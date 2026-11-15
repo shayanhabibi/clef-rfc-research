@@ -2,7 +2,7 @@
   "rocqVersion": "9.1.0",
   "digests": {
     "theories/RFC0001/Constraints.v": "bb993d3d23e9c717054ab0ba27203ed4",
-    "theories/RFC0001/Discussion.v": "c2ffc6ffcbe629916117452992510b46",
+    "theories/RFC0001/Discussion.v": "a8aab6b2cbe7363884873f63b7d9da4d",
     "theories/RFC0001/Overview.v": "d6a9255a9da55b3612de50041aa9de7f",
     "theories/RFC0001/Representation.v": "b8c7101f4c4bfaaff499261a9a8f8d8b",
     "theories/RFC0001/TypeCase.v": "ac18369418ee5ad858fbd48d0e561307",

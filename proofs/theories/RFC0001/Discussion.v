@@ -3,8 +3,8 @@
 ## What the proofs cover
 
 The model is small on purpose. It has one type variable, closed member types, operations with one
-argument, pairs, `let` and the type-case. It has no functions as values, no inference and no
-evaluation.
+argument, pairs, `let` and the type-case, with typing and evaluation for both source and
+specialized terms. It has no functions as values and no inference.
 
 | Claim | Status |
 |---|---|
@@ -18,15 +18,18 @@ evaluation.
 | A body with no type-case is uniform | Proved: `case_free_uniform` |
 | Complete arms give code for every member | Proved: `coverage_total` |
 | An untagged union cannot be tested at run time | Proved from an assumption: `untagged_union_discriminable_falsified` |
-| A specialized body evaluates without a run-time type test | Holds by construction: specialized terms have no type-case. No evaluation is modelled |
+| A specialized body evaluates without a run-time type test, and returns what the source returns | Proved: `specialization_preserves_meaning` |
+| A typed specialization evaluates to a value of its type | Proved from an assumption: `specialization_is_safe` |
+| A definition that checks runs at every member | Proved from an assumption: `checked_definition_runs` |
+| A body with no type-case cannot observe its instantiation | Proved: `case_free_parametric` |
 | Inference with closed-set constraints keeps principal types | Not proved. `meet_greatest` is the lemma it would need |
 | The local type equation of an arm is sound with inference | Not proved. No inference is modelled |
 | An unconstrained variable stays parametric | Not proved. The rule is stated in prose |
 | Several constrained variables in one definition | Not modelled |
 
-Two assumptions come from the specification, and both are in the `Spec` modules:
-`tycon_eq_dec` and `no_runtime_type_metadata`. The second is this repository's reading of the spec
-and is not a quotation from it.
+Three assumptions come from the specification, and all are in the `Spec` modules:
+`tycon_eq_dec`, `witness_sound` and `no_runtime_type_metadata`. The last is this repository's
+reading of the spec and is not a quotation from it.
 
 ## Drawbacks
 
