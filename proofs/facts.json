@@ -6,6 +6,9 @@
     "theories/RFC0001/Overview.v": "d6a9255a9da55b3612de50041aa9de7f",
     "theories/RFC0001/Representation.v": "b8c7101f4c4bfaaff499261a9a8f8d8b",
     "theories/RFC0001/TypeCase.v": "ac18369418ee5ad858fbd48d0e561307",
+    "theories/RFC0002/Discussion.v": "5728896ef9ecb969e1b4f3a84c04882c",
+    "theories/RFC0002/Overview.v": "a1261f4be8fd3e6c9ccf7efa3dee51cd",
+    "theories/RFC0002/Regions.v": "43a410b27fde03f9b99d6cb0205ad11a",
     "theories/Spec/Runtime.v": "08995eb04b8716d1cc3c9c69ef08783b",
     "theories/Spec/Types.v": "03515d34d93a2c16c7d1da0001196f5f",
     "theories/Spec/Witnesses.v": "ba3453af70cda2fd69ffaa0a14a96fbe"
@@ -584,6 +587,498 @@
     },
     "Clef.RFC0001.TypeCase.well_typed_at": {
       "type": "Types.ty -> list Types.oty -> TypeCase.tm -> Types.oty -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.Both": {
+      "type": "Regions.test -> Regions.test -> Regions.test",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.Equation": {
+      "type": "Regions.reading",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.IsA": {
+      "type": "Regions.test",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.IsB": {
+      "type": "Regions.test",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.Membership": {
+      "type": "Regions.reading",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.binder_types": {
+      "type": "Regions.inst3 -> Regions.test -> list Types.ty",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.both_match_in_meet": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (s : Regions.inst3),\nRegions.valid CA CB s ->\nRegions.matches r CA CB s Regions.IsA = true ->\nRegions.matches r CA CB s Regions.IsB = true ->\nConstraints.sat (Regions.iT s) (Constraints.meet CA CB)",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "r": "Regions.reading",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.coverage": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (arms : list Regions.test) (s : Regions.inst3),\nList.In Regions.IsA arms ->\nList.In Regions.IsB arms ->\nRegions.valid CA CB s -> Regions.select r CA CB arms s <> None",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "arms": "list Regions.test",
+        "r": "Regions.reading",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.diagonal_matches": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset) (x : Types.ty),\nConstraints.sat x CA ->\nConstraints.sat x CB ->\nRegions.matches r CA CB\n  {| Regions.iA := x; Regions.iB := x; Regions.iT := x |} Regions.IsA =\ntrue /\\\nRegions.matches r CA CB\n  {| Regions.iA := x; Regions.iB := x; Regions.iT := x |} Regions.IsB =\ntrue",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "r": "Regions.reading",
+        "x": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.diagonal_valid": {
+      "type": "forall (CA CB : Constraints.cset) (x : Types.ty),\nConstraints.sat x CA ->\nConstraints.sat x CB ->\nRegions.valid CA CB\n  {| Regions.iA := x; Regions.iB := x; Regions.iT := x |}",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "x": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.equation_refines": {
+      "type": "forall (CA CB : Constraints.cset) (s : Regions.inst3)\n  (p : Regions.test),\nRegions.matches Regions.Equation CA CB s p = true ->\nforall u : Types.ty,\nList.In u (Regions.binder_types s p) -> u = Regions.iT s",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "p": "Regions.test",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.find_app": {
+      "type": "forall (A : Type) (f : A -> bool) (l1 l2 : list A),\nList.find f (l1 ++ l2) =\nmatch List.find f l1 with\n| Some x => Some x\n| None => List.find f l2\nend",
+      "binders": {
+        "A": "Type",
+        "f": "A -> bool",
+        "l1": "list A",
+        "l2": "list A"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0002.Regions.first_match_is_most_specific": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (arms : list Regions.test) (s : Regions.inst3) \n  (p q : Regions.test),\nRegions.ordered r CA CB nil arms = true ->\nRegions.valid CA CB s ->\nRegions.select r CA CB arms s = Some p ->\nList.In q arms ->\nRegions.matches r CA CB s q = true -> Regions.le r CA CB p q = true",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "arms": "list Regions.test",
+        "p": "Regions.test",
+        "q": "Regions.test",
+        "r": "Regions.reading",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.iA": {
+      "type": "Regions.inst3 -> Types.ty",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.iB": {
+      "type": "Regions.inst3 -> Types.ty",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.iT": {
+      "type": "Regions.inst3 -> Types.ty",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.inst3": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.intersection_first_is_ordered": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset),\nRegions.ordered r CA CB nil\n  (Regions.Both Regions.IsA Regions.IsB\n   :: Regions.IsA :: Regions.IsB :: nil) =\ntrue",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "r": "Regions.reading"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.intersection_first_order_free": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (s : Regions.inst3),\nRegions.select r CA CB\n  (Regions.Both Regions.IsA Regions.IsB\n   :: Regions.IsA :: Regions.IsB :: nil)\n  s =\nRegions.select r CA CB\n  (Regions.Both Regions.IsA Regions.IsB\n   :: Regions.IsB :: Regions.IsA :: nil)\n  s",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "r": "Regions.reading",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.intersection_reachable_iff": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset),\n(exists s : Regions.inst3,\n   Regions.valid CA CB s /\\\n   Regions.matches r CA CB s (Regions.Both Regions.IsA Regions.IsB) =\n   true) <->\nConstraints.meet CA CB <> nil",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "r": "Regions.reading"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.le": {
+      "type": "Regions.reading ->\nConstraints.cset ->\nConstraints.cset -> Regions.test -> Regions.test -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.le_both_l": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (p q : Regions.test),\nRegions.le r CA CB (Regions.Both p q) p = true",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "p": "Regions.test",
+        "q": "Regions.test",
+        "r": "Regions.reading"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.le_both_r": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (p q : Regions.test),\nRegions.le r CA CB (Regions.Both p q) q = true",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "p": "Regions.test",
+        "q": "Regions.test",
+        "r": "Regions.reading"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.le_iff": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (p q : Regions.test),\nRegions.le r CA CB p q = true <->\n(forall s : Regions.inst3,\n Regions.valid CA CB s ->\n Regions.matches r CA CB s p = true ->\n Regions.matches r CA CB s q = true)",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "p": "Regions.test",
+        "q": "Regions.test",
+        "r": "Regions.reading"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.le_refl": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (p : Regions.test),\nRegions.le r CA CB p p = true",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "p": "Regions.test",
+        "r": "Regions.reading"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.matches": {
+      "type": "Regions.reading ->\nConstraints.cset ->\nConstraints.cset -> Regions.inst3 -> Regions.test -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.matches_agree": {
+      "type": "forall (CA CB : Constraints.cset) (s : Regions.inst3),\nConstraints.meet CA CB = nil ->\nRegions.valid CA CB s ->\nforall p : Regions.test,\nRegions.matches Regions.Membership CA CB s p =\nRegions.matches Regions.Equation CA CB s p",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.meet_nonempty_witness": {
+      "type": "forall CA CB : Constraints.cset,\nConstraints.meet CA CB <> nil ->\nexists x : Types.ty, Constraints.sat x CA /\\ Constraints.sat x CB",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.membership_refines_falsified": {
+      "type": "forall x y : Types.ty,\nx <> y ->\n~\n(forall (CA CB : Constraints.cset) (s : Regions.inst3)\n   (p : Regions.test),\n Regions.valid CA CB s ->\n Regions.matches Regions.Membership CA CB s p = true ->\n forall u : Types.ty,\n List.In u (Regions.binder_types s p) -> u = Regions.iT s)",
+      "binders": {
+        "x": "Types.ty",
+        "y": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.order_is_irrelevant": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (l1 l2 : list Regions.test) (s : Regions.inst3)\n  (p1 p2 : Regions.test),\nRegions.ordered r CA CB nil l1 = true ->\nRegions.ordered r CA CB nil l2 = true ->\n(forall p : Regions.test, List.In p l1 <-> List.In p l2) ->\nRegions.valid CA CB s ->\nRegions.select r CA CB l1 s = Some p1 ->\nRegions.select r CA CB l2 s = Some p2 ->\nRegions.le r CA CB p1 p2 = true /\\ Regions.le r CA CB p2 p1 = true",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "l1": "list Regions.test",
+        "l2": "list Regions.test",
+        "p1": "Regions.test",
+        "p2": "Regions.test",
+        "r": "Regions.reading",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.ordered": {
+      "type": "Regions.reading ->\nConstraints.cset ->\nConstraints.cset -> list Regions.test -> list Regions.test -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.ordered_most_specific": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (arms seen : list Regions.test) (s : Regions.inst3)\n  (p q : Regions.test),\nRegions.ordered r CA CB seen arms = true ->\nRegions.valid CA CB s ->\nList.find (Regions.matches r CA CB s) (seen ++ arms) = Some p ->\nList.In q arms ->\nRegions.matches r CA CB s q = true -> Regions.le r CA CB p q = true",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "arms": "list Regions.test",
+        "p": "Regions.test",
+        "q": "Regions.test",
+        "r": "Regions.reading",
+        "s": "Regions.inst3",
+        "seen": "list Regions.test"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.reading": {
+      "type": "Set",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.reading_ind": {
+      "type": "forall P : Regions.reading -> Prop,\nP Regions.Equation ->\nP Regions.Membership -> forall r : Regions.reading, P r",
+      "binders": {
+        "P": "Regions.reading -> Prop"
+      }
+    },
+    "Clef.RFC0002.Regions.reading_rec": {
+      "type": "forall P : Regions.reading -> Set,\nP Regions.Equation ->\nP Regions.Membership -> forall r : Regions.reading, P r",
+      "binders": {
+        "P": "Regions.reading -> Set"
+      }
+    },
+    "Clef.RFC0002.Regions.reading_rect": {
+      "type": "forall P : Regions.reading -> Type,\nP Regions.Equation ->\nP Regions.Membership -> forall r : Regions.reading, P r",
+      "binders": {
+        "P": "Regions.reading -> Type"
+      }
+    },
+    "Clef.RFC0002.Regions.reading_sind": {
+      "type": "forall P : Regions.reading -> SProp,\nP Regions.Equation ->\nP Regions.Membership -> forall r : Regions.reading, P r",
+      "binders": {
+        "P": "Regions.reading -> SProp"
+      }
+    },
+    "Clef.RFC0002.Regions.readings_agree_falsified": {
+      "type": "forall x y : Types.ty,\nx <> y ->\n~\n(forall (CA CB : Constraints.cset) (s : Regions.inst3)\n   (arms : list Regions.test),\n Regions.valid CA CB s ->\n Regions.select Regions.Membership CA CB arms s =\n Regions.select Regions.Equation CA CB arms s)",
+      "binders": {
+        "x": "Types.ty",
+        "y": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.readings_agree_when_disjoint": {
+      "type": "forall (CA CB : Constraints.cset) (s : Regions.inst3)\n  (arms : list Regions.test),\nConstraints.meet CA CB = nil ->\nRegions.valid CA CB s ->\nRegions.select Regions.Membership CA CB arms s =\nRegions.select Regions.Equation CA CB arms s",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "arms": "list Regions.test",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.regions_partition": {
+      "type": "forall (CA CB : Constraints.cset) (s : Regions.inst3),\nRegions.valid CA CB s ->\nlet arms :=\n  (Regions.Both Regions.IsA Regions.IsB\n   :: Regions.IsA :: Regions.IsB :: nil)%list\n  in\n(Regions.select Regions.Equation CA CB arms s =\n Some (Regions.Both Regions.IsA Regions.IsB) <->\n Regions.iT s = Regions.iA s /\\ Regions.iA s = Regions.iB s) /\\\n(Regions.select Regions.Equation CA CB arms s = Some Regions.IsA <->\n Regions.iT s = Regions.iA s /\\ Regions.iA s <> Regions.iB s) /\\\n(Regions.select Regions.Equation CA CB arms s = Some Regions.IsB <->\n Regions.iT s = Regions.iB s /\\ Regions.iA s <> Regions.iB s)",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.rows": {
+      "type": "Types.ty -> Types.ty -> list Regions.inst3",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.select": {
+      "type": "Regions.reading ->\nConstraints.cset ->\nConstraints.cset ->\nlist Regions.test -> Regions.inst3 -> option Regions.test",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.table": {
+      "type": "Constraints.cset -> Constraints.cset -> list Regions.inst3",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.table_iff_valid": {
+      "type": "forall (CA CB : Constraints.cset) (s : Regions.inst3),\nList.In s (Regions.table CA CB) <-> Regions.valid CA CB s",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.test": {
+      "type": "Set",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.test_ind": {
+      "type": "forall P : Regions.test -> Prop,\nP Regions.IsA ->\nP Regions.IsB ->\n(forall p : Regions.test,\n P p -> forall q : Regions.test, P q -> P (Regions.Both p q)) ->\nforall t : Regions.test, P t",
+      "binders": {
+        "P": "Regions.test -> Prop"
+      }
+    },
+    "Clef.RFC0002.Regions.test_rec": {
+      "type": "forall P : Regions.test -> Set,\nP Regions.IsA ->\nP Regions.IsB ->\n(forall p : Regions.test,\n P p -> forall q : Regions.test, P q -> P (Regions.Both p q)) ->\nforall t : Regions.test, P t",
+      "binders": {
+        "P": "Regions.test -> Set"
+      }
+    },
+    "Clef.RFC0002.Regions.test_rect": {
+      "type": "forall P : Regions.test -> Type,\nP Regions.IsA ->\nP Regions.IsB ->\n(forall p : Regions.test,\n P p -> forall q : Regions.test, P q -> P (Regions.Both p q)) ->\nforall t : Regions.test, P t",
+      "binders": {
+        "P": "Regions.test -> Type"
+      }
+    },
+    "Clef.RFC0002.Regions.test_sind": {
+      "type": "forall P : Regions.test -> SProp,\nP Regions.IsA ->\nP Regions.IsB ->\n(forall p : Regions.test,\n P p -> forall q : Regions.test, P q -> P (Regions.Both p q)) ->\nforall t : Regions.test, P t",
+      "binders": {
+        "P": "Regions.test -> SProp"
+      }
+    },
+    "Clef.RFC0002.Regions.two_arms_order_matters_iff": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset),\n(forall s : Regions.inst3,\n Regions.valid CA CB s ->\n Regions.select r CA CB (Regions.IsA :: Regions.IsB :: nil) s =\n Regions.select r CA CB (Regions.IsB :: Regions.IsA :: nil) s) <->\nConstraints.meet CA CB = nil",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "r": "Regions.reading"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.tyeqb": {
+      "type": "Types.ty -> Types.ty -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Regions.tyeqb_false": {
+      "type": "forall x y : Types.ty, x <> y -> Regions.tyeqb x y = false",
+      "binders": {
+        "x": "Types.ty",
+        "y": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.tyeqb_iff": {
+      "type": "forall x y : Types.ty, Regions.tyeqb x y = true <-> x = y",
+      "binders": {
+        "x": "Types.ty",
+        "y": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.tyeqb_neq": {
+      "type": "forall x y : Types.ty, Regions.tyeqb x y = false -> x <> y",
+      "binders": {
+        "x": "Types.ty",
+        "y": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.tyeqb_refl": {
+      "type": "forall x : Types.ty, Regions.tyeqb x x = true",
+      "binders": {
+        "x": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.unordered_overlap_rejected": {
+      "type": "forall x y : Types.ty,\nx <> y ->\nRegions.ordered Regions.Equation (x :: y :: nil)%list \n  (y :: nil)%list nil (Regions.IsA :: Regions.IsB :: nil) =\nfalse",
+      "binders": {
+        "x": "Types.ty",
+        "y": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Regions.valid": {
+      "type": "Constraints.cset -> Constraints.cset -> Regions.inst3 -> Prop",
       "binders": {}
     },
     "Clef.Spec.Runtime.HAtom": {
