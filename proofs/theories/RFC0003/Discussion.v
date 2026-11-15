@@ -77,6 +77,61 @@ These are the reasons for doubt.
 - **The checker reports the hazard.** Whether a conversion is exact is computed, so a simple use
   needs no ceremony and a lossy one is reported at the position that causes it.
 
+## Relation to the Tier 1 dimensional sheaf
+
+The Clef design documents describe checking as a sheaf over the compilation stages: Source, the
+program graph, the MLIR levels and the native binary. At Tier 1 the fact attached to a stage is an
+integer exponent vector over the declared base measures, the maps between stages compose, and a
+program is consistent when the facts agree along every adjacent step. The specification makes
+every Tier 1 check an equality. `ntu-dimensional-architecture.md` §7.2 says identity is exact on
+the unit, that no component is subtyped, and "There are no seals and no conversion sites."
+
+This section records how the RFC meets that structure. It is a reading of the documents, and
+nothing in it is proved here beyond the theorems it names. The sheaf description comes from the
+design documents and the preprint *Fixed-Point Scaffolding in the Clef Programming Language*, not
+from the specification commit this RFC is written against.
+
+**What fits in Tier 1.**
+
+- *Dimension is a quotient of the exponent vector.* Today `km` and `m` are independent
+  generators. `dim` is a homomorphism from units to base units (`dim_mul`, `dim_pow`), and
+  convertibility is equality after applying it (`convb_iff`). The check stays an equality in an
+  abelian group.
+- *Scale is a second homomorphism.* `scale` maps measures to the positive rationals under
+  multiplication (`scale_mul`, `scale_div`), and `coherence` says a factor is the difference of
+  two images. The positive rationals are a free abelian group on the primes, so a scale is itself
+  an exponent vector. That last fact is standard and is not proved here.
+- *Meaning preservation is one step of the gluing condition.* `elab_preserves_meaning` shows the
+  step from source to elaborated program commutes with the meaning. The later steps, through MLIR
+  to the binary, are not modelled.
+
+**What conflicts.**
+
+- *An inserted conversion is a conversion site.* The position that expects a measure coerces the
+  unit, which §7.2 rules out in both of its clauses.
+- *A measure gains runtime content.* Today a measure can be released without touching the value.
+  With conversion a difference of measure is a multiplication, which the lowering must emit and
+  account for.
+- *The integer rule needs an order.* §7.2 says no ordering is needed. Choosing the finer unit is a
+  divisibility check. For closed measures it is a computation. With measure variables it would
+  likely be integer linear arithmetic, which the tiers place in Tier 2.
+- *Operators.* `units-of-measure.md` requires matching measures for addition. The integer rule
+  changes that signature. The rational half of this RFC does not.
+- *Retention.* The specification requires the program graph to retain the measure of each value.
+  The target language here erases measures, so the model is coarser than the graph.
+
+**A shape that would fit.** §7.2 has a precedent. A `ReadWrite` handle becomes `ReadOnly` only
+through `Ptr.asReadOnly`, which is a node in the graph. The same pattern for units is:
+
+1. Tier 1 keeps unit identity exact. Dimension and scale are derived facts on the same vector.
+2. A conversion is an explicit node in the graph that carries both measures and the factor.
+   Identity is exact on each side of it.
+3. Exactness, overflow and rounding are Tier 2 obligations on that node, discharged from range
+   information. Width inference sees the scaling as ordinary arithmetic.
+
+Whether the node is written by the author or inserted by elaboration is then the one remaining
+choice. Written, it needs no change to §7.2. Inserted, §7.2 must be amended.
+
 ## Alternatives
 
 - **Explicit conversion only.** Keep units unrelated to the type checker, and derive a `convert`
@@ -111,4 +166,6 @@ sizes to existing units accepts calls that were errors before.
 7. **Irrational and fractional factors.** Degrees and radians need an irrational factor, and a
    square root gives a fractional exponent, whose factor is a root.
 8. **Inference.** The rule for a position whose measure is not yet closed.
+9. **Written or inserted.** Whether the conversion node is written by the author, which leaves
+   `ntu-dimensional-architecture.md` §7.2 as it is, or inserted by elaboration, which amends it.
 *)

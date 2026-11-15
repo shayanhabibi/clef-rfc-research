@@ -10,7 +10,7 @@
     "theories/RFC0002/Overview.v": "a1261f4be8fd3e6c9ccf7efa3dee51cd",
     "theories/RFC0002/Regions.v": "43a410b27fde03f9b99d6cb0205ad11a",
     "theories/RFC0003/Conversion.v": "87d6abfbe5310fd32a19f4822dbb4989",
-    "theories/RFC0003/Discussion.v": "d11362edfbdf01607f80b78e183e96fe",
+    "theories/RFC0003/Discussion.v": "166d3a3f7c182561995f92ecfa6e38d1",
     "theories/RFC0003/Elaboration.v": "c956e637ca9e7067721fe11b52fe5d75",
     "theories/RFC0003/Integers.v": "51de7d8dd1b45cba7568d872baf2e675",
     "theories/RFC0003/Measures.v": "074b87e62cdaa895ebcfe6ad9275a7c1",
