@@ -1,0 +1,10 @@
+-Q theories Clef
+
+theories/Spec/Types.v
+theories/Spec/Runtime.v
+theories/Spec/Witnesses.v
+theories/RFC0001/Overview.v
+theories/RFC0001/Constraints.v
+theories/RFC0001/TypeCase.v
+theories/RFC0001/Representation.v
+theories/RFC0001/Discussion.v

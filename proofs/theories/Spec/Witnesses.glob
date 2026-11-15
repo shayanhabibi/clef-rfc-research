@@ -1,0 +1,51 @@
+DIGEST ba3453af70cda2fd69ffaa0a14a96fbe
+FClef.Spec.Witnesses
+R25:34 Clef.Spec.Types <> <> lib
+R36:47 Clef.Spec.Runtime <> <> lib
+ax 471:472 <> op
+ax 659:665 <> witness
+R671:674 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R669:670 Clef.Spec.Witnesses <> op defax
+R677:680 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R675:676 Clef.Spec.Types <> ty ind
+R681:686 Corelib.Init.Datatypes <> option ind
+R688:689 Clef.Spec.Types <> ty ind
+ax 778:782 <> apply
+R788:791 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R786:787 Clef.Spec.Witnesses <> op defax
+R795:798 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R792:794 Clef.Spec.Runtime <> val ind
+R799:804 Corelib.Init.Datatypes <> option ind
+R806:808 Clef.Spec.Runtime <> val ind
+ax 1003:1015 <> witness_sound
+R1033:1034 Clef.Spec.Witnesses <> op defax
+binder 1029:1029 <> o:7
+R1044:1045 Clef.Spec.Types <> ty ind
+binder 1038:1038 <> a:8
+binder 1040:1040 <> r:9
+R1053:1055 Clef.Spec.Runtime <> val ind
+binder 1049:1049 <> v:10
+R1083:1086 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1074:1076 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1063:1069 Clef.Spec.Witnesses <> witness defax
+R1071:1071 Clef.Spec.Witnesses <> o:7 var
+R1073:1073 Clef.Spec.Witnesses <> a:8 var
+R1077:1080 Corelib.Init.Datatypes <> Some constr
+R1082:1082 Clef.Spec.Witnesses <> r:9 var
+R1097:1104 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1087:1092 Clef.Spec.Runtime <> has_ty ind
+R1094:1094 Clef.Spec.Witnesses <> v:10 var
+R1096:1096 Clef.Spec.Witnesses <> a:8 var
+R1105:1111 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1113:1114 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 1112:1112 <> w:11
+R1133:1136 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1124:1126 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1115:1119 Clef.Spec.Witnesses <> apply defax
+R1121:1121 Clef.Spec.Witnesses <> o:7 var
+R1123:1123 Clef.Spec.Witnesses <> v:10 var
+R1127:1130 Corelib.Init.Datatypes <> Some constr
+R1132:1132 Clef.Spec.Witnesses <> w:11 var
+R1137:1142 Clef.Spec.Runtime <> has_ty ind
+R1144:1144 Clef.Spec.Witnesses <> w:11 var
+R1146:1146 Clef.Spec.Witnesses <> r:9 var

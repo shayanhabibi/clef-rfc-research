@@ -1,0 +1,303 @@
+DIGEST bb993d3d23e9c717054ab0ba27203ed4
+FClef.RFC0001.Constraints
+R27:30 Stdlib.Lists.List <> <> lib
+R40:52 Stdlib.Lists.List ListNotations <> mod
+R80:89 Clef.Spec.Types <> <> lib
+def 691:694 <> cset
+R706:709 Corelib.Init.Datatypes <> list ind
+R711:712 Clef.Spec.Types <> ty ind
+def 995:1005 <> well_formed
+R1012:1015 Clef.RFC0001.Constraints <> cset def
+binder 1008:1008 <> C:1
+R1037:1040 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1030:1034 Stdlib.Lists.List <> NoDup ind
+R1036:1036 Clef.RFC0001.Constraints <> C:1 var
+R1042:1045 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1046:1051 Corelib.Init.Datatypes <> length def
+R1053:1053 Clef.RFC0001.Constraints <> C:1 var
+def 1428:1430 <> sat
+R1437:1438 Clef.Spec.Types <> ty ind
+binder 1433:1433 <> t:2
+R1446:1449 Clef.RFC0001.Constraints <> cset def
+binder 1442:1442 <> C:3
+R1462:1463 Stdlib.Lists.List <> In def
+R1467:1467 Clef.RFC0001.Constraints <> C:3 var
+R1465:1465 Clef.RFC0001.Constraints <> t:2 var
+def 1551:1554 <> memb
+R1561:1562 Clef.Spec.Types <> ty ind
+binder 1557:1557 <> t:4
+R1570:1573 Clef.RFC0001.Constraints <> cset def
+binder 1566:1566 <> C:5
+R1578:1581 Corelib.Init.Datatypes <> bool ind
+R1591:1596 Stdlib.Lists.List <> in_dec thm
+R1610:1610 Clef.RFC0001.Constraints <> C:5 var
+R1608:1608 Clef.RFC0001.Constraints <> t:4 var
+R1598:1606 Clef.Spec.Types <> ty_eq_dec thm
+R1627:1631 Corelib.Init.Datatypes <> false constr
+R1617:1620 Corelib.Init.Datatypes <> true constr
+prf 1690:1697 <> memb_iff
+R1704:1705 Clef.Spec.Types <> ty ind
+binder 1700:1700 <> t:6
+R1713:1716 Clef.RFC0001.Constraints <> cset def
+binder 1709:1709 <> C:7
+R1736:1740 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+R1729:1731 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1721:1724 Clef.RFC0001.Constraints <> memb def
+R1726:1726 Clef.RFC0001.Constraints <> t:6 var
+R1728:1728 Clef.RFC0001.Constraints <> C:7 var
+R1732:1735 Corelib.Init.Datatypes <> true constr
+R1741:1743 Clef.RFC0001.Constraints <> sat def
+R1745:1745 Clef.RFC0001.Constraints <> t:6 var
+R1747:1747 Clef.RFC0001.Constraints <> C:7 var
+R1766:1769 Clef.RFC0001.Constraints <> memb def
+R1772:1774 Clef.RFC0001.Constraints <> sat def
+R1787:1792 Stdlib.Lists.List <> in_dec thm
+R1794:1802 Clef.Spec.Types <> ty_eq_dec thm
+R1787:1792 Stdlib.Lists.List <> in_dec thm
+R1794:1802 Clef.Spec.Types <> ty_eq_dec thm
+prf 2003:2015 <> sat_decidable
+R2022:2023 Clef.Spec.Types <> ty ind
+binder 2018:2018 <> t:8
+R2031:2034 Clef.RFC0001.Constraints <> cset def
+binder 2027:2027 <> C:9
+R2039:2039 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R2047:2051 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R2061:2061 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R2040:2042 Clef.RFC0001.Constraints <> sat def
+R2044:2044 Clef.RFC0001.Constraints <> t:8 var
+R2046:2046 Clef.RFC0001.Constraints <> C:9 var
+R2052:2053 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R2054:2056 Clef.RFC0001.Constraints <> sat def
+R2058:2058 Clef.RFC0001.Constraints <> t:8 var
+R2060:2060 Clef.RFC0001.Constraints <> C:9 var
+R2080:2085 Stdlib.Lists.List <> in_dec thm
+R2087:2095 Clef.Spec.Types <> ty_eq_dec thm
+R2080:2085 Stdlib.Lists.List <> in_dec thm
+R2087:2095 Clef.Spec.Types <> ty_eq_dec thm
+def 2234:2241 <> entailsb
+R2250:2253 Clef.RFC0001.Constraints <> cset def
+binder 2244:2244 <> C:10
+binder 2246:2246 <> D:11
+R2258:2261 Corelib.Init.Datatypes <> bool ind
+R2268:2274 Stdlib.Lists.List <> forallb def
+R2296:2296 Clef.RFC0001.Constraints <> C:10 var
+binder 2281:2281 <> t:12
+R2286:2289 Clef.RFC0001.Constraints <> memb def
+R2291:2291 Clef.RFC0001.Constraints <> t:12 var
+R2293:2293 Clef.RFC0001.Constraints <> D:11 var
+def 2529:2535 <> entails
+R2544:2547 Clef.RFC0001.Constraints <> cset def
+binder 2538:2538 <> C:13
+binder 2540:2540 <> D:14
+R2572:2574 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2560:2567 Clef.RFC0001.Constraints <> entailsb def
+R2569:2569 Clef.RFC0001.Constraints <> C:13 var
+R2571:2571 Clef.RFC0001.Constraints <> D:14 var
+R2575:2578 Corelib.Init.Datatypes <> true constr
+prf 2863:2877 <> entails_iff_sat
+R2886:2889 Clef.RFC0001.Constraints <> cset def
+binder 2880:2880 <> C:15
+binder 2882:2882 <> D:16
+R2907:2911 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+R2896:2902 Clef.RFC0001.Constraints <> entails def
+R2904:2904 Clef.RFC0001.Constraints <> C:15 var
+R2906:2906 Clef.RFC0001.Constraints <> D:16 var
+binder 2919:2919 <> t:17
+R2929:2932 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2922:2924 Clef.RFC0001.Constraints <> sat def
+R2926:2926 Clef.RFC0001.Constraints <> t:17 var
+R2928:2928 Clef.RFC0001.Constraints <> C:15 var
+R2933:2935 Clef.RFC0001.Constraints <> sat def
+R2937:2937 Clef.RFC0001.Constraints <> t:17 var
+R2939:2939 Clef.RFC0001.Constraints <> D:16 var
+R2958:2964 Clef.RFC0001.Constraints <> entails def
+R2967:2974 Clef.RFC0001.Constraints <> entailsb def
+R2985:2998 Stdlib.Lists.List <> forallb_forall thm
+R2985:2998 Stdlib.Lists.List <> forallb_forall thm
+R2985:2998 Stdlib.Lists.List <> forallb_forall thm
+R3033:3040 Clef.RFC0001.Constraints <> memb_iff thm
+R3033:3040 Clef.RFC0001.Constraints <> memb_iff thm
+R3072:3079 Clef.RFC0001.Constraints <> memb_iff thm
+R3072:3079 Clef.RFC0001.Constraints <> memb_iff thm
+prf 3149:3160 <> entails_refl
+R3167:3170 Clef.RFC0001.Constraints <> cset def
+binder 3163:3163 <> C:18
+R3175:3181 Clef.RFC0001.Constraints <> entails def
+R3183:3183 Clef.RFC0001.Constraints <> C:18 var
+R3185:3185 Clef.RFC0001.Constraints <> C:18 var
+R3203:3217 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R3203:3217 Clef.RFC0001.Constraints <> entails_iff_sat thm
+prf 3279:3291 <> entails_trans
+R3302:3305 Clef.RFC0001.Constraints <> cset def
+binder 3294:3294 <> C:19
+binder 3296:3296 <> D:20
+binder 3298:3298 <> E:21
+R3321:3324 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3310:3316 Clef.RFC0001.Constraints <> entails def
+R3318:3318 Clef.RFC0001.Constraints <> C:19 var
+R3320:3320 Clef.RFC0001.Constraints <> D:20 var
+R3336:3339 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3325:3331 Clef.RFC0001.Constraints <> entails def
+R3333:3333 Clef.RFC0001.Constraints <> D:20 var
+R3335:3335 Clef.RFC0001.Constraints <> E:21 var
+R3340:3346 Clef.RFC0001.Constraints <> entails def
+R3348:3348 Clef.RFC0001.Constraints <> C:19 var
+R3350:3350 Clef.RFC0001.Constraints <> E:21 var
+R3371:3385 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R3371:3385 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R3371:3385 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R3371:3385 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R3371:3385 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R3371:3385 Clef.RFC0001.Constraints <> entails_iff_sat thm
+def 3679:3682 <> meet
+R3691:3694 Clef.RFC0001.Constraints <> cset def
+binder 3685:3685 <> C:22
+binder 3687:3687 <> D:23
+R3699:3702 Clef.RFC0001.Constraints <> cset def
+R3709:3714 Stdlib.Lists.List <> filter def
+R3736:3736 Clef.RFC0001.Constraints <> C:22 var
+binder 3721:3721 <> t:24
+R3726:3729 Clef.RFC0001.Constraints <> memb def
+R3731:3731 Clef.RFC0001.Constraints <> t:24 var
+R3733:3733 Clef.RFC0001.Constraints <> D:23 var
+prf 3974:3981 <> meet_sat
+R3988:3989 Clef.Spec.Types <> ty ind
+binder 3984:3984 <> t:25
+R3999:4002 Clef.RFC0001.Constraints <> cset def
+binder 3993:3993 <> C:26
+binder 3995:3995 <> D:27
+R4025:4029 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+R4009:4011 Clef.RFC0001.Constraints <> sat def
+R4013:4013 Clef.RFC0001.Constraints <> t:25 var
+R4016:4019 Clef.RFC0001.Constraints <> meet def
+R4021:4021 Clef.RFC0001.Constraints <> C:26 var
+R4023:4023 Clef.RFC0001.Constraints <> D:27 var
+R4037:4040 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4030:4032 Clef.RFC0001.Constraints <> sat def
+R4034:4034 Clef.RFC0001.Constraints <> t:25 var
+R4036:4036 Clef.RFC0001.Constraints <> C:26 var
+R4041:4043 Clef.RFC0001.Constraints <> sat def
+R4045:4045 Clef.RFC0001.Constraints <> t:25 var
+R4047:4047 Clef.RFC0001.Constraints <> D:27 var
+R4066:4069 Clef.RFC0001.Constraints <> meet def
+R4072:4074 Clef.RFC0001.Constraints <> sat def
+R4085:4093 Stdlib.Lists.List <> filter_In thm
+R4085:4093 Stdlib.Lists.List <> filter_In thm
+R4085:4093 Stdlib.Lists.List <> filter_In thm
+R4104:4111 Clef.RFC0001.Constraints <> memb_iff thm
+R4104:4111 Clef.RFC0001.Constraints <> memb_iff thm
+R4104:4111 Clef.RFC0001.Constraints <> memb_iff thm
+prf 4450:4462 <> meet_greatest
+R4473:4476 Clef.RFC0001.Constraints <> cset def
+binder 4465:4465 <> C:28
+binder 4467:4467 <> D:29
+binder 4469:4469 <> E:30
+R4503:4506 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4483:4489 Clef.RFC0001.Constraints <> entails def
+R4492:4495 Clef.RFC0001.Constraints <> meet def
+R4497:4497 Clef.RFC0001.Constraints <> C:28 var
+R4499:4499 Clef.RFC0001.Constraints <> D:29 var
+R4502:4502 Clef.RFC0001.Constraints <> C:28 var
+R4527:4533 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4584:4584 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4507:4513 Clef.RFC0001.Constraints <> entails def
+R4516:4519 Clef.RFC0001.Constraints <> meet def
+R4521:4521 Clef.RFC0001.Constraints <> C:28 var
+R4523:4523 Clef.RFC0001.Constraints <> D:29 var
+R4526:4526 Clef.RFC0001.Constraints <> D:29 var
+R4545:4548 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4534:4540 Clef.RFC0001.Constraints <> entails def
+R4542:4542 Clef.RFC0001.Constraints <> E:30 var
+R4544:4544 Clef.RFC0001.Constraints <> C:28 var
+R4560:4563 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4549:4555 Clef.RFC0001.Constraints <> entails def
+R4557:4557 Clef.RFC0001.Constraints <> E:30 var
+R4559:4559 Clef.RFC0001.Constraints <> D:29 var
+R4564:4570 Clef.RFC0001.Constraints <> entails def
+R4572:4572 Clef.RFC0001.Constraints <> E:30 var
+R4575:4578 Clef.RFC0001.Constraints <> meet def
+R4580:4580 Clef.RFC0001.Constraints <> C:28 var
+R4582:4582 Clef.RFC0001.Constraints <> D:29 var
+R4624:4638 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R4624:4638 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R4659:4666 Clef.RFC0001.Constraints <> meet_sat thm
+R4659:4666 Clef.RFC0001.Constraints <> meet_sat thm
+R4693:4707 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R4693:4707 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R4728:4735 Clef.RFC0001.Constraints <> meet_sat thm
+R4728:4735 Clef.RFC0001.Constraints <> meet_sat thm
+R4765:4779 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R4765:4779 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R4765:4779 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R4765:4779 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R4765:4779 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R4765:4779 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R4806:4813 Clef.RFC0001.Constraints <> meet_sat thm
+R4806:4813 Clef.RFC0001.Constraints <> meet_sat thm
+prf 5059:5068 <> meet_empty
+R5077:5080 Clef.RFC0001.Constraints <> cset def
+binder 5071:5071 <> C:31
+binder 5073:5073 <> D:32
+R5100:5103 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5095:5097 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5087:5090 Clef.RFC0001.Constraints <> meet def
+R5092:5092 Clef.RFC0001.Constraints <> C:31 var
+R5094:5094 Clef.RFC0001.Constraints <> D:32 var
+R5098:5099 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+binder 5111:5111 <> t:33
+R5114:5116 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R5135:5135 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R5124:5127 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5117:5119 Clef.RFC0001.Constraints <> sat def
+R5121:5121 Clef.RFC0001.Constraints <> t:33 var
+R5123:5123 Clef.RFC0001.Constraints <> C:31 var
+R5128:5130 Clef.RFC0001.Constraints <> sat def
+R5132:5132 Clef.RFC0001.Constraints <> t:33 var
+R5134:5134 Clef.RFC0001.Constraints <> D:32 var
+R5167:5174 Clef.RFC0001.Constraints <> meet_sat thm
+R5167:5174 Clef.RFC0001.Constraints <> meet_sat thm
+prf 5427:5440 <> meet_singleton
+R5449:5452 Clef.RFC0001.Constraints <> cset def
+binder 5443:5443 <> C:34
+binder 5445:5445 <> D:35
+R5460:5461 Clef.Spec.Types <> ty ind
+binder 5456:5456 <> t:36
+R5482:5485 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5476:5478 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5468:5471 Clef.RFC0001.Constraints <> meet def
+R5473:5473 Clef.RFC0001.Constraints <> C:34 var
+R5475:5475 Clef.RFC0001.Constraints <> D:35 var
+R5479:5479 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R5481:5481 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R5480:5480 Clef.RFC0001.Constraints <> t:36 var
+binder 5493:5493 <> u:37
+R5503:5506 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5496:5498 Clef.RFC0001.Constraints <> sat def
+R5500:5500 Clef.RFC0001.Constraints <> u:37 var
+R5502:5502 Clef.RFC0001.Constraints <> C:34 var
+R5514:5517 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5507:5509 Clef.RFC0001.Constraints <> sat def
+R5511:5511 Clef.RFC0001.Constraints <> u:37 var
+R5513:5513 Clef.RFC0001.Constraints <> D:35 var
+R5519:5521 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5518:5518 Clef.RFC0001.Constraints <> u:37 var
+R5522:5522 Clef.RFC0001.Constraints <> t:36 var
+R5566:5568 Clef.RFC0001.Constraints <> sat def
+R5573:5576 Clef.RFC0001.Constraints <> meet def
+R5594:5601 Clef.RFC0001.Constraints <> meet_sat thm
+R5566:5568 Clef.RFC0001.Constraints <> sat def
+R5573:5576 Clef.RFC0001.Constraints <> meet def
+R5594:5601 Clef.RFC0001.Constraints <> meet_sat thm
+prf 5781:5790 <> meet_nodup
+R5799:5802 Clef.RFC0001.Constraints <> cset def
+binder 5793:5793 <> C:38
+binder 5795:5795 <> D:39
+R5814:5817 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5807:5811 Stdlib.Lists.List <> NoDup ind
+R5813:5813 Clef.RFC0001.Constraints <> C:38 var
+R5818:5822 Stdlib.Lists.List <> NoDup ind
+R5825:5828 Clef.RFC0001.Constraints <> meet def
+R5830:5830 Clef.RFC0001.Constraints <> C:38 var
+R5832:5832 Clef.RFC0001.Constraints <> D:39 var
+R5851:5862 Stdlib.Lists.List <> NoDup_filter thm
+R5851:5862 Stdlib.Lists.List <> NoDup_filter thm

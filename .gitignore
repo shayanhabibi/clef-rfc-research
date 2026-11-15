@@ -1,0 +1,15 @@
+bin/
+obj/
+.idea/
+*.user
+
+# Rocq build output. The .glob files are committed, since the site is built without Rocq.
+*.vo
+*.vok
+*.vos
+.*.aux
+
+# Site output, and the pages Site.fs generates from site/pages.
+site/output/
+site/content/
+site/.nacara/

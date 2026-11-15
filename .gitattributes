@@ -1,0 +1,4 @@
+# A .glob holds the MD5 of its .v and byte offsets into it, and facts.json holds the same digest,
+# so the bytes of these files must not change on checkout.
+proofs/** -text -whitespace
+*.sh text eol=lf

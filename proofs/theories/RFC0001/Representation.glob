@@ -1,0 +1,56 @@
+DIGEST b8c7101f4c4bfaaff499261a9a8f8d8b
+FClef.RFC0001.Representation
+R25:34 Clef.Spec.Types <> <> lib
+R36:47 Clef.Spec.Runtime <> <> lib
+def 621:633 <> discriminates
+R649:652 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R645:648 Clef.Spec.Runtime <> bits defax
+R653:657 Clef.Spec.Types <> tycon defax
+binder 636:641 <> decode:1
+R684:688 Clef.Spec.Types <> tycon defax
+binder 680:680 <> c:2
+R696:699 Clef.Spec.Runtime <> atom defax
+R701:701 Clef.RFC0001.Representation <> c:2 var
+binder 692:692 <> x:3
+R722:724 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R705:710 Clef.RFC0001.Representation <> decode:1 var
+R713:716 Clef.Spec.Runtime <> repr defax
+R718:718 Clef.RFC0001.Representation <> c:2 var
+R720:720 Clef.RFC0001.Representation <> x:3 var
+R725:725 Clef.RFC0001.Representation <> c:2 var
+prf 1028:1065 <> untagged_union_discriminable_falsified
+R1071:1072 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R1073:1079 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1086:1087 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 1080:1085 <> decode:4
+R1088:1100 Clef.RFC0001.Representation <> discriminates def
+R1102:1107 Clef.RFC0001.Representation <> decode:4 var
+R1149:1172 Clef.Spec.Runtime <> no_runtime_type_metadata prfax
+R1239:1242 Clef.Spec.Runtime <> repr defax
+R1239:1242 Clef.Spec.Runtime <> repr defax
+prf 1616:1641 <> tagged_union_discriminable
+R1647:1653 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1684:1689 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1675:1678 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1668:1670 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R1663:1667 Clef.Spec.Types <> tycon defax
+R1671:1674 Clef.Spec.Runtime <> bits defax
+R1679:1683 Clef.Spec.Types <> tycon defax
+binder 1654:1659 <> decode:5
+R1702:1706 Clef.Spec.Types <> tycon defax
+binder 1698:1698 <> c:6
+R1714:1717 Clef.Spec.Runtime <> atom defax
+R1719:1719 Clef.RFC0001.Representation <> c:6 var
+binder 1710:1710 <> x:7
+R1743:1745 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1723:1728 Clef.RFC0001.Representation <> decode:5 var
+R1730:1730 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1732:1733 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1742:1742 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1731:1731 Clef.RFC0001.Representation <> c:6 var
+R1734:1737 Clef.Spec.Runtime <> repr defax
+R1739:1739 Clef.RFC0001.Representation <> c:6 var
+R1741:1741 Clef.RFC0001.Representation <> x:7 var
+R1746:1746 Clef.RFC0001.Representation <> c:6 var
+R1765:1767 Corelib.Init.Datatypes <> fst def
+R1765:1767 Corelib.Init.Datatypes <> fst def

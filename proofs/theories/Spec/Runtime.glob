@@ -1,0 +1,94 @@
+DIGEST 08995eb04b8716d1cc3c9c69ef08783b
+FClef.Spec.Runtime
+R25:34 Clef.Spec.Types <> <> lib
+ax 429:432 <> atom
+R441:444 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R436:440 Clef.Spec.Types <> tycon defax
+ind 533:535 <> val
+constr 549:553 <> VAtom
+constr 582:586 <> VPair
+R560:564 Clef.Spec.Types <> tycon defax
+binder 556:556 <> c:5
+R572:575 Clef.Spec.Runtime <> atom defax
+R577:577 Clef.Spec.Runtime <> c:5 var
+binder 568:568 <> x:6
+R595:597 Clef.Spec.Runtime <> val:3 ind
+binder 589:589 <> a:7
+binder 591:591 <> b:8
+scheme 533:535 <> val_rect
+scheme 533:535 <> val_ind
+scheme 533:535 <> val_rec
+scheme 533:535 <> val_sind
+ind 752:757 <> has_ty
+constr 784:788 <> HAtom
+constr 847:851 <> HPair
+R764:767 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R761:763 Clef.Spec.Runtime <> val ind
+R770:773 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R768:769 Clef.Spec.Types <> ty ind
+R795:799 Clef.Spec.Types <> tycon defax
+binder 791:791 <> c:11
+R807:810 Clef.Spec.Runtime <> atom defax
+R812:812 Clef.Spec.Runtime <> c:11 var
+binder 803:803 <> x:12
+R817:822 Clef.Spec.Runtime <> has_ty:9 ind
+R837:840 Clef.Spec.Types <> TCon constr
+R842:842 Clef.Spec.Runtime <> c:11 var
+R825:829 Clef.Spec.Runtime <> VAtom constr
+R831:831 Clef.Spec.Runtime <> c:11 var
+R833:833 Clef.Spec.Runtime <> x:12 var
+R860:862 Clef.Spec.Runtime <> val ind
+binder 854:854 <> a:13
+binder 856:856 <> b:14
+R872:873 Clef.Spec.Types <> ty ind
+binder 866:866 <> s:15
+binder 868:868 <> t:16
+R888:891 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R878:883 Clef.Spec.Runtime <> has_ty:9 ind
+R887:887 Clef.Spec.Runtime <> s:15 var
+R885:885 Clef.Spec.Runtime <> a:13 var
+R902:905 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R892:897 Clef.Spec.Runtime <> has_ty:9 ind
+R901:901 Clef.Spec.Runtime <> t:16 var
+R899:899 Clef.Spec.Runtime <> b:14 var
+R906:911 Clef.Spec.Runtime <> has_ty:9 ind
+R926:930 Clef.Spec.Types <> TPair constr
+R932:932 Clef.Spec.Runtime <> s:15 var
+R934:934 Clef.Spec.Runtime <> t:16 var
+R914:918 Clef.Spec.Runtime <> VPair constr
+R920:920 Clef.Spec.Runtime <> a:13 var
+R922:922 Clef.Spec.Runtime <> b:14 var
+scheme 752:757 <> has_ty_ind
+scheme 752:757 <> has_ty_sind
+ax 1003:1006 <> bits
+ax 1091:1094 <> repr
+R1109:1113 Clef.Spec.Types <> tycon defax
+binder 1105:1105 <> c:19
+R1122:1125 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1116:1119 Clef.Spec.Runtime <> atom defax
+R1121:1121 Clef.Spec.Runtime <> c:19 var
+R1126:1129 Clef.Spec.Runtime <> bits defax
+ax 1460:1483 <> no_runtime_type_metadata
+R1489:1496 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1534:1536 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1503:1507 Clef.Spec.Types <> tycon defax
+binder 1497:1497 <> c:22
+R1503:1507 Clef.Spec.Types <> tycon defax
+binder 1499:1499 <> d:23
+R1515:1518 Clef.Spec.Runtime <> atom defax
+R1520:1520 Clef.Spec.Runtime <> c:22 var
+binder 1511:1511 <> x:24
+R1528:1531 Clef.Spec.Runtime <> atom defax
+R1533:1533 Clef.Spec.Runtime <> d:23 var
+binder 1524:1524 <> y:25
+R1543:1546 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1538:1541 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R1537:1537 Clef.Spec.Runtime <> c:22 var
+R1542:1542 Clef.Spec.Runtime <> d:23 var
+R1555:1557 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1547:1550 Clef.Spec.Runtime <> repr defax
+R1552:1552 Clef.Spec.Runtime <> c:22 var
+R1554:1554 Clef.Spec.Runtime <> x:24 var
+R1558:1561 Clef.Spec.Runtime <> repr defax
+R1563:1563 Clef.Spec.Runtime <> d:23 var
+R1565:1565 Clef.Spec.Runtime <> y:25 var

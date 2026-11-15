@@ -1,0 +1,809 @@
+{
+  "rocqVersion": "9.1.0",
+  "digests": {
+    "theories/RFC0001/Constraints.v": "bb993d3d23e9c717054ab0ba27203ed4",
+    "theories/RFC0001/Discussion.v": "c2ffc6ffcbe629916117452992510b46",
+    "theories/RFC0001/Overview.v": "d6a9255a9da55b3612de50041aa9de7f",
+    "theories/RFC0001/Representation.v": "b8c7101f4c4bfaaff499261a9a8f8d8b",
+    "theories/RFC0001/TypeCase.v": "ac18369418ee5ad858fbd48d0e561307",
+    "theories/Spec/Runtime.v": "08995eb04b8716d1cc3c9c69ef08783b",
+    "theories/Spec/Types.v": "03515d34d93a2c16c7d1da0001196f5f",
+    "theories/Spec/Witnesses.v": "ba3453af70cda2fd69ffaa0a14a96fbe"
+  },
+  "symbols": {
+    "Clef.RFC0001.Constraints.cset": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0001.Constraints.entails": {
+      "type": "Constraints.cset -> Constraints.cset -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Constraints.entails_iff_sat": {
+      "type": "forall C D : Constraints.cset,\nConstraints.entails C D <->\n(forall t : Types.ty, Constraints.sat t C -> Constraints.sat t D)",
+      "binders": {
+        "C": "Constraints.cset",
+        "D": "Constraints.cset"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0001.Constraints.entails_refl": {
+      "type": "forall C : Constraints.cset, Constraints.entails C C",
+      "binders": {
+        "C": "Constraints.cset"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0001.Constraints.entails_trans": {
+      "type": "forall C D E : Constraints.cset,\nConstraints.entails C D ->\nConstraints.entails D E -> Constraints.entails C E",
+      "binders": {
+        "C": "Constraints.cset",
+        "D": "Constraints.cset",
+        "E": "Constraints.cset"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0001.Constraints.entailsb": {
+      "type": "Constraints.cset -> Constraints.cset -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0001.Constraints.meet": {
+      "type": "Constraints.cset -> Constraints.cset -> Constraints.cset",
+      "binders": {}
+    },
+    "Clef.RFC0001.Constraints.meet_empty": {
+      "type": "forall C D : Constraints.cset,\nConstraints.meet C D = nil ->\nforall t : Types.ty, ~ (Constraints.sat t C /\\ Constraints.sat t D)",
+      "binders": {
+        "C": "Constraints.cset",
+        "D": "Constraints.cset"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0001.Constraints.meet_greatest": {
+      "type": "forall C D E : Constraints.cset,\nConstraints.entails (Constraints.meet C D) C /\\\nConstraints.entails (Constraints.meet C D) D /\\\n(Constraints.entails E C ->\n Constraints.entails E D ->\n Constraints.entails E (Constraints.meet C D))",
+      "binders": {
+        "C": "Constraints.cset",
+        "D": "Constraints.cset",
+        "E": "Constraints.cset"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0001.Constraints.meet_nodup": {
+      "type": "forall C D : Constraints.cset,\nList.NoDup C -> List.NoDup (Constraints.meet C D)",
+      "binders": {
+        "C": "Constraints.cset",
+        "D": "Constraints.cset"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0001.Constraints.meet_sat": {
+      "type": "forall (t : Types.ty) (C D : Constraints.cset),\nConstraints.sat t (Constraints.meet C D) <->\nConstraints.sat t C /\\ Constraints.sat t D",
+      "binders": {
+        "C": "Constraints.cset",
+        "D": "Constraints.cset",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0001.Constraints.meet_singleton": {
+      "type": "forall (C D : Constraints.cset) (t : Types.ty),\nConstraints.meet C D = (t :: nil)%list ->\nforall u : Types.ty,\nConstraints.sat u C -> Constraints.sat u D -> u = t",
+      "binders": {
+        "C": "Constraints.cset",
+        "D": "Constraints.cset",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0001.Constraints.memb": {
+      "type": "Types.ty -> Constraints.cset -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0001.Constraints.memb_iff": {
+      "type": "forall (t : Types.ty) (C : Constraints.cset),\nConstraints.memb t C = true <-> Constraints.sat t C",
+      "binders": {
+        "C": "Constraints.cset",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0001.Constraints.sat": {
+      "type": "Types.ty -> Constraints.cset -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Constraints.sat_decidable": {
+      "type": "forall (t : Types.ty) (C : Constraints.cset),\n{Constraints.sat t C} + {~ Constraints.sat t C}",
+      "binders": {
+        "C": "Constraints.cset",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0001.Constraints.well_formed": {
+      "type": "Constraints.cset -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Representation.discriminates": {
+      "type": "(Runtime.bits -> Types.tycon) -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Representation.tagged_union_discriminable": {
+      "type": "exists decode : Types.tycon * Runtime.bits -> Types.tycon,\n  forall (c : Types.tycon) (x : Runtime.atom c),\n  decode (c, Runtime.repr c x) = c",
+      "binders": {},
+      "assumptions": [
+        "Types.tycon",
+        "Runtime.repr",
+        "Runtime.bits",
+        "Runtime.atom"
+      ]
+    },
+    "Clef.RFC0001.Representation.untagged_union_discriminable_falsified": {
+      "type": "~\n(exists decode : Runtime.bits -> Types.tycon,\n   Representation.discriminates decode)",
+      "binders": {},
+      "assumptions": [
+        "Types.tycon",
+        "Runtime.repr",
+        "Runtime.no_runtime_type_metadata",
+        "Runtime.bits",
+        "Runtime.atom"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.Case": {
+      "type": "list (Types.ty * TypeCase.tm) -> TypeCase.tm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.Fst": {
+      "type": "TypeCase.tm -> TypeCase.tm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.Let": {
+      "type": "TypeCase.tm -> TypeCase.tm -> TypeCase.tm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.MFst": {
+      "type": "TypeCase.mtm -> TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.MLet": {
+      "type": "TypeCase.mtm -> TypeCase.mtm -> TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.MPair": {
+      "type": "TypeCase.mtm -> TypeCase.mtm -> TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.MPrim": {
+      "type": "Witnesses.op -> TypeCase.mtm -> TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.MSnd": {
+      "type": "TypeCase.mtm -> TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.MVar": {
+      "type": "nat -> TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.Pair": {
+      "type": "TypeCase.tm -> TypeCase.tm -> TypeCase.tm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.Prim": {
+      "type": "Witnesses.op -> TypeCase.tm -> TypeCase.tm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.Snd": {
+      "type": "TypeCase.tm -> TypeCase.tm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.TmInduction.HCase": {
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.TmInduction.HFst": {
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.TmInduction.HLet": {
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.TmInduction.HPair": {
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.TmInduction.HPrim": {
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.TmInduction.HSnd": {
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.TmInduction.HVar": {
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.TmInduction.P": {
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.Var": {
+      "type": "nat -> TypeCase.tm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.call_through_entailment": {
+      "type": "forall (C D : Constraints.cset) (G : list Types.oty) \n  (e : TypeCase.tm) (r : Types.oty),\nConstraints.entails C D ->\nTypeCase.check D G e r = true ->\nforall t : Types.ty,\nConstraints.sat t C -> TypeCase.well_typed_at t G e r",
+      "binders": {
+        "C": "Constraints.cset",
+        "D": "Constraints.cset",
+        "G": "list Types.oty",
+        "e": "TypeCase.tm",
+        "r": "Types.oty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.case_free": {
+      "type": "TypeCase.tm -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.case_free_parametric": {
+      "type": "forall (e : TypeCase.tm) (t u : Types.ty) (env : list Runtime.val),\nTypeCase.case_free e = true ->\nTypeCase.seval t env e = TypeCase.seval u env e",
+      "binders": {
+        "e": "TypeCase.tm",
+        "env": "list Runtime.val",
+        "t": "Types.ty",
+        "u": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.case_free_uniform": {
+      "type": "forall e : TypeCase.tm,\nTypeCase.case_free e = true ->\nexists m : TypeCase.mtm,\n  forall t : Types.ty, TypeCase.spec t e = Some m",
+      "binders": {
+        "e": "TypeCase.tm"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.check": {
+      "type": "Constraints.cset -> list Types.oty -> TypeCase.tm -> Types.oty -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.check_complete": {
+      "type": "forall (C : Constraints.cset) (G : list Types.oty) \n  (e : TypeCase.tm) (r : Types.oty),\n(forall t : Types.ty,\n Constraints.sat t C -> TypeCase.well_typed_at t G e r) ->\nTypeCase.check C G e r = true",
+      "binders": {
+        "C": "Constraints.cset",
+        "G": "list Types.oty",
+        "e": "TypeCase.tm",
+        "r": "Types.oty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.check_narrowing": {
+      "type": "forall (C D : Constraints.cset) (G : list Types.oty) \n  (e : TypeCase.tm) (r : Types.oty),\nConstraints.entails C D ->\nTypeCase.check D G e r = true -> TypeCase.check C G e r = true",
+      "binders": {
+        "C": "Constraints.cset",
+        "D": "Constraints.cset",
+        "G": "list Types.oty",
+        "e": "TypeCase.tm",
+        "r": "Types.oty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.checked_definition_runs": {
+      "type": "forall (C : Constraints.cset) (G : list Types.oty) \n  (e : TypeCase.tm) (r : Types.oty),\nTypeCase.check C G e r = true ->\nforall t : Types.ty,\nConstraints.sat t C ->\nforall env : list Runtime.val,\nList.Forall2 Runtime.has_ty env (ListDef.map (Types.inst t) G) ->\nexists v : Runtime.val,\n  TypeCase.seval t env e = Some v /\\ Runtime.has_ty v (Types.inst t r)",
+      "binders": {
+        "C": "Constraints.cset",
+        "G": "list Types.oty",
+        "e": "TypeCase.tm",
+        "r": "Types.oty"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.coverage_total": {
+      "type": "forall (e : TypeCase.tm) (C : Constraints.cset),\nTypeCase.covered C e ->\nforall t : Types.ty,\nConstraints.sat t C ->\nexists m : TypeCase.mtm, TypeCase.spec t e = Some m",
+      "binders": {
+        "C": "Constraints.cset",
+        "e": "TypeCase.tm"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.covered": {
+      "type": "Constraints.cset -> TypeCase.tm -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.derived_satisfaction": {
+      "type": "forall (C : Constraints.cset) (G : list Types.oty) \n  (e : TypeCase.tm) (r : Types.oty),\nTypeCase.check C G e r = true ->\nforall t : Types.ty,\nConstraints.sat t C -> TypeCase.well_typed_at t G e r",
+      "binders": {
+        "C": "Constraints.cset",
+        "G": "list Types.oty",
+        "e": "TypeCase.tm",
+        "r": "Types.oty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.eval": {
+      "type": "list Runtime.val -> TypeCase.mtm -> option Runtime.val",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.instance_ok": {
+      "type": "list Types.oty -> TypeCase.tm -> Types.oty -> Types.ty -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.instance_ok_iff": {
+      "type": "forall (G : list Types.oty) (e : TypeCase.tm) \n  (r : Types.oty) (t : Types.ty),\nTypeCase.instance_ok G e r t = true <-> TypeCase.well_typed_at t G e r",
+      "binders": {
+        "G": "list Types.oty",
+        "e": "TypeCase.tm",
+        "r": "Types.oty",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.lookup_typed": {
+      "type": "forall (env : list Runtime.val) (G : list Types.ty),\nList.Forall2 Runtime.has_ty env G ->\nforall (n : nat) (t : Types.ty),\nList.nth_error G n = Some t ->\nexists v : Runtime.val,\n  List.nth_error env n = Some v /\\ Runtime.has_ty v t",
+      "binders": {
+        "G": "list Types.ty",
+        "env": "list Runtime.val"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Runtime.atom"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.mtm": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.mtm_ind": {
+      "type": "forall P : TypeCase.mtm -> Prop,\n(forall n : nat, P (TypeCase.MVar n)) ->\n(forall (o : Witnesses.op) (e : TypeCase.mtm),\n P e -> P (TypeCase.MPrim o e)) ->\n(forall a : TypeCase.mtm,\n P a -> forall b : TypeCase.mtm, P b -> P (TypeCase.MPair a b)) ->\n(forall e : TypeCase.mtm, P e -> P (TypeCase.MFst e)) ->\n(forall e : TypeCase.mtm, P e -> P (TypeCase.MSnd e)) ->\n(forall a : TypeCase.mtm,\n P a -> forall b : TypeCase.mtm, P b -> P (TypeCase.MLet a b)) ->\nforall m : TypeCase.mtm, P m",
+      "binders": {
+        "P": "TypeCase.mtm -> Prop"
+      }
+    },
+    "Clef.RFC0001.TypeCase.mtm_rec": {
+      "type": "forall P : TypeCase.mtm -> Set,\n(forall n : nat, P (TypeCase.MVar n)) ->\n(forall (o : Witnesses.op) (e : TypeCase.mtm),\n P e -> P (TypeCase.MPrim o e)) ->\n(forall a : TypeCase.mtm,\n P a -> forall b : TypeCase.mtm, P b -> P (TypeCase.MPair a b)) ->\n(forall e : TypeCase.mtm, P e -> P (TypeCase.MFst e)) ->\n(forall e : TypeCase.mtm, P e -> P (TypeCase.MSnd e)) ->\n(forall a : TypeCase.mtm,\n P a -> forall b : TypeCase.mtm, P b -> P (TypeCase.MLet a b)) ->\nforall m : TypeCase.mtm, P m",
+      "binders": {
+        "P": "TypeCase.mtm -> Set"
+      }
+    },
+    "Clef.RFC0001.TypeCase.mtm_rect": {
+      "type": "forall P : TypeCase.mtm -> Type,\n(forall n : nat, P (TypeCase.MVar n)) ->\n(forall (o : Witnesses.op) (e : TypeCase.mtm),\n P e -> P (TypeCase.MPrim o e)) ->\n(forall a : TypeCase.mtm,\n P a -> forall b : TypeCase.mtm, P b -> P (TypeCase.MPair a b)) ->\n(forall e : TypeCase.mtm, P e -> P (TypeCase.MFst e)) ->\n(forall e : TypeCase.mtm, P e -> P (TypeCase.MSnd e)) ->\n(forall a : TypeCase.mtm,\n P a -> forall b : TypeCase.mtm, P b -> P (TypeCase.MLet a b)) ->\nforall m : TypeCase.mtm, P m",
+      "binders": {
+        "P": "TypeCase.mtm -> Type"
+      }
+    },
+    "Clef.RFC0001.TypeCase.mtm_sind": {
+      "type": "forall P : TypeCase.mtm -> SProp,\n(forall n : nat, P (TypeCase.MVar n)) ->\n(forall (o : Witnesses.op) (e : TypeCase.mtm),\n P e -> P (TypeCase.MPrim o e)) ->\n(forall a : TypeCase.mtm,\n P a -> forall b : TypeCase.mtm, P b -> P (TypeCase.MPair a b)) ->\n(forall e : TypeCase.mtm, P e -> P (TypeCase.MFst e)) ->\n(forall e : TypeCase.mtm, P e -> P (TypeCase.MSnd e)) ->\n(forall a : TypeCase.mtm,\n P a -> forall b : TypeCase.mtm, P b -> P (TypeCase.MLet a b)) ->\nforall m : TypeCase.mtm, P m",
+      "binders": {
+        "P": "TypeCase.mtm -> SProp"
+      }
+    },
+    "Clef.RFC0001.TypeCase.mtype": {
+      "type": "list Types.ty -> TypeCase.mtm -> option Types.ty",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.pick": {
+      "type": "Types.ty -> list (Types.ty * TypeCase.tm) -> option TypeCase.tm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.pick_in": {
+      "type": "forall (t : Types.ty) (arms : list (Types.ty * TypeCase.tm))\n  (a : TypeCase.tm),\nTypeCase.pick t arms = Some a -> List.In (t, a) arms",
+      "binders": {
+        "a": "TypeCase.tm",
+        "arms": "list (Types.ty * TypeCase.tm)",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.seval": {
+      "type": "Types.ty -> list Runtime.val -> TypeCase.tm -> option Runtime.val",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.seval_case": {
+      "type": "forall (t : Types.ty) (env : list Runtime.val)\n  (arms : list (Types.ty * TypeCase.tm)),\nTypeCase.seval t env (TypeCase.Case arms) =\nmatch TypeCase.pick t arms with\n| Some a => TypeCase.seval t env a\n| None => None\nend",
+      "binders": {
+        "arms": "list (Types.ty * TypeCase.tm)",
+        "env": "list Runtime.val",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.shared_operation": {
+      "type": "forall (C : Constraints.cset) (o : Witnesses.op) (r : Types.oty),\nTypeCase.check C (Types.OVar :: nil)\n  (TypeCase.Prim o (TypeCase.Var 0)) r =\ntrue <->\n(forall t : Types.ty,\n Constraints.sat t C -> Witnesses.witness o t = Some (Types.inst t r))",
+      "binders": {
+        "C": "Constraints.cset",
+        "o": "Witnesses.op",
+        "r": "Types.oty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.spec": {
+      "type": "Types.ty -> TypeCase.tm -> option TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.spec_case": {
+      "type": "forall (t : Types.ty) (arms : list (Types.ty * TypeCase.tm)),\nTypeCase.spec t (TypeCase.Case arms) =\nmatch TypeCase.pick t arms with\n| Some a => TypeCase.spec t a\n| None => None\nend",
+      "binders": {
+        "arms": "list (Types.ty * TypeCase.tm)",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.specialization_is_safe": {
+      "type": "forall (m : TypeCase.mtm) (G : list Types.ty) \n  (env : list Runtime.val) (t : Types.ty),\nList.Forall2 Runtime.has_ty env G ->\nTypeCase.mtype G m = Some t ->\nexists v : Runtime.val,\n  TypeCase.eval env m = Some v /\\ Runtime.has_ty v t",
+      "binders": {
+        "G": "list Types.ty",
+        "env": "list Runtime.val",
+        "m": "TypeCase.mtm",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.specialization_preserves_meaning": {
+      "type": "forall (e : TypeCase.tm) (t : Types.ty) (m : TypeCase.mtm),\nTypeCase.spec t e = Some m ->\nforall env : list Runtime.val,\nTypeCase.seval t env e = TypeCase.eval env m",
+      "binders": {
+        "e": "TypeCase.tm",
+        "m": "TypeCase.mtm",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.TypeCase.tm": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0001.TypeCase.tm_arms_ind": {
+      "type": "forall P : TypeCase.tm -> Prop,\n(forall n : nat, P (TypeCase.Var n)) ->\n(forall (o : Witnesses.op) (e : TypeCase.tm),\n P e -> P (TypeCase.Prim o e)) ->\n(forall a b : TypeCase.tm, P a -> P b -> P (TypeCase.Pair a b)) ->\n(forall e : TypeCase.tm, P e -> P (TypeCase.Fst e)) ->\n(forall e : TypeCase.tm, P e -> P (TypeCase.Snd e)) ->\n(forall a b : TypeCase.tm, P a -> P b -> P (TypeCase.Let a b)) ->\n(forall arms : list (Types.ty * TypeCase.tm),\n ListDef.Forall (fun arm : Types.ty * TypeCase.tm => P (snd arm)) arms ->\n P (TypeCase.Case arms)) ->\nforall e : TypeCase.tm, P e",
+      "binders": {
+        "P": "TypeCase.tm -> Prop"
+      }
+    },
+    "Clef.RFC0001.TypeCase.tm_ind": {
+      "type": "forall P : TypeCase.tm -> Prop,\n(forall n : nat, P (TypeCase.Var n)) ->\n(forall (o : Witnesses.op) (e : TypeCase.tm),\n P e -> P (TypeCase.Prim o e)) ->\n(forall a : TypeCase.tm,\n P a -> forall b : TypeCase.tm, P b -> P (TypeCase.Pair a b)) ->\n(forall e : TypeCase.tm, P e -> P (TypeCase.Fst e)) ->\n(forall e : TypeCase.tm, P e -> P (TypeCase.Snd e)) ->\n(forall a : TypeCase.tm,\n P a -> forall b : TypeCase.tm, P b -> P (TypeCase.Let a b)) ->\n(forall arms : list (Types.ty * TypeCase.tm), P (TypeCase.Case arms)) ->\nforall t : TypeCase.tm, P t",
+      "binders": {
+        "P": "TypeCase.tm -> Prop"
+      }
+    },
+    "Clef.RFC0001.TypeCase.tm_rec": {
+      "type": "forall P : TypeCase.tm -> Set,\n(forall n : nat, P (TypeCase.Var n)) ->\n(forall (o : Witnesses.op) (e : TypeCase.tm),\n P e -> P (TypeCase.Prim o e)) ->\n(forall a : TypeCase.tm,\n P a -> forall b : TypeCase.tm, P b -> P (TypeCase.Pair a b)) ->\n(forall e : TypeCase.tm, P e -> P (TypeCase.Fst e)) ->\n(forall e : TypeCase.tm, P e -> P (TypeCase.Snd e)) ->\n(forall a : TypeCase.tm,\n P a -> forall b : TypeCase.tm, P b -> P (TypeCase.Let a b)) ->\n(forall arms : list (Types.ty * TypeCase.tm), P (TypeCase.Case arms)) ->\nforall t : TypeCase.tm, P t",
+      "binders": {
+        "P": "TypeCase.tm -> Set"
+      }
+    },
+    "Clef.RFC0001.TypeCase.tm_rect": {
+      "type": "forall P : TypeCase.tm -> Type,\n(forall n : nat, P (TypeCase.Var n)) ->\n(forall (o : Witnesses.op) (e : TypeCase.tm),\n P e -> P (TypeCase.Prim o e)) ->\n(forall a : TypeCase.tm,\n P a -> forall b : TypeCase.tm, P b -> P (TypeCase.Pair a b)) ->\n(forall e : TypeCase.tm, P e -> P (TypeCase.Fst e)) ->\n(forall e : TypeCase.tm, P e -> P (TypeCase.Snd e)) ->\n(forall a : TypeCase.tm,\n P a -> forall b : TypeCase.tm, P b -> P (TypeCase.Let a b)) ->\n(forall arms : list (Types.ty * TypeCase.tm), P (TypeCase.Case arms)) ->\nforall t : TypeCase.tm, P t",
+      "binders": {
+        "P": "TypeCase.tm -> Type"
+      }
+    },
+    "Clef.RFC0001.TypeCase.tm_sind": {
+      "type": "forall P : TypeCase.tm -> SProp,\n(forall n : nat, P (TypeCase.Var n)) ->\n(forall (o : Witnesses.op) (e : TypeCase.tm),\n P e -> P (TypeCase.Prim o e)) ->\n(forall a : TypeCase.tm,\n P a -> forall b : TypeCase.tm, P b -> P (TypeCase.Pair a b)) ->\n(forall e : TypeCase.tm, P e -> P (TypeCase.Fst e)) ->\n(forall e : TypeCase.tm, P e -> P (TypeCase.Snd e)) ->\n(forall a : TypeCase.tm,\n P a -> forall b : TypeCase.tm, P b -> P (TypeCase.Let a b)) ->\n(forall arms : list (Types.ty * TypeCase.tm), P (TypeCase.Case arms)) ->\nforall t : TypeCase.tm, P t",
+      "binders": {
+        "P": "TypeCase.tm -> SProp"
+      }
+    },
+    "Clef.RFC0001.TypeCase.well_typed_at": {
+      "type": "Types.ty -> list Types.oty -> TypeCase.tm -> Types.oty -> Prop",
+      "binders": {}
+    },
+    "Clef.Spec.Runtime.HAtom": {
+      "type": "forall (c : Types.tycon) (x : Runtime.atom c),\nRuntime.has_ty (Runtime.VAtom c x) (Types.TCon c)",
+      "binders": {
+        "c": "Types.tycon",
+        "x": "Runtime.atom c"
+      }
+    },
+    "Clef.Spec.Runtime.HPair": {
+      "type": "forall (a b : Runtime.val) (s t : Types.ty),\nRuntime.has_ty a s ->\nRuntime.has_ty b t ->\nRuntime.has_ty (Runtime.VPair a b) (Types.TPair s t)",
+      "binders": {
+        "a": "Runtime.val",
+        "b": "Runtime.val",
+        "s": "Types.ty",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.Spec.Runtime.VAtom": {
+      "type": "forall c : Types.tycon, Runtime.atom c -> Runtime.val",
+      "binders": {
+        "c": "Types.tycon"
+      }
+    },
+    "Clef.Spec.Runtime.VPair": {
+      "type": "Runtime.val -> Runtime.val -> Runtime.val",
+      "binders": {}
+    },
+    "Clef.Spec.Runtime.atom": {
+      "type": "Types.tycon -> Type",
+      "binders": {}
+    },
+    "Clef.Spec.Runtime.bits": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.Spec.Runtime.has_ty": {
+      "type": "Runtime.val -> Types.ty -> Prop",
+      "binders": {}
+    },
+    "Clef.Spec.Runtime.has_ty_ind": {
+      "type": "forall P : Runtime.val -> Types.ty -> Prop,\n(forall (c : Types.tycon) (x : Runtime.atom c),\n P (Runtime.VAtom c x) (Types.TCon c)) ->\n(forall (a b : Runtime.val) (s t : Types.ty),\n Runtime.has_ty a s ->\n P a s ->\n Runtime.has_ty b t ->\n P b t -> P (Runtime.VPair a b) (Types.TPair s t)) ->\nforall (v : Runtime.val) (t : Types.ty), Runtime.has_ty v t -> P v t",
+      "binders": {
+        "P": "Runtime.val -> Types.ty -> Prop"
+      }
+    },
+    "Clef.Spec.Runtime.has_ty_sind": {
+      "type": "forall P : Runtime.val -> Types.ty -> SProp,\n(forall (c : Types.tycon) (x : Runtime.atom c),\n P (Runtime.VAtom c x) (Types.TCon c)) ->\n(forall (a b : Runtime.val) (s t : Types.ty),\n Runtime.has_ty a s ->\n P a s ->\n Runtime.has_ty b t ->\n P b t -> P (Runtime.VPair a b) (Types.TPair s t)) ->\nforall (v : Runtime.val) (t : Types.ty), Runtime.has_ty v t -> P v t",
+      "binders": {
+        "P": "Runtime.val -> Types.ty -> SProp"
+      }
+    },
+    "Clef.Spec.Runtime.no_runtime_type_metadata": {
+      "type": "exists (c d : Types.tycon) (x : Runtime.atom c) \n(y : Runtime.atom d), c <> d /\\ Runtime.repr c x = Runtime.repr d y",
+      "binders": {}
+    },
+    "Clef.Spec.Runtime.repr": {
+      "type": "forall c : Types.tycon, Runtime.atom c -> Runtime.bits",
+      "binders": {
+        "c": "Types.tycon"
+      }
+    },
+    "Clef.Spec.Runtime.val": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.Spec.Runtime.val_ind": {
+      "type": "forall P : Runtime.val -> Prop,\n(forall (c : Types.tycon) (x : Runtime.atom c), P (Runtime.VAtom c x)) ->\n(forall a : Runtime.val,\n P a -> forall b : Runtime.val, P b -> P (Runtime.VPair a b)) ->\nforall v : Runtime.val, P v",
+      "binders": {
+        "P": "Runtime.val -> Prop"
+      }
+    },
+    "Clef.Spec.Runtime.val_rec": {
+      "type": "forall P : Runtime.val -> Set,\n(forall (c : Types.tycon) (x : Runtime.atom c), P (Runtime.VAtom c x)) ->\n(forall a : Runtime.val,\n P a -> forall b : Runtime.val, P b -> P (Runtime.VPair a b)) ->\nforall v : Runtime.val, P v",
+      "binders": {
+        "P": "Runtime.val -> Set"
+      }
+    },
+    "Clef.Spec.Runtime.val_rect": {
+      "type": "forall P : Runtime.val -> Type,\n(forall (c : Types.tycon) (x : Runtime.atom c), P (Runtime.VAtom c x)) ->\n(forall a : Runtime.val,\n P a -> forall b : Runtime.val, P b -> P (Runtime.VPair a b)) ->\nforall v : Runtime.val, P v",
+      "binders": {
+        "P": "Runtime.val -> Type"
+      }
+    },
+    "Clef.Spec.Runtime.val_sind": {
+      "type": "forall P : Runtime.val -> SProp,\n(forall (c : Types.tycon) (x : Runtime.atom c), P (Runtime.VAtom c x)) ->\n(forall a : Runtime.val,\n P a -> forall b : Runtime.val, P b -> P (Runtime.VPair a b)) ->\nforall v : Runtime.val, P v",
+      "binders": {
+        "P": "Runtime.val -> SProp"
+      }
+    },
+    "Clef.Spec.Types.OCon": {
+      "type": "Types.tycon -> Types.oty",
+      "binders": {}
+    },
+    "Clef.Spec.Types.OFun": {
+      "type": "Types.oty -> Types.oty -> Types.oty",
+      "binders": {}
+    },
+    "Clef.Spec.Types.OPair": {
+      "type": "Types.oty -> Types.oty -> Types.oty",
+      "binders": {}
+    },
+    "Clef.Spec.Types.OVar": {
+      "type": "Types.oty",
+      "binders": {}
+    },
+    "Clef.Spec.Types.TCon": {
+      "type": "Types.tycon -> Types.ty",
+      "binders": {}
+    },
+    "Clef.Spec.Types.TFun": {
+      "type": "Types.ty -> Types.ty -> Types.ty",
+      "binders": {}
+    },
+    "Clef.Spec.Types.TPair": {
+      "type": "Types.ty -> Types.ty -> Types.ty",
+      "binders": {}
+    },
+    "Clef.Spec.Types.inst": {
+      "type": "Types.ty -> Types.oty -> Types.ty",
+      "binders": {}
+    },
+    "Clef.Spec.Types.oty": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.Spec.Types.oty_ind": {
+      "type": "forall P : Types.oty -> Prop,\nP Types.OVar ->\n(forall c : Types.tycon, P (Types.OCon c)) ->\n(forall a : Types.oty,\n P a -> forall b : Types.oty, P b -> P (Types.OFun a b)) ->\n(forall a : Types.oty,\n P a -> forall b : Types.oty, P b -> P (Types.OPair a b)) ->\nforall o : Types.oty, P o",
+      "binders": {
+        "P": "Types.oty -> Prop"
+      }
+    },
+    "Clef.Spec.Types.oty_rec": {
+      "type": "forall P : Types.oty -> Set,\nP Types.OVar ->\n(forall c : Types.tycon, P (Types.OCon c)) ->\n(forall a : Types.oty,\n P a -> forall b : Types.oty, P b -> P (Types.OFun a b)) ->\n(forall a : Types.oty,\n P a -> forall b : Types.oty, P b -> P (Types.OPair a b)) ->\nforall o : Types.oty, P o",
+      "binders": {
+        "P": "Types.oty -> Set"
+      }
+    },
+    "Clef.Spec.Types.oty_rect": {
+      "type": "forall P : Types.oty -> Type,\nP Types.OVar ->\n(forall c : Types.tycon, P (Types.OCon c)) ->\n(forall a : Types.oty,\n P a -> forall b : Types.oty, P b -> P (Types.OFun a b)) ->\n(forall a : Types.oty,\n P a -> forall b : Types.oty, P b -> P (Types.OPair a b)) ->\nforall o : Types.oty, P o",
+      "binders": {
+        "P": "Types.oty -> Type"
+      }
+    },
+    "Clef.Spec.Types.oty_sind": {
+      "type": "forall P : Types.oty -> SProp,\nP Types.OVar ->\n(forall c : Types.tycon, P (Types.OCon c)) ->\n(forall a : Types.oty,\n P a -> forall b : Types.oty, P b -> P (Types.OFun a b)) ->\n(forall a : Types.oty,\n P a -> forall b : Types.oty, P b -> P (Types.OPair a b)) ->\nforall o : Types.oty, P o",
+      "binders": {
+        "P": "Types.oty -> SProp"
+      }
+    },
+    "Clef.Spec.Types.ty": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.Spec.Types.ty_eq_dec": {
+      "type": "forall a b : Types.ty, {a = b} + {a <> b}",
+      "binders": {
+        "a": "Types.ty",
+        "b": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.Spec.Types.ty_ind": {
+      "type": "forall P : Types.ty -> Prop,\n(forall c : Types.tycon, P (Types.TCon c)) ->\n(forall a : Types.ty,\n P a -> forall b : Types.ty, P b -> P (Types.TFun a b)) ->\n(forall a : Types.ty,\n P a -> forall b : Types.ty, P b -> P (Types.TPair a b)) ->\nforall t : Types.ty, P t",
+      "binders": {
+        "P": "Types.ty -> Prop"
+      }
+    },
+    "Clef.Spec.Types.ty_rec": {
+      "type": "forall P : Types.ty -> Set,\n(forall c : Types.tycon, P (Types.TCon c)) ->\n(forall a : Types.ty,\n P a -> forall b : Types.ty, P b -> P (Types.TFun a b)) ->\n(forall a : Types.ty,\n P a -> forall b : Types.ty, P b -> P (Types.TPair a b)) ->\nforall t : Types.ty, P t",
+      "binders": {
+        "P": "Types.ty -> Set"
+      }
+    },
+    "Clef.Spec.Types.ty_rect": {
+      "type": "forall P : Types.ty -> Type,\n(forall c : Types.tycon, P (Types.TCon c)) ->\n(forall a : Types.ty,\n P a -> forall b : Types.ty, P b -> P (Types.TFun a b)) ->\n(forall a : Types.ty,\n P a -> forall b : Types.ty, P b -> P (Types.TPair a b)) ->\nforall t : Types.ty, P t",
+      "binders": {
+        "P": "Types.ty -> Type"
+      }
+    },
+    "Clef.Spec.Types.ty_sind": {
+      "type": "forall P : Types.ty -> SProp,\n(forall c : Types.tycon, P (Types.TCon c)) ->\n(forall a : Types.ty,\n P a -> forall b : Types.ty, P b -> P (Types.TFun a b)) ->\n(forall a : Types.ty,\n P a -> forall b : Types.ty, P b -> P (Types.TPair a b)) ->\nforall t : Types.ty, P t",
+      "binders": {
+        "P": "Types.ty -> SProp"
+      }
+    },
+    "Clef.Spec.Types.tycon": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.Spec.Types.tycon_eq_dec": {
+      "type": "forall a b : Types.tycon, {a = b} + {a <> b}",
+      "binders": {
+        "a": "Types.tycon",
+        "b": "Types.tycon"
+      }
+    },
+    "Clef.Spec.Witnesses.apply": {
+      "type": "Witnesses.op -> Runtime.val -> option Runtime.val",
+      "binders": {}
+    },
+    "Clef.Spec.Witnesses.op": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.Spec.Witnesses.witness": {
+      "type": "Witnesses.op -> Types.ty -> option Types.ty",
+      "binders": {}
+    },
+    "Clef.Spec.Witnesses.witness_sound": {
+      "type": "forall (o : Witnesses.op) (a r : Types.ty) (v : Runtime.val),\nWitnesses.witness o a = Some r ->\nRuntime.has_ty v a ->\nexists w : Runtime.val,\n  Witnesses.apply o v = Some w /\\ Runtime.has_ty w r",
+      "binders": {
+        "a": "Types.ty",
+        "o": "Witnesses.op",
+        "r": "Types.ty",
+        "v": "Runtime.val"
+      }
+    }
+  }
+}
