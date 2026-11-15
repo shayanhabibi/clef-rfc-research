@@ -9,6 +9,12 @@
     "theories/RFC0002/Discussion.v": "5728896ef9ecb969e1b4f3a84c04882c",
     "theories/RFC0002/Overview.v": "a1261f4be8fd3e6c9ccf7efa3dee51cd",
     "theories/RFC0002/Regions.v": "43a410b27fde03f9b99d6cb0205ad11a",
+    "theories/RFC0003/Conversion.v": "87d6abfbe5310fd32a19f4822dbb4989",
+    "theories/RFC0003/Discussion.v": "d11362edfbdf01607f80b78e183e96fe",
+    "theories/RFC0003/Elaboration.v": "c956e637ca9e7067721fe11b52fe5d75",
+    "theories/RFC0003/Integers.v": "51de7d8dd1b45cba7568d872baf2e675",
+    "theories/RFC0003/Measures.v": "074b87e62cdaa895ebcfe6ad9275a7c1",
+    "theories/RFC0003/Overview.v": "d14ec21533d52dad86a82fde9086709a",
     "theories/Spec/Runtime.v": "08995eb04b8716d1cc3c9c69ef08783b",
     "theories/Spec/Types.v": "03515d34d93a2c16c7d1da0001196f5f",
     "theories/Spec/Witnesses.v": "ba3453af70cda2fd69ffaa0a14a96fbe"
@@ -1079,6 +1085,957 @@
     },
     "Clef.RFC0002.Regions.valid": {
       "type": "Constraints.cset -> Constraints.cset -> Regions.inst3 -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.base_independent": {
+      "type": "forall (D D' : Conversion.decls) (k : Measures.uname -> QArith_base.Q)\n  (a b : Measures.measure),\n(forall u : Measures.uname,\n QArith_base.Qlt\n   {|\n     QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH\n   |} (k u)) ->\n(forall u : Measures.uname,\n QArith_base.Qeq (Conversion.factor D' u)\n   (QArith_base.Qmult (Conversion.factor D u)\n      (Measures.evalq k (Conversion.basedim D u)))) ->\nConversion.conv D a b ->\nQArith_base.Qeq (Conversion.cfactor D' a b) (Conversion.cfactor D a b)",
+      "binders": {
+        "D": "Conversion.decls",
+        "D'": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "k": "Measures.uname -> QArith_base.Q"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.basedim": {
+      "type": "Conversion.decls -> Measures.uname -> Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.cfactor": {
+      "type": "Conversion.decls ->\nMeasures.measure -> Measures.measure -> QArith_base.Q",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.cfactor_equal": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure),\nMeasures.meq a b ->\nQArith_base.Qeq (Conversion.cfactor D a b)\n  {|\n    QArith_base.Qnum := BinNums.Zpos BinNums.xH;\n    QArith_base.Qden := BinNums.xH\n  |}",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.coherence": {
+      "type": "forall (D : Conversion.decls) (a b c : Measures.measure),\nQArith_base.Qeq (Conversion.cfactor D a a)\n  {|\n    QArith_base.Qnum := BinNums.Zpos BinNums.xH;\n    QArith_base.Qden := BinNums.xH\n  |} /\\\nQArith_base.Qeq\n  (QArith_base.Qmult (Conversion.cfactor D a b)\n     (Conversion.cfactor D b c))\n  (Conversion.cfactor D a c) /\\\nQArith_base.Qeq\n  (QArith_base.Qmult (Conversion.cfactor D a b)\n     (Conversion.cfactor D b a))\n  {|\n    QArith_base.Qnum := BinNums.Zpos BinNums.xH;\n    QArith_base.Qden := BinNums.xH\n  |}",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "c": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.compound": {
+      "type": "forall (D : Conversion.decls) (a a' b b' : Measures.measure)\n  (k : BinNums.Z),\nConversion.conv D a a' ->\nConversion.conv D b b' ->\nConversion.conv D (Measures.mmul a b) (Measures.mmul a' b') /\\\nQArith_base.Qeq\n  (Conversion.cfactor D (Measures.mmul a b) (Measures.mmul a' b'))\n  (QArith_base.Qmult (Conversion.cfactor D a a')\n     (Conversion.cfactor D b b')) /\\\nConversion.conv D (Measures.mpow k a) (Measures.mpow k a') /\\\nQArith_base.Qeq\n  (Conversion.cfactor D (Measures.mpow k a) (Measures.mpow k a'))\n  (QArith_base.Qpower (Conversion.cfactor D a a') k)",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "a'": "Measures.measure",
+        "b": "Measures.measure",
+        "b'": "Measures.measure",
+        "k": "BinNums.Z"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.conv": {
+      "type": "Conversion.decls -> Measures.measure -> Measures.measure -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.conv_equivalence": {
+      "type": "forall (D : Conversion.decls) (a b c : Measures.measure),\nConversion.conv D a a /\\\n(Conversion.conv D a b -> Conversion.conv D b a) /\\\n(Conversion.conv D a b ->\n Conversion.conv D b c -> Conversion.conv D a c) /\\\n(Measures.meq a b -> Conversion.conv D a b)",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "c": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.convb": {
+      "type": "Conversion.decls -> Measures.measure -> Measures.measure -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.convb_iff": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure),\nConversion.convb D a b = true <-> Conversion.conv D a b",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.decls": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.dim": {
+      "type": "Conversion.decls -> Measures.measure -> Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.dim_meq": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure),\nMeasures.meq a b ->\nMeasures.meq (Conversion.dim D a) (Conversion.dim D b)",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.dim_mul": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure),\nMeasures.meq (Conversion.dim D (Measures.mmul a b))\n  (Measures.mmul (Conversion.dim D a) (Conversion.dim D b))",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.dim_pow": {
+      "type": "forall (D : Conversion.decls) (k : BinNums.Z) (a : Measures.measure),\nMeasures.meq (Conversion.dim D (Measures.mpow k a))\n  (Measures.mpow k (Conversion.dim D a))",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "k": "BinNums.Z"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.ex": {
+      "type": "Conversion.decls",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.ex_basedim": {
+      "type": "Measures.uname -> Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.ex_factor": {
+      "type": "Measures.uname -> QArith_base.Q",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.ex_factor_pos": {
+      "type": "forall u : Measures.uname,\nQArith_base.Qlt\n  {| QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH |}\n  (Conversion.ex_factor u)",
+      "binders": {
+        "u": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.ex_km_not_s": {
+      "type": "Conversion.convb Conversion.ex\n  ((String.String\n      (Ascii.Ascii true true false true false true true false)\n      (String.String\n         (Ascii.Ascii true false true true false true true false)\n         String.EmptyString),\n    BinNums.Zpos BinNums.xH)\n   :: nil)%list\n  ((String.String\n      (Ascii.Ascii true true false false true true true false)\n      String.EmptyString,\n    BinNums.Zpos BinNums.xH)\n   :: nil)%list =\nfalse",
+      "binders": {},
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.ex_kmh_to_ms": {
+      "type": "Conversion.convb Conversion.ex Conversion.kmh Conversion.ms = true /\\\nQreduction.Qred\n  (Conversion.cfactor Conversion.ex Conversion.kmh Conversion.ms) =\n{|\n  QArith_base.Qnum :=\n    BinNums.Zpos (BinNums.xI (BinNums.xO BinNums.xH));\n  QArith_base.Qden :=\n    BinNums.xO (BinNums.xI (BinNums.xO (BinNums.xO BinNums.xH)))\n|}",
+      "binders": {},
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.expo_dim": {
+      "type": "forall (D : Conversion.decls) (m : Measures.measure)\n  (v : Measures.uname),\nMeasures.expo (Conversion.dim D m) v =\nMeasures.lin\n  (fun u : Measures.uname => Measures.expo (Conversion.basedim D u) v)\n  m",
+      "binders": {
+        "D": "Conversion.decls",
+        "m": "Measures.measure",
+        "v": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.factor": {
+      "type": "Conversion.decls -> Measures.uname -> QArith_base.Q",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.factor_pos": {
+      "type": "forall (d : Conversion.decls) (u : Measures.uname),\nQArith_base.Qlt\n  {| QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH |}\n  (Conversion.factor d u)",
+      "binders": {
+        "d": "Conversion.decls",
+        "u": "Measures.uname"
+      }
+    },
+    "Clef.RFC0003.Conversion.kmh": {
+      "type": "Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.ms": {
+      "type": "Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.quotient_dimension": {
+      "type": "forall (D : Conversion.decls) (a b d t : Measures.measure),\nConversion.conv D a d ->\nConversion.conv D b t ->\nConversion.conv D (Measures.mdiv a b) (Measures.mdiv d t) /\\\nQArith_base.Qeq\n  (Conversion.cfactor D (Measures.mdiv a b) (Measures.mdiv d t))\n  (QArith_base.Qdiv (Conversion.cfactor D a d)\n     (Conversion.cfactor D b t))",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "d": "Measures.measure",
+        "t": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.readings_well_defined": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure),\nMeasures.meq a b ->\nMeasures.meq (Conversion.dim D a) (Conversion.dim D b) /\\\nQArith_base.Qeq (Conversion.scale D a) (Conversion.scale D b)",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.scale": {
+      "type": "Conversion.decls -> Measures.measure -> QArith_base.Q",
+      "binders": {}
+    },
+    "Clef.RFC0003.Conversion.scale_div": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure),\nQArith_base.Qeq (Conversion.scale D (Measures.mdiv a b))\n  (QArith_base.Qdiv (Conversion.scale D a) (Conversion.scale D b))",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.scale_meq": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure),\nMeasures.meq a b ->\nQArith_base.Qeq (Conversion.scale D a) (Conversion.scale D b)",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.scale_mul": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure),\nQArith_base.Qeq (Conversion.scale D (Measures.mmul a b))\n  (QArith_base.Qmult (Conversion.scale D a) (Conversion.scale D b))",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.scale_nonzero": {
+      "type": "forall (D : Conversion.decls) (m : Measures.measure),\n~\nQArith_base.Qeq (Conversion.scale D m)\n  {| QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH |}",
+      "binders": {
+        "D": "Conversion.decls",
+        "m": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.scale_pos": {
+      "type": "forall (D : Conversion.decls) (m : Measures.measure),\nQArith_base.Qlt\n  {| QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH |}\n  (Conversion.scale D m)",
+      "binders": {
+        "D": "Conversion.decls",
+        "m": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.scale_pow": {
+      "type": "forall (D : Conversion.decls) (k : BinNums.Z) (a : Measures.measure),\nQArith_base.Qeq (Conversion.scale D (Measures.mpow k a))\n  (QArith_base.Qpower (Conversion.scale D a) k)",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "k": "BinNums.Z"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Conversion.scale_rescaled": {
+      "type": "forall (D D' : Conversion.decls) (k : Measures.uname -> QArith_base.Q)\n  (m : Measures.measure),\n(forall u : Measures.uname,\n QArith_base.Qeq (Conversion.factor D' u)\n   (QArith_base.Qmult (Conversion.factor D u)\n      (Measures.evalq k (Conversion.basedim D u)))) ->\nQArith_base.Qeq (Conversion.scale D' m)\n  (QArith_base.Qmult (Conversion.scale D m)\n     (Measures.evalq k (Conversion.dim D m)))",
+      "binders": {
+        "D": "Conversion.decls",
+        "D'": "Conversion.decls",
+        "k": "Measures.uname -> QArith_base.Q",
+        "m": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Elaboration.SAdd": {
+      "type": "Elaboration.sterm -> Elaboration.sterm -> Elaboration.sterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.SAs": {
+      "type": "Measures.measure -> Elaboration.sterm -> Elaboration.sterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.SDiv": {
+      "type": "Elaboration.sterm -> Elaboration.sterm -> Elaboration.sterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.SLit": {
+      "type": "QArith_base.Q -> Measures.measure -> Elaboration.sterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.SMul": {
+      "type": "Elaboration.sterm -> Elaboration.sterm -> Elaboration.sterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.TAdd": {
+      "type": "Elaboration.tterm -> Elaboration.tterm -> Elaboration.tterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.TDiv": {
+      "type": "Elaboration.tterm -> Elaboration.tterm -> Elaboration.tterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.TLit": {
+      "type": "QArith_base.Q -> Elaboration.tterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.TMul": {
+      "type": "Elaboration.tterm -> Elaboration.tterm -> Elaboration.tterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.TScale": {
+      "type": "QArith_base.Q -> Elaboration.tterm -> Elaboration.tterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.elab": {
+      "type": "Conversion.decls ->\nElaboration.sterm -> option (Elaboration.tterm * Measures.measure)",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.elab_fuses": {
+      "type": "forall (D : Conversion.decls) (e : Elaboration.sterm)\n  (b c : Measures.measure) (t1 t2 : Elaboration.tterm)\n  (m1 m2 : Measures.measure),\nElaboration.elab D (Elaboration.SAs c (Elaboration.SAs b e)) =\nSome (t1, m1) ->\nElaboration.elab D (Elaboration.SAs c e) = Some (t2, m2) ->\nQArith_base.Qeq (Elaboration.run t1) (Elaboration.run t2)",
+      "binders": {
+        "D": "Conversion.decls",
+        "b": "Measures.measure",
+        "c": "Measures.measure",
+        "e": "Elaboration.sterm",
+        "m1": "Measures.measure",
+        "m2": "Measures.measure",
+        "t1": "Elaboration.tterm",
+        "t2": "Elaboration.tterm"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Elaboration.elab_keeps_dimension": {
+      "type": "forall (D : Conversion.decls) (e : Elaboration.sterm)\n  (t : Elaboration.tterm) (m : Measures.measure),\nElaboration.elab D e = Some (t, m) ->\nMeasures.meq (Conversion.dim D m) (Elaboration.sdim D e)",
+      "binders": {
+        "D": "Conversion.decls",
+        "e": "Elaboration.sterm",
+        "m": "Measures.measure",
+        "t": "Elaboration.tterm"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Elaboration.elab_path_independent": {
+      "type": "forall (D : Conversion.decls) (e1 e2 : Elaboration.sterm)\n  (t1 t2 : Elaboration.tterm) (m1 m2 : Measures.measure),\nElaboration.elab D e1 = Some (t1, m1) ->\nElaboration.elab D e2 = Some (t2, m2) ->\nMeasures.meq m1 m2 ->\nQArith_base.Qeq (Elaboration.mean D e1) (Elaboration.mean D e2) ->\nQArith_base.Qeq (Elaboration.run t1) (Elaboration.run t2)",
+      "binders": {
+        "D": "Conversion.decls",
+        "e1": "Elaboration.sterm",
+        "e2": "Elaboration.sterm",
+        "m1": "Measures.measure",
+        "m2": "Measures.measure",
+        "t1": "Elaboration.tterm",
+        "t2": "Elaboration.tterm"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Elaboration.elab_preserves_meaning": {
+      "type": "forall (D : Conversion.decls) (e : Elaboration.sterm)\n  (t : Elaboration.tterm) (m : Measures.measure),\nElaboration.elab D e = Some (t, m) ->\nQArith_base.Qeq\n  (QArith_base.Qmult (Elaboration.run t) (Conversion.scale D m))\n  (Elaboration.mean D e)",
+      "binders": {
+        "D": "Conversion.decls",
+        "e": "Elaboration.sterm",
+        "m": "Measures.measure",
+        "t": "Elaboration.tterm"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Elaboration.ex_length_as_time": {
+      "type": "Elaboration.elab Conversion.ex\n  (Elaboration.SAs\n     ((String.String\n         (Ascii.Ascii true true false false true true true false)\n         String.EmptyString,\n       BinNums.Zpos BinNums.xH)\n      :: nil)%list\n     (Elaboration.SLit\n        {|\n          QArith_base.Qnum := BinNums.Zpos BinNums.xH;\n          QArith_base.Qden := BinNums.xH\n        |}\n        ((String.String\n            (Ascii.Ascii true true false true false true true false)\n            (String.String\n               (Ascii.Ascii true false true true false true true false)\n               String.EmptyString),\n          BinNums.Zpos BinNums.xH)\n         :: nil)%list)) =\nNone",
+      "binders": {},
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Elaboration.ex_speed": {
+      "type": "Elaboration.sterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.ex_speed_runs": {
+      "type": "exists t : Elaboration.tterm,\n  Elaboration.elab Conversion.ex Elaboration.ex_speed =\n  Some (t, Conversion.ms) /\\\n  Qreduction.Qred (Elaboration.run t) =\n  {|\n    QArith_base.Qnum :=\n      BinNums.Zpos\n        (BinNums.xO (BinNums.xO (BinNums.xI (BinNums.xO BinNums.xH))));\n    QArith_base.Qden := BinNums.xI BinNums.xH\n  |}",
+      "binders": {},
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Elaboration.mean": {
+      "type": "Conversion.decls -> Elaboration.sterm -> QArith_base.Q",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.run": {
+      "type": "Elaboration.tterm -> QArith_base.Q",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.sdim": {
+      "type": "Conversion.decls -> Elaboration.sterm -> Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.sterm": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.sterm_ind": {
+      "type": "forall P : Elaboration.sterm -> Prop,\n(forall (q : QArith_base.Q) (m : Measures.measure),\n P (Elaboration.SLit q m)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SAdd a b)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SMul a b)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SDiv a b)) ->\n(forall (m : Measures.measure) (e : Elaboration.sterm),\n P e -> P (Elaboration.SAs m e)) ->\nforall s : Elaboration.sterm, P s",
+      "binders": {
+        "P": "Elaboration.sterm -> Prop"
+      }
+    },
+    "Clef.RFC0003.Elaboration.sterm_rec": {
+      "type": "forall P : Elaboration.sterm -> Set,\n(forall (q : QArith_base.Q) (m : Measures.measure),\n P (Elaboration.SLit q m)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SAdd a b)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SMul a b)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SDiv a b)) ->\n(forall (m : Measures.measure) (e : Elaboration.sterm),\n P e -> P (Elaboration.SAs m e)) ->\nforall s : Elaboration.sterm, P s",
+      "binders": {
+        "P": "Elaboration.sterm -> Set"
+      }
+    },
+    "Clef.RFC0003.Elaboration.sterm_rect": {
+      "type": "forall P : Elaboration.sterm -> Type,\n(forall (q : QArith_base.Q) (m : Measures.measure),\n P (Elaboration.SLit q m)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SAdd a b)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SMul a b)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SDiv a b)) ->\n(forall (m : Measures.measure) (e : Elaboration.sterm),\n P e -> P (Elaboration.SAs m e)) ->\nforall s : Elaboration.sterm, P s",
+      "binders": {
+        "P": "Elaboration.sterm -> Type"
+      }
+    },
+    "Clef.RFC0003.Elaboration.sterm_sind": {
+      "type": "forall P : Elaboration.sterm -> SProp,\n(forall (q : QArith_base.Q) (m : Measures.measure),\n P (Elaboration.SLit q m)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SAdd a b)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SMul a b)) ->\n(forall a : Elaboration.sterm,\n P a -> forall b : Elaboration.sterm, P b -> P (Elaboration.SDiv a b)) ->\n(forall (m : Measures.measure) (e : Elaboration.sterm),\n P e -> P (Elaboration.SAs m e)) ->\nforall s : Elaboration.sterm, P s",
+      "binders": {
+        "P": "Elaboration.sterm -> SProp"
+      }
+    },
+    "Clef.RFC0003.Elaboration.tterm": {
+      "type": "Set",
+      "binders": {}
+    },
+    "Clef.RFC0003.Elaboration.tterm_ind": {
+      "type": "forall P : Elaboration.tterm -> Prop,\n(forall q : QArith_base.Q, P (Elaboration.TLit q)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TAdd a b)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TMul a b)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TDiv a b)) ->\n(forall (k : QArith_base.Q) (t : Elaboration.tterm),\n P t -> P (Elaboration.TScale k t)) ->\nforall t : Elaboration.tterm, P t",
+      "binders": {
+        "P": "Elaboration.tterm -> Prop"
+      }
+    },
+    "Clef.RFC0003.Elaboration.tterm_rec": {
+      "type": "forall P : Elaboration.tterm -> Set,\n(forall q : QArith_base.Q, P (Elaboration.TLit q)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TAdd a b)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TMul a b)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TDiv a b)) ->\n(forall (k : QArith_base.Q) (t : Elaboration.tterm),\n P t -> P (Elaboration.TScale k t)) ->\nforall t : Elaboration.tterm, P t",
+      "binders": {
+        "P": "Elaboration.tterm -> Set"
+      }
+    },
+    "Clef.RFC0003.Elaboration.tterm_rect": {
+      "type": "forall P : Elaboration.tterm -> Type,\n(forall q : QArith_base.Q, P (Elaboration.TLit q)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TAdd a b)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TMul a b)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TDiv a b)) ->\n(forall (k : QArith_base.Q) (t : Elaboration.tterm),\n P t -> P (Elaboration.TScale k t)) ->\nforall t : Elaboration.tterm, P t",
+      "binders": {
+        "P": "Elaboration.tterm -> Type"
+      }
+    },
+    "Clef.RFC0003.Elaboration.tterm_sind": {
+      "type": "forall P : Elaboration.tterm -> SProp,\n(forall q : QArith_base.Q, P (Elaboration.TLit q)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TAdd a b)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TMul a b)) ->\n(forall a : Elaboration.tterm,\n P a -> forall b : Elaboration.tterm, P b -> P (Elaboration.TDiv a b)) ->\n(forall (k : QArith_base.Q) (t : Elaboration.tterm),\n P t -> P (Elaboration.TScale k t)) ->\nforall t : Elaboration.tterm, P t",
+      "binders": {
+        "P": "Elaboration.tterm -> SProp"
+      }
+    },
+    "Clef.RFC0003.Integers.IAdd": {
+      "type": "Integers.iterm -> Integers.iterm -> Integers.iterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.IAs": {
+      "type": "Measures.measure -> Integers.iterm -> Integers.iterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.ILit": {
+      "type": "BinNums.Z -> Measures.measure -> Integers.iterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.IMul": {
+      "type": "Integers.iterm -> Integers.iterm -> Integers.iterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.JAdd": {
+      "type": "Integers.jterm -> Integers.jterm -> Integers.jterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.JLit": {
+      "type": "BinNums.Z -> Integers.jterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.JMul": {
+      "type": "Integers.jterm -> Integers.jterm -> Integers.jterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.JScale": {
+      "type": "BinNums.Z -> Integers.jterm -> Integers.jterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.JTrunc": {
+      "type": "QArith_base.Q -> Integers.jterm -> Integers.jterm",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.ex_metres_as_km_lossy": {
+      "type": "exists t : Integers.jterm,\n  Integers.ielab true Conversion.ex\n    (Integers.IAs Integers.km\n       (Integers.ILit\n          (BinNums.Zpos\n             (BinNums.xO\n                (BinNums.xO\n                   (BinNums.xI\n                      (BinNums.xI\n                         (BinNums.xI\n                            (BinNums.xO\n                               (BinNums.xI\n                                  (BinNums.xI\n                                     (BinNums.xI\n                                        (BinNums.xO BinNums.xH)))))))))))\n          Integers.m_)) =\n  Some (t, Integers.km) /\\ Integers.irun t = BinNums.Zpos BinNums.xH",
+      "binders": {},
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Integers.ex_metres_as_km_strict": {
+      "type": "Integers.ielab false Conversion.ex\n  (Integers.IAs Integers.km\n     (Integers.ILit\n        (BinNums.Zpos\n           (BinNums.xO\n              (BinNums.xO\n                 (BinNums.xI\n                    (BinNums.xI\n                       (BinNums.xI\n                          (BinNums.xO\n                             (BinNums.xI\n                                (BinNums.xI\n                                   (BinNums.xI (BinNums.xO BinNums.xH)))))))))))\n        Integers.m_)) =\nNone",
+      "binders": {},
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Integers.ex_sum_in_metres": {
+      "type": "Integers.ielab false Conversion.ex\n  (Integers.IAdd\n     (Integers.ILit (BinNums.Zpos (BinNums.xO BinNums.xH)) Integers.km)\n     (Integers.ILit\n        (BinNums.Zpos\n           (BinNums.xO\n              (BinNums.xO\n                 (BinNums.xI\n                    (BinNums.xO\n                       (BinNums.xI\n                          (BinNums.xI\n                             (BinNums.xI (BinNums.xI BinNums.xH)))))))))\n        Integers.m_)) =\nSome\n  (Integers.JAdd\n     (Integers.JScale\n        (BinNums.Zpos\n           (BinNums.xO\n              (BinNums.xO\n                 (BinNums.xO\n                    (BinNums.xI\n                       (BinNums.xO\n                          (BinNums.xI\n                             (BinNums.xI\n                                (BinNums.xI (BinNums.xI BinNums.xH))))))))))\n        (Integers.JLit (BinNums.Zpos (BinNums.xO BinNums.xH))))\n     (Integers.JLit\n        (BinNums.Zpos\n           (BinNums.xO\n              (BinNums.xO\n                 (BinNums.xI\n                    (BinNums.xO\n                       (BinNums.xI\n                          (BinNums.xI\n                             (BinNums.xI (BinNums.xI BinNums.xH)))))))))),\n   Integers.m_)",
+      "binders": {},
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Integers.ielab": {
+      "type": "bool ->\nConversion.decls ->\nIntegers.iterm -> option (Integers.jterm * Measures.measure)",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.ielab_exact": {
+      "type": "forall (D : Conversion.decls) (e : Integers.iterm)\n  (t : Integers.jterm) (m : Measures.measure),\nIntegers.ielab false D e = Some (t, m) ->\nQArith_base.Qeq\n  (QArith_base.Qmult (QArith_base.inject_Z (Integers.irun t))\n     (Conversion.scale D m))\n  (Integers.imean D e)",
+      "binders": {
+        "D": "Conversion.decls",
+        "e": "Integers.iterm",
+        "m": "Measures.measure",
+        "t": "Integers.jterm"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Integers.ielab_lossy_conservative": {
+      "type": "forall (D : Conversion.decls) (e : Integers.iterm)\n  (r : Integers.jterm * Measures.measure),\nIntegers.ielab false D e = Some r -> Integers.ielab true D e = Some r",
+      "binders": {
+        "D": "Conversion.decls",
+        "e": "Integers.iterm",
+        "r": "Integers.jterm * Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Integers.imean": {
+      "type": "Conversion.decls -> Integers.iterm -> QArith_base.Q",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.int_conv": {
+      "type": "Conversion.decls -> Measures.measure -> Measures.measure -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.int_conv_order": {
+      "type": "forall (D : Conversion.decls) (a b c : Measures.measure),\nIntegers.int_conv D a a /\\\n(Integers.int_conv D a b ->\n Integers.int_conv D b c -> Integers.int_conv D a c) /\\\n(Integers.int_conv D a b ->\n Integers.int_conv D b a ->\n QArith_base.Qeq (Conversion.scale D a) (Conversion.scale D b))",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "c": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Integers.int_factor": {
+      "type": "Conversion.decls ->\nMeasures.measure -> Measures.measure -> option BinNums.Z",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.int_factor_iff": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure) (n : BinNums.Z),\nIntegers.int_factor D a b = Some n <->\nQArith_base.Qeq (Conversion.scale D a)\n  (QArith_base.Qmult (QArith_base.inject_Z n) (Conversion.scale D b))",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "n": "BinNums.Z"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Integers.int_factor_none": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure),\nIntegers.int_factor D a b = None ->\n~\n(exists z : BinNums.Z,\n   QArith_base.Qeq (Conversion.scale D a)\n     (QArith_base.Qmult (QArith_base.inject_Z z)\n        (Conversion.scale D b)))",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Integers.int_join": {
+      "type": "Conversion.decls ->\nMeasures.measure -> Measures.measure -> option Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.int_join_finest": {
+      "type": "forall (D : Conversion.decls) (a b c : Measures.measure),\nIntegers.int_join D a b = Some c ->\nIntegers.int_conv D a c /\\\nIntegers.int_conv D b c /\\\n(forall d : Measures.measure,\n Integers.int_conv D a d ->\n Integers.int_conv D b d -> Integers.int_conv D c d)",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "c": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Integers.irun": {
+      "type": "Integers.jterm -> BinNums.Z",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.iterm": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.iterm_ind": {
+      "type": "forall P : Integers.iterm -> Prop,\n(forall (z : BinNums.Z) (m : Measures.measure), P (Integers.ILit z m)) ->\n(forall a : Integers.iterm,\n P a -> forall b : Integers.iterm, P b -> P (Integers.IAdd a b)) ->\n(forall a : Integers.iterm,\n P a -> forall b : Integers.iterm, P b -> P (Integers.IMul a b)) ->\n(forall (m : Measures.measure) (e : Integers.iterm),\n P e -> P (Integers.IAs m e)) ->\nforall i : Integers.iterm, P i",
+      "binders": {
+        "P": "Integers.iterm -> Prop"
+      }
+    },
+    "Clef.RFC0003.Integers.iterm_rec": {
+      "type": "forall P : Integers.iterm -> Set,\n(forall (z : BinNums.Z) (m : Measures.measure), P (Integers.ILit z m)) ->\n(forall a : Integers.iterm,\n P a -> forall b : Integers.iterm, P b -> P (Integers.IAdd a b)) ->\n(forall a : Integers.iterm,\n P a -> forall b : Integers.iterm, P b -> P (Integers.IMul a b)) ->\n(forall (m : Measures.measure) (e : Integers.iterm),\n P e -> P (Integers.IAs m e)) ->\nforall i : Integers.iterm, P i",
+      "binders": {
+        "P": "Integers.iterm -> Set"
+      }
+    },
+    "Clef.RFC0003.Integers.iterm_rect": {
+      "type": "forall P : Integers.iterm -> Type,\n(forall (z : BinNums.Z) (m : Measures.measure), P (Integers.ILit z m)) ->\n(forall a : Integers.iterm,\n P a -> forall b : Integers.iterm, P b -> P (Integers.IAdd a b)) ->\n(forall a : Integers.iterm,\n P a -> forall b : Integers.iterm, P b -> P (Integers.IMul a b)) ->\n(forall (m : Measures.measure) (e : Integers.iterm),\n P e -> P (Integers.IAs m e)) ->\nforall i : Integers.iterm, P i",
+      "binders": {
+        "P": "Integers.iterm -> Type"
+      }
+    },
+    "Clef.RFC0003.Integers.iterm_sind": {
+      "type": "forall P : Integers.iterm -> SProp,\n(forall (z : BinNums.Z) (m : Measures.measure), P (Integers.ILit z m)) ->\n(forall a : Integers.iterm,\n P a -> forall b : Integers.iterm, P b -> P (Integers.IAdd a b)) ->\n(forall a : Integers.iterm,\n P a -> forall b : Integers.iterm, P b -> P (Integers.IMul a b)) ->\n(forall (m : Measures.measure) (e : Integers.iterm),\n P e -> P (Integers.IAs m e)) ->\nforall i : Integers.iterm, P i",
+      "binders": {
+        "P": "Integers.iterm -> SProp"
+      }
+    },
+    "Clef.RFC0003.Integers.jterm": {
+      "type": "Set",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.jterm_ind": {
+      "type": "forall P : Integers.jterm -> Prop,\n(forall z : BinNums.Z, P (Integers.JLit z)) ->\n(forall a : Integers.jterm,\n P a -> forall b : Integers.jterm, P b -> P (Integers.JAdd a b)) ->\n(forall a : Integers.jterm,\n P a -> forall b : Integers.jterm, P b -> P (Integers.JMul a b)) ->\n(forall (n : BinNums.Z) (t : Integers.jterm),\n P t -> P (Integers.JScale n t)) ->\n(forall (k : QArith_base.Q) (t : Integers.jterm),\n P t -> P (Integers.JTrunc k t)) ->\nforall j : Integers.jterm, P j",
+      "binders": {
+        "P": "Integers.jterm -> Prop"
+      }
+    },
+    "Clef.RFC0003.Integers.jterm_rec": {
+      "type": "forall P : Integers.jterm -> Set,\n(forall z : BinNums.Z, P (Integers.JLit z)) ->\n(forall a : Integers.jterm,\n P a -> forall b : Integers.jterm, P b -> P (Integers.JAdd a b)) ->\n(forall a : Integers.jterm,\n P a -> forall b : Integers.jterm, P b -> P (Integers.JMul a b)) ->\n(forall (n : BinNums.Z) (t : Integers.jterm),\n P t -> P (Integers.JScale n t)) ->\n(forall (k : QArith_base.Q) (t : Integers.jterm),\n P t -> P (Integers.JTrunc k t)) ->\nforall j : Integers.jterm, P j",
+      "binders": {
+        "P": "Integers.jterm -> Set"
+      }
+    },
+    "Clef.RFC0003.Integers.jterm_rect": {
+      "type": "forall P : Integers.jterm -> Type,\n(forall z : BinNums.Z, P (Integers.JLit z)) ->\n(forall a : Integers.jterm,\n P a -> forall b : Integers.jterm, P b -> P (Integers.JAdd a b)) ->\n(forall a : Integers.jterm,\n P a -> forall b : Integers.jterm, P b -> P (Integers.JMul a b)) ->\n(forall (n : BinNums.Z) (t : Integers.jterm),\n P t -> P (Integers.JScale n t)) ->\n(forall (k : QArith_base.Q) (t : Integers.jterm),\n P t -> P (Integers.JTrunc k t)) ->\nforall j : Integers.jterm, P j",
+      "binders": {
+        "P": "Integers.jterm -> Type"
+      }
+    },
+    "Clef.RFC0003.Integers.jterm_sind": {
+      "type": "forall P : Integers.jterm -> SProp,\n(forall z : BinNums.Z, P (Integers.JLit z)) ->\n(forall a : Integers.jterm,\n P a -> forall b : Integers.jterm, P b -> P (Integers.JAdd a b)) ->\n(forall a : Integers.jterm,\n P a -> forall b : Integers.jterm, P b -> P (Integers.JMul a b)) ->\n(forall (n : BinNums.Z) (t : Integers.jterm),\n P t -> P (Integers.JScale n t)) ->\n(forall (k : QArith_base.Q) (t : Integers.jterm),\n P t -> P (Integers.JTrunc k t)) ->\nforall j : Integers.jterm, P j",
+      "binders": {
+        "P": "Integers.jterm -> SProp"
+      }
+    },
+    "Clef.RFC0003.Integers.km": {
+      "type": "Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.m_": {
+      "type": "Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.qint": {
+      "type": "QArith_base.Q -> option BinNums.Z",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.qint_iff": {
+      "type": "forall (q : QArith_base.Q) (n : BinNums.Z),\nIntegers.qint q = Some n <->\nQArith_base.Qeq q (QArith_base.inject_Z n)",
+      "binders": {
+        "n": "BinNums.Z",
+        "q": "QArith_base.Q"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Integers.truncate": {
+      "type": "Conversion.decls ->\nMeasures.measure -> Measures.measure -> BinNums.Z -> BinNums.Z",
+      "binders": {}
+    },
+    "Clef.RFC0003.Integers.truncate_bound": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure) (z : BinNums.Z),\nQArith_base.Qle\n  (QArith_base.Qmult\n     (QArith_base.inject_Z (Integers.truncate D a b z))\n     (Conversion.scale D b))\n  (QArith_base.Qmult (QArith_base.inject_Z z) (Conversion.scale D a)) /\\\nQArith_base.Qlt\n  (QArith_base.Qmult (QArith_base.inject_Z z) (Conversion.scale D a))\n  (QArith_base.Qmult\n     (QArith_base.inject_Z\n        (BinInt.Z.add (Integers.truncate D a b z)\n           (BinNums.Zpos BinNums.xH)))\n     (Conversion.scale D b))",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "z": "BinNums.Z"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Integers.truncate_exact": {
+      "type": "forall (D : Conversion.decls) (a b : Measures.measure)\n  (n z : BinNums.Z),\nIntegers.int_factor D a b = Some n ->\nIntegers.truncate D a b z = BinInt.Z.mul z n",
+      "binders": {
+        "D": "Conversion.decls",
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "n": "BinNums.Z",
+        "z": "BinNums.Z"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.Qpos_nonzero": {
+      "type": "forall q : QArith_base.Q,\nQArith_base.Qlt\n  {| QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH |}\n  q ->\n~\nQArith_base.Qeq q\n  {| QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH |}",
+      "binders": {
+        "q": "QArith_base.Q"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.evalq": {
+      "type": "(Measures.uname -> QArith_base.Q) -> Measures.measure -> QArith_base.Q",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.evalq_meq": {
+      "type": "forall (f : Measures.uname -> QArith_base.Q) (a b : Measures.measure),\n(forall u : Measures.uname,\n QArith_base.Qlt\n   {|\n     QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH\n   |} (f u)) ->\nMeasures.meq a b ->\nQArith_base.Qeq (Measures.evalq f a) (Measures.evalq f b)",
+      "binders": {
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "f": "Measures.uname -> QArith_base.Q"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.evalq_mul": {
+      "type": "forall (f : Measures.uname -> QArith_base.Q) (a b : Measures.measure),\nQArith_base.Qeq (Measures.evalq f (Measures.mmul a b))\n  (QArith_base.Qmult (Measures.evalq f a) (Measures.evalq f b))",
+      "binders": {
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "f": "Measures.uname -> QArith_base.Q"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.evalq_one": {
+      "type": "forall (f : Measures.uname -> QArith_base.Q) (m : Measures.measure),\n(forall u : Measures.uname,\n QArith_base.Qlt\n   {|\n     QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH\n   |} (f u)) ->\nMeasures.meq m Measures.mone ->\nQArith_base.Qeq (Measures.evalq f m)\n  {|\n    QArith_base.Qnum := BinNums.Zpos BinNums.xH;\n    QArith_base.Qden := BinNums.xH\n  |}",
+      "binders": {
+        "f": "Measures.uname -> QArith_base.Q",
+        "m": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.evalq_pos": {
+      "type": "forall (f : Measures.uname -> QArith_base.Q) (m : Measures.measure),\n(forall u : Measures.uname,\n QArith_base.Qlt\n   {|\n     QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH\n   |} (f u)) ->\nQArith_base.Qlt\n  {| QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH |}\n  (Measures.evalq f m)",
+      "binders": {
+        "f": "Measures.uname -> QArith_base.Q",
+        "m": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.evalq_pow": {
+      "type": "forall (f : Measures.uname -> QArith_base.Q) \n  (k : BinNums.Z) (m : Measures.measure),\nQArith_base.Qeq (Measures.evalq f (Measures.mpow k m))\n  (QArith_base.Qpower (Measures.evalq f m) k)",
+      "binders": {
+        "f": "Measures.uname -> QArith_base.Q",
+        "k": "BinNums.Z",
+        "m": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.evalq_split": {
+      "type": "forall (f : Measures.uname -> QArith_base.Q) \n  (u : Measures.uname) (m : Measures.measure),\n(forall u0 : Measures.uname,\n QArith_base.Qlt\n   {|\n     QArith_base.Qnum := BinNums.Z0; QArith_base.Qden := BinNums.xH\n   |} (f u0)) ->\nQArith_base.Qeq (Measures.evalq f m)\n  (QArith_base.Qmult (QArith_base.Qpower (f u) (Measures.expo m u))\n     (Measures.evalq f (Measures.remove u m)))",
+      "binders": {
+        "f": "Measures.uname -> QArith_base.Q",
+        "m": "Measures.measure",
+        "u": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.expo": {
+      "type": "Measures.measure -> Measures.uname -> BinNums.Z",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.expo_absent": {
+      "type": "forall (m : Measures.measure) (u : Measures.uname),\n~ List.In u (Measures.units m) -> Measures.expo m u = BinNums.Z0",
+      "binders": {
+        "m": "Measures.measure",
+        "u": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.expo_mul": {
+      "type": "forall (a b : Measures.measure) (u : Measures.uname),\nMeasures.expo (Measures.mmul a b) u =\nBinInt.Z.add (Measures.expo a u) (Measures.expo b u)",
+      "binders": {
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "u": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.expo_pow": {
+      "type": "forall (k : BinNums.Z) (m : Measures.measure) (u : Measures.uname),\nMeasures.expo (Measures.mpow k m) u =\nBinInt.Z.mul k (Measures.expo m u)",
+      "binders": {
+        "k": "BinNums.Z",
+        "m": "Measures.measure",
+        "u": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.expo_remove_other": {
+      "type": "forall (u v : Measures.uname) (m : Measures.measure),\nv <> u -> Measures.expo (Measures.remove u m) v = Measures.expo m v",
+      "binders": {
+        "m": "Measures.measure",
+        "u": "Measures.uname",
+        "v": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.expo_remove_same": {
+      "type": "forall (u : Measures.uname) (m : Measures.measure),\nMeasures.expo (Measures.remove u m) u = BinNums.Z0",
+      "binders": {
+        "m": "Measures.measure",
+        "u": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.length_remove": {
+      "type": "forall (u : Measures.uname) (m : Measures.measure),\nlength (Measures.remove u m) <= length m",
+      "binders": {
+        "m": "Measures.measure",
+        "u": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.lin": {
+      "type": "(Measures.uname -> BinNums.Z) -> Measures.measure -> BinNums.Z",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.lin_meq": {
+      "type": "forall (g : Measures.uname -> BinNums.Z) (a b : Measures.measure),\nMeasures.meq a b -> Measures.lin g a = Measures.lin g b",
+      "binders": {
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "g": "Measures.uname -> BinNums.Z"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.lin_mul": {
+      "type": "forall (g : Measures.uname -> BinNums.Z) (a b : Measures.measure),\nMeasures.lin g (Measures.mmul a b) =\nBinInt.Z.add (Measures.lin g a) (Measures.lin g b)",
+      "binders": {
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "g": "Measures.uname -> BinNums.Z"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.lin_one": {
+      "type": "forall (g : Measures.uname -> BinNums.Z) (m : Measures.measure),\nMeasures.meq m Measures.mone -> Measures.lin g m = BinNums.Z0",
+      "binders": {
+        "g": "Measures.uname -> BinNums.Z",
+        "m": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.lin_pow": {
+      "type": "forall (g : Measures.uname -> BinNums.Z) (k : BinNums.Z)\n  (m : Measures.measure),\nMeasures.lin g (Measures.mpow k m) = BinInt.Z.mul k (Measures.lin g m)",
+      "binders": {
+        "g": "Measures.uname -> BinNums.Z",
+        "k": "BinNums.Z",
+        "m": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.lin_split": {
+      "type": "forall (g : Measures.uname -> BinNums.Z) (u : Measures.uname)\n  (m : Measures.measure),\nMeasures.lin g m =\nBinInt.Z.add (BinInt.Z.mul (Measures.expo m u) (g u))\n  (Measures.lin g (Measures.remove u m))",
+      "binders": {
+        "g": "Measures.uname -> BinNums.Z",
+        "m": "Measures.measure",
+        "u": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.mdiv": {
+      "type": "Measures.measure -> Measures.measure -> Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.measure": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.measure_group_laws": {
+      "type": "forall a b c : Measures.measure,\nMeasures.meq (Measures.mmul (Measures.mmul a b) c)\n  (Measures.mmul a (Measures.mmul b c)) /\\\nMeasures.meq (Measures.mmul a b) (Measures.mmul b a) /\\\nMeasures.meq (Measures.mmul Measures.mone a) a /\\\nMeasures.meq (Measures.mmul a (Measures.minv a)) Measures.mone",
+      "binders": {
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "c": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.meq": {
+      "type": "Measures.measure -> Measures.measure -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.meq_refl": {
+      "type": "forall a : Measures.measure, Measures.meq a a",
+      "binders": {
+        "a": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.meq_sym": {
+      "type": "forall a b : Measures.measure, Measures.meq a b -> Measures.meq b a",
+      "binders": {
+        "a": "Measures.measure",
+        "b": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.meq_trans": {
+      "type": "forall a b c : Measures.measure,\nMeasures.meq a b -> Measures.meq b c -> Measures.meq a c",
+      "binders": {
+        "a": "Measures.measure",
+        "b": "Measures.measure",
+        "c": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.meqb": {
+      "type": "Measures.measure -> Measures.measure -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.meqb_iff": {
+      "type": "forall a b : Measures.measure,\nMeasures.meqb a b = true <-> Measures.meq a b",
+      "binders": {
+        "a": "Measures.measure",
+        "b": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.minv": {
+      "type": "Measures.measure -> Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.mmul": {
+      "type": "Measures.measure -> Measures.measure -> Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.mmul_meq": {
+      "type": "forall a a' b b' : Measures.measure,\nMeasures.meq a a' ->\nMeasures.meq b b' ->\nMeasures.meq (Measures.mmul a b) (Measures.mmul a' b')",
+      "binders": {
+        "a": "Measures.measure",
+        "a'": "Measures.measure",
+        "b": "Measures.measure",
+        "b'": "Measures.measure"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.mone": {
+      "type": "Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.mpow": {
+      "type": "BinNums.Z -> Measures.measure -> Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.mpow_meq": {
+      "type": "forall (k : BinNums.Z) (a a' : Measures.measure),\nMeasures.meq a a' ->\nMeasures.meq (Measures.mpow k a) (Measures.mpow k a')",
+      "binders": {
+        "a": "Measures.measure",
+        "a'": "Measures.measure",
+        "k": "BinNums.Z"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.remove": {
+      "type": "Measures.uname -> Measures.measure -> Measures.measure",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.ueqb": {
+      "type": "Measures.uname -> Measures.uname -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.ueqb_iff": {
+      "type": "forall u v : Measures.uname, Measures.ueqb u v = true <-> u = v",
+      "binders": {
+        "u": "Measures.uname",
+        "v": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.ueqb_refl": {
+      "type": "forall u : Measures.uname, Measures.ueqb u u = true",
+      "binders": {
+        "u": "Measures.uname"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0003.Measures.uname": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0003.Measures.units": {
+      "type": "Measures.measure -> list Measures.uname",
       "binders": {}
     },
     "Clef.Spec.Runtime.HAtom": {

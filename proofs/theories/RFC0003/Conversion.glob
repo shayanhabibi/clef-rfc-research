@@ -1,0 +1,897 @@
+DIGEST 87d6abfbe5310fd32a19f4822dbb4989
+FClef.RFC0003.Conversion
+R27:30 Stdlib.Lists.List <> <> lib
+R32:37 Stdlib.ZArith.ZArith <> <> lib
+R39:44 Stdlib.QArith.QArith <> <> lib
+R46:51 Stdlib.QArith.Qpower <> <> lib
+R53:58 Stdlib.Strings.String <> <> lib
+R60:63 Stdlib.Bool.Bool <> <> lib
+R65:67 Stdlib.micromega.Lia <> <> lib
+R77:89 Stdlib.Lists.List ListNotations <> mod
+R117:132 Clef.RFC0003.Measures <> <> lib
+rec 1222:1226 <> decls
+proj 1248:1254 <> basedim
+proj 1278:1283 <> factor
+proj 1301:1310 <> factor_pos
+R1263:1266 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1258:1262 Clef.RFC0003.Measures <> uname def
+R1267:1273 Clef.RFC0003.Measures <> measure def
+R1292:1295 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1287:1291 Clef.RFC0003.Measures <> uname def
+R1296:1296 Stdlib.QArith.QArith_base <> Q rec
+binder 1321:1321 <> u:4
+R1325:1327 Stdlib.QArith.QArith_base <> ::Q_scope:x_'<'_x not
+R1328:1333 Clef.RFC0003.Conversion <> factor:3 meth
+R1335:1335 Clef.RFC0003.Conversion <> u:4 var
+def 1480:1482 <> dim
+R1489:1493 Clef.RFC0003.Conversion <> decls rec
+binder 1485:1485 <> D:6
+R1501:1507 Clef.RFC0003.Measures <> measure def
+binder 1497:1497 <> m:7
+R1512:1518 Clef.RFC0003.Measures <> measure def
+R1531:1531 Clef.RFC0003.Conversion <> m:7 var
+R1542:1543 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1548:1549 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1561:1564 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1555:1555 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1557:1558 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1560:1560 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1570:1573 Clef.RFC0003.Measures <> mmul def
+R1576:1579 Clef.RFC0003.Measures <> mpow def
+R1584:1590 Clef.RFC0003.Conversion <> basedim proj
+R1592:1592 Clef.RFC0003.Conversion <> D:6 var
+R1599:1601 Clef.RFC0003.Conversion <> dim:8 def
+R1603:1603 Clef.RFC0003.Conversion <> D:6 var
+def 1695:1699 <> scale
+R1706:1710 Clef.RFC0003.Conversion <> decls rec
+binder 1702:1702 <> D:10
+R1718:1724 Clef.RFC0003.Measures <> measure def
+binder 1714:1714 <> m:11
+R1729:1729 Stdlib.QArith.QArith_base <> Q rec
+R1734:1738 Clef.RFC0003.Measures <> evalq def
+R1741:1746 Clef.RFC0003.Conversion <> factor proj
+R1748:1748 Clef.RFC0003.Conversion <> D:10 var
+R1751:1751 Clef.RFC0003.Conversion <> m:11 var
+def 1837:1840 <> conv
+R1847:1851 Clef.RFC0003.Conversion <> decls rec
+binder 1843:1843 <> D:12
+R1861:1867 Clef.RFC0003.Measures <> measure def
+binder 1855:1855 <> a:13
+binder 1857:1857 <> b:14
+R1880:1882 Clef.RFC0003.Measures <> meq def
+R1885:1887 Clef.RFC0003.Conversion <> dim def
+R1889:1889 Clef.RFC0003.Conversion <> D:12 var
+R1891:1891 Clef.RFC0003.Conversion <> a:13 var
+R1895:1897 Clef.RFC0003.Conversion <> dim def
+R1899:1899 Clef.RFC0003.Conversion <> D:12 var
+R1901:1901 Clef.RFC0003.Conversion <> b:14 var
+def 1959:1963 <> convb
+R1970:1974 Clef.RFC0003.Conversion <> decls rec
+binder 1966:1966 <> D:15
+R1984:1990 Clef.RFC0003.Measures <> measure def
+binder 1978:1978 <> a:16
+binder 1980:1980 <> b:17
+R1995:1998 Corelib.Init.Datatypes <> bool ind
+R2003:2006 Clef.RFC0003.Measures <> meqb def
+R2009:2011 Clef.RFC0003.Conversion <> dim def
+R2013:2013 Clef.RFC0003.Conversion <> D:15 var
+R2015:2015 Clef.RFC0003.Conversion <> a:16 var
+R2019:2021 Clef.RFC0003.Conversion <> dim def
+R2023:2023 Clef.RFC0003.Conversion <> D:15 var
+R2025:2025 Clef.RFC0003.Conversion <> b:17 var
+def 2227:2233 <> cfactor
+R2240:2244 Clef.RFC0003.Conversion <> decls rec
+binder 2236:2236 <> D:18
+R2254:2260 Clef.RFC0003.Measures <> measure def
+binder 2248:2248 <> a:19
+binder 2250:2250 <> b:20
+R2265:2265 Stdlib.QArith.QArith_base <> Q rec
+R2279:2281 Stdlib.QArith.QArith_base <> ::Q_scope:x_'/'_x not
+R2270:2274 Clef.RFC0003.Conversion <> scale def
+R2276:2276 Clef.RFC0003.Conversion <> D:18 var
+R2278:2278 Clef.RFC0003.Conversion <> a:19 var
+R2282:2286 Clef.RFC0003.Conversion <> scale def
+R2288:2288 Clef.RFC0003.Conversion <> D:18 var
+R2290:2290 Clef.RFC0003.Conversion <> b:20 var
+prf 2436:2443 <> expo_dim
+R2450:2454 Clef.RFC0003.Conversion <> decls rec
+binder 2446:2446 <> D:21
+R2462:2468 Clef.RFC0003.Measures <> measure def
+binder 2458:2458 <> m:22
+R2476:2480 Clef.RFC0003.Measures <> uname def
+binder 2472:2472 <> v:23
+R2503:2505 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2487:2490 Clef.RFC0003.Measures <> expo def
+R2493:2495 Clef.RFC0003.Conversion <> dim def
+R2497:2497 Clef.RFC0003.Conversion <> D:21 var
+R2499:2499 Clef.RFC0003.Conversion <> m:22 var
+R2502:2502 Clef.RFC0003.Conversion <> v:23 var
+R2506:2508 Clef.RFC0003.Measures <> lin def
+binder 2515:2515 <> u:24
+R2520:2523 Clef.RFC0003.Measures <> expo def
+R2526:2532 Clef.RFC0003.Conversion <> basedim proj
+R2534:2534 Clef.RFC0003.Conversion <> D:21 var
+R2536:2536 Clef.RFC0003.Conversion <> u:24 var
+R2539:2539 Clef.RFC0003.Conversion <> v:23 var
+R2542:2542 Clef.RFC0003.Conversion <> m:22 var
+R2619:2626 Clef.RFC0003.Measures <> expo_mul thm
+R2629:2636 Clef.RFC0003.Measures <> expo_pow thm
+R2619:2626 Clef.RFC0003.Measures <> expo_mul thm
+R2619:2626 Clef.RFC0003.Measures <> expo_mul thm
+R2629:2636 Clef.RFC0003.Measures <> expo_pow thm
+R2629:2636 Clef.RFC0003.Measures <> expo_pow thm
+prf 2713:2719 <> dim_meq
+R2726:2730 Clef.RFC0003.Conversion <> decls rec
+binder 2722:2722 <> D:25
+R2740:2746 Clef.RFC0003.Measures <> measure def
+binder 2734:2734 <> a:26
+binder 2736:2736 <> b:27
+R2758:2761 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2751:2753 Clef.RFC0003.Measures <> meq def
+R2755:2755 Clef.RFC0003.Conversion <> a:26 var
+R2757:2757 Clef.RFC0003.Conversion <> b:27 var
+R2762:2764 Clef.RFC0003.Measures <> meq def
+R2767:2769 Clef.RFC0003.Conversion <> dim def
+R2771:2771 Clef.RFC0003.Conversion <> D:25 var
+R2773:2773 Clef.RFC0003.Conversion <> a:26 var
+R2777:2779 Clef.RFC0003.Conversion <> dim def
+R2781:2781 Clef.RFC0003.Conversion <> D:25 var
+R2783:2783 Clef.RFC0003.Conversion <> b:27 var
+R2817:2824 Clef.RFC0003.Conversion <> expo_dim thm
+R2817:2824 Clef.RFC0003.Conversion <> expo_dim thm
+R2817:2824 Clef.RFC0003.Conversion <> expo_dim thm
+R2817:2824 Clef.RFC0003.Conversion <> expo_dim thm
+R2817:2824 Clef.RFC0003.Conversion <> expo_dim thm
+R2833:2839 Clef.RFC0003.Measures <> lin_meq thm
+R2833:2839 Clef.RFC0003.Measures <> lin_meq thm
+prf 2931:2937 <> dim_mul
+R2944:2948 Clef.RFC0003.Conversion <> decls rec
+binder 2940:2940 <> D:28
+R2958:2964 Clef.RFC0003.Measures <> measure def
+binder 2952:2952 <> a:29
+binder 2954:2954 <> b:30
+R2969:2971 Clef.RFC0003.Measures <> meq def
+R2974:2976 Clef.RFC0003.Conversion <> dim def
+R2978:2978 Clef.RFC0003.Conversion <> D:28 var
+R2981:2984 Clef.RFC0003.Measures <> mmul def
+R2986:2986 Clef.RFC0003.Conversion <> a:29 var
+R2988:2988 Clef.RFC0003.Conversion <> b:30 var
+R2993:2996 Clef.RFC0003.Measures <> mmul def
+R2999:3001 Clef.RFC0003.Conversion <> dim def
+R3003:3003 Clef.RFC0003.Conversion <> D:28 var
+R3005:3005 Clef.RFC0003.Conversion <> a:29 var
+R3009:3011 Clef.RFC0003.Conversion <> dim def
+R3013:3013 Clef.RFC0003.Conversion <> D:28 var
+R3015:3015 Clef.RFC0003.Conversion <> b:30 var
+R3046:3053 Clef.RFC0003.Measures <> expo_mul thm
+R3057:3064 Clef.RFC0003.Conversion <> expo_dim thm
+R3067:3073 Clef.RFC0003.Measures <> lin_mul thm
+R3046:3053 Clef.RFC0003.Measures <> expo_mul thm
+R3046:3053 Clef.RFC0003.Measures <> expo_mul thm
+R3057:3064 Clef.RFC0003.Conversion <> expo_dim thm
+R3057:3064 Clef.RFC0003.Conversion <> expo_dim thm
+R3057:3064 Clef.RFC0003.Conversion <> expo_dim thm
+R3057:3064 Clef.RFC0003.Conversion <> expo_dim thm
+R3057:3064 Clef.RFC0003.Conversion <> expo_dim thm
+R3067:3073 Clef.RFC0003.Measures <> lin_mul thm
+R3067:3073 Clef.RFC0003.Measures <> lin_mul thm
+prf 3164:3170 <> dim_pow
+R3177:3181 Clef.RFC0003.Conversion <> decls rec
+binder 3173:3173 <> D:31
+R3189:3189 Corelib.Numbers.BinNums <> Z ind
+binder 3185:3185 <> k:32
+R3197:3203 Clef.RFC0003.Measures <> measure def
+binder 3193:3193 <> a:33
+R3208:3210 Clef.RFC0003.Measures <> meq def
+R3213:3215 Clef.RFC0003.Conversion <> dim def
+R3217:3217 Clef.RFC0003.Conversion <> D:31 var
+R3220:3223 Clef.RFC0003.Measures <> mpow def
+R3225:3225 Clef.RFC0003.Conversion <> k:32 var
+R3227:3227 Clef.RFC0003.Conversion <> a:33 var
+R3232:3235 Clef.RFC0003.Measures <> mpow def
+R3237:3237 Clef.RFC0003.Conversion <> k:32 var
+R3240:3242 Clef.RFC0003.Conversion <> dim def
+R3244:3244 Clef.RFC0003.Conversion <> D:31 var
+R3246:3246 Clef.RFC0003.Conversion <> a:33 var
+R3277:3284 Clef.RFC0003.Measures <> expo_pow thm
+R3288:3295 Clef.RFC0003.Conversion <> expo_dim thm
+R3298:3304 Clef.RFC0003.Measures <> lin_pow thm
+R3277:3284 Clef.RFC0003.Measures <> expo_pow thm
+R3277:3284 Clef.RFC0003.Measures <> expo_pow thm
+R3288:3295 Clef.RFC0003.Conversion <> expo_dim thm
+R3288:3295 Clef.RFC0003.Conversion <> expo_dim thm
+R3288:3295 Clef.RFC0003.Conversion <> expo_dim thm
+R3288:3295 Clef.RFC0003.Conversion <> expo_dim thm
+R3298:3304 Clef.RFC0003.Measures <> lin_pow thm
+R3298:3304 Clef.RFC0003.Measures <> lin_pow thm
+prf 3375:3383 <> scale_pos
+R3390:3394 Clef.RFC0003.Conversion <> decls rec
+binder 3386:3386 <> D:34
+R3402:3408 Clef.RFC0003.Measures <> measure def
+binder 3398:3398 <> m:35
+R3414:3416 Stdlib.QArith.QArith_base <> ::Q_scope:x_'<'_x not
+R3417:3421 Clef.RFC0003.Conversion <> scale def
+R3423:3423 Clef.RFC0003.Conversion <> D:34 var
+R3425:3425 Clef.RFC0003.Conversion <> m:35 var
+R3443:3451 Clef.RFC0003.Measures <> evalq_pos thm
+R3443:3451 Clef.RFC0003.Measures <> evalq_pos thm
+R3460:3469 Clef.RFC0003.Conversion <> factor_pos proj
+R3460:3469 Clef.RFC0003.Conversion <> factor_pos proj
+prf 3527:3539 <> scale_nonzero
+R3546:3550 Clef.RFC0003.Conversion <> decls rec
+binder 3542:3542 <> D:36
+R3558:3564 Clef.RFC0003.Measures <> measure def
+binder 3554:3554 <> m:37
+R3569:3570 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R3580:3583 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R3571:3575 Clef.RFC0003.Conversion <> scale def
+R3577:3577 Clef.RFC0003.Conversion <> D:36 var
+R3579:3579 Clef.RFC0003.Conversion <> m:37 var
+R3602:3613 Clef.RFC0003.Measures <> Qpos_nonzero thm
+R3602:3613 Clef.RFC0003.Measures <> Qpos_nonzero thm
+R3622:3630 Clef.RFC0003.Conversion <> scale_pos thm
+R3622:3630 Clef.RFC0003.Conversion <> scale_pos thm
+prf 3686:3694 <> scale_meq
+R3701:3705 Clef.RFC0003.Conversion <> decls rec
+binder 3697:3697 <> D:38
+R3715:3721 Clef.RFC0003.Measures <> measure def
+binder 3709:3709 <> a:39
+binder 3711:3711 <> b:40
+R3733:3736 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3726:3728 Clef.RFC0003.Measures <> meq def
+R3730:3730 Clef.RFC0003.Conversion <> a:39 var
+R3732:3732 Clef.RFC0003.Conversion <> b:40 var
+R3746:3749 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R3737:3741 Clef.RFC0003.Conversion <> scale def
+R3743:3743 Clef.RFC0003.Conversion <> D:38 var
+R3745:3745 Clef.RFC0003.Conversion <> a:39 var
+R3750:3754 Clef.RFC0003.Conversion <> scale def
+R3756:3756 Clef.RFC0003.Conversion <> D:38 var
+R3758:3758 Clef.RFC0003.Conversion <> b:40 var
+R3776:3784 Clef.RFC0003.Measures <> evalq_meq thm
+R3776:3784 Clef.RFC0003.Measures <> evalq_meq thm
+R3793:3802 Clef.RFC0003.Conversion <> factor_pos proj
+R3793:3802 Clef.RFC0003.Conversion <> factor_pos proj
+prf 3877:3885 <> scale_mul
+R3892:3896 Clef.RFC0003.Conversion <> decls rec
+binder 3888:3888 <> D:41
+R3906:3912 Clef.RFC0003.Measures <> measure def
+binder 3900:3900 <> a:42
+binder 3902:3902 <> b:43
+R3935:3938 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R3917:3921 Clef.RFC0003.Conversion <> scale def
+R3923:3923 Clef.RFC0003.Conversion <> D:41 var
+R3926:3929 Clef.RFC0003.Measures <> mmul def
+R3931:3931 Clef.RFC0003.Conversion <> a:42 var
+R3933:3933 Clef.RFC0003.Conversion <> b:43 var
+R3948:3950 Stdlib.QArith.QArith_base <> ::Q_scope:x_'*'_x not
+R3939:3943 Clef.RFC0003.Conversion <> scale def
+R3945:3945 Clef.RFC0003.Conversion <> D:41 var
+R3947:3947 Clef.RFC0003.Conversion <> a:42 var
+R3951:3955 Clef.RFC0003.Conversion <> scale def
+R3957:3957 Clef.RFC0003.Conversion <> D:41 var
+R3959:3959 Clef.RFC0003.Conversion <> b:43 var
+R3977:3985 Clef.RFC0003.Measures <> evalq_mul thm
+R3977:3985 Clef.RFC0003.Measures <> evalq_mul thm
+prf 4055:4063 <> scale_pow
+R4070:4074 Clef.RFC0003.Conversion <> decls rec
+binder 4066:4066 <> D:44
+R4082:4082 Corelib.Numbers.BinNums <> Z ind
+binder 4078:4078 <> k:45
+R4090:4096 Clef.RFC0003.Measures <> measure def
+binder 4086:4086 <> a:46
+R4119:4122 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R4101:4105 Clef.RFC0003.Conversion <> scale def
+R4107:4107 Clef.RFC0003.Conversion <> D:44 var
+R4110:4113 Clef.RFC0003.Measures <> mpow def
+R4115:4115 Clef.RFC0003.Conversion <> k:45 var
+R4117:4117 Clef.RFC0003.Conversion <> a:46 var
+R4132:4134 Stdlib.QArith.QArith_base <> ::Q_scope:x_'^'_x not
+R4123:4127 Clef.RFC0003.Conversion <> scale def
+R4129:4129 Clef.RFC0003.Conversion <> D:44 var
+R4131:4131 Clef.RFC0003.Conversion <> a:46 var
+R4135:4135 Clef.RFC0003.Conversion <> k:45 var
+R4153:4161 Clef.RFC0003.Measures <> evalq_pow thm
+R4153:4161 Clef.RFC0003.Measures <> evalq_pow thm
+prf 4238:4246 <> scale_div
+R4253:4257 Clef.RFC0003.Conversion <> decls rec
+binder 4249:4249 <> D:47
+R4267:4273 Clef.RFC0003.Measures <> measure def
+binder 4261:4261 <> a:48
+binder 4263:4263 <> b:49
+R4296:4299 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R4278:4282 Clef.RFC0003.Conversion <> scale def
+R4284:4284 Clef.RFC0003.Conversion <> D:47 var
+R4287:4290 Clef.RFC0003.Measures <> mdiv def
+R4292:4292 Clef.RFC0003.Conversion <> a:48 var
+R4294:4294 Clef.RFC0003.Conversion <> b:49 var
+R4309:4311 Stdlib.QArith.QArith_base <> ::Q_scope:x_'/'_x not
+R4300:4304 Clef.RFC0003.Conversion <> scale def
+R4306:4306 Clef.RFC0003.Conversion <> D:47 var
+R4308:4308 Clef.RFC0003.Conversion <> a:48 var
+R4312:4316 Clef.RFC0003.Conversion <> scale def
+R4318:4318 Clef.RFC0003.Conversion <> D:47 var
+R4320:4320 Clef.RFC0003.Conversion <> b:49 var
+R4339:4342 Clef.RFC0003.Measures <> mdiv def
+R4345:4348 Clef.RFC0003.Measures <> minv def
+R4359:4367 Clef.RFC0003.Conversion <> scale_mul thm
+R4370:4378 Clef.RFC0003.Conversion <> scale_pow thm
+R4359:4367 Clef.RFC0003.Conversion <> scale_mul thm
+R4359:4367 Clef.RFC0003.Conversion <> scale_mul thm
+R4370:4378 Clef.RFC0003.Conversion <> scale_pow thm
+R4370:4378 Clef.RFC0003.Conversion <> scale_pow thm
+prf 4699:4719 <> readings_well_defined
+R4726:4730 Clef.RFC0003.Conversion <> decls rec
+binder 4722:4722 <> D:50
+R4740:4746 Clef.RFC0003.Measures <> measure def
+binder 4734:4734 <> a:51
+binder 4736:4736 <> b:52
+R4760:4763 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4753:4755 Clef.RFC0003.Measures <> meq def
+R4757:4757 Clef.RFC0003.Conversion <> a:51 var
+R4759:4759 Clef.RFC0003.Conversion <> b:52 var
+R4787:4790 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4764:4766 Clef.RFC0003.Measures <> meq def
+R4769:4771 Clef.RFC0003.Conversion <> dim def
+R4773:4773 Clef.RFC0003.Conversion <> D:50 var
+R4775:4775 Clef.RFC0003.Conversion <> a:51 var
+R4779:4781 Clef.RFC0003.Conversion <> dim def
+R4783:4783 Clef.RFC0003.Conversion <> D:50 var
+R4785:4785 Clef.RFC0003.Conversion <> b:52 var
+R4800:4803 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R4791:4795 Clef.RFC0003.Conversion <> scale def
+R4797:4797 Clef.RFC0003.Conversion <> D:50 var
+R4799:4799 Clef.RFC0003.Conversion <> a:51 var
+R4804:4808 Clef.RFC0003.Conversion <> scale def
+R4810:4810 Clef.RFC0003.Conversion <> D:50 var
+R4812:4812 Clef.RFC0003.Conversion <> b:52 var
+R4847:4853 Clef.RFC0003.Conversion <> dim_meq thm
+R4863:4871 Clef.RFC0003.Conversion <> scale_meq thm
+R4847:4853 Clef.RFC0003.Conversion <> dim_meq thm
+R4863:4871 Clef.RFC0003.Conversion <> scale_meq thm
+prf 5119:5127 <> convb_iff
+R5134:5138 Clef.RFC0003.Conversion <> decls rec
+binder 5130:5130 <> D:53
+R5148:5154 Clef.RFC0003.Measures <> measure def
+binder 5142:5142 <> a:54
+binder 5144:5144 <> b:55
+R5177:5181 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+R5170:5172 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5159:5163 Clef.RFC0003.Conversion <> convb def
+R5165:5165 Clef.RFC0003.Conversion <> D:53 var
+R5167:5167 Clef.RFC0003.Conversion <> a:54 var
+R5169:5169 Clef.RFC0003.Conversion <> b:55 var
+R5173:5176 Corelib.Init.Datatypes <> true constr
+R5182:5185 Clef.RFC0003.Conversion <> conv def
+R5187:5187 Clef.RFC0003.Conversion <> D:53 var
+R5189:5189 Clef.RFC0003.Conversion <> a:54 var
+R5191:5191 Clef.RFC0003.Conversion <> b:55 var
+R5209:5216 Clef.RFC0003.Measures <> meqb_iff thm
+R5209:5216 Clef.RFC0003.Measures <> meqb_iff thm
+prf 5537:5552 <> conv_equivalence
+R5559:5563 Clef.RFC0003.Conversion <> decls rec
+binder 5555:5555 <> D:56
+R5575:5581 Clef.RFC0003.Measures <> measure def
+binder 5567:5567 <> a:57
+binder 5569:5569 <> b:58
+binder 5571:5571 <> c:59
+R5598:5603 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5588:5591 Clef.RFC0003.Conversion <> conv def
+R5593:5593 Clef.RFC0003.Conversion <> D:56 var
+R5595:5595 Clef.RFC0003.Conversion <> a:57 var
+R5597:5597 Clef.RFC0003.Conversion <> a:57 var
+R5604:5604 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5629:5635 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5615:5618 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5605:5608 Clef.RFC0003.Conversion <> conv def
+R5610:5610 Clef.RFC0003.Conversion <> D:56 var
+R5612:5612 Clef.RFC0003.Conversion <> a:57 var
+R5614:5614 Clef.RFC0003.Conversion <> b:58 var
+R5619:5622 Clef.RFC0003.Conversion <> conv def
+R5624:5624 Clef.RFC0003.Conversion <> D:56 var
+R5626:5626 Clef.RFC0003.Conversion <> b:58 var
+R5628:5628 Clef.RFC0003.Conversion <> a:57 var
+R5636:5636 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5675:5682 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5704:5704 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5647:5650 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5637:5640 Clef.RFC0003.Conversion <> conv def
+R5642:5642 Clef.RFC0003.Conversion <> D:56 var
+R5644:5644 Clef.RFC0003.Conversion <> a:57 var
+R5646:5646 Clef.RFC0003.Conversion <> b:58 var
+R5661:5664 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5651:5654 Clef.RFC0003.Conversion <> conv def
+R5656:5656 Clef.RFC0003.Conversion <> D:56 var
+R5658:5658 Clef.RFC0003.Conversion <> b:58 var
+R5660:5660 Clef.RFC0003.Conversion <> c:59 var
+R5665:5668 Clef.RFC0003.Conversion <> conv def
+R5670:5670 Clef.RFC0003.Conversion <> D:56 var
+R5672:5672 Clef.RFC0003.Conversion <> a:57 var
+R5674:5674 Clef.RFC0003.Conversion <> c:59 var
+R5690:5693 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5683:5685 Clef.RFC0003.Measures <> meq def
+R5687:5687 Clef.RFC0003.Conversion <> a:57 var
+R5689:5689 Clef.RFC0003.Conversion <> b:58 var
+R5694:5697 Clef.RFC0003.Conversion <> conv def
+R5699:5699 Clef.RFC0003.Conversion <> D:56 var
+R5701:5701 Clef.RFC0003.Conversion <> a:57 var
+R5703:5703 Clef.RFC0003.Conversion <> b:58 var
+R5723:5726 Clef.RFC0003.Conversion <> conv def
+R5768:5775 Clef.RFC0003.Measures <> meq_refl thm
+R5768:5775 Clef.RFC0003.Measures <> meq_refl thm
+R5788:5794 Clef.RFC0003.Measures <> meq_sym thm
+R5788:5794 Clef.RFC0003.Measures <> meq_sym thm
+R5807:5815 Clef.RFC0003.Measures <> meq_trans thm
+R5807:5815 Clef.RFC0003.Measures <> meq_trans thm
+R5828:5834 Clef.RFC0003.Conversion <> dim_meq thm
+R5828:5834 Clef.RFC0003.Conversion <> dim_meq thm
+prf 6274:6282 <> coherence
+R6289:6293 Clef.RFC0003.Conversion <> decls rec
+binder 6285:6285 <> D:60
+R6305:6311 Clef.RFC0003.Measures <> measure def
+binder 6297:6297 <> a:61
+binder 6299:6299 <> b:62
+binder 6301:6301 <> c:63
+R6336:6341 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6331:6334 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R6318:6324 Clef.RFC0003.Conversion <> cfactor def
+R6326:6326 Clef.RFC0003.Conversion <> D:60 var
+R6328:6328 Clef.RFC0003.Conversion <> a:61 var
+R6330:6330 Clef.RFC0003.Conversion <> a:61 var
+R6388:6393 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6371:6374 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R6355:6357 Stdlib.QArith.QArith_base <> ::Q_scope:x_'*'_x not
+R6342:6348 Clef.RFC0003.Conversion <> cfactor def
+R6350:6350 Clef.RFC0003.Conversion <> D:60 var
+R6352:6352 Clef.RFC0003.Conversion <> a:61 var
+R6354:6354 Clef.RFC0003.Conversion <> b:62 var
+R6358:6364 Clef.RFC0003.Conversion <> cfactor def
+R6366:6366 Clef.RFC0003.Conversion <> D:60 var
+R6368:6368 Clef.RFC0003.Conversion <> b:62 var
+R6370:6370 Clef.RFC0003.Conversion <> c:63 var
+R6375:6381 Clef.RFC0003.Conversion <> cfactor def
+R6383:6383 Clef.RFC0003.Conversion <> D:60 var
+R6385:6385 Clef.RFC0003.Conversion <> a:61 var
+R6387:6387 Clef.RFC0003.Conversion <> c:63 var
+R6423:6426 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R6407:6409 Stdlib.QArith.QArith_base <> ::Q_scope:x_'*'_x not
+R6394:6400 Clef.RFC0003.Conversion <> cfactor def
+R6402:6402 Clef.RFC0003.Conversion <> D:60 var
+R6404:6404 Clef.RFC0003.Conversion <> a:61 var
+R6406:6406 Clef.RFC0003.Conversion <> b:62 var
+R6410:6416 Clef.RFC0003.Conversion <> cfactor def
+R6418:6418 Clef.RFC0003.Conversion <> D:60 var
+R6420:6420 Clef.RFC0003.Conversion <> b:62 var
+R6422:6422 Clef.RFC0003.Conversion <> a:61 var
+R6446:6452 Clef.RFC0003.Conversion <> cfactor def
+R6469:6481 Clef.RFC0003.Conversion <> scale_nonzero thm
+R6469:6481 Clef.RFC0003.Conversion <> scale_nonzero thm
+R6501:6513 Clef.RFC0003.Conversion <> scale_nonzero thm
+R6501:6513 Clef.RFC0003.Conversion <> scale_nonzero thm
+R6533:6545 Clef.RFC0003.Conversion <> scale_nonzero thm
+R6533:6545 Clef.RFC0003.Conversion <> scale_nonzero thm
+prf 6815:6827 <> cfactor_equal
+R6834:6838 Clef.RFC0003.Conversion <> decls rec
+binder 6830:6830 <> D:64
+R6848:6854 Clef.RFC0003.Measures <> measure def
+binder 6842:6842 <> a:65
+binder 6844:6844 <> b:66
+R6866:6869 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6859:6861 Clef.RFC0003.Measures <> meq def
+R6863:6863 Clef.RFC0003.Conversion <> a:65 var
+R6865:6865 Clef.RFC0003.Conversion <> b:66 var
+R6883:6886 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R6870:6876 Clef.RFC0003.Conversion <> cfactor def
+R6878:6878 Clef.RFC0003.Conversion <> D:64 var
+R6880:6880 Clef.RFC0003.Conversion <> a:65 var
+R6882:6882 Clef.RFC0003.Conversion <> b:66 var
+R6915:6921 Clef.RFC0003.Conversion <> cfactor def
+R6933:6941 Clef.RFC0003.Conversion <> scale_meq thm
+R6933:6941 Clef.RFC0003.Conversion <> scale_meq thm
+R6933:6941 Clef.RFC0003.Conversion <> scale_meq thm
+R6966:6978 Clef.RFC0003.Conversion <> scale_nonzero thm
+R6966:6978 Clef.RFC0003.Conversion <> scale_nonzero thm
+prf 7398:7405 <> compound
+R7412:7416 Clef.RFC0003.Conversion <> decls rec
+binder 7408:7408 <> D:67
+R7432:7438 Clef.RFC0003.Measures <> measure def
+binder 7420:7420 <> a:68
+binder 7422:7423 <> a':69
+binder 7425:7425 <> b:70
+binder 7427:7428 <> b':71
+R7446:7446 Corelib.Numbers.BinNums <> Z ind
+binder 7442:7442 <> k:72
+R7464:7467 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7453:7456 Clef.RFC0003.Conversion <> conv def
+R7458:7458 Clef.RFC0003.Conversion <> D:67 var
+R7460:7460 Clef.RFC0003.Conversion <> a:68 var
+R7462:7463 Clef.RFC0003.Conversion <> a':69 var
+R7479:7484 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7468:7471 Clef.RFC0003.Conversion <> conv def
+R7473:7473 Clef.RFC0003.Conversion <> D:67 var
+R7475:7475 Clef.RFC0003.Conversion <> b:70 var
+R7477:7478 Clef.RFC0003.Conversion <> b':71 var
+R7515:7520 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7485:7488 Clef.RFC0003.Conversion <> conv def
+R7490:7490 Clef.RFC0003.Conversion <> D:67 var
+R7493:7496 Clef.RFC0003.Measures <> mmul def
+R7498:7498 Clef.RFC0003.Conversion <> a:68 var
+R7500:7500 Clef.RFC0003.Conversion <> b:70 var
+R7504:7507 Clef.RFC0003.Measures <> mmul def
+R7509:7510 Clef.RFC0003.Conversion <> a':69 var
+R7512:7513 Clef.RFC0003.Conversion <> b':71 var
+R7589:7594 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7554:7557 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R7521:7527 Clef.RFC0003.Conversion <> cfactor def
+R7529:7529 Clef.RFC0003.Conversion <> D:67 var
+R7532:7535 Clef.RFC0003.Measures <> mmul def
+R7537:7537 Clef.RFC0003.Conversion <> a:68 var
+R7539:7539 Clef.RFC0003.Conversion <> b:70 var
+R7543:7546 Clef.RFC0003.Measures <> mmul def
+R7548:7549 Clef.RFC0003.Conversion <> a':69 var
+R7551:7552 Clef.RFC0003.Conversion <> b':71 var
+R7572:7574 Stdlib.QArith.QArith_base <> ::Q_scope:x_'*'_x not
+R7558:7564 Clef.RFC0003.Conversion <> cfactor def
+R7566:7566 Clef.RFC0003.Conversion <> D:67 var
+R7568:7568 Clef.RFC0003.Conversion <> a:68 var
+R7570:7571 Clef.RFC0003.Conversion <> a':69 var
+R7575:7581 Clef.RFC0003.Conversion <> cfactor def
+R7583:7583 Clef.RFC0003.Conversion <> D:67 var
+R7585:7585 Clef.RFC0003.Conversion <> b:70 var
+R7587:7588 Clef.RFC0003.Conversion <> b':71 var
+R7624:7629 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7595:7598 Clef.RFC0003.Conversion <> conv def
+R7600:7600 Clef.RFC0003.Conversion <> D:67 var
+R7603:7606 Clef.RFC0003.Measures <> mpow def
+R7608:7608 Clef.RFC0003.Conversion <> k:72 var
+R7610:7610 Clef.RFC0003.Conversion <> a:68 var
+R7614:7617 Clef.RFC0003.Measures <> mpow def
+R7619:7619 Clef.RFC0003.Conversion <> k:72 var
+R7621:7622 Clef.RFC0003.Conversion <> a':69 var
+R7662:7665 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R7630:7636 Clef.RFC0003.Conversion <> cfactor def
+R7638:7638 Clef.RFC0003.Conversion <> D:67 var
+R7641:7644 Clef.RFC0003.Measures <> mpow def
+R7646:7646 Clef.RFC0003.Conversion <> k:72 var
+R7648:7648 Clef.RFC0003.Conversion <> a:68 var
+R7652:7655 Clef.RFC0003.Measures <> mpow def
+R7657:7657 Clef.RFC0003.Conversion <> k:72 var
+R7659:7660 Clef.RFC0003.Conversion <> a':69 var
+R7680:7682 Stdlib.QArith.QArith_base <> ::Q_scope:x_'^'_x not
+R7666:7672 Clef.RFC0003.Conversion <> cfactor def
+R7674:7674 Clef.RFC0003.Conversion <> D:67 var
+R7676:7676 Clef.RFC0003.Conversion <> a:68 var
+R7678:7679 Clef.RFC0003.Conversion <> a':69 var
+R7683:7683 Clef.RFC0003.Conversion <> k:72 var
+R7702:7705 Clef.RFC0003.Conversion <> conv def
+R7708:7714 Clef.RFC0003.Conversion <> cfactor def
+R7745:7757 Clef.RFC0003.Conversion <> scale_nonzero thm
+R7745:7757 Clef.RFC0003.Conversion <> scale_nonzero thm
+R7778:7790 Clef.RFC0003.Conversion <> scale_nonzero thm
+R7778:7790 Clef.RFC0003.Conversion <> scale_nonzero thm
+R7841:7849 Clef.RFC0003.Measures <> meq_trans thm
+R7859:7865 Clef.RFC0003.Conversion <> dim_mul thm
+R7841:7849 Clef.RFC0003.Measures <> meq_trans thm
+R7859:7865 Clef.RFC0003.Conversion <> dim_mul thm
+R7878:7886 Clef.RFC0003.Measures <> meq_trans thm
+R7898:7904 Clef.RFC0003.Measures <> meq_sym thm
+R7913:7919 Clef.RFC0003.Conversion <> dim_mul thm
+R7878:7886 Clef.RFC0003.Measures <> meq_trans thm
+R7898:7904 Clef.RFC0003.Measures <> meq_sym thm
+R7913:7919 Clef.RFC0003.Conversion <> dim_mul thm
+R7933:7940 Clef.RFC0003.Measures <> mmul_meq thm
+R7933:7940 Clef.RFC0003.Measures <> mmul_meq thm
+R7968:7976 Clef.RFC0003.Conversion <> scale_mul thm
+R7968:7976 Clef.RFC0003.Conversion <> scale_mul thm
+R7968:7976 Clef.RFC0003.Conversion <> scale_mul thm
+R7968:7976 Clef.RFC0003.Conversion <> scale_mul thm
+R7968:7976 Clef.RFC0003.Conversion <> scale_mul thm
+R8003:8011 Clef.RFC0003.Measures <> meq_trans thm
+R8021:8027 Clef.RFC0003.Conversion <> dim_pow thm
+R8003:8011 Clef.RFC0003.Measures <> meq_trans thm
+R8021:8027 Clef.RFC0003.Conversion <> dim_pow thm
+R8040:8048 Clef.RFC0003.Measures <> meq_trans thm
+R8060:8066 Clef.RFC0003.Measures <> meq_sym thm
+R8075:8081 Clef.RFC0003.Conversion <> dim_pow thm
+R8040:8048 Clef.RFC0003.Measures <> meq_trans thm
+R8060:8066 Clef.RFC0003.Measures <> meq_sym thm
+R8075:8081 Clef.RFC0003.Conversion <> dim_pow thm
+R8095:8102 Clef.RFC0003.Measures <> mpow_meq thm
+R8095:8102 Clef.RFC0003.Measures <> mpow_meq thm
+R8128:8136 Clef.RFC0003.Conversion <> scale_pow thm
+R8128:8136 Clef.RFC0003.Conversion <> scale_pow thm
+R8128:8136 Clef.RFC0003.Conversion <> scale_pow thm
+R8128:8136 Clef.RFC0003.Conversion <> scale_pow thm
+R8128:8136 Clef.RFC0003.Conversion <> scale_pow thm
+R8155:8164 Stdlib.QArith.Qpower <> Qdiv_power thm
+R8155:8164 Stdlib.QArith.Qpower <> Qdiv_power thm
+prf 9238:9255 <> quotient_dimension
+R9262:9266 Clef.RFC0003.Conversion <> decls rec
+binder 9258:9258 <> D:73
+R9280:9286 Clef.RFC0003.Measures <> measure def
+binder 9270:9270 <> a:74
+binder 9272:9272 <> b:75
+binder 9274:9274 <> d:76
+binder 9276:9276 <> t:77
+R9303:9306 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9293:9296 Clef.RFC0003.Conversion <> conv def
+R9298:9298 Clef.RFC0003.Conversion <> D:73 var
+R9300:9300 Clef.RFC0003.Conversion <> a:74 var
+R9302:9302 Clef.RFC0003.Conversion <> d:76 var
+R9317:9322 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9307:9310 Clef.RFC0003.Conversion <> conv def
+R9312:9312 Clef.RFC0003.Conversion <> D:73 var
+R9314:9314 Clef.RFC0003.Conversion <> b:75 var
+R9316:9316 Clef.RFC0003.Conversion <> t:77 var
+R9351:9357 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9422:9422 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9323:9326 Clef.RFC0003.Conversion <> conv def
+R9328:9328 Clef.RFC0003.Conversion <> D:73 var
+R9331:9334 Clef.RFC0003.Measures <> mdiv def
+R9336:9336 Clef.RFC0003.Conversion <> a:74 var
+R9338:9338 Clef.RFC0003.Conversion <> b:75 var
+R9342:9345 Clef.RFC0003.Measures <> mdiv def
+R9347:9347 Clef.RFC0003.Conversion <> d:76 var
+R9349:9349 Clef.RFC0003.Conversion <> t:77 var
+R9389:9392 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R9358:9364 Clef.RFC0003.Conversion <> cfactor def
+R9366:9366 Clef.RFC0003.Conversion <> D:73 var
+R9369:9372 Clef.RFC0003.Measures <> mdiv def
+R9374:9374 Clef.RFC0003.Conversion <> a:74 var
+R9376:9376 Clef.RFC0003.Conversion <> b:75 var
+R9380:9383 Clef.RFC0003.Measures <> mdiv def
+R9385:9385 Clef.RFC0003.Conversion <> d:76 var
+R9387:9387 Clef.RFC0003.Conversion <> t:77 var
+R9406:9408 Stdlib.QArith.QArith_base <> ::Q_scope:x_'/'_x not
+R9393:9399 Clef.RFC0003.Conversion <> cfactor def
+R9401:9401 Clef.RFC0003.Conversion <> D:73 var
+R9403:9403 Clef.RFC0003.Conversion <> a:74 var
+R9405:9405 Clef.RFC0003.Conversion <> d:76 var
+R9409:9415 Clef.RFC0003.Conversion <> cfactor def
+R9417:9417 Clef.RFC0003.Conversion <> D:73 var
+R9419:9419 Clef.RFC0003.Conversion <> b:75 var
+R9421:9421 Clef.RFC0003.Conversion <> t:77 var
+R9455:9458 Clef.RFC0003.Measures <> mdiv def
+R9461:9464 Clef.RFC0003.Measures <> minv def
+R9479:9486 Clef.RFC0003.Conversion <> compound thm
+R9479:9486 Clef.RFC0003.Conversion <> compound thm
+R9544:9551 Clef.RFC0003.Conversion <> compound thm
+R9560:9563 Clef.RFC0003.Measures <> mpow def
+R9574:9577 Clef.RFC0003.Measures <> mpow def
+R9544:9551 Clef.RFC0003.Conversion <> compound thm
+R9560:9563 Clef.RFC0003.Measures <> mpow def
+R9574:9577 Clef.RFC0003.Measures <> mpow def
+prf 9806:9819 <> scale_rescaled
+R9829:9833 Clef.RFC0003.Conversion <> decls rec
+binder 9822:9822 <> D:78
+binder 9824:9825 <> D':79
+R9846:9849 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9841:9845 Clef.RFC0003.Measures <> uname def
+R9850:9850 Stdlib.QArith.QArith_base <> Q rec
+binder 9837:9837 <> k:80
+R9858:9864 Clef.RFC0003.Measures <> measure def
+binder 9854:9854 <> m:81
+R9871:9871 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9931:9937 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 9879:9879 <> u:82
+R9893:9896 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R9882:9887 Clef.RFC0003.Conversion <> factor proj
+R9889:9890 Clef.RFC0003.Conversion <> D':79 var
+R9892:9892 Clef.RFC0003.Conversion <> u:82 var
+R9907:9909 Stdlib.QArith.QArith_base <> ::Q_scope:x_'*'_x not
+R9897:9902 Clef.RFC0003.Conversion <> factor proj
+R9904:9904 Clef.RFC0003.Conversion <> D:78 var
+R9906:9906 Clef.RFC0003.Conversion <> u:82 var
+R9910:9914 Clef.RFC0003.Measures <> evalq def
+R9916:9916 Clef.RFC0003.Conversion <> k:80 var
+R9919:9925 Clef.RFC0003.Conversion <> basedim proj
+R9927:9927 Clef.RFC0003.Conversion <> D:78 var
+R9929:9929 Clef.RFC0003.Conversion <> u:82 var
+R9948:9951 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R9938:9942 Clef.RFC0003.Conversion <> scale def
+R9944:9945 Clef.RFC0003.Conversion <> D':79 var
+R9947:9947 Clef.RFC0003.Conversion <> m:81 var
+R9961:9963 Stdlib.QArith.QArith_base <> ::Q_scope:x_'*'_x not
+R9952:9956 Clef.RFC0003.Conversion <> scale def
+R9958:9958 Clef.RFC0003.Conversion <> D:78 var
+R9960:9960 Clef.RFC0003.Conversion <> m:81 var
+R9964:9968 Clef.RFC0003.Measures <> evalq def
+R9970:9970 Clef.RFC0003.Conversion <> k:80 var
+R9973:9975 Clef.RFC0003.Conversion <> dim def
+R9977:9977 Clef.RFC0003.Conversion <> D:78 var
+R9979:9979 Clef.RFC0003.Conversion <> m:81 var
+R10008:10012 Clef.RFC0003.Conversion <> scale def
+R10080:10090 Stdlib.QArith.Qpower <> Qmult_power thm
+R10093:10101 Clef.RFC0003.Measures <> evalq_mul thm
+R10104:10112 Clef.RFC0003.Measures <> evalq_pow thm
+R10080:10090 Stdlib.QArith.Qpower <> Qmult_power thm
+R10080:10090 Stdlib.QArith.Qpower <> Qmult_power thm
+R10093:10101 Clef.RFC0003.Measures <> evalq_mul thm
+R10093:10101 Clef.RFC0003.Measures <> evalq_mul thm
+R10104:10112 Clef.RFC0003.Measures <> evalq_pow thm
+R10104:10112 Clef.RFC0003.Measures <> evalq_pow thm
+prf 10651:10666 <> base_independent
+R10676:10680 Clef.RFC0003.Conversion <> decls rec
+binder 10669:10669 <> D:83
+binder 10671:10672 <> D':84
+R10693:10696 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10688:10692 Clef.RFC0003.Measures <> uname def
+R10697:10697 Stdlib.QArith.QArith_base <> Q rec
+binder 10684:10684 <> k:85
+R10707:10713 Clef.RFC0003.Measures <> measure def
+binder 10701:10701 <> a:86
+binder 10703:10703 <> b:87
+R10720:10720 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10738:10744 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 10728:10728 <> u:88
+R10732:10734 Stdlib.QArith.QArith_base <> ::Q_scope:x_'<'_x not
+R10735:10735 Clef.RFC0003.Conversion <> k:85 var
+R10737:10737 Clef.RFC0003.Conversion <> u:88 var
+R10745:10745 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10805:10811 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 10753:10753 <> u:89
+R10767:10770 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R10756:10761 Clef.RFC0003.Conversion <> factor proj
+R10763:10764 Clef.RFC0003.Conversion <> D':84 var
+R10766:10766 Clef.RFC0003.Conversion <> u:89 var
+R10781:10783 Stdlib.QArith.QArith_base <> ::Q_scope:x_'*'_x not
+R10771:10776 Clef.RFC0003.Conversion <> factor proj
+R10778:10778 Clef.RFC0003.Conversion <> D:83 var
+R10780:10780 Clef.RFC0003.Conversion <> u:89 var
+R10784:10788 Clef.RFC0003.Measures <> evalq def
+R10790:10790 Clef.RFC0003.Conversion <> k:85 var
+R10793:10799 Clef.RFC0003.Conversion <> basedim proj
+R10801:10801 Clef.RFC0003.Conversion <> D:83 var
+R10803:10803 Clef.RFC0003.Conversion <> u:89 var
+R10822:10827 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10812:10815 Clef.RFC0003.Conversion <> conv def
+R10817:10817 Clef.RFC0003.Conversion <> D:83 var
+R10819:10819 Clef.RFC0003.Conversion <> a:86 var
+R10821:10821 Clef.RFC0003.Conversion <> b:87 var
+R10842:10845 Stdlib.QArith.QArith_base <> ::Q_scope:x_'=='_x not
+R10828:10834 Clef.RFC0003.Conversion <> cfactor def
+R10836:10837 Clef.RFC0003.Conversion <> D':84 var
+R10839:10839 Clef.RFC0003.Conversion <> a:86 var
+R10841:10841 Clef.RFC0003.Conversion <> b:87 var
+R10846:10852 Clef.RFC0003.Conversion <> cfactor def
+R10854:10854 Clef.RFC0003.Conversion <> D:83 var
+R10856:10856 Clef.RFC0003.Conversion <> a:86 var
+R10858:10858 Clef.RFC0003.Conversion <> b:87 var
+R10891:10897 Clef.RFC0003.Conversion <> cfactor def
+R10910:10923 Clef.RFC0003.Conversion <> scale_rescaled thm
+R10910:10923 Clef.RFC0003.Conversion <> scale_rescaled thm
+R10910:10923 Clef.RFC0003.Conversion <> scale_rescaled thm
+R10910:10923 Clef.RFC0003.Conversion <> scale_rescaled thm
+R10910:10923 Clef.RFC0003.Conversion <> scale_rescaled thm
+R10956:10964 Clef.RFC0003.Measures <> evalq_meq thm
+R10969:10971 Clef.RFC0003.Conversion <> dim def
+R10979:10981 Clef.RFC0003.Conversion <> dim def
+R10956:10964 Clef.RFC0003.Measures <> evalq_meq thm
+R10969:10971 Clef.RFC0003.Conversion <> dim def
+R10979:10981 Clef.RFC0003.Conversion <> dim def
+R10956:10964 Clef.RFC0003.Measures <> evalq_meq thm
+R10969:10971 Clef.RFC0003.Conversion <> dim def
+R10979:10981 Clef.RFC0003.Conversion <> dim def
+R11008:11020 Clef.RFC0003.Conversion <> scale_nonzero thm
+R11008:11020 Clef.RFC0003.Conversion <> scale_nonzero thm
+R11040:11051 Clef.RFC0003.Measures <> Qpos_nonzero thm
+R11056:11064 Clef.RFC0003.Measures <> evalq_pos thm
+R11069:11071 Clef.RFC0003.Conversion <> dim def
+R11040:11051 Clef.RFC0003.Measures <> Qpos_nonzero thm
+R11056:11064 Clef.RFC0003.Measures <> evalq_pos thm
+R11069:11071 Clef.RFC0003.Conversion <> dim def
+def 11258:11266 <> ex_factor
+R11273:11277 Clef.RFC0003.Measures <> uname def
+binder 11269:11269 <> u:90
+R11282:11282 Stdlib.QArith.QArith_base <> Q rec
+R11292:11295 Clef.RFC0003.Measures <> ueqb def
+R11297:11297 Clef.RFC0003.Conversion <> u:90 var
+R11324:11327 Clef.RFC0003.Measures <> ueqb def
+R11329:11329 Clef.RFC0003.Conversion <> u:90 var
+R11355:11358 Clef.RFC0003.Measures <> ueqb def
+R11360:11360 Clef.RFC0003.Conversion <> u:90 var
+R11379:11381 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+def 11465:11474 <> ex_basedim
+R11481:11485 Clef.RFC0003.Measures <> uname def
+binder 11477:11477 <> u:91
+R11490:11496 Clef.RFC0003.Measures <> measure def
+R11506:11509 Clef.RFC0003.Measures <> ueqb def
+R11511:11511 Clef.RFC0003.Conversion <> u:91 var
+R11546:11549 Clef.RFC0003.Measures <> ueqb def
+R11551:11551 Clef.RFC0003.Conversion <> u:91 var
+R11585:11588 Clef.RFC0003.Measures <> ueqb def
+R11590:11590 Clef.RFC0003.Conversion <> u:91 var
+R11622:11622 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R11631:11631 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R11623:11623 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11625:11626 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11630:11630 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11624:11624 Clef.RFC0003.Conversion <> u:91 var
+R11602:11602 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R11613:11613 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R11603:11603 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11607:11608 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11612:11612 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11562:11562 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R11573:11573 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R11563:11563 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11567:11568 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11572:11572 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11523:11523 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R11534:11534 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R11524:11524 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11528:11529 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11533:11533 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+prf 11687:11699 <> ex_factor_pos
+R11706:11710 Clef.RFC0003.Measures <> uname def
+binder 11702:11702 <> u:92
+R11716:11718 Stdlib.QArith.QArith_base <> ::Q_scope:x_'<'_x not
+R11719:11727 Clef.RFC0003.Conversion <> ex_factor def
+R11729:11729 Clef.RFC0003.Conversion <> u:92 var
+R11748:11756 Clef.RFC0003.Conversion <> ex_factor def
+R11776:11779 Clef.RFC0003.Measures <> ueqb def
+R11776:11779 Clef.RFC0003.Measures <> ueqb def
+R11776:11779 Clef.RFC0003.Measures <> ueqb def
+R11776:11779 Clef.RFC0003.Measures <> ueqb def
+R11776:11779 Clef.RFC0003.Measures <> ueqb def
+R11776:11779 Clef.RFC0003.Measures <> ueqb def
+R11776:11779 Clef.RFC0003.Measures <> ueqb def
+R11776:11779 Clef.RFC0003.Measures <> ueqb def
+def 11850:11851 <> ex
+R11855:11859 Clef.RFC0003.Conversion <> decls rec
+R11864:11868 Clef.RFC0003.Conversion <> Decls constr
+R11870:11879 Clef.RFC0003.Conversion <> ex_basedim def
+R11881:11889 Clef.RFC0003.Conversion <> ex_factor def
+R11891:11903 Clef.RFC0003.Conversion <> ex_factor_pos thm
+def 11933:11935 <> kmh
+R11939:11945 Clef.RFC0003.Measures <> measure def
+R11950:11950 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11962:11963 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11977:11977 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R11951:11951 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11956:11957 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11961:11961 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11964:11964 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11968:11969 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11976:11976 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+def 12006:12007 <> ms
+R12011:12017 Clef.RFC0003.Measures <> measure def
+R12022:12022 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R12033:12034 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R12048:12048 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R12023:12023 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R12027:12028 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R12032:12032 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R12035:12035 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R12039:12040 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R12047:12047 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+prf 12115:12126 <> ex_kmh_to_ms
+R12152:12155 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R12145:12147 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R12130:12134 Clef.RFC0003.Conversion <> convb def
+R12136:12137 Clef.RFC0003.Conversion <> ex def
+R12139:12141 Clef.RFC0003.Conversion <> kmh def
+R12143:12144 Clef.RFC0003.Conversion <> ms def
+R12148:12151 Corelib.Init.Datatypes <> true constr
+R12180:12182 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R12156:12159 Stdlib.QArith.Qreduction <> Qred def
+R12162:12168 Clef.RFC0003.Conversion <> cfactor def
+R12170:12171 Clef.RFC0003.Conversion <> ex def
+R12173:12175 Clef.RFC0003.Conversion <> kmh def
+R12177:12178 Clef.RFC0003.Conversion <> ms def
+R12184:12186 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+prf 12281:12291 <> ex_km_not_s
+R12330:12332 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R12295:12299 Clef.RFC0003.Conversion <> convb def
+R12301:12302 Clef.RFC0003.Conversion <> ex def
+R12304:12304 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R12316:12316 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R12305:12305 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R12310:12311 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R12315:12315 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R12318:12318 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R12329:12329 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R12319:12319 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R12323:12324 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R12328:12328 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R12333:12337 Corelib.Init.Datatypes <> false constr

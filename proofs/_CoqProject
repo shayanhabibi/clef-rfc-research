@@ -11,3 +11,9 @@ theories/RFC0001/Discussion.v
 theories/RFC0002/Overview.v
 theories/RFC0002/Regions.v
 theories/RFC0002/Discussion.v
+theories/RFC0003/Overview.v
+theories/RFC0003/Measures.v
+theories/RFC0003/Conversion.v
+theories/RFC0003/Elaboration.v
+theories/RFC0003/Integers.v
+theories/RFC0003/Discussion.v
