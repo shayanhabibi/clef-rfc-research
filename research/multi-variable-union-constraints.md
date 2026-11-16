@@ -5,8 +5,8 @@ Research note for RFC 0001 (closed-set type constraints). Written 2026-11-15.
 Sources read for this note:
 
 - RFC 0001 as modelled in `proofs/theories/RFC0001/*.v` and `proofs/theories/Spec/*.v` of this repository.
-- The Clef specification at `C:\Users\shaya\RiderProjects\ClefWorkspace\clef-lang-spec\spec\` (repository HEAD `26207e0`; the RFC states it was written against `0ad783d`). Cited below as `spec/<file>`, with the heading.
-- The compiler sources at `C:\Users\shaya\RiderProjects\ClefWorkspace\clef\src\Compiler\`. Cited as `clef/src/Compiler/<path>`.
+- The Clef specification at a local clone of `clef-lang-spec`, directory `spec/` (repository HEAD `26207e0`; the RFC states it was written against `0ad783d`). Cited below as `spec/<file>`, with the heading.
+- The compiler sources at a local clone of `clef`, directory `src/Compiler/`. Cited as `clef/src/Compiler/<path>`.
 - Web sources fetched during this task are marked **[fetched]**. Papers cited from memory and not re-read during this task are marked **[not re-read]**; their titles and venues should be checked before they are quoted in an RFC.
 
 The companion note `research/overlapping-type-patterns.md` (written concurrently by another agent) covers specificity ordering of overlapping *structural* patterns such as `list<'a>` against `'a`. This note covers only the overlap that comes from two *variables* being instantiated to the same type, and does not repeat that material.

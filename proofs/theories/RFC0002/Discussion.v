@@ -3,9 +3,9 @@
 ## What the proofs cover
 
 The model has three type variables: two with closed-set constraints and one constrained to be
-either of them. An arm is a test, and the model says which arm a specialization selects. Arm bodies
-are not modelled, so there is no typing or evaluation of what an arm does. Member types are closed,
-as in RFC 0001.
+either of them. An arm is a test and a body. The model says which arm a specialization selects,
+types the body of an arm, and evaluates it. A body is a term of RFC 0001 with no type-case of its
+own. Member types are closed, as in RFC 0001.
 
 | Claim | Status |
 |---|---|
@@ -15,18 +15,26 @@ as in RFC 0001.
 | The intersection arm is reachable exactly when the sets share a type | Proved, both readings: `intersection_reachable_iff` |
 | Without the intersection arm, arm order matters exactly when the sets share a type | Proved, both readings: `two_arms_order_matters_iff` |
 | Under the overlap check, the first matching arm is the most specific | Proved, both readings, any arms: `first_match_is_most_specific` |
-| Under the overlap check, arm order does not change the program | Proved, both readings, any arms: `order_is_irrelevant` |
+| Under the overlap check, arm order does not change how specific the selected test is | Proved, both readings, any arms: `order_is_irrelevant` |
+| Under the overlap check, arm order does not change what the program computes | Refuted: `ordered_order_irrelevant_falsified` |
+| Under the overlap check, with no two arms testing the same thing, arm order does not change what the program computes | Proved, both readings: `priority_glues`, `glued_order_irrelevant` |
+| Arms whose bodies agree where they overlap may be written in any order | Proved, both readings: `glued_order_irrelevant` |
+| Agreement accepts a match the overlap check rejects | Proved for one family of constraints: `agreement_accepts_what_priority_rejects` |
 | The three-arm match always passes the overlap check | Proved, both readings: `intersection_first_is_ordered` |
 | The overlap check rejects the two-arm match on overlapping sets | Proved for one family of constraints: `unordered_overlap_rejected` |
 | An arm's binder has the scrutinee's type | Proved under the equation reading: `equation_refines`. Refuted under the membership reading: `membership_refines_falsified` |
+| A definition whose arm bodies check runs to a value of its declared type | Proved from an assumption under the equation reading: `checked_match_runs`. Refuted under the membership reading: `membership_binding_falsified` |
 | The two readings select the same arm | Proved for disjoint sets: `readings_agree_when_disjoint`. Refuted in general: `readings_agree_falsified` |
-| A definition whose arm bodies check runs at every instantiation | Not proved. Arm bodies are not modelled |
-| Specialization preserves meaning with several variables | Not proved. RFC 0001 proves it for one variable |
+| The overlap check accepts a match that agreement rejects | Not proved. The three-arm match with three different bodies is the expected example |
+| Specialization preserves meaning with several variables | Not proved. A body here has no type-case, so a specialization is the selected body and there is nothing to preserve. RFC 0001 proves it for one variable with nested cases |
+| A type-case nested in an arm body | Not modelled |
 | Inference with a constraint `'T : ('A or 'B)` keeps principal types | Not proved. The research note argues it does not, without a restriction |
 | More than two tested variables, and generic members | Not modelled |
 
-The two refutations hold whenever two different closed types exist. No theorem here uses an
-assumption beyond decidable equality of type constructors, `tycon_eq_dec`.
+`checked_match_runs` rests on `witness_sound`, the assumption that every witness is implemented at
+its declared type. No other theorem here uses an assumption beyond decidable equality of type
+constructors, `tycon_eq_dec`. The refutations hold whenever two different closed types exist, or,
+for the two about evaluation, whenever some type has a value.
 
 ## The open question
 
@@ -43,16 +51,94 @@ The proofs give this evidence.
    and `'B : (y)`, `'A` instantiated to `x` and a scrutinee of type `y`, the equation reading
    selects `:? 'B` and the membership reading selects the intersection arm.
 3. **Only the equation reading lets the arm bind at the variable's type.** Under it, `:? 'A as v`
-   may give `v` the type `'A` (`equation_refines`). Under the membership reading that binding is
-   unsound (`membership_refines_falsified`), so `v` can only have the scrutinee's type.
+   may give `v` the type `'A` (`equation_refines`), and a definition checked that way is safe to
+   run (`checked_match_runs`). Under the membership reading the same check accepts a definition
+   that returns a value of the wrong type (`membership_binding_falsified`), so `v` can only have
+   the scrutinee's type.
 4. **The membership reading adds nothing to RFC 0001.** Its test depends only on the scrutinee's
    type and a fixed set of closed types, which is a list of RFC 0001's closed arms.
-5. **Everything else is the same.** Coverage, reachability of the intersection arm, the effect of
-   arm order and the overlap check hold under both readings.
+5. **The equation reading is the one the tier discipline admits.** It is an equality between two
+   types. The membership reading is a set test. See the tiers section below.
+6. **Everything else is the same.** Coverage, reachability of the intersection arm, the effect of
+   arm order, the overlap check and both ways of gluing hold under both readings.
 
 The evidence favours the equation reading: it is the one under which the intersection arm means
-"the two variables unify", and the one under which an arm learns a type equation. The RFC does not
-adopt it yet.
+"the two variables unify", and the one under which an arm learns a type equation that a checked
+body can rely on. The RFC does not adopt it yet.
+
+## Two ways to glue overlapping arms
+
+[Bodies](Clef.RFC0002.Bodies.html) states one condition, *gluing*, under which arm order cannot
+change what a definition computes: at every instantiation the selected arm is strictly more
+specific than each other arm that matches, or computes the same result as it. Two rules imply it.
+
+| Rule | Requires | Accepts | Rejects |
+|---|---|---|---|
+| Priority | The overlap check, and no two arms with equivalent tests | The three-arm match with any bodies, where its three tests differ | The two-arm match on overlapping sets, even when both bodies are the same |
+| Agreement | Overlapping arms compute the same result on the overlap | The two-arm match when both bodies are the same | Any overlap whose arms differ, including the three-arm match with different bodies |
+
+Neither rule contains the other, and a compiler may use both: an overlap is accepted if it passes
+either. That is what the gluing condition says, and `glued_order_irrelevant` covers the mixture.
+
+Agreement has a cost priority does not. Whether two bodies compute the same result is not
+decidable in general. Two checks are available. Identical bodies with the same binders agree, which
+is a structural check (`same_body_glues` is this case). Otherwise the equality is a proof
+obligation about two programs. Haskell's closed type families use the structural form, under the
+name compatibility.
+
+The model's agreement asks for equal results on every scrutinee of the type `'T` is instantiated
+to, with the other parameters unrestricted. That is stronger than needed, since the other
+parameters also have known types, and a rule that used them would accept more.
+
+## Relation to the verification tiers
+
+The specification organises checking into tiers. Tier 1 is structural inference whose checks are
+equalities. Tier 2 is local analysis and solver fragments. Tier 3 is the application of library
+theorems. Tier 4 is relational judgments about executions. The research note
+[RFC 0001 and RFC 0002 against the verification tiers](https://shayanhabibi.github.io/clef-rfc-research/research/tier-placement-and-extensions/)
+gives the sources and the full argument. This section records the conclusions for this RFC. They
+are a reading of the specification and the design documents, and none is a theorem.
+
+| Piece | Tier | Reason |
+|---|---|---|
+| The instantiation table | Edge of 1 | It is the set of joint solutions of the constraints. It is finite and computable, and its size is up to the product of the set sizes |
+| Coverage and reachability | Edge of 1 | Decided by enumerating the table |
+| The overlap check | Edge of 1 | Up to 2ⁿ − 1 regions for n tested variables. It compares arms by generality, which is an order, where Tier 1 checks are equalities |
+| Binder typing under the equation reading | 1 | The arm learns an equation between types |
+| Agreement by identical bodies | 1 | A structural comparison |
+| Agreement by proved equivalence | 4 | A relation between two programs |
+
+**The constraint is a disjunction of equations between variables.** `'T : ('A | 'B)` says `'T` is
+`'A` or `'T` is `'B`. A set of closed types narrows one variable. This relates three, and it has
+several incomparable solutions where the unification Tier 1 relies on has one most general
+solution. The research note sketches an encoding of Boolean satisfiability into such constraints.
+If the sketch holds, a compiler that had to infer them would be doing a solver's work. That
+supports unresolved question 5: these constraints are declared and never inferred, so the compiler
+checks a given table and does not search for one.
+
+**In the staged picture, arms are local definitions and the body is their gluing.** The design
+documents describe a program as facts attached to stages that must agree along every step. The
+same shape appears here inside one definition. Each arm defines the function over a region of the
+table, and the regions overlap. Priority and agreement are the two standard ways to obtain one
+function from overlapping pieces: let the smallest piece win, or require the pieces to agree.
+
+## Possible extensions
+
+These are not part of the RFC. They are recorded because the model points at them. The research
+note gives each in more detail.
+
+1. **Patterns as members.** With the overlap of two patterns computed by unification, the overlap
+   check covers `list<'a>` against `'a`: their overlap is `list<'a>`, which is itself an arm and
+   the more specific one. `first_match_is_most_specific` is proved over a finite table and would
+   have to be proved again over a lattice of patterns.
+2. **Arms decided by a solver.** An arm could carry a guard over compile-time facts such as range,
+   size or alignment. Coverage becomes the validity of a disjunction and the overlap rule a set of
+   implications between guards, which are Tier 2 queries. The proofs here enumerate a table and do
+   not cover it.
+3. **Agreement as a proof obligation.** Where two overlapping arms differ in text and agree in
+   result, the agreement could be discharged by a relational proof. A type-case all of whose
+   overlaps agree behaves like one function, which is the property RFC 0001 loses when it admits
+   the type-case.
 
 ## Drawbacks
 
@@ -62,6 +148,9 @@ adopt it yet.
 - **The check runs over a table.** Its size is bounded by the product of the member-set sizes.
 - **Arms carry type equations.** An arm that may assume `'A = 'B` is a local type refinement, which
   is where inference usually loses principal types.
+- **Equivalent tests need their own diagnostic.** Two arms that test the same thing pass the
+  overlap check and make the result depend on order. The compiler must reject one of them, as it
+  would an unreachable rule.
 
 ## Alternatives
 
@@ -72,6 +161,9 @@ adopt it yet.
   removes the intersection arm and the open question together, and removes the feature's point.
 - **Sort the arms by specificity.** Sorting cannot order two arms where neither is more specific,
   which is the case this RFC is about.
+- **Agreement only.** Drop the overlap check and require every overlap to agree. This rejects the
+  author's three-arm match whenever the intersection arm does something of its own, which is the
+  reason to write it.
 
 ## Impact and migration
 
@@ -80,11 +172,12 @@ Nothing in a program without a closed-set constraint changes. The RFC depends on
 ## Unresolved questions
 
 1. The reading of `:? 'A`, above.
-2. Whether one arm may cover several regions, as `:? 'A | :? 'B` would, when its body checks in
-   each. The compiler cannot write an arm body, so this is the nearest thing to implicit handling.
+2. Whether agreement is admitted beside priority, and in which form: identical bodies only, or
+   bodies proved equivalent. An arm such as `:? 'A | :? 'B` covering several regions is the
+   surface form of the first.
 3. Whether a missing reachable intersection arm is an error. The overlap check as modelled makes it
-   one.
-4. A model of arm bodies, so that the type equations of a region are used by a typing judgement and
-   the soundness of a checked definition is proved, as RFC 0001 does for one variable.
+   one, unless the overlapping arms agree.
+4. A type-case nested in an arm body, with the equations of the outer region in scope.
 5. Constraints declared but never inferred, as the restriction that keeps inference principal.
+6. The diagnostic for two arms with equivalent tests.
 *)

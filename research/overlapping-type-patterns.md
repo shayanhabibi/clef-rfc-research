@@ -40,7 +40,7 @@ Notation: `p ≤ q` means "pattern `p` is at least as specific as pattern `q`".
 
 ### 2.1 Clef specification
 
-Working copy `C:\Users\shaya\RiderProjects\ClefWorkspace\clef-lang-spec\spec\`, at commit `26207e0`.
+Working copy a local clone of `clef-lang-spec`, directory `spec/`, at commit `26207e0`.
 
 - **Arm order is first match.** `patterns.md`, chapter introduction: "Rules are attempted in order
   from top to bottom and left to right." No heading in `patterns.md` or `expressions.md`

@@ -118,7 +118,7 @@ On the overlap of `:? 'A` and `:? 'B` all three variables are the same type, so 
 
 Closed type families in Haskell use the first rule under the name *compatibility*, as recalled from Eisenberg et al.
 
-This would answer unresolved question 2 of RFC 0002, whether one arm may cover several regions. It needs a model of arm bodies, which is unresolved question 4.
+**Now modelled.** RFC 0002's `Bodies` module gives arms bodies and states one condition, gluing, that both rules imply. `glued_order_irrelevant` proves that arms which glue compute the same result in any order, `priority_glues` proves the overlap check glues once no two arms test the same thing, and `agreement_accepts_what_priority_rejects` shows agreement accepts a match priority rejects. The model also found that the overlap check alone does not make order irrelevant (`ordered_order_irrelevant_falsified`). Only the structural form of agreement is covered; proved equivalence is not.
 
 ### 4.4 Patterns as members (Tier 1)
 
@@ -164,7 +164,7 @@ Missing: a model of obligations attached to members, and the invalidation rule Â
 
 ## 5. What this suggests for the RFCs
 
-- **RFC 0002 should model arm bodies next.** Its own unresolved question 4 asks for it, and 4.3 needs it. With bodies, the choice between priority and agreement can be stated and compared.
+- **RFC 0002 should model arm bodies next.** Done after this note was written: see 4.3. With bodies, a definition that checks is proved safe to run under the equation reading (`checked_match_runs`) and shown unsafe under the membership reading (`membership_binding_falsified`).
 - **RFC 0001's largest drawback has a possible answer.** The RFC lists non-parametric generic code first among its drawbacks, and `case_free_parametric` confines the loss to bodies with a type-case. Under 4.3 with proved equivalence, a body with a type-case would be parametric up to that equivalence.
 - **4.6 changes what the feature is for.** RFC 0001 is motivated by typing: errors at the definition, and the admitted set in the signature. A closed set that also makes proof obligations finite is a stronger argument for the feature than convenience.
 - **The equation reading should be adopted**, on the combined evidence of RFC 0002 and section 3.
@@ -174,5 +174,5 @@ Missing: a model of obligations attached to members, and the invalidation rule Â
 - That one-variable closed sets keep principal types.
 - The NP-hardness sketch in section 3.
 - That `first_match_is_most_specific` and `order_is_irrelevant` hold over patterns or solver predicates.
-- Any of the extensions. None is modelled.
+- Any of the extensions other than 4.3. The others are not modelled.
 - The exact wording of the design documents, which were read through a summarising fetch.

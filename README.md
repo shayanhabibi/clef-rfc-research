@@ -15,7 +15,7 @@ This is research. It is not part of the Clef specification, and nothing here is 
 | `proofs/theories/RFC0001` | RFC 0001: Closed-set type constraints |
 | `proofs/theories/RFC0002` | RFC 0002: Type-case over several constrained variables |
 | `proofs/theories/RFC0003` | RFC 0003: Convertible units of measure (exploratory) |
-| `research` | Research notes behind the RFCs, with their sources |
+| `research` | Research notes behind the RFCs, with their sources. Each is published as a page under Research on the site |
 | `proofs/template` | The modules a new RFC starts from |
 | `proofs/facts.json` | Types and assumptions captured from Rocq, for the site's hover cards and badges |
 | `site` | The site: a [Nacara](https://github.com/shayanhabibi/Nacara) program using `Nacara.Plugin.Rocq` from [FSharp.Data.Rocq](https://github.com/ranvier-org/FSharp.Data.Rocq) and `Partas.Nacara.Theme` |

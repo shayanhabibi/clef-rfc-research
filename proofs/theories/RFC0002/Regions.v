@@ -407,11 +407,16 @@ Proof.
 Qed.
 
 (**md
-**Under the overlap check, the order of the arms does not change the program.**
+**Under the overlap check, the order of the arms does not change how specific the selected test is.**
 
-Two lists holding the same arms, both passing the check, select equally specific arms at every
-instantiation: each selected test succeeds exactly where the other does. The author's order is then
-a matter of layout, not of meaning.
+Two lists holding the same tests, both passing the check, select equally specific tests at every
+instantiation: each selected test succeeds exactly where the other does.
+
+This is a statement about tests. It does not say the two selected arms are the same arm, and once
+arms have bodies that difference matters: two arms with equivalent tests and different bodies pass
+the check in either order. [Bodies](Clef.RFC0002.Bodies.html) refutes the stronger claim
+(`ordered_order_irrelevant_falsified`) and proves the corrected one (`priority_glues`,
+`glued_order_irrelevant`).
 
 - [l1:] the arms in one order.
 - [l2:] the same arms in another order.

@@ -2,13 +2,14 @@
   "rocqVersion": "9.1.0",
   "digests": {
     "theories/RFC0001/Constraints.v": "bb993d3d23e9c717054ab0ba27203ed4",
-    "theories/RFC0001/Discussion.v": "a8aab6b2cbe7363884873f63b7d9da4d",
+    "theories/RFC0001/Discussion.v": "3d224e58ff8ce584f25eaa51084be47f",
     "theories/RFC0001/Overview.v": "d6a9255a9da55b3612de50041aa9de7f",
     "theories/RFC0001/Representation.v": "b8c7101f4c4bfaaff499261a9a8f8d8b",
     "theories/RFC0001/TypeCase.v": "ac18369418ee5ad858fbd48d0e561307",
-    "theories/RFC0002/Discussion.v": "5728896ef9ecb969e1b4f3a84c04882c",
-    "theories/RFC0002/Overview.v": "a1261f4be8fd3e6c9ccf7efa3dee51cd",
-    "theories/RFC0002/Regions.v": "43a410b27fde03f9b99d6cb0205ad11a",
+    "theories/RFC0002/Bodies.v": "86cd0c9cabb147e13924a65659d9e4f8",
+    "theories/RFC0002/Discussion.v": "167586fd300f92fed8a81aebbed00fbf",
+    "theories/RFC0002/Overview.v": "005ca7a1a9a2cbea5aa63277f21e7879",
+    "theories/RFC0002/Regions.v": "aeb799d63e24c389f859696c3ac0ab42",
     "theories/RFC0003/Conversion.v": "87d6abfbe5310fd32a19f4822dbb4989",
     "theories/RFC0003/Discussion.v": "166d3a3f7c182561995f92ecfa6e38d1",
     "theories/RFC0003/Elaboration.v": "c956e637ca9e7067721fe11b52fe5d75",
@@ -593,6 +594,321 @@
     },
     "Clef.RFC0001.TypeCase.well_typed_at": {
       "type": "Types.ty -> list Types.oty -> TypeCase.tm -> Types.oty -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.O3Con": {
+      "type": "Types.tycon -> Bodies.oty3",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.O3Pair": {
+      "type": "Bodies.oty3 -> Bodies.oty3 -> Bodies.oty3",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.VA": {
+      "type": "Bodies.oty3",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.VB": {
+      "type": "Bodies.oty3",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.VT": {
+      "type": "Bodies.oty3",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.abody": {
+      "type": "Bodies.arm -> TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.agree_at": {
+      "type": "Regions.inst3 -> Bodies.arm -> Bodies.arm -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.agreement_accepts_what_priority_rejects": {
+      "type": "forall (x y : Types.ty) (b : TypeCase.mtm),\nx <> y ->\nBodies.glues Regions.Equation (x :: y :: nil)%list \n  (y :: nil)%list\n  ({| Bodies.atest := Regions.IsA; Bodies.abody := b |}\n   :: {| Bodies.atest := Regions.IsB; Bodies.abody := b |} :: nil) /\\\nRegions.ordered Regions.Equation (x :: y :: nil)%list \n  (y :: nil)%list nil\n  (ListDef.map Bodies.atest\n     ({| Bodies.atest := Regions.IsA; Bodies.abody := b |}\n      :: {| Bodies.atest := Regions.IsB; Bodies.abody := b |} :: nil)) =\nfalse",
+      "binders": {
+        "b": "TypeCase.mtm",
+        "x": "Types.ty",
+        "y": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Bodies.amatches": {
+      "type": "Regions.reading ->\nConstraints.cset ->\nConstraints.cset -> Regions.inst3 -> Bodies.arm -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.arity": {
+      "type": "Regions.test -> nat",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.arm": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.arm_ok": {
+      "type": "Regions.inst3 -> list Bodies.oty3 -> Bodies.oty3 -> Bodies.arm -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.atest": {
+      "type": "Bodies.arm -> Regions.test",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.binders_typed": {
+      "type": "forall (CA CB : Constraints.cset) (s : Regions.inst3)\n  (x : Runtime.val) (p : Regions.test),\nRegions.matches Regions.Equation CA CB s p = true ->\nRuntime.has_ty x (Regions.iT s) ->\nList.Forall2 Runtime.has_ty (ListDef.repeat x (Bodies.arity p))\n  (Regions.binder_types s p)",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "p": "Regions.test",
+        "s": "Regions.inst3",
+        "x": "Runtime.val"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Runtime.atom"
+      ]
+    },
+    "Clef.RFC0002.Bodies.check3": {
+      "type": "Regions.reading ->\nConstraints.cset ->\nConstraints.cset ->\nlist Bodies.oty3 -> list Bodies.arm -> Bodies.oty3 -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.checked_match_runs": {
+      "type": "forall (CA CB : Constraints.cset) (G : list Bodies.oty3)\n  (arms : list Bodies.arm) (res : Bodies.oty3) \n  (s : Regions.inst3) (env : list Runtime.val) \n  (x : Runtime.val),\nBodies.check3 Regions.Equation CA CB G arms res = true ->\nRegions.valid CA CB s ->\nRuntime.has_ty x (Regions.iT s) ->\nList.Forall2 Runtime.has_ty env (ListDef.map (Bodies.inst3ty s) G) ->\nexists v : Runtime.val,\n  Bodies.run Regions.Equation CA CB arms s env x = Some v /\\\n  Runtime.has_ty v (Bodies.inst3ty s res)",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "G": "list Bodies.oty3",
+        "arms": "list Bodies.arm",
+        "env": "list Runtime.val",
+        "res": "Bodies.oty3",
+        "s": "Regions.inst3",
+        "x": "Runtime.val"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Bodies.dup_ordered_1": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset),\nRegions.ordered r CA CB nil\n  (Regions.IsA :: Regions.Both Regions.IsA Regions.IsA :: nil) =\ntrue",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "r": "Regions.reading"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Bodies.dup_ordered_2": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset),\nRegions.ordered r CA CB nil\n  (Regions.Both Regions.IsA Regions.IsA :: Regions.IsA :: nil) =\ntrue",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "r": "Regions.reading"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Bodies.existsb_find": {
+      "type": "forall (A : Type) (f : A -> bool) (l : list A),\nList.existsb f l = true -> exists a : A, List.find f l = Some a",
+      "binders": {
+        "A": "Type",
+        "f": "A -> bool",
+        "l": "list A"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0002.Bodies.find_map": {
+      "type": "forall (A B : Type) (f : B -> bool) (g : A -> B) (l : list A),\nList.find f (ListDef.map g l) =\noption_map g (List.find (fun a : A => f (g a)) l)",
+      "binders": {
+        "A": "Type",
+        "B": "Type",
+        "f": "B -> bool",
+        "g": "A -> B",
+        "l": "list A"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0002.Bodies.glued_order_irrelevant": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (l1 l2 : list Bodies.arm) (s : Regions.inst3)\n  (env : list Runtime.val) (x : Runtime.val),\nBodies.glues r CA CB l1 ->\nBodies.glues r CA CB l2 ->\n(forall a : Bodies.arm, List.In a l1 <-> List.In a l2) ->\nRegions.valid CA CB s ->\nRuntime.has_ty x (Regions.iT s) ->\nBodies.run r CA CB l1 s env x = Bodies.run r CA CB l2 s env x",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "env": "list Runtime.val",
+        "l1": "list Bodies.arm",
+        "l2": "list Bodies.arm",
+        "r": "Regions.reading",
+        "s": "Regions.inst3",
+        "x": "Runtime.val"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Bodies.glues": {
+      "type": "Regions.reading ->\nConstraints.cset -> Constraints.cset -> list Bodies.arm -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.has_ty_fun": {
+      "type": "forall (v : Runtime.val) (s t : Types.ty),\nRuntime.has_ty v s -> Runtime.has_ty v t -> s = t",
+      "binders": {
+        "s": "Types.ty",
+        "t": "Types.ty",
+        "v": "Runtime.val"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Runtime.atom"
+      ]
+    },
+    "Clef.RFC0002.Bodies.inst3ty": {
+      "type": "Regions.inst3 -> Bodies.oty3 -> Types.ty",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.lt": {
+      "type": "Regions.reading ->\nConstraints.cset ->\nConstraints.cset -> Regions.test -> Regions.test -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.membership_binding_falsified": {
+      "type": "forall (x y : Types.ty) (v : Runtime.val),\nx <> y ->\nRuntime.has_ty v y ->\n~\n(forall (CA CB : Constraints.cset) (G : list Bodies.oty3)\n   (arms : list Bodies.arm) (res : Bodies.oty3) \n   (s : Regions.inst3) (env : list Runtime.val) \n   (xv : Runtime.val),\n Bodies.check3 Regions.Membership CA CB G arms res = true ->\n Regions.valid CA CB s ->\n Runtime.has_ty xv (Regions.iT s) ->\n List.Forall2 Runtime.has_ty env (ListDef.map (Bodies.inst3ty s) G) ->\n exists w : Runtime.val,\n   Bodies.run Regions.Membership CA CB arms s env xv = Some w /\\\n   Runtime.has_ty w (Bodies.inst3ty s res))",
+      "binders": {
+        "v": "Runtime.val",
+        "x": "Types.ty",
+        "y": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Bodies.ordered_order_irrelevant_falsified": {
+      "type": "forall (z : Types.ty) (v : Runtime.val),\nRuntime.has_ty v z ->\n~\n(forall (r : Regions.reading) (CA CB : Constraints.cset)\n   (l1 l2 : list Bodies.arm) (s : Regions.inst3)\n   (env : list Runtime.val) (x : Runtime.val),\n Regions.ordered r CA CB nil (ListDef.map Bodies.atest l1) = true ->\n Regions.ordered r CA CB nil (ListDef.map Bodies.atest l2) = true ->\n (forall a : Bodies.arm, List.In a l1 <-> List.In a l2) ->\n Regions.valid CA CB s ->\n Runtime.has_ty x (Regions.iT s) ->\n Bodies.run r CA CB l1 s env x = Bodies.run r CA CB l2 s env x)",
+      "binders": {
+        "v": "Runtime.val",
+        "z": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Bodies.oty3": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.oty3_ind": {
+      "type": "forall P : Bodies.oty3 -> Prop,\nP Bodies.VA ->\nP Bodies.VB ->\nP Bodies.VT ->\n(forall c : Types.tycon, P (Bodies.O3Con c)) ->\n(forall a : Bodies.oty3,\n P a -> forall b : Bodies.oty3, P b -> P (Bodies.O3Pair a b)) ->\nforall o : Bodies.oty3, P o",
+      "binders": {
+        "P": "Bodies.oty3 -> Prop"
+      }
+    },
+    "Clef.RFC0002.Bodies.oty3_rec": {
+      "type": "forall P : Bodies.oty3 -> Set,\nP Bodies.VA ->\nP Bodies.VB ->\nP Bodies.VT ->\n(forall c : Types.tycon, P (Bodies.O3Con c)) ->\n(forall a : Bodies.oty3,\n P a -> forall b : Bodies.oty3, P b -> P (Bodies.O3Pair a b)) ->\nforall o : Bodies.oty3, P o",
+      "binders": {
+        "P": "Bodies.oty3 -> Set"
+      }
+    },
+    "Clef.RFC0002.Bodies.oty3_rect": {
+      "type": "forall P : Bodies.oty3 -> Type,\nP Bodies.VA ->\nP Bodies.VB ->\nP Bodies.VT ->\n(forall c : Types.tycon, P (Bodies.O3Con c)) ->\n(forall a : Bodies.oty3,\n P a -> forall b : Bodies.oty3, P b -> P (Bodies.O3Pair a b)) ->\nforall o : Bodies.oty3, P o",
+      "binders": {
+        "P": "Bodies.oty3 -> Type"
+      }
+    },
+    "Clef.RFC0002.Bodies.oty3_sind": {
+      "type": "forall P : Bodies.oty3 -> SProp,\nP Bodies.VA ->\nP Bodies.VB ->\nP Bodies.VT ->\n(forall c : Types.tycon, P (Bodies.O3Con c)) ->\n(forall a : Bodies.oty3,\n P a -> forall b : Bodies.oty3, P b -> P (Bodies.O3Pair a b)) ->\nforall o : Bodies.oty3, P o",
+      "binders": {
+        "P": "Bodies.oty3 -> SProp"
+      }
+    },
+    "Clef.RFC0002.Bodies.pair_neq": {
+      "type": "forall v : Runtime.val, v <> Runtime.VPair v v",
+      "binders": {
+        "v": "Runtime.val"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Runtime.atom"
+      ]
+    },
+    "Clef.RFC0002.Bodies.priority_glues": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (arms : list Bodies.arm),\nRegions.ordered r CA CB nil (ListDef.map Bodies.atest arms) = true ->\n(forall a b : Bodies.arm,\n List.In a arms ->\n List.In b arms ->\n Regions.le r CA CB (Bodies.atest a) (Bodies.atest b) = true ->\n Regions.le r CA CB (Bodies.atest b) (Bodies.atest a) = true -> a = b) ->\nBodies.glues r CA CB arms",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "arms": "list Bodies.arm",
+        "r": "Regions.reading"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Bodies.run": {
+      "type": "Regions.reading ->\nConstraints.cset ->\nConstraints.cset ->\nlist Bodies.arm ->\nRegions.inst3 -> list Runtime.val -> Runtime.val -> option Runtime.val",
+      "binders": {}
+    },
+    "Clef.RFC0002.Bodies.same_body_glues": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (b : TypeCase.mtm),\nBodies.glues r CA CB\n  ({| Bodies.atest := Regions.IsA; Bodies.abody := b |}\n   :: {| Bodies.atest := Regions.IsB; Bodies.abody := b |} :: nil)",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "b": "TypeCase.mtm",
+        "r": "Regions.reading"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Bodies.select_atest": {
+      "type": "forall (r : Regions.reading) (CA CB : Constraints.cset)\n  (arms : list Bodies.arm) (s : Regions.inst3),\nRegions.select r CA CB (ListDef.map Bodies.atest arms) s =\noption_map Bodies.atest (Bodies.selecta r CA CB arms s)",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "arms": "list Bodies.arm",
+        "r": "Regions.reading",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Bodies.selecta": {
+      "type": "Regions.reading ->\nConstraints.cset ->\nConstraints.cset ->\nlist Bodies.arm -> Regions.inst3 -> option Bodies.arm",
       "binders": {}
     },
     "Clef.RFC0002.Regions.Both": {

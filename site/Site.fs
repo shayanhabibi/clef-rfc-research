@@ -22,6 +22,9 @@ let private proofs = "../proofs/_CoqProject"
 /// Where the plugin publishes the project: a page per module and the Guarantees page.
 let private proofsRoot = "proofs"
 
+/// The research notes behind the RFCs, relative to this directory. Each is published as a page.
+let private research = "../research"
+
 let private rocqOptions =
     Rocq.defaults
     |> Rocq.project proofs
@@ -148,6 +151,22 @@ let private weave () =
 
         File.WriteAllText (target, text)
 
+    // A research note is published as it is written: its first heading becomes the page title.
+    for source in Directory.GetFiles (research, "*.md") do
+        let text = File.ReadAllText source
+        let heading = Regex.Match (text, @"\A# (.+?)\r?\n")
+
+        if not heading.Success then
+            failwith $"The research note {source} does not start with a heading."
+
+        let title = heading.Groups[1].Value.Trim().Replace ("\"", "'")
+        let target = Path.Combine ("content", "research", Path.GetFileName source)
+
+        Directory.CreateDirectory (Path.GetDirectoryName target)
+        |> ignore
+
+        File.WriteAllText (target, $"---\ntitle: \"{title}\"\n---\n" + text.Substring heading.Length)
+
 let private styles =
     """
 .rfc-hero { padding-block: var(--nacara-space-8); text-align: center; }
@@ -164,6 +183,7 @@ let private theme =
     |> Theme.navbar
         [
             NavbarLink ("Guarantees", $"/{proofsRoot}/index.html")
+            NavbarSection ("Research", "research", "/research/")
             NavbarSection ("Process", "process", "/process/")
         ]
     |> Theme.navbarEnd
@@ -178,6 +198,13 @@ let private theme =
             Menu.page "process/assumptions.md"
             Menu.page "process/building.md"
         ]
+    |> Theme.menu
+        "research"
+        (Menu.page "research/index.md"
+         :: (Directory.GetFiles (Path.Combine (__SOURCE_DIRECTORY__, research), "*.md")
+             |> Array.sort
+             |> Array.map (fun note -> Menu.page $"research/{Path.GetFileName note}")
+             |> List.ofArray))
     |> Theme.css styles
     |> Theme.footer (Html.p [ Html.text "Clef RFC research · Proofs checked by Rocq · Built with Nacara" ])
 

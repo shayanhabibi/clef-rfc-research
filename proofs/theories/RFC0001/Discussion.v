@@ -69,6 +69,90 @@ reading of the spec and is not a quotation from it.
   templates do. Rejected because it gives up `derived_satisfaction`, which is the main benefit a
   closed set has over open SRTP.
 
+## Relation to the verification tiers
+
+The specification organises checking into tiers.
+
+| Tier | Covers | Evidence |
+|---|---|---|
+| 1 | Structural inference: dimensions and declared structural relationships | A substitution or a derivation under the declared laws |
+| 2 | Local analysis and supported solver fragments: range, layout, arithmetic | The checked condition and an analysis result or solver proof |
+| 3 | Parameterised domain and system theorems | A checked library theorem instance with its premises discharged |
+| 4 | Relational judgments about executions | A derivation in an admitted relational logic |
+
+The design documents describe checking as facts attached to the compilation stages (source, the
+program graph, the MLIR levels, the native binary) that must agree along every step.
+`ntu-dimensional-architecture.md` §7.2 adds that every Tier 1 check is an equality and that no
+ordering is needed.
+
+The research note
+[RFC 0001 and RFC 0002 against the verification tiers](https://shayanhabibi.github.io/clef-rfc-research/research/tier-placement-and-extensions/)
+gives the sources and the full argument. This section records the conclusions for this RFC. They
+are a reading of the specification and the design documents, and none is a theorem.
+
+| Piece | Tier | Reason |
+|---|---|---|
+| Satisfaction (`sat_decidable`) | 1 | Membership is equality against a finite list of closed types |
+| Entailment (`entails_iff_sat`) | 1, with an order | The subset test is finite and decidable, but it is an order and not an equality |
+| Intersection on unification (`meet_sat`, `meet_greatest`, `meet_empty`) | 1 | The member set of a variable is a lattice element. Unification takes the meet, and the empty set is a contradiction located at that variable |
+| Definition-site checking (`derived_satisfaction`, `shared_operation`) | 1 | One witness lookup per member: a finite conjunction of Tier 1 checks |
+| Coverage (`coverage_total`) | 1 | A finite cover check |
+| Specialisation (`specialization_preserves_meaning`) | 1, one step | The commuting condition for the saturation step. After it the constraint is discharged and nothing reaches MLIR |
+| Untagged unions (`untagged_union_discriminable_falsified`) | The last stage | The native stage holds no type fact, so a type test cannot be decided there |
+
+Three points follow.
+
+- **The member set is a fact of a kind Tier 1 already carries.** The design documents place escape
+  classifications, which come from an ordered domain, beside dimensions. A member set is an
+  element of the lattice of finite sets of closed types.
+- **Principal types plausibly survive, and this is not proved.** A closed-set constraint is a
+  disjunction of equations, and disjunction is what usually ends principality. With sets on single
+  variables and equations between types, a solver can keep one member set per class of unified
+  variables and intersect on each merge. `meet_greatest` is the lemma that argument needs.
+- **The untagged-union theorem is a statement about a stage.** The type of a value is a fact at
+  the source and graph stages and is absent at the native stage. A type test must be decided where
+  the fact is still present, which is what the static type-case does: it is reduced at saturation.
+
+The one conflict with the letter of §7.2 is that entailment is an order. It is mild: §7.2 speaks of
+the components of a type, and a member set is a constraint on a variable, not a component of a
+type.
+
+## Possible extensions
+
+These are not part of the RFC. They are recorded because the tier placement points at them, and
+the research note gives each in more detail. None is modelled.
+
+1. **Member sets over other sorts (Tier 1).** [Constraints](Clef.RFC0001.Constraints.html) uses one
+   fact about types: equality is decidable. The same theory would hold over measures, memory
+   spaces, access kinds and regions. §7.2 forbids subtyping on those components, and a closed-set
+   constraint gives bounded polymorphism over them without it, as in
+   `'a : (ReadOnly | ReadWrite)`.
+2. **Member sets as fibres of a map (Tier 1).** A dimension in
+   [RFC 0003](Clef.RFC0003.Conversion.html) is every measure with the same image under a map. That
+   is a member set with infinitely many members and a decidable test. An enumerated set is the
+   finite case. This is the route to RFC 0003's dimension-generic functions.
+3. **Patterns as members (Tier 1).** Members that mention type variables, ordered by the overlap
+   check of [RFC 0002](Clef.RFC0002.Regions.html) with unification as the overlap. This addresses
+   unresolved questions 2 and 5.
+4. **Laws per member (Tier 2).** A member set could carry declared laws, each checked once per
+   member. Integer addition passes associativity and floating-point addition fails it, which is
+   the reassociation hazard the specification already names. A body may then rewrite by the laws
+   its set carries.
+5. **Theorems per member (Tier 3).** A library theorem stated over `'T : C` is instantiated once
+   per member with its premises discharged. This is available only because the set is closed: an
+   open member constraint has instances the compiler cannot enumerate. `derived_satisfaction` is
+   this pattern for typing, and `call_through_entailment` is the rule that moves the evidence to a
+   narrower set.
+6. **Equivalent arms (Tier 4).** A type-case whose arms are proved to compute the same result
+   behaves like one function. That would recover, up to the equivalence, the uniformity
+   `case_free_parametric` proves for bodies with no type-case, and it answers the first drawback
+   above. [RFC 0002](Clef.RFC0002.Bodies.html) models the rule for overlapping arms.
+
+Extension 5 changes what the feature is for. The motivation above is about typing: errors at the
+definition, and the admitted set in the signature. A closed set also turns a statement about every
+admitted type into a finite list of obligations, which is a stronger reason for the feature than
+convenience.
+
 ## Impact and migration
 
 **Existing code.** The change is additive. The new grammar alternative was a syntax error before,
