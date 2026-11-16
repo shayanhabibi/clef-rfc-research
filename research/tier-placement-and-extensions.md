@@ -9,7 +9,7 @@ Nothing in this note is proved. Where it names a theorem, the theorem is in this
 Sources read for this note:
 
 - RFC 0001 and RFC 0002 as modelled in `proofs/theories/RFC0001/*.v`, `proofs/theories/RFC0002/*.v` and `proofs/theories/Spec/*.v`.
-- The Clef specification clone at commit `26207e0`: `spec/terms-and-definitions.md` (the entry *tier*), `spec/ntu-dimensional-architecture.md` §3.2 and §7.2, `spec/units-of-measure.md`, `spec/conformance.md` §6.1.
+- The Clef specification clone at commit `26207e0`: [`terms-and-definitions.md`](https://clef-lang.com/spec/draft/terms-and-definitions/#verification) (the entry *tier*), [`ntu-dimensional-architecture.md` §3.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#32-section-compilation) and [§7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity), [`units-of-measure.md`](https://clef-lang.com/spec/draft/units-of-measure/), [`conformance.md` §6.1](https://clef-lang.com/spec/draft/conformance/#61-verification-evidence-and-composition).
 - **[fetched, summarised]** *The Compilation Sheaf*, <https://clef-lang.pages.dev/docs/design/categorical-foundations/the-compilation-sheaf/>. Read through a summarising fetch, not verbatim. Statements about it should be checked against the page before they are quoted in an RFC.
 - **[fetched, summarised]** Haynes, *Fixed-Point Scaffolding in the Clef Programming Language*, arXiv 2606.02854. Same caveat.
 - **[not re-read]** Eisenberg, Vytiniotis, Peyton Jones, Weirich, *Closed Type Families with Overlapping Equations*, POPL 2014. Cited from memory.
@@ -34,9 +34,9 @@ The specification defines a tier as an organisational level of the verification 
 | 3 | Parameterised domain and system theorems | A checked library theorem instance with its premises discharged |
 | 4 | Relational judgments about executions, distributions or realisations | A derivation in an admitted relational logic |
 
-A tier does not by itself establish decidability or a latency bound. Evidence may compose between tiers under `spec/conformance.md` §6.1.
+A tier does not by itself establish decidability or a latency bound. Evidence may compose between tiers under [`conformance.md` §6.1](https://clef-lang.com/spec/draft/conformance/#61-verification-evidence-and-composition).
 
-The design documents describe checking as facts attached to the compilation stages (Source, the program graph, the MLIR levels, the native binary), with translations between stages that compose. A program is consistent when one choice of fact per stage agrees along every adjacent step. At Tier 1 the fact for a dimension is an integer exponent vector. `spec/ntu-dimensional-architecture.md` §7.2 adds that identity is exact on every dimensional component, that nothing is subtyped, and that "The enumeration sort needs no ordering; every check is equality".
+The design documents describe checking as facts attached to the compilation stages (Source, the program graph, the MLIR levels, the native binary), with translations between stages that compose. A program is consistent when one choice of fact per stage agrees along every adjacent step. At Tier 1 the fact for a dimension is an integer exponent vector. [`ntu-dimensional-architecture.md` §7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity) adds that identity is exact on every dimensional component, that nothing is subtyped, and that "The enumeration sort needs no ordering; every check is equality".
 
 ## 2. Where RFC 0001 sits
 
@@ -60,7 +60,7 @@ Three observations.
 
 ### Tension with §7.2
 
-RFC 0001 conflicts with the letter of §7.2 in one place: entailment is an order. The conflict is mild. §7.2 speaks of the components of a dimensional type, and a member set is a constraint on a variable, not a component of a type. `Constraints.v` says the same from its side: a member set is not a type.
+RFC 0001 conflicts with the letter of [§7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity) in one place: entailment is an order. The conflict is mild. [§7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity) speaks of the components of a dimensional type, and a member set is a constraint on a variable, not a component of a type. `Constraints.v` says the same from its side: a member set is not a type.
 
 ## 3. Where RFC 0002 sits
 
@@ -81,7 +81,7 @@ This supports the restriction RFC 0002 lists among its unresolved questions: the
 
 ### Evidence on the reading of a test
 
-When this note was written, RFC 0002 left open what `:? 'A` tests. It has since adopted the equation reading. Under the equation reading the test is "the scrutinee's type equals the type `'A` is instantiated to". Under the membership reading it is "the scrutinee's type is in `'A`'s set". The first is an equality between two types, which is the only kind of check §7.2 admits. The second is a set test. The tier discipline therefore points the same way as `equation_refines` and `membership_refines_falsified`. This is supporting evidence and not a proof.
+When this note was written, RFC 0002 left open what `:? 'A` tests. It has since adopted the equation reading. Under the equation reading the test is "the scrutinee's type equals the type `'A` is instantiated to". Under the membership reading it is "the scrutinee's type is in `'A`'s set". The first is an equality between two types, which is the only kind of check [§7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity) admits. The second is a set test. The tier discipline therefore points the same way as `equation_refines` and `membership_refines_falsified`. This is supporting evidence and not a proof.
 
 ## 4. Extensions
 
@@ -95,7 +95,7 @@ Each extension names the tier it would live in and what is missing.
 let read<'a when 'a : (ReadOnly | ReadWrite)> (p: Ptr<int, 'a>) = ...
 ```
 
-§7.2 forbids subtyping on these components. A closed-set constraint gives bounded polymorphism over them without subtyping: each call site is still an exact identity, and the definition is checked once against every member.
+[§7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity) forbids subtyping on these components. A closed-set constraint gives bounded polymorphism over them without subtyping: each call site is still an exact identity, and the definition is checked once against every member.
 
 Missing: for measures, equality is the group equality and not syntactic identity, so membership must compare normal forms or use the computed equality of RFC 0003 (`meqb`). The compiler does not specialise on measures today, as the note `multi-variable-union-constraints.md` records.
 
@@ -154,13 +154,13 @@ A caveat applies to one tempting use. A type-case over the selected representati
 type Additive = (int | float) with assoc (+), unit (+) 0
 ```
 
-Each law is one obligation per member, discharged once. Integer addition passes associativity. Floating-point addition fails it, which is the reassociation hazard `spec/numeric-selection.md` §10 already names. A body may then rewrite by the laws its set carries, for example to reduce in parallel.
+Each law is one obligation per member, discharged once. Integer addition passes associativity. Floating-point addition fails it, which is the reassociation hazard [`numeric-selection.md` §10.5.1](https://clef-lang.com/spec/draft/numeric-selection/#1051-obligations-by-arithmetic-family) already names. A body may then rewrite by the laws its set carries, for example to reduce in parallel.
 
 **Theorems.** A library theorem stated over `'T : C` is instantiated once per member, with its premises discharged. This is the Tier 3 pattern, and it is available only because the set is closed: an open member constraint has instances the compiler cannot enumerate, so a statement about all of them can never be discharged by cases.
 
-**Transport.** `call_through_entailment` moves a checked definition along set inclusion. For evidence, that is the reuse rule `spec/conformance.md` §6.1 regulates: evidence established for a set holds for every subset.
+**Transport.** `call_through_entailment` moves a checked definition along set inclusion. For evidence, that is the reuse rule [`conformance.md` §6.1](https://clef-lang.com/spec/draft/conformance/#61-verification-evidence-and-composition) regulates: evidence established for a set holds for every subset.
 
-Missing: a model of obligations attached to members, and the invalidation rule §6.1 requires when a member or a law changes.
+Since this note was written, RFC 0001 has modelled this extension in its [Laws](https://shayanhabibi.github.io/clef-rfc-research/proofs/Clef.RFC0001.Laws.html) module: obligations per member and law, rewriting by a carried law, library theorems as derivations, and which evidence survives a change of implementation. Missing when the note was written: a model of obligations attached to members, and the invalidation rule [§6.1](https://clef-lang.com/spec/draft/conformance/#61-verification-evidence-and-composition) requires when a member or a law changes.
 
 ## 5. What this suggests for the RFCs
 

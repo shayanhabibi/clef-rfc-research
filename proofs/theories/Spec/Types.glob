@@ -1,89 +1,89 @@
-DIGEST 03515d34d93a2c16c7d1da0001196f5f
+DIGEST 505927e23c38f2d5e19cb91f17f8f865
 FClef.Spec.Types
 R27:30 Stdlib.Lists.List <> <> lib
 R40:52 Stdlib.Lists.List ListNotations <> mod
 ax 637:641 <> tycon
-ax 913:924 <> tycon_eq_dec
-R941:945 Clef.Spec.Types <> tycon defax
-binder 935:935 <> a:3
-binder 937:937 <> b:4
-R948:948 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
-R954:958 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
-R965:965 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
-R950:952 Corelib.Init.Logic <> ::type_scope:x_'='_x not
-R949:949 Clef.Spec.Types <> a:3 var
-R953:953 Clef.Spec.Types <> b:4 var
-R960:963 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
-R959:959 Clef.Spec.Types <> a:3 var
-R964:964 Clef.Spec.Types <> b:4 var
-ind 1248:1249 <> ty
-constr 1263:1266 <> TCon
-constr 1282:1285 <> TFun
-constr 1300:1304 <> TPair
-R1273:1277 Clef.Spec.Types <> tycon defax
-binder 1269:1269 <> c:9
-R1294:1295 Clef.Spec.Types <> ty:7 ind
-binder 1288:1288 <> a:10
-binder 1290:1290 <> b:11
-R1313:1314 Clef.Spec.Types <> ty:7 ind
-binder 1307:1307 <> a:12
-binder 1309:1309 <> b:13
-scheme 1248:1249 <> ty_rect
-scheme 1248:1249 <> ty_ind
-scheme 1248:1249 <> ty_rec
-scheme 1248:1249 <> ty_sind
-prf 1407:1415 <> ty_eq_dec
-R1432:1433 Clef.Spec.Types <> ty ind
-binder 1426:1426 <> a:14
-binder 1428:1428 <> b:15
-R1436:1436 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
-R1442:1446 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
-R1453:1453 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
-R1438:1440 Corelib.Init.Logic <> ::type_scope:x_'='_x not
-R1437:1437 Clef.Spec.Types <> a:14 var
-R1441:1441 Clef.Spec.Types <> b:15 var
-R1448:1451 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
-R1447:1447 Clef.Spec.Types <> a:14 var
-R1452:1452 Clef.Spec.Types <> b:15 var
-R1488:1499 Clef.Spec.Types <> tycon_eq_dec prfax
-R1488:1499 Clef.Spec.Types <> tycon_eq_dec prfax
-ind 1694:1696 <> oty
-constr 1710:1713 <> OVar
-constr 1717:1720 <> OCon
-constr 1736:1739 <> OFun
-constr 1755:1759 <> OPair
-R1727:1731 Clef.Spec.Types <> tycon defax
-binder 1723:1723 <> c:18
-R1748:1750 Clef.Spec.Types <> oty:16 ind
-binder 1742:1742 <> a:19
-binder 1744:1744 <> b:20
-R1768:1770 Clef.Spec.Types <> oty:16 ind
-binder 1762:1762 <> a:21
-binder 1764:1764 <> b:22
-scheme 1694:1696 <> oty_rect
-scheme 1694:1696 <> oty_ind
-scheme 1694:1696 <> oty_rec
-scheme 1694:1696 <> oty_sind
-def 1946:1949 <> inst
-R1956:1957 Clef.Spec.Types <> ty ind
-binder 1952:1952 <> t:23
-R1965:1967 Clef.Spec.Types <> oty ind
-binder 1961:1961 <> o:24
-R1972:1973 Clef.Spec.Types <> ty ind
-R1986:1986 Clef.Spec.Types <> o:24 var
-R1997:2000 Clef.Spec.Types <> OVar constr
-R2005:2005 Clef.Spec.Types <> t:23 var
-R2011:2014 Clef.Spec.Types <> OCon constr
-R2021:2024 Clef.Spec.Types <> TCon constr
-R2032:2035 Clef.Spec.Types <> OFun constr
-R2044:2047 Clef.Spec.Types <> TFun constr
-R2050:2053 Clef.Spec.Types <> inst:25 def
-R2055:2055 Clef.Spec.Types <> t:23 var
-R2061:2064 Clef.Spec.Types <> inst:25 def
-R2066:2066 Clef.Spec.Types <> t:23 var
-R2075:2079 Clef.Spec.Types <> OPair constr
-R2088:2092 Clef.Spec.Types <> TPair constr
-R2095:2098 Clef.Spec.Types <> inst:25 def
-R2100:2100 Clef.Spec.Types <> t:23 var
-R2106:2109 Clef.Spec.Types <> inst:25 def
-R2111:2111 Clef.Spec.Types <> t:23 var
+ax 1087:1098 <> tycon_eq_dec
+R1115:1119 Clef.Spec.Types <> tycon defax
+binder 1109:1109 <> a:3
+binder 1111:1111 <> b:4
+R1122:1122 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R1128:1132 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R1139:1139 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R1124:1126 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1123:1123 Clef.Spec.Types <> a:3 var
+R1127:1127 Clef.Spec.Types <> b:4 var
+R1134:1137 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R1133:1133 Clef.Spec.Types <> a:3 var
+R1138:1138 Clef.Spec.Types <> b:4 var
+ind 1422:1423 <> ty
+constr 1437:1440 <> TCon
+constr 1456:1459 <> TFun
+constr 1474:1478 <> TPair
+R1447:1451 Clef.Spec.Types <> tycon defax
+binder 1443:1443 <> c:9
+R1468:1469 Clef.Spec.Types <> ty:7 ind
+binder 1462:1462 <> a:10
+binder 1464:1464 <> b:11
+R1487:1488 Clef.Spec.Types <> ty:7 ind
+binder 1481:1481 <> a:12
+binder 1483:1483 <> b:13
+scheme 1422:1423 <> ty_rect
+scheme 1422:1423 <> ty_ind
+scheme 1422:1423 <> ty_rec
+scheme 1422:1423 <> ty_sind
+prf 1581:1589 <> ty_eq_dec
+R1606:1607 Clef.Spec.Types <> ty ind
+binder 1600:1600 <> a:14
+binder 1602:1602 <> b:15
+R1610:1610 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R1616:1620 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R1627:1627 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R1612:1614 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1611:1611 Clef.Spec.Types <> a:14 var
+R1615:1615 Clef.Spec.Types <> b:15 var
+R1622:1625 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R1621:1621 Clef.Spec.Types <> a:14 var
+R1626:1626 Clef.Spec.Types <> b:15 var
+R1662:1673 Clef.Spec.Types <> tycon_eq_dec prfax
+R1662:1673 Clef.Spec.Types <> tycon_eq_dec prfax
+ind 1868:1870 <> oty
+constr 1884:1887 <> OVar
+constr 1891:1894 <> OCon
+constr 1910:1913 <> OFun
+constr 1929:1933 <> OPair
+R1901:1905 Clef.Spec.Types <> tycon defax
+binder 1897:1897 <> c:18
+R1922:1924 Clef.Spec.Types <> oty:16 ind
+binder 1916:1916 <> a:19
+binder 1918:1918 <> b:20
+R1942:1944 Clef.Spec.Types <> oty:16 ind
+binder 1936:1936 <> a:21
+binder 1938:1938 <> b:22
+scheme 1868:1870 <> oty_rect
+scheme 1868:1870 <> oty_ind
+scheme 1868:1870 <> oty_rec
+scheme 1868:1870 <> oty_sind
+def 2120:2123 <> inst
+R2130:2131 Clef.Spec.Types <> ty ind
+binder 2126:2126 <> t:23
+R2139:2141 Clef.Spec.Types <> oty ind
+binder 2135:2135 <> o:24
+R2146:2147 Clef.Spec.Types <> ty ind
+R2160:2160 Clef.Spec.Types <> o:24 var
+R2171:2174 Clef.Spec.Types <> OVar constr
+R2179:2179 Clef.Spec.Types <> t:23 var
+R2185:2188 Clef.Spec.Types <> OCon constr
+R2195:2198 Clef.Spec.Types <> TCon constr
+R2206:2209 Clef.Spec.Types <> OFun constr
+R2218:2221 Clef.Spec.Types <> TFun constr
+R2224:2227 Clef.Spec.Types <> inst:25 def
+R2229:2229 Clef.Spec.Types <> t:23 var
+R2235:2238 Clef.Spec.Types <> inst:25 def
+R2240:2240 Clef.Spec.Types <> t:23 var
+R2249:2253 Clef.Spec.Types <> OPair constr
+R2262:2266 Clef.Spec.Types <> TPair constr
+R2269:2272 Clef.Spec.Types <> inst:25 def
+R2274:2274 Clef.Spec.Types <> t:23 var
+R2280:2283 Clef.Spec.Types <> inst:25 def
+R2285:2285 Clef.Spec.Types <> t:23 var

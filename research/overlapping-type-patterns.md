@@ -42,32 +42,32 @@ Notation: `p ≤ q` means "pattern `p` is at least as specific as pattern `q`".
 
 Working copy a local clone of `clef-lang-spec`, directory `spec/`, at commit `26207e0`.
 
-- **Arm order is first match.** `patterns.md`, chapter introduction: "Rules are attempted in order
-  from top to bottom and left to right." No heading in `patterns.md` or `expressions.md`
+- **Arm order is first match.** [`patterns.md`](https://clef-lang.com/spec/draft/patterns/), chapter introduction: "Rules are attempted in order
+  from top to bottom and left to right." No heading in [`patterns.md`](https://clef-lang.com/spec/draft/patterns/) or [`expressions.md`](https://clef-lang.com/spec/draft/expressions/)
   ("Pattern-Matching Expressions and Functions") orders rules by specificity.
-- **Redundant type tests give a warning.** `patterns.md`, "Dynamic Type-test Patterns": "A warning
+- **Redundant type tests give a warning.** [`patterns.md`, "Dynamic Type-test Patterns"](https://clef-lang.com/spec/draft/patterns/#dynamic-type-test-patterns): "A warning
   is issued if an expression contains a redundant dynamic type-test pattern". The example puts
   `:? System.IComparable` before `:? string` and reports the second rule as "never matched". So
   the existing rule for a general arm placed before a specific one is a warning, and the general
   arm wins.
-- **`:?` is resolved statically, but the text is inconsistent.** `expressions.md`, "Dynamic
+- **`:?` is resolved statically, but the text is inconsistent.** [`expressions.md`](https://clef-lang.com/spec/draft/expressions/), "Dynamic
   Type-Test Expressions": "No runtime type inspection is performed", and an undeterminable
-  relationship is a compile-time error. `types-and-type-constraints.md`, "No Dynamic Type Tests",
-  gives an example over `obj`. `introduction.md` says `:?` and `obj` "are not available in Clef".
-  `patterns.md` still describes run-time subtype matching, inherited from F#. RFC 0001 Motivation
+  relationship is a compile-time error. [`types-and-type-constraints.md`](https://clef-lang.com/spec/draft/types-and-type-constraints/), "No Dynamic Type Tests",
+  gives an example over `obj`. [`introduction.md`](https://clef-lang.com/spec/draft/introduction/) says `:?` and `obj` "are not available in Clef".
+  [`patterns.md`](https://clef-lang.com/spec/draft/patterns/) still describes run-time subtype matching, inherited from F#. RFC 0001 Motivation
   item 3 already records this.
 - **Overload resolution has a "more specific" rule, and it is not pattern specificity.**
-  `inference-application-resolution.md`, "Method Application Resolution", step 7. Criterion 5:
+  [`inference-application-resolution.md`, "Method Application Resolution"](https://clef-lang.com/spec/draft/inference-application-resolution/#method-application-resolution), step 7. Criterion 5:
   "prefer any candidate that has the more specific actual argument types", defined by "feasibly
   subsumes", which is a coercion relation. Criterion 8: "Prefer candidates that are not generic
   over candidates that are generic". Then: "Report an error if steps 1) through 8) do not result
   in the selection of a unique better method." This is a partial preference with an ambiguity
   error. It has no rule that prefers `list<'a>` over `'a` between two generic candidates.
-- **SRTP.** `inference-constraint-solving.md`, "Solving Member Constraints": a constraint is
+- **SRTP.** [`inference-constraint-solving.md`, "Solving Member Constraints"](https://clef-lang.com/spec/draft/inference-constraint-solving/#solving-member-constraints): a constraint is
   satisfied when a type in the support set has the member. There is no ordering and no
-  specificity. `program-semantic-graph.md` §3.3 records one resolved member per site.
-- **Monomorphization.** `types-and-type-constraints.md` (text before "Named Types"):
-  "Monomorphization ... occurs during PSG saturation". `native-type-mappings.md`: "Generic type
+  specificity. [`program-semantic-graph.md` §3.3](https://clef-lang.com/spec/draft/program-semantic-graph/#33-srtp-resolution) records one resolved member per site.
+- **Monomorphization.** [`types-and-type-constraints.md`](https://clef-lang.com/spec/draft/types-and-type-constraints/) (text before "Named Types"):
+  "Monomorphization ... occurs during PSG saturation". [`native-type-mappings.md`](https://clef-lang.com/spec/draft/native-type-mappings/): "Generic type
   parameters are monomorphized (specialized at each call site)."
 
 Conclusion: no existing Clef rule orders by specificity. The principles that do exist are
@@ -342,7 +342,7 @@ Separate the constraint from the type-case.
    section 5.
 7. Well-formedness, checked at the definition:
    - **No shadowing.** No arm is an instance of an earlier arm. This is an error, not the warning
-     of `patterns.md`, because a dead arm in a static type-case is always a mistake.
+     of [`patterns.md`](https://clef-lang.com/spec/draft/patterns/), because a dead arm in a static type-case is always a mistake.
    - **Chain rule.** If two arms unify, the earlier is strictly more specific than the later.
    - **Coverage.** Every member is an instance of some arm, or a default arm is present.
 8. Each arm body is checked once, generically in the arm's pattern variables, under the local
@@ -381,7 +381,7 @@ This should be its own unresolved question, or its own RFC.
 - **R4. Erased or normalized distinctions.** Matching must see exactly what saturation sees. The
   candidates in Clef are type abbreviations, units of measure (`float<m>` against `float`),
   width-inferred numeric types, and any coercion or subtyping relation (`:>` constraints exist in
-  `types-and-type-constraints.md`). If the checker distinguishes two types that saturation
+  [`types-and-type-constraints.md`](https://clef-lang.com/spec/draft/types-and-type-constraints/)). If the checker distinguishes two types that saturation
   identifies, or the reverse, then non-linear patterns and patterns that mention such types
   behave like Rust's lifetime dispatch. Whether measures are erased before saturation was not
   verified.

@@ -93,8 +93,10 @@ parameters also have known types, and a rule that used them would accept more.
 
 ## Relation to the verification tiers
 
-The specification organises checking into tiers. Tier 1 is structural inference whose checks are
-equalities. Tier 2 is local analysis and solver fragments. Tier 3 is the application of library
+The specification organises checking into
+[tiers](https://clef-lang.com/spec/draft/terms-and-definitions/#verification).
+Tier 1 is structural inference whose checks are equalities
+([NTU Dimensional Architecture §7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity)). Tier 2 is local analysis and solver fragments. Tier 3 is the application of library
 theorems. Tier 4 is relational judgments about executions. The research note
 [RFC 0001 and RFC 0002 against the verification tiers](https://shayanhabibi.github.io/clef-rfc-research/research/tier-placement-and-extensions/)
 gives the sources and the full argument. This section records the conclusions for this RFC. They

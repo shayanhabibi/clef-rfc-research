@@ -83,7 +83,8 @@ The Clef design documents describe checking as a sheaf over the compilation stag
 program graph, the MLIR levels and the native binary. At Tier 1 the fact attached to a stage is an
 integer exponent vector over the declared base measures, the maps between stages compose, and a
 program is consistent when the facts agree along every adjacent step. The specification makes
-every Tier 1 check an equality. `ntu-dimensional-architecture.md` §7.2 says identity is exact on
+every Tier 1 check an equality. [NTU Dimensional Architecture §7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity)
+says identity is exact on
 the unit, that no component is subtyped, and "There are no seals and no conversion sites."
 
 This section records how the RFC meets that structure. It is a reading of the documents, and
@@ -108,19 +109,25 @@ from the specification commit this RFC is written against.
 **What conflicts.**
 
 - *An inserted conversion is a conversion site.* The position that expects a measure coerces the
-  unit, which §7.2 rules out in both of its clauses.
+  unit, which [§7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity)
+  rules out in both of its clauses.
 - *A measure gains runtime content.* Today a measure can be released without touching the value.
   With conversion a difference of measure is a multiplication, which the lowering must emit and
   account for.
-- *The integer rule needs an order.* §7.2 says no ordering is needed. Choosing the finer unit is a
+- *The integer rule needs an order.* [§7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity)
+  says no ordering is needed. Choosing the finer unit is a
   divisibility check. For closed measures it is a computation. With measure variables it would
-  likely be integer linear arithmetic, which the tiers place in Tier 2.
-- *Operators.* `units-of-measure.md` requires matching measures for addition. The integer rule
+  likely be integer linear arithmetic, which the
+  [tiers](https://clef-lang.com/spec/draft/terms-and-definitions/#verification) place in Tier 2.
+- *Operators.* [Units of Measure, Numeric Operations with Measures](https://clef-lang.com/spec/draft/units-of-measure/#numeric-operations-with-measures)
+  requires matching measures for addition. The integer rule
   changes that signature. The rational half of this RFC does not.
-- *Retention.* The specification requires the program graph to retain the measure of each value.
+- *Retention.* [Units of Measure, Measure Parameters Past the Checker](https://clef-lang.com/spec/draft/units-of-measure/#measure-parameters-past-the-checker)
+  requires the program graph to retain the measure of each value.
   The target language here erases measures, so the model is coarser than the graph.
 
-**A shape that would fit.** §7.2 has a precedent. A `ReadWrite` handle becomes `ReadOnly` only
+**A shape that would fit.** [§7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity)
+has a precedent. A `ReadWrite` handle becomes `ReadOnly` only
 through `Ptr.asReadOnly`, which is a node in the graph. The same pattern for units is:
 
 1. Tier 1 keeps unit identity exact. Dimension and scale are derived facts on the same vector.
@@ -130,7 +137,8 @@ through `Ptr.asReadOnly`, which is a node in the graph. The same pattern for uni
    information. Width inference sees the scaling as ordinary arithmetic.
 
 Whether the node is written by the author or inserted by elaboration is then the one remaining
-choice. Written, it needs no change to §7.2. Inserted, §7.2 must be amended.
+choice. Written, it needs no change to [§7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity).
+Inserted, §7.2 must be amended.
 
 ## Alternatives
 
@@ -167,5 +175,6 @@ sizes to existing units accepts calls that were errors before.
    square root gives a fractional exponent, whose factor is a root.
 8. **Inference.** The rule for a position whose measure is not yet closed.
 9. **Written or inserted.** Whether the conversion node is written by the author, which leaves
-   `ntu-dimensional-architecture.md` §7.2 as it is, or inserted by elaboration, which amends it.
+   [NTU Dimensional Architecture §7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity)
+   as it is, or inserted by elaboration, which amends it.
 *)

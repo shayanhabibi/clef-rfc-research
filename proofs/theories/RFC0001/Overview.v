@@ -47,7 +47,9 @@ Three concrete problems follow from the gap.
    definition and rejected wherever it is instantiated with a type lacking the member.
 2. **The admissible set is not part of the contract.** A signature cannot state which types a
    function is meant for, so a later change to the body silently changes the set.
-3. **The `:?` pattern has no settled meaning.** The spec says it is resolved statically, yet its
+3. **The `:?` pattern has no settled meaning.** The spec's
+   [Dynamic Type-test Patterns](https://clef-lang.com/spec/draft/patterns/#dynamic-type-test-patterns)
+   says it is resolved statically, yet its
    example takes a parameter of type `obj`, which the compiler must reject. No conforming program
    can reach the construct that section describes.
 
@@ -81,6 +83,7 @@ Rocq. The prose between them is the RFC.
 | [Constraints](Clef.RFC0001.Constraints.html) | Member sets, satisfaction, entailment and intersection |
 | [TypeCase](Clef.RFC0001.TypeCase.html) | Definition-site checking, the static type-case and specialization |
 | [Representation](Clef.RFC0001.Representation.html) | Why a member set cannot be a type without a tag |
+| [Laws](Clef.RFC0001.Laws.html) | An extension, not part of the proposal: laws a member set carries, rewriting by them, and library theorems instantiated per member |
 | [Discussion](Clef.RFC0001.Discussion.html) | What the proofs do not cover, drawbacks, alternatives, impact and open questions |
 
 The Guarantees page, which opens this reader, lists every titled theorem with the assumptions its

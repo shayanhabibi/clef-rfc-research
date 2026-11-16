@@ -2,22 +2,23 @@
   "rocqVersion": "9.1.0",
   "digests": {
     "theories/RFC0001/Constraints.v": "bb993d3d23e9c717054ab0ba27203ed4",
-    "theories/RFC0001/Discussion.v": "3d224e58ff8ce584f25eaa51084be47f",
-    "theories/RFC0001/Overview.v": "d6a9255a9da55b3612de50041aa9de7f",
+    "theories/RFC0001/Discussion.v": "7ef9b9a807136461f36a85d617c91fc3",
+    "theories/RFC0001/Laws.v": "017889f134571d5b574aa4c0a80a9dea",
+    "theories/RFC0001/Overview.v": "701de8485a20b73c5264016bc95877f0",
     "theories/RFC0001/Representation.v": "b8c7101f4c4bfaaff499261a9a8f8d8b",
     "theories/RFC0001/TypeCase.v": "ac18369418ee5ad858fbd48d0e561307",
     "theories/RFC0002/Bodies.v": "86cd0c9cabb147e13924a65659d9e4f8",
-    "theories/RFC0002/Discussion.v": "3ac00bd48f306e016259b648ca30a67f",
+    "theories/RFC0002/Discussion.v": "bd3d0a79431e56b62106fdb7de473160",
     "theories/RFC0002/Overview.v": "5d9b3ff216202af387fb86f01e7c80df",
     "theories/RFC0002/Regions.v": "55439ab54c6dc484ac5680c4df570aed",
     "theories/RFC0003/Conversion.v": "87d6abfbe5310fd32a19f4822dbb4989",
-    "theories/RFC0003/Discussion.v": "166d3a3f7c182561995f92ecfa6e38d1",
+    "theories/RFC0003/Discussion.v": "39d46a4bf9622b3054dd2d5e71f342f0",
     "theories/RFC0003/Elaboration.v": "c956e637ca9e7067721fe11b52fe5d75",
     "theories/RFC0003/Integers.v": "51de7d8dd1b45cba7568d872baf2e675",
-    "theories/RFC0003/Measures.v": "074b87e62cdaa895ebcfe6ad9275a7c1",
+    "theories/RFC0003/Measures.v": "33a01f5692c9c90089eba518dc4d3f7d",
     "theories/RFC0003/Overview.v": "d14ec21533d52dad86a82fde9086709a",
     "theories/Spec/Runtime.v": "08995eb04b8716d1cc3c9c69ef08783b",
-    "theories/Spec/Types.v": "03515d34d93a2c16c7d1da0001196f5f",
+    "theories/Spec/Types.v": "505927e23c38f2d5e19cb91f17f8f865",
     "theories/Spec/Witnesses.v": "ba3453af70cda2fd69ffaa0a14a96fbe"
   },
   "symbols": {
@@ -161,6 +162,643 @@
     "Clef.RFC0001.Constraints.well_formed": {
       "type": "Constraints.cset -> Prop",
       "binders": {}
+    },
+    "Clef.RFC0001.Laws.LPair": {
+      "type": "Laws.lterm -> Laws.lterm -> Laws.lterm",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.LPrim": {
+      "type": "Witnesses.op -> Laws.lterm -> Laws.lterm",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.LVar": {
+      "type": "nat -> Laws.lterm",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.RwBack": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (l : Laws.law) (s : list TypeCase.mtm) (m m' : TypeCase.mtm),\nList.In l L ->\nlength s = Laws.arity l ->\nListDef.Forall (fun a : TypeCase.mtm => TypeCase.mtype G a = Some t) s ->\nLaws.linst s (Laws.lhs l) = Some m ->\nLaws.linst s (Laws.rhs l) = Some m' -> Laws.rw L t G m' m",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "l": "Laws.law",
+        "m": "TypeCase.mtm",
+        "m'": "TypeCase.mtm",
+        "s": "list TypeCase.mtm",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.RwFst": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (a a' : TypeCase.mtm),\nLaws.rw L t G a a' ->\nLaws.rw L t G (TypeCase.MFst a) (TypeCase.MFst a')",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "a": "TypeCase.mtm",
+        "a'": "TypeCase.mtm",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.RwLaw": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (l : Laws.law) (s : list TypeCase.mtm) (m m' : TypeCase.mtm),\nList.In l L ->\nlength s = Laws.arity l ->\nListDef.Forall (fun a : TypeCase.mtm => TypeCase.mtype G a = Some t) s ->\nLaws.linst s (Laws.lhs l) = Some m ->\nLaws.linst s (Laws.rhs l) = Some m' -> Laws.rw L t G m m'",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "l": "Laws.law",
+        "m": "TypeCase.mtm",
+        "m'": "TypeCase.mtm",
+        "s": "list TypeCase.mtm",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.RwLetL": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (a a' b : TypeCase.mtm),\nLaws.rw L t G a a' ->\nLaws.rw L t G (TypeCase.MLet a b) (TypeCase.MLet a' b)",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "a": "TypeCase.mtm",
+        "a'": "TypeCase.mtm",
+        "b": "TypeCase.mtm",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.RwLetR": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (a b b' : TypeCase.mtm) (x : Types.ty),\nTypeCase.mtype G a = Some x ->\nLaws.rw L t (x :: G) b b' ->\nLaws.rw L t G (TypeCase.MLet a b) (TypeCase.MLet a b')",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "a": "TypeCase.mtm",
+        "b": "TypeCase.mtm",
+        "b'": "TypeCase.mtm",
+        "t": "Types.ty",
+        "x": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.RwPairL": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (a a' b : TypeCase.mtm),\nLaws.rw L t G a a' ->\nLaws.rw L t G (TypeCase.MPair a b) (TypeCase.MPair a' b)",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "a": "TypeCase.mtm",
+        "a'": "TypeCase.mtm",
+        "b": "TypeCase.mtm",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.RwPairR": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (a b b' : TypeCase.mtm),\nLaws.rw L t G b b' ->\nLaws.rw L t G (TypeCase.MPair a b) (TypeCase.MPair a b')",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "a": "TypeCase.mtm",
+        "b": "TypeCase.mtm",
+        "b'": "TypeCase.mtm",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.RwPrim": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (o : Witnesses.op) (a a' : TypeCase.mtm),\nLaws.rw L t G a a' ->\nLaws.rw L t G (TypeCase.MPrim o a) (TypeCase.MPrim o a')",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "a": "TypeCase.mtm",
+        "a'": "TypeCase.mtm",
+        "o": "Witnesses.op",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.RwSnd": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (a a' : TypeCase.mtm),\nLaws.rw L t G a a' ->\nLaws.rw L t G (TypeCase.MSnd a) (TypeCase.MSnd a')",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "a": "TypeCase.mtm",
+        "a'": "TypeCase.mtm",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.RwsRefl": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (m : TypeCase.mtm),\nLaws.rws L t G m m",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "m": "TypeCase.mtm",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.RwsStep": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (m m' m'' : TypeCase.mtm),\nLaws.rw L t G m m' -> Laws.rws L t G m' m'' -> Laws.rws L t G m m''",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "m": "TypeCase.mtm",
+        "m'": "TypeCase.mtm",
+        "m''": "TypeCase.mtm",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.apply_sound": {
+      "type": "Laws.sound_impl Witnesses.apply",
+      "binders": {},
+      "assumptions": [
+        "Witnesses.witness_sound"
+      ]
+    },
+    "Clef.RFC0001.Laws.args_evaluate": {
+      "type": "forall (G : list Types.ty) (env : list Runtime.val) (t : Types.ty),\nList.Forall2 Runtime.has_ty env G ->\nforall s : list TypeCase.mtm,\nListDef.Forall (fun a : TypeCase.mtm => TypeCase.mtype G a = Some t) s ->\nexists vs : list Runtime.val,\n  List.Forall2 Runtime.has_ty vs (ListDef.repeat t (length s)) /\\\n  (forall (n : nat) (a : TypeCase.mtm),\n   List.nth_error s n = Some a ->\n   TypeCase.eval env a = List.nth_error vs n)",
+      "binders": {
+        "G": "list Types.ty",
+        "env": "list Runtime.val",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.arity": {
+      "type": "Laws.law -> nat",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.associative": {
+      "type": "Witnesses.op -> Laws.law",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.bin": {
+      "type": "Witnesses.op -> Laws.lterm -> Laws.lterm -> Laws.lterm",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.carries": {
+      "type": "Constraints.cset -> Laws.law -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.carries_member": {
+      "type": "forall (C : Constraints.cset) (t : Types.ty) (l : Laws.law),\nLaws.carries (t :: C)%list l <-> Laws.holds_at t l /\\ Laws.carries C l",
+      "binders": {
+        "C": "Constraints.cset",
+        "l": "Laws.law",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.commutative": {
+      "type": "Witnesses.op -> Laws.law",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.derived_law": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (n : nat) \n  (a b : Laws.lterm) (ma mb : TypeCase.mtm),\n(forall l : Laws.law, List.In l L -> Laws.holds_at t l) ->\nLaws.linst (Laws.vars 0 n) a = Some ma ->\nLaws.linst (Laws.vars 0 n) b = Some mb ->\nLaws.rws L t (ListDef.repeat t n) ma mb ->\nLaws.holds_at t {| Laws.arity := n; Laws.lhs := a; Laws.rhs := b |}",
+      "binders": {
+        "L": "list Laws.law",
+        "a": "Laws.lterm",
+        "b": "Laws.lterm",
+        "ma": "TypeCase.mtm",
+        "mb": "TypeCase.mtm",
+        "n": "nat",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.evidence_survives_unrelated_change": {
+      "type": "forall (I J : Laws.impl) (t : Types.ty) (l : Laws.law),\nLaws.sound_impl I ->\nLaws.law_typed t l ->\n(forall (o : Witnesses.op) (a : Types.ty),\n List.In (o, a) (Laws.law_uses t l) ->\n forall v : Runtime.val, Runtime.has_ty v a -> I o v = J o v) ->\nLaws.holdsI I t l -> Laws.holdsI J t l",
+      "binders": {
+        "I": "Laws.impl",
+        "J": "Laws.impl",
+        "l": "Laws.law",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom"
+      ]
+    },
+    "Clef.RFC0001.Laws.holdsI": {
+      "type": "Laws.impl -> Types.ty -> Laws.law -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.holds_at": {
+      "type": "Types.ty -> Laws.law -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.impl": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.law": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.law_iff_rewrite": {
+      "type": "forall (t : Types.ty) (l : Laws.law),\nLaws.lscoped (Laws.arity l) (Laws.lhs l) = true ->\nLaws.lscoped (Laws.arity l) (Laws.rhs l) = true ->\nLaws.holds_at t l <->\n(forall (G : list Types.ty) (m m' : TypeCase.mtm),\n Laws.rw (l :: nil) t G m m' ->\n forall env : list Runtime.val,\n List.Forall2 Runtime.has_ty env G ->\n TypeCase.eval env m = TypeCase.eval env m')",
+      "binders": {
+        "l": "Laws.law",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.law_narrowing": {
+      "type": "forall (C D : Constraints.cset) (l : Laws.law),\nConstraints.entails C D -> Laws.carries D l -> Laws.carries C l",
+      "binders": {
+        "C": "Constraints.cset",
+        "D": "Constraints.cset",
+        "l": "Laws.law"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.law_typed": {
+      "type": "Types.ty -> Laws.law -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.law_uses": {
+      "type": "Types.ty -> Laws.law -> list (Witnesses.op * Types.ty)",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.levalI": {
+      "type": "Laws.impl -> list Runtime.val -> Laws.lterm -> option Runtime.val",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.leval_agree": {
+      "type": "forall I J : Laws.impl,\nLaws.sound_impl I ->\nforall (G : list Types.ty) (vs : list Runtime.val),\nList.Forall2 Runtime.has_ty vs G ->\nforall (p : Laws.lterm) (r : Types.ty),\nLaws.ltype G p = Some r ->\n(forall (o : Witnesses.op) (a : Types.ty),\n List.In (o, a) (Laws.uses G p) ->\n forall v : Runtime.val, Runtime.has_ty v a -> I o v = J o v) ->\nLaws.levalI I vs p = Laws.levalI J vs p",
+      "binders": {
+        "I": "Laws.impl",
+        "J": "Laws.impl"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom"
+      ]
+    },
+    "Clef.RFC0001.Laws.lhs": {
+      "type": "Laws.law -> Laws.lterm",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.library_theorem": {
+      "type": "list Laws.law -> Laws.law -> (Types.ty -> Prop) -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.linst": {
+      "type": "list TypeCase.mtm -> Laws.lterm -> option TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.linst_eval": {
+      "type": "forall (env : list Runtime.val) (s : list TypeCase.mtm)\n  (vs : list Runtime.val),\n(forall (n : nat) (a : TypeCase.mtm),\n List.nth_error s n = Some a ->\n TypeCase.eval env a = List.nth_error vs n) ->\nforall (p : Laws.lterm) (m : TypeCase.mtm),\nLaws.linst s p = Some m ->\nTypeCase.eval env m = Laws.levalI Witnesses.apply vs p",
+      "binders": {
+        "env": "list Runtime.val",
+        "s": "list TypeCase.mtm",
+        "vs": "list Runtime.val"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.linst_scoped": {
+      "type": "forall (s : list TypeCase.mtm) (p : Laws.lterm),\nLaws.lscoped (length s) p = true ->\nexists m : TypeCase.mtm, Laws.linst s p = Some m",
+      "binders": {
+        "p": "Laws.lterm",
+        "s": "list TypeCase.mtm"
+      },
+      "assumptions": [
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.Laws.lsafe": {
+      "type": "forall I : Laws.impl,\nLaws.sound_impl I ->\nforall (G : list Types.ty) (vs : list Runtime.val),\nList.Forall2 Runtime.has_ty vs G ->\nforall (p : Laws.lterm) (r : Types.ty),\nLaws.ltype G p = Some r ->\nexists v : Runtime.val,\n  Laws.levalI I vs p = Some v /\\ Runtime.has_ty v r",
+      "binders": {
+        "I": "Laws.impl"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom"
+      ]
+    },
+    "Clef.RFC0001.Laws.lscoped": {
+      "type": "nat -> Laws.lterm -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.lterm": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.lterm_ind": {
+      "type": "forall P : Laws.lterm -> Prop,\n(forall n : nat, P (Laws.LVar n)) ->\n(forall (o : Witnesses.op) (a : Laws.lterm), P a -> P (Laws.LPrim o a)) ->\n(forall a : Laws.lterm,\n P a -> forall b : Laws.lterm, P b -> P (Laws.LPair a b)) ->\nforall l : Laws.lterm, P l",
+      "binders": {
+        "P": "Laws.lterm -> Prop"
+      }
+    },
+    "Clef.RFC0001.Laws.lterm_rec": {
+      "type": "forall P : Laws.lterm -> Set,\n(forall n : nat, P (Laws.LVar n)) ->\n(forall (o : Witnesses.op) (a : Laws.lterm), P a -> P (Laws.LPrim o a)) ->\n(forall a : Laws.lterm,\n P a -> forall b : Laws.lterm, P b -> P (Laws.LPair a b)) ->\nforall l : Laws.lterm, P l",
+      "binders": {
+        "P": "Laws.lterm -> Set"
+      }
+    },
+    "Clef.RFC0001.Laws.lterm_rect": {
+      "type": "forall P : Laws.lterm -> Type,\n(forall n : nat, P (Laws.LVar n)) ->\n(forall (o : Witnesses.op) (a : Laws.lterm), P a -> P (Laws.LPrim o a)) ->\n(forall a : Laws.lterm,\n P a -> forall b : Laws.lterm, P b -> P (Laws.LPair a b)) ->\nforall l : Laws.lterm, P l",
+      "binders": {
+        "P": "Laws.lterm -> Type"
+      }
+    },
+    "Clef.RFC0001.Laws.lterm_sind": {
+      "type": "forall P : Laws.lterm -> SProp,\n(forall n : nat, P (Laws.LVar n)) ->\n(forall (o : Witnesses.op) (a : Laws.lterm), P a -> P (Laws.LPrim o a)) ->\n(forall a : Laws.lterm,\n P a -> forall b : Laws.lterm, P b -> P (Laws.LPair a b)) ->\nforall l : Laws.lterm, P l",
+      "binders": {
+        "P": "Laws.lterm -> SProp"
+      }
+    },
+    "Clef.RFC0001.Laws.ltype": {
+      "type": "list Types.ty -> Laws.lterm -> option Types.ty",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.meet_carries": {
+      "type": "forall (C D : Constraints.cset) (l : Laws.law),\nLaws.carries C l \\/ Laws.carries D l ->\nLaws.carries (Constraints.meet C D) l",
+      "binders": {
+        "C": "Constraints.cset",
+        "D": "Constraints.cset",
+        "l": "Laws.law"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.obligations": {
+      "type": "Constraints.cset -> list Laws.law -> list (Types.ty * Laws.law)",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.obligations_count": {
+      "type": "forall (C : Constraints.cset) (L : list Laws.law),\nlength (Laws.obligations C L) = length C * length L",
+      "binders": {
+        "C": "Constraints.cset",
+        "L": "list Laws.law"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.Laws.obligations_exact": {
+      "type": "forall (C : Constraints.cset) (L : list Laws.law),\n(forall (t : Types.ty) (l : Laws.law),\n List.In (t, l) (Laws.obligations C L) -> Laws.holds_at t l) <->\n(forall l : Laws.law, List.In l L -> Laws.carries C l)",
+      "binders": {
+        "C": "Constraints.cset",
+        "L": "list Laws.law"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.repeat_nth": {
+      "type": "forall (t : Types.ty) (k n : nat),\nn < k -> List.nth_error (ListDef.repeat t k) n = Some t",
+      "binders": {
+        "k": "nat",
+        "n": "nat",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0001.Laws.reversal_at_every_member": {
+      "type": "forall (C : Constraints.cset) (o : Witnesses.op),\n(forall t : Types.ty,\n Constraints.sat t C -> Witnesses.witness o (Types.TPair t t) = Some t) ->\nLaws.carries C (Laws.commutative o) ->\nLaws.carries C (Laws.reversed o)",
+      "binders": {
+        "C": "Constraints.cset",
+        "o": "Witnesses.op"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.reversal_from_commutativity": {
+      "type": "forall o : Witnesses.op,\nLaws.library_theorem (Laws.commutative o :: nil) \n  (Laws.reversed o)\n  (fun t : Types.ty => Witnesses.witness o (Types.TPair t t) = Some t)",
+      "binders": {
+        "o": "Witnesses.op"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.reversed": {
+      "type": "Witnesses.op -> Laws.law",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.rewrite_sound": {
+      "type": "forall (L : list Laws.law) (t : Types.ty),\n(forall l : Laws.law, List.In l L -> Laws.holds_at t l) ->\nforall (G : list Types.ty) (m m' : TypeCase.mtm),\nLaws.rw L t G m m' ->\nforall env : list Runtime.val,\nList.Forall2 Runtime.has_ty env G ->\nTypeCase.eval env m = TypeCase.eval env m'",
+      "binders": {
+        "L": "list Laws.law",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.rewrites_sound": {
+      "type": "forall (L : list Laws.law) (t : Types.ty),\n(forall l : Laws.law, List.In l L -> Laws.holds_at t l) ->\nforall (G : list Types.ty) (m m' : TypeCase.mtm),\nLaws.rws L t G m m' ->\nforall env : list Runtime.val,\nList.Forall2 Runtime.has_ty env G ->\nTypeCase.eval env m = TypeCase.eval env m'",
+      "binders": {
+        "L": "list Laws.law",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.rewritten_definition_keeps_meaning": {
+      "type": "forall (C : Constraints.cset) (L : list Laws.law) \n  (G : list Types.oty) (e : TypeCase.tm) (r : Types.oty),\nTypeCase.check C G e r = true ->\n(forall l : Laws.law, List.In l L -> Laws.carries C l) ->\nforall t : Types.ty,\nConstraints.sat t C ->\nforall m m' : TypeCase.mtm,\nTypeCase.spec t e = Some m ->\nLaws.rws L t (ListDef.map (Types.inst t) G) m m' ->\nforall env : list Runtime.val,\nList.Forall2 Runtime.has_ty env (ListDef.map (Types.inst t) G) ->\nexists v : Runtime.val,\n  TypeCase.eval env m' = Some v /\\\n  TypeCase.seval t env e = Some v /\\ Runtime.has_ty v (Types.inst t r)",
+      "binders": {
+        "C": "Constraints.cset",
+        "G": "list Types.oty",
+        "L": "list Laws.law",
+        "e": "TypeCase.tm",
+        "r": "Types.oty"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.rhs": {
+      "type": "Laws.law -> Laws.lterm",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.rw": {
+      "type": "list Laws.law ->\nTypes.ty -> list Types.ty -> TypeCase.mtm -> TypeCase.mtm -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.rw_ind": {
+      "type": "forall (L : list Laws.law) (t : Types.ty)\n  (P : list Types.ty -> TypeCase.mtm -> TypeCase.mtm -> Prop),\n(forall (G : list Types.ty) (l : Laws.law) \n   (s : list TypeCase.mtm) (m m' : TypeCase.mtm),\n List.In l L ->\n length s = Laws.arity l ->\n ListDef.Forall (fun a : TypeCase.mtm => TypeCase.mtype G a = Some t)\n   s ->\n Laws.linst s (Laws.lhs l) = Some m ->\n Laws.linst s (Laws.rhs l) = Some m' -> P G m m') ->\n(forall (G : list Types.ty) (l : Laws.law) \n   (s : list TypeCase.mtm) (m m' : TypeCase.mtm),\n List.In l L ->\n length s = Laws.arity l ->\n ListDef.Forall (fun a : TypeCase.mtm => TypeCase.mtype G a = Some t)\n   s ->\n Laws.linst s (Laws.lhs l) = Some m ->\n Laws.linst s (Laws.rhs l) = Some m' -> P G m' m) ->\n(forall (G : list Types.ty) (o : Witnesses.op) (a a' : TypeCase.mtm),\n Laws.rw L t G a a' ->\n P G a a' -> P G (TypeCase.MPrim o a) (TypeCase.MPrim o a')) ->\n(forall (G : list Types.ty) (a a' b : TypeCase.mtm),\n Laws.rw L t G a a' ->\n P G a a' -> P G (TypeCase.MPair a b) (TypeCase.MPair a' b)) ->\n(forall (G : list Types.ty) (a b b' : TypeCase.mtm),\n Laws.rw L t G b b' ->\n P G b b' -> P G (TypeCase.MPair a b) (TypeCase.MPair a b')) ->\n(forall (G : list Types.ty) (a a' : TypeCase.mtm),\n Laws.rw L t G a a' ->\n P G a a' -> P G (TypeCase.MFst a) (TypeCase.MFst a')) ->\n(forall (G : list Types.ty) (a a' : TypeCase.mtm),\n Laws.rw L t G a a' ->\n P G a a' -> P G (TypeCase.MSnd a) (TypeCase.MSnd a')) ->\n(forall (G : list Types.ty) (a a' b : TypeCase.mtm),\n Laws.rw L t G a a' ->\n P G a a' -> P G (TypeCase.MLet a b) (TypeCase.MLet a' b)) ->\n(forall (G : list Types.ty) (a b b' : TypeCase.mtm) (x : Types.ty),\n TypeCase.mtype G a = Some x ->\n Laws.rw L t (x :: G) b b' ->\n P (x :: G)%list b b' -> P G (TypeCase.MLet a b) (TypeCase.MLet a b')) ->\nforall (l : list Types.ty) (m m0 : TypeCase.mtm),\nLaws.rw L t l m m0 -> P l m m0",
+      "binders": {
+        "L": "list Laws.law",
+        "P": "list Types.ty -> TypeCase.mtm -> TypeCase.mtm -> Prop",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.rw_sind": {
+      "type": "forall (L : list Laws.law) (t : Types.ty)\n  (P : list Types.ty -> TypeCase.mtm -> TypeCase.mtm -> SProp),\n(forall (G : list Types.ty) (l : Laws.law) \n   (s : list TypeCase.mtm) (m m' : TypeCase.mtm),\n List.In l L ->\n length s = Laws.arity l ->\n ListDef.Forall (fun a : TypeCase.mtm => TypeCase.mtype G a = Some t)\n   s ->\n Laws.linst s (Laws.lhs l) = Some m ->\n Laws.linst s (Laws.rhs l) = Some m' -> P G m m') ->\n(forall (G : list Types.ty) (l : Laws.law) \n   (s : list TypeCase.mtm) (m m' : TypeCase.mtm),\n List.In l L ->\n length s = Laws.arity l ->\n ListDef.Forall (fun a : TypeCase.mtm => TypeCase.mtype G a = Some t)\n   s ->\n Laws.linst s (Laws.lhs l) = Some m ->\n Laws.linst s (Laws.rhs l) = Some m' -> P G m' m) ->\n(forall (G : list Types.ty) (o : Witnesses.op) (a a' : TypeCase.mtm),\n Laws.rw L t G a a' ->\n P G a a' -> P G (TypeCase.MPrim o a) (TypeCase.MPrim o a')) ->\n(forall (G : list Types.ty) (a a' b : TypeCase.mtm),\n Laws.rw L t G a a' ->\n P G a a' -> P G (TypeCase.MPair a b) (TypeCase.MPair a' b)) ->\n(forall (G : list Types.ty) (a b b' : TypeCase.mtm),\n Laws.rw L t G b b' ->\n P G b b' -> P G (TypeCase.MPair a b) (TypeCase.MPair a b')) ->\n(forall (G : list Types.ty) (a a' : TypeCase.mtm),\n Laws.rw L t G a a' ->\n P G a a' -> P G (TypeCase.MFst a) (TypeCase.MFst a')) ->\n(forall (G : list Types.ty) (a a' : TypeCase.mtm),\n Laws.rw L t G a a' ->\n P G a a' -> P G (TypeCase.MSnd a) (TypeCase.MSnd a')) ->\n(forall (G : list Types.ty) (a a' b : TypeCase.mtm),\n Laws.rw L t G a a' ->\n P G a a' -> P G (TypeCase.MLet a b) (TypeCase.MLet a' b)) ->\n(forall (G : list Types.ty) (a b b' : TypeCase.mtm) (x : Types.ty),\n TypeCase.mtype G a = Some x ->\n Laws.rw L t (x :: G) b b' ->\n P (x :: G)%list b b' -> P G (TypeCase.MLet a b) (TypeCase.MLet a b')) ->\nforall (l : list Types.ty) (m m0 : TypeCase.mtm),\nLaws.rw L t l m m0 -> P l m m0",
+      "binders": {
+        "L": "list Laws.law",
+        "P": "list Types.ty -> TypeCase.mtm -> TypeCase.mtm -> SProp",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.rws": {
+      "type": "list Laws.law ->\nTypes.ty -> list Types.ty -> TypeCase.mtm -> TypeCase.mtm -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.rws_ind": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (P : TypeCase.mtm -> TypeCase.mtm -> Prop),\n(forall m : TypeCase.mtm, P m m) ->\n(forall m m' m'' : TypeCase.mtm,\n Laws.rw L t G m m' -> Laws.rws L t G m' m'' -> P m' m'' -> P m m'') ->\nforall m m0 : TypeCase.mtm, Laws.rws L t G m m0 -> P m m0",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "P": "TypeCase.mtm -> TypeCase.mtm -> Prop",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.rws_sind": {
+      "type": "forall (L : list Laws.law) (t : Types.ty) (G : list Types.ty)\n  (P : TypeCase.mtm -> TypeCase.mtm -> SProp),\n(forall m : TypeCase.mtm, P m m) ->\n(forall m m' m'' : TypeCase.mtm,\n Laws.rw L t G m m' -> Laws.rws L t G m' m'' -> P m' m'' -> P m m'') ->\nforall m m0 : TypeCase.mtm, Laws.rws L t G m m0 -> P m m0",
+      "binders": {
+        "G": "list Types.ty",
+        "L": "list Laws.law",
+        "P": "TypeCase.mtm -> TypeCase.mtm -> SProp",
+        "t": "Types.ty"
+      }
+    },
+    "Clef.RFC0001.Laws.sound_impl": {
+      "type": "Laws.impl -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.theorem_per_member": {
+      "type": "forall (P : list Laws.law) (c : Laws.law) (side : Types.ty -> Prop)\n  (C : Constraints.cset),\nLaws.library_theorem P c side ->\n(forall t : Types.ty, Constraints.sat t C -> side t) ->\n(forall l : Laws.law, List.In l P -> Laws.carries C l) ->\nLaws.carries C c",
+      "binders": {
+        "C": "Constraints.cset",
+        "P": "list Laws.law",
+        "c": "Laws.law",
+        "side": "Types.ty -> Prop"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.uses": {
+      "type": "list Types.ty -> Laws.lterm -> list (Witnesses.op * Types.ty)",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.vars": {
+      "type": "nat -> nat -> list TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.vars_eval": {
+      "type": "forall (vs : list Runtime.val) (k n : nat) (a : TypeCase.mtm),\nList.nth_error (Laws.vars 0 k) n = Some a ->\nTypeCase.eval vs a = List.nth_error vs n",
+      "binders": {
+        "a": "TypeCase.mtm",
+        "k": "nat",
+        "n": "nat",
+        "vs": "list Runtime.val"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.vars_length": {
+      "type": "forall k i : nat, length (Laws.vars i k) = k",
+      "binders": {
+        "i": "nat",
+        "k": "nat"
+      },
+      "assumptions": [
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.Laws.vars_nth": {
+      "type": "forall (k i n : nat) (a : TypeCase.mtm),\nList.nth_error (Laws.vars i k) n = Some a -> a = TypeCase.MVar (i + n)",
+      "binders": {
+        "a": "TypeCase.mtm",
+        "i": "nat",
+        "k": "nat",
+        "n": "nat"
+      },
+      "assumptions": [
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.Laws.vars_typed": {
+      "type": "forall (t : Types.ty) (k : nat),\nListDef.Forall\n  (fun a : TypeCase.mtm =>\n   TypeCase.mtype (ListDef.repeat t k) a = Some t)\n  (Laws.vars 0 k)",
+      "binders": {
+        "k": "nat",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
     },
     "Clef.RFC0001.Representation.discriminates": {
       "type": "(Runtime.bits -> Types.tycon) -> Prop",

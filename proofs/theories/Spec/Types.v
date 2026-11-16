@@ -19,7 +19,10 @@ Parameter tycon : Type.
 
 (**md
 Type identity is identity of the constructor reference. The spec states it as "Two types are equal
-iff their TypeConRefs are equal" (§2.1) and unifies by comparing the reference (§7). A comparison
+iff their TypeConRefs are equal"
+([§2.1](https://clef-lang.com/spec/draft/type-representation-architecture/#21-why-this-pattern))
+and unifies by comparing the reference
+([§7](https://clef-lang.com/spec/draft/type-representation-architecture/#7-unification)). A comparison
 that the compiler performs is a decidable one.
 *)
 Axiom tycon_eq_dec : forall a b : tycon, {a = b} + {a <> b}.

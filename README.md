@@ -4,7 +4,7 @@ Proposals for the [Clef language](https://clef-lang.com/spec/) whose claims are 
 
 The site is published at <https://shayanhabibi.github.io/clef-rfc-research/>.
 
-This is research. It is not part of the Clef specification, and nothing here is accepted until it goes through the specification's change process.
+This is research. It is not part of the Clef specification, and nothing here is accepted until it goes through the [specification's change process](https://clef-lang.com/spec/draft/change-process-management/).
 
 ## Layout
 

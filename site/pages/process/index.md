@@ -12,7 +12,7 @@ An RFC in this repository is a directory of Rocq modules. The prose of the RFC i
 | One module per topic | Definitions for the design rules, and theorems for the claims |
 | `Discussion` | What the proofs cover and do not cover, drawbacks, alternatives, impact and unresolved questions |
 
-These are the sections the specification's change process requires of an RFC: summary, motivation, detailed design, drawbacks, alternatives, impact and migration, and unresolved questions. The detailed design is the topic modules.
+These are the sections the [specification's change process](https://clef-lang.com/spec/draft/change-process-management/) requires of an RFC: summary, motivation, detailed design, drawbacks, alternatives, impact and migration, and unresolved questions. The detailed design is the topic modules.
 
 ## The standard a claim must meet
 
@@ -35,4 +35,4 @@ The [Guarantees page]({{base}}proofs/index.html) lists every titled theorem of e
 
 ## Stages
 
-An RFC's header table gives its stage, using the stages of the specification's change process: Draft, Review, Final review, then Accepted, Rejected, Postponed or Withdrawn. The home page reads the stage from the header.
+An RFC's header table gives its stage, using the stages of the [specification's change process](https://clef-lang.com/spec/draft/change-process-management/): Draft, Review, Final review, then Accepted, Rejected, Postponed or Withdrawn. The home page reads the stage from the header.

@@ -1,0 +1,2050 @@
+DIGEST 017889f134571d5b574aa4c0a80a9dea
+FClef.RFC0001.Laws
+R27:30 Stdlib.Lists.List <> <> lib
+R32:35 Stdlib.Bool.Bool <> <> lib
+R37:44 Stdlib.Arith.PeanoNat <> <> lib
+R46:48 Stdlib.micromega.Lia <> <> lib
+R58:70 Stdlib.Lists.List ListNotations <> mod
+R98:107 Clef.Spec.Types <> <> lib
+R109:120 Clef.Spec.Runtime <> <> lib
+R122:135 Clef.Spec.Witnesses <> <> lib
+R163:181 Clef.RFC0001.Constraints <> <> lib
+R183:198 Clef.RFC0001.TypeCase <> <> lib
+ind 2379:2383 <> lterm
+constr 2397:2400 <> LVar
+constr 2414:2418 <> LPrim
+constr 2443:2447 <> LPair
+R2407:2409 Corelib.Init.Datatypes <> nat ind
+binder 2403:2403 <> n:3
+R2425:2426 Clef.Spec.Witnesses <> op defax
+binder 2421:2421 <> o:4
+R2434:2438 Clef.RFC0001.Laws <> lterm:1 ind
+binder 2430:2430 <> a:5
+R2456:2460 Clef.RFC0001.Laws <> lterm:1 ind
+binder 2450:2450 <> a:6
+binder 2452:2452 <> b:7
+scheme 2379:2383 <> lterm_rect
+scheme 2379:2383 <> lterm_ind
+scheme 2379:2383 <> lterm_rec
+scheme 2379:2383 <> lterm_sind
+rec 2578:2580 <> law
+proj 2600:2604 <> arity
+proj 2615:2617 <> lhs
+proj 2630:2632 <> rhs
+R2608:2610 Corelib.Init.Datatypes <> nat ind
+R2621:2625 Clef.RFC0001.Laws <> lterm ind
+R2636:2640 Clef.RFC0001.Laws <> lterm ind
+def 2766:2768 <> bin
+R2775:2776 Clef.Spec.Witnesses <> op defax
+binder 2771:2771 <> o:12
+R2786:2790 Clef.RFC0001.Laws <> lterm ind
+binder 2780:2780 <> a:13
+binder 2782:2782 <> b:14
+R2795:2799 Clef.RFC0001.Laws <> lterm ind
+R2804:2808 Clef.RFC0001.Laws <> LPrim constr
+R2810:2810 Clef.RFC0001.Laws <> o:12 var
+R2813:2817 Clef.RFC0001.Laws <> LPair constr
+R2819:2819 Clef.RFC0001.Laws <> a:13 var
+R2821:2821 Clef.RFC0001.Laws <> b:14 var
+def 2912:2922 <> associative
+R2929:2930 Clef.Spec.Witnesses <> op defax
+binder 2925:2925 <> o:15
+R2935:2937 Clef.RFC0001.Laws <> law rec
+R2944:2946 Clef.RFC0001.Laws <> Law constr
+R2951:2953 Clef.RFC0001.Laws <> bin def
+R2955:2955 Clef.RFC0001.Laws <> o:15 var
+R2958:2960 Clef.RFC0001.Laws <> bin def
+R2962:2962 Clef.RFC0001.Laws <> o:15 var
+R2965:2968 Clef.RFC0001.Laws <> LVar constr
+R2974:2977 Clef.RFC0001.Laws <> LVar constr
+R2984:2987 Clef.RFC0001.Laws <> LVar constr
+R2994:2996 Clef.RFC0001.Laws <> bin def
+R2998:2998 Clef.RFC0001.Laws <> o:15 var
+R3001:3004 Clef.RFC0001.Laws <> LVar constr
+R3010:3012 Clef.RFC0001.Laws <> bin def
+R3014:3014 Clef.RFC0001.Laws <> o:15 var
+R3017:3020 Clef.RFC0001.Laws <> LVar constr
+R3026:3029 Clef.RFC0001.Laws <> LVar constr
+def 3108:3118 <> commutative
+R3125:3126 Clef.Spec.Witnesses <> op defax
+binder 3121:3121 <> o:16
+R3131:3133 Clef.RFC0001.Laws <> law rec
+R3140:3142 Clef.RFC0001.Laws <> Law constr
+R3147:3149 Clef.RFC0001.Laws <> bin def
+R3151:3151 Clef.RFC0001.Laws <> o:16 var
+R3154:3157 Clef.RFC0001.Laws <> LVar constr
+R3163:3166 Clef.RFC0001.Laws <> LVar constr
+R3173:3175 Clef.RFC0001.Laws <> bin def
+R3177:3177 Clef.RFC0001.Laws <> o:16 var
+R3180:3183 Clef.RFC0001.Laws <> LVar constr
+R3189:3192 Clef.RFC0001.Laws <> LVar constr
+def 3407:3411 <> ltype
+R3418:3421 Corelib.Init.Datatypes <> list ind
+R3423:3424 Clef.Spec.Types <> ty ind
+binder 3414:3414 <> G:17
+R3432:3436 Clef.RFC0001.Laws <> lterm ind
+binder 3428:3428 <> p:18
+R3441:3446 Corelib.Init.Datatypes <> option ind
+R3448:3449 Clef.Spec.Types <> ty ind
+R3462:3462 Clef.RFC0001.Laws <> p:18 var
+R3473:3476 Clef.RFC0001.Laws <> LVar constr
+R3483:3491 Stdlib.Lists.List <> nth_error def
+R3493:3493 Clef.RFC0001.Laws <> G:17 var
+R3501:3505 Clef.RFC0001.Laws <> LPrim constr
+R3526:3530 Clef.RFC0001.Laws <> ltype:19 def
+R3532:3532 Clef.RFC0001.Laws <> G:17 var
+R3549:3552 Corelib.Init.Datatypes <> Some constr
+R3559:3565 Clef.Spec.Witnesses <> witness defax
+R3579:3582 Corelib.Init.Datatypes <> None constr
+R3587:3590 Corelib.Init.Datatypes <> None constr
+R3606:3610 Clef.RFC0001.Laws <> LPair constr
+R3642:3646 Clef.RFC0001.Laws <> ltype:19 def
+R3648:3648 Clef.RFC0001.Laws <> G:17 var
+R3631:3635 Clef.RFC0001.Laws <> ltype:19 def
+R3637:3637 Clef.RFC0001.Laws <> G:17 var
+R3665:3668 Corelib.Init.Datatypes <> Some constr
+R3673:3676 Corelib.Init.Datatypes <> Some constr
+R3683:3686 Corelib.Init.Datatypes <> Some constr
+R3689:3693 Clef.Spec.Types <> TPair constr
+R3716:3719 Corelib.Init.Datatypes <> None constr
+def 3876:3879 <> impl
+R3893:3896 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3891:3892 Clef.Spec.Witnesses <> op defax
+R3900:3903 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3897:3899 Clef.Spec.Runtime <> val ind
+R3904:3909 Corelib.Init.Datatypes <> option ind
+R3911:3913 Clef.Spec.Runtime <> val ind
+def 4106:4111 <> levalI
+R4118:4121 Clef.RFC0001.Laws <> impl def
+binder 4114:4114 <> I:21
+R4130:4133 Corelib.Init.Datatypes <> list ind
+R4135:4137 Clef.Spec.Runtime <> val ind
+binder 4125:4126 <> vs:22
+R4145:4149 Clef.RFC0001.Laws <> lterm ind
+binder 4141:4141 <> p:23
+R4154:4159 Corelib.Init.Datatypes <> option ind
+R4161:4163 Clef.Spec.Runtime <> val ind
+R4176:4176 Clef.RFC0001.Laws <> p:23 var
+R4187:4190 Clef.RFC0001.Laws <> LVar constr
+R4197:4205 Stdlib.Lists.List <> nth_error def
+R4207:4208 Clef.RFC0001.Laws <> vs:22 var
+R4216:4220 Clef.RFC0001.Laws <> LPrim constr
+R4241:4246 Clef.RFC0001.Laws <> levalI:24 def
+R4250:4251 Clef.RFC0001.Laws <> vs:22 var
+R4248:4248 Clef.RFC0001.Laws <> I:21 var
+R4268:4271 Corelib.Init.Datatypes <> Some constr
+R4278:4278 Clef.RFC0001.Laws <> I:21 var
+R4292:4295 Corelib.Init.Datatypes <> None constr
+R4300:4303 Corelib.Init.Datatypes <> None constr
+R4319:4323 Clef.RFC0001.Laws <> LPair constr
+R4359:4364 Clef.RFC0001.Laws <> levalI:24 def
+R4368:4369 Clef.RFC0001.Laws <> vs:22 var
+R4366:4366 Clef.RFC0001.Laws <> I:21 var
+R4344:4349 Clef.RFC0001.Laws <> levalI:24 def
+R4353:4354 Clef.RFC0001.Laws <> vs:22 var
+R4351:4351 Clef.RFC0001.Laws <> I:21 var
+R4386:4389 Corelib.Init.Datatypes <> Some constr
+R4394:4397 Corelib.Init.Datatypes <> Some constr
+R4404:4407 Corelib.Init.Datatypes <> Some constr
+R4410:4414 Clef.Spec.Runtime <> VPair constr
+R4437:4440 Corelib.Init.Datatypes <> None constr
+def 4706:4711 <> holdsI
+R4718:4721 Clef.RFC0001.Laws <> impl def
+binder 4714:4714 <> I:26
+R4729:4730 Clef.Spec.Types <> ty ind
+binder 4725:4725 <> t:27
+R4738:4740 Clef.RFC0001.Laws <> law rec
+binder 4734:4734 <> l:28
+binder 4762:4763 <> vs:29
+R4804:4809 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4766:4772 Stdlib.Lists.List <> Forall2 ind
+R4785:4790 Corelib.Lists.ListDef <> repeat def
+R4795:4799 Clef.RFC0001.Laws <> arity proj
+R4801:4801 Clef.RFC0001.Laws <> l:28 var
+R4792:4792 Clef.RFC0001.Laws <> t:27 var
+R4781:4782 Clef.RFC0001.Laws <> vs:29 var
+R4774:4779 Clef.Spec.Runtime <> has_ty ind
+R4829:4831 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4810:4815 Clef.RFC0001.Laws <> levalI def
+R4817:4817 Clef.RFC0001.Laws <> I:26 var
+R4819:4820 Clef.RFC0001.Laws <> vs:29 var
+R4823:4825 Clef.RFC0001.Laws <> lhs proj
+R4827:4827 Clef.RFC0001.Laws <> l:28 var
+R4832:4837 Clef.RFC0001.Laws <> levalI def
+R4839:4839 Clef.RFC0001.Laws <> I:26 var
+R4841:4842 Clef.RFC0001.Laws <> vs:29 var
+R4845:4847 Clef.RFC0001.Laws <> rhs proj
+R4849:4849 Clef.RFC0001.Laws <> l:28 var
+def 4980:4987 <> holds_at
+R4994:4995 Clef.Spec.Types <> ty ind
+binder 4990:4990 <> t:30
+R5003:5005 Clef.RFC0001.Laws <> law rec
+binder 4999:4999 <> l:31
+R5018:5023 Clef.RFC0001.Laws <> holdsI def
+R5025:5029 Clef.Spec.Witnesses <> apply defax
+R5031:5031 Clef.RFC0001.Laws <> t:30 var
+R5033:5033 Clef.RFC0001.Laws <> l:31 var
+def 5161:5167 <> carries
+R5174:5177 Clef.RFC0001.Constraints <> cset def
+binder 5170:5170 <> C:32
+R5185:5187 Clef.RFC0001.Laws <> law rec
+binder 5181:5181 <> l:33
+binder 5209:5209 <> t:34
+R5219:5222 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5212:5214 Clef.RFC0001.Constraints <> sat def
+R5216:5216 Clef.RFC0001.Laws <> t:34 var
+R5218:5218 Clef.RFC0001.Laws <> C:32 var
+R5223:5230 Clef.RFC0001.Laws <> holds_at def
+R5232:5232 Clef.RFC0001.Laws <> t:34 var
+R5234:5234 Clef.RFC0001.Laws <> l:33 var
+def 5332:5342 <> obligations
+R5349:5352 Clef.RFC0001.Constraints <> cset def
+binder 5345:5345 <> C:35
+R5360:5363 Corelib.Init.Datatypes <> list ind
+R5365:5367 Clef.RFC0001.Laws <> law rec
+binder 5356:5356 <> L:36
+R5372:5375 Corelib.Init.Datatypes <> list ind
+R5380:5382 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R5378:5379 Clef.Spec.Types <> ty ind
+R5383:5385 Clef.RFC0001.Laws <> law rec
+R5391:5399 Stdlib.Lists.List <> list_prod def
+R5403:5403 Clef.RFC0001.Laws <> L:36 var
+R5401:5401 Clef.RFC0001.Laws <> C:35 var
+prf 5473:5489 <> obligations_count
+R5496:5499 Clef.RFC0001.Constraints <> cset def
+binder 5492:5492 <> C:37
+R5507:5510 Corelib.Init.Datatypes <> list ind
+R5512:5514 Clef.RFC0001.Laws <> law rec
+binder 5503:5503 <> L:38
+R5545:5547 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5521:5526 Corelib.Init.Datatypes <> length def
+R5529:5539 Clef.RFC0001.Laws <> obligations def
+R5541:5541 Clef.RFC0001.Laws <> C:37 var
+R5543:5543 Clef.RFC0001.Laws <> L:38 var
+R5556:5558 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R5548:5553 Corelib.Init.Datatypes <> length def
+R5555:5555 Clef.RFC0001.Laws <> C:37 var
+R5559:5564 Corelib.Init.Datatypes <> length def
+R5566:5566 Clef.RFC0001.Laws <> L:38 var
+R5584:5594 Stdlib.Lists.List <> length_prod thm
+R5584:5594 Stdlib.Lists.List <> length_prod thm
+prf 5999:6015 <> obligations_exact
+R6022:6025 Clef.RFC0001.Constraints <> cset def
+binder 6018:6018 <> C:39
+R6033:6036 Corelib.Init.Datatypes <> list ind
+R6038:6040 Clef.RFC0001.Laws <> law rec
+binder 6029:6029 <> L:40
+R6047:6047 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+R6103:6111 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+R6143:6143 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+binder 6055:6055 <> t:41
+binder 6057:6057 <> l:42
+R6087:6090 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6060:6061 Stdlib.Lists.List <> In def
+R6071:6081 Clef.RFC0001.Laws <> obligations def
+R6083:6083 Clef.RFC0001.Laws <> C:39 var
+R6085:6085 Clef.RFC0001.Laws <> L:40 var
+R6063:6063 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R6065:6066 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R6068:6068 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R6064:6064 Clef.RFC0001.Laws <> t:41 var
+R6067:6067 Clef.RFC0001.Laws <> l:42 var
+R6091:6098 Clef.RFC0001.Laws <> holds_at def
+R6100:6100 Clef.RFC0001.Laws <> t:41 var
+R6102:6102 Clef.RFC0001.Laws <> l:42 var
+binder 6119:6119 <> l:43
+R6128:6131 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6122:6123 Stdlib.Lists.List <> In def
+R6127:6127 Clef.RFC0001.Laws <> L:40 var
+R6125:6125 Clef.RFC0001.Laws <> l:43 var
+R6132:6138 Clef.RFC0001.Laws <> carries def
+R6140:6140 Clef.RFC0001.Laws <> C:39 var
+R6142:6142 Clef.RFC0001.Laws <> l:43 var
+R6162:6172 Clef.RFC0001.Laws <> obligations def
+R6175:6181 Clef.RFC0001.Laws <> carries def
+R6184:6186 Clef.RFC0001.Constraints <> sat def
+R6235:6245 Stdlib.Lists.List <> in_prod_iff thm
+R6235:6245 Stdlib.Lists.List <> in_prod_iff thm
+R6295:6305 Stdlib.Lists.List <> in_prod_iff thm
+R6295:6305 Stdlib.Lists.List <> in_prod_iff thm
+prf 6714:6727 <> carries_member
+R6734:6737 Clef.RFC0001.Constraints <> cset def
+binder 6730:6730 <> C:44
+R6745:6746 Clef.Spec.Types <> ty ind
+binder 6741:6741 <> t:45
+R6754:6756 Clef.RFC0001.Laws <> law rec
+binder 6750:6750 <> l:46
+R6781:6785 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+R6763:6769 Clef.RFC0001.Laws <> carries def
+R6773:6776 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R6772:6772 Clef.RFC0001.Laws <> t:45 var
+R6777:6777 Clef.RFC0001.Laws <> C:44 var
+R6780:6780 Clef.RFC0001.Laws <> l:46 var
+R6798:6801 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6786:6793 Clef.RFC0001.Laws <> holds_at def
+R6795:6795 Clef.RFC0001.Laws <> t:45 var
+R6797:6797 Clef.RFC0001.Laws <> l:46 var
+R6802:6808 Clef.RFC0001.Laws <> carries def
+R6810:6810 Clef.RFC0001.Laws <> C:44 var
+R6812:6812 Clef.RFC0001.Laws <> l:46 var
+R6831:6837 Clef.RFC0001.Laws <> carries def
+R6840:6842 Clef.RFC0001.Constraints <> sat def
+prf 7473:7485 <> law_narrowing
+R7494:7497 Clef.RFC0001.Constraints <> cset def
+binder 7488:7488 <> C:47
+binder 7490:7490 <> D:48
+R7505:7507 Clef.RFC0001.Laws <> law rec
+binder 7501:7501 <> l:49
+R7525:7528 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7514:7520 Clef.RFC0001.Constraints <> entails def
+R7522:7522 Clef.RFC0001.Laws <> C:47 var
+R7524:7524 Clef.RFC0001.Laws <> D:48 var
+R7540:7543 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7529:7535 Clef.RFC0001.Laws <> carries def
+R7537:7537 Clef.RFC0001.Laws <> D:48 var
+R7539:7539 Clef.RFC0001.Laws <> l:49 var
+R7544:7550 Clef.RFC0001.Laws <> carries def
+R7552:7552 Clef.RFC0001.Laws <> C:47 var
+R7554:7554 Clef.RFC0001.Laws <> l:49 var
+R7602:7606 Corelib.Init.Logic <> proj1 thm
+R7609:7623 Clef.RFC0001.Constraints <> entails_iff_sat thm
+R7602:7606 Corelib.Init.Logic <> proj1 thm
+R7609:7623 Clef.RFC0001.Constraints <> entails_iff_sat thm
+prf 7825:7836 <> meet_carries
+R7845:7848 Clef.RFC0001.Constraints <> cset def
+binder 7839:7839 <> C:50
+binder 7841:7841 <> D:51
+R7856:7858 Clef.RFC0001.Laws <> law rec
+binder 7852:7852 <> l:52
+R7891:7894 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7876:7879 Corelib.Init.Logic <> ::type_scope:x_'\/'_x not
+R7865:7871 Clef.RFC0001.Laws <> carries def
+R7873:7873 Clef.RFC0001.Laws <> C:50 var
+R7875:7875 Clef.RFC0001.Laws <> l:52 var
+R7880:7886 Clef.RFC0001.Laws <> carries def
+R7888:7888 Clef.RFC0001.Laws <> D:51 var
+R7890:7890 Clef.RFC0001.Laws <> l:52 var
+R7895:7901 Clef.RFC0001.Laws <> carries def
+R7904:7907 Clef.RFC0001.Constraints <> meet def
+R7909:7909 Clef.RFC0001.Laws <> C:50 var
+R7911:7911 Clef.RFC0001.Laws <> D:51 var
+R7914:7914 Clef.RFC0001.Laws <> l:52 var
+R7953:7960 Clef.RFC0001.Constraints <> meet_sat thm
+R7953:7960 Clef.RFC0001.Constraints <> meet_sat thm
+R7953:7960 Clef.RFC0001.Constraints <> meet_sat thm
+def 8397:8401 <> linst
+R8408:8411 Corelib.Init.Datatypes <> list ind
+R8413:8415 Clef.RFC0001.TypeCase <> mtm ind
+binder 8404:8404 <> s:53
+R8423:8427 Clef.RFC0001.Laws <> lterm ind
+binder 8419:8419 <> p:54
+R8432:8437 Corelib.Init.Datatypes <> option ind
+R8439:8441 Clef.RFC0001.TypeCase <> mtm ind
+R8454:8454 Clef.RFC0001.Laws <> p:54 var
+R8465:8468 Clef.RFC0001.Laws <> LVar constr
+R8475:8483 Stdlib.Lists.List <> nth_error def
+R8485:8485 Clef.RFC0001.Laws <> s:53 var
+R8493:8497 Clef.RFC0001.Laws <> LPrim constr
+R8506:8515 Corelib.Init.Datatypes <> option_map def
+R8528:8532 Clef.RFC0001.Laws <> linst:55 def
+R8534:8534 Clef.RFC0001.Laws <> s:53 var
+R8518:8522 Clef.RFC0001.TypeCase <> MPrim constr
+R8543:8547 Clef.RFC0001.Laws <> LPair constr
+R8579:8583 Clef.RFC0001.Laws <> linst:55 def
+R8585:8585 Clef.RFC0001.Laws <> s:53 var
+R8568:8572 Clef.RFC0001.Laws <> linst:55 def
+R8574:8574 Clef.RFC0001.Laws <> s:53 var
+R8602:8605 Corelib.Init.Datatypes <> Some constr
+R8610:8613 Corelib.Init.Datatypes <> Some constr
+R8620:8623 Corelib.Init.Datatypes <> Some constr
+R8626:8630 Clef.RFC0001.TypeCase <> MPair constr
+R8653:8656 Corelib.Init.Datatypes <> None constr
+ind 9211:9212 <> rw
+constr 9275:9279 <> RwLaw
+constr 9498:9503 <> RwBack
+constr 9722:9727 <> RwPrim
+constr 9824:9830 <> RwPairL
+constr 9920:9926 <> RwPairR
+constr 10016:10020 <> RwFst
+constr 10102:10106 <> RwSnd
+constr 10188:10193 <> RwLetL
+constr 10281:10286 <> RwLetR
+R9219:9222 Corelib.Init.Datatypes <> list ind
+R9224:9226 Clef.RFC0001.Laws <> law rec
+binder 9215:9215 <> L:57
+R9234:9235 Clef.Spec.Types <> ty ind
+binder 9230:9230 <> t:58
+R9247:9250 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9240:9243 Corelib.Init.Datatypes <> list ind
+R9245:9246 Clef.Spec.Types <> ty ind
+R9254:9257 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9251:9253 Clef.RFC0001.TypeCase <> mtm ind
+R9261:9264 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9258:9260 Clef.RFC0001.TypeCase <> mtm ind
+R9286:9289 Corelib.Init.Datatypes <> list ind
+R9291:9292 Clef.Spec.Types <> ty ind
+binder 9282:9282 <> G:61
+R9300:9302 Clef.RFC0001.Laws <> law rec
+binder 9296:9296 <> l:62
+R9310:9313 Corelib.Init.Datatypes <> list ind
+R9315:9317 Clef.RFC0001.TypeCase <> mtm ind
+binder 9306:9306 <> s:63
+R9328:9330 Clef.RFC0001.TypeCase <> mtm ind
+binder 9321:9321 <> m:64
+binder 9323:9324 <> m':65
+R9345:9348 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9339:9340 Stdlib.Lists.List <> In def
+R9344:9344 Clef.RFC0001.Laws <> L:57 var
+R9342:9342 Clef.RFC0001.Laws <> l:62 var
+R9367:9374 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9357:9359 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9349:9354 Corelib.Init.Datatypes <> length def
+R9356:9356 Clef.RFC0001.Laws <> s:63 var
+R9360:9364 Clef.RFC0001.Laws <> arity proj
+R9366:9366 Clef.RFC0001.Laws <> l:62 var
+R9413:9420 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9375:9380 Corelib.Lists.ListDef <> Forall ind
+R9412:9412 Clef.RFC0001.Laws <> s:63 var
+binder 9387:9387 <> a:66
+R9401:9403 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9392:9396 Clef.RFC0001.TypeCase <> mtype def
+R9398:9398 Clef.RFC0001.Laws <> G:61 var
+R9400:9400 Clef.RFC0001.Laws <> a:66 var
+R9404:9407 Corelib.Init.Datatypes <> Some constr
+R9409:9409 Clef.RFC0001.Laws <> t:58 var
+R9445:9448 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9436:9438 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9421:9425 Clef.RFC0001.Laws <> linst def
+R9427:9427 Clef.RFC0001.Laws <> s:63 var
+R9430:9432 Clef.RFC0001.Laws <> lhs proj
+R9434:9434 Clef.RFC0001.Laws <> l:62 var
+R9439:9442 Corelib.Init.Datatypes <> Some constr
+R9444:9444 Clef.RFC0001.Laws <> m:64 var
+R9474:9481 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9464:9466 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9449:9453 Clef.RFC0001.Laws <> linst def
+R9455:9455 Clef.RFC0001.Laws <> s:63 var
+R9458:9460 Clef.RFC0001.Laws <> rhs proj
+R9462:9462 Clef.RFC0001.Laws <> l:62 var
+R9467:9470 Corelib.Init.Datatypes <> Some constr
+R9472:9473 Clef.RFC0001.Laws <> m':65 var
+R9482:9483 Clef.RFC0001.Laws <> rw:59 ind
+R9493:9494 Clef.RFC0001.Laws <> m':65 var
+R9491:9491 Clef.RFC0001.Laws <> m:64 var
+R9489:9489 Clef.RFC0001.Laws <> G:61 var
+R9487:9487 Clef.RFC0001.Laws <> t:58 var
+R9485:9485 Clef.RFC0001.Laws <> L:57 var
+R9510:9513 Corelib.Init.Datatypes <> list ind
+R9515:9516 Clef.Spec.Types <> ty ind
+binder 9506:9506 <> G:67
+R9524:9526 Clef.RFC0001.Laws <> law rec
+binder 9520:9520 <> l:68
+R9534:9537 Corelib.Init.Datatypes <> list ind
+R9539:9541 Clef.RFC0001.TypeCase <> mtm ind
+binder 9530:9530 <> s:69
+R9552:9554 Clef.RFC0001.TypeCase <> mtm ind
+binder 9545:9545 <> m:70
+binder 9547:9548 <> m':71
+R9569:9572 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9563:9564 Stdlib.Lists.List <> In def
+R9568:9568 Clef.RFC0001.Laws <> L:57 var
+R9566:9566 Clef.RFC0001.Laws <> l:68 var
+R9591:9598 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9581:9583 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9573:9578 Corelib.Init.Datatypes <> length def
+R9580:9580 Clef.RFC0001.Laws <> s:69 var
+R9584:9588 Clef.RFC0001.Laws <> arity proj
+R9590:9590 Clef.RFC0001.Laws <> l:68 var
+R9637:9644 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9599:9604 Corelib.Lists.ListDef <> Forall ind
+R9636:9636 Clef.RFC0001.Laws <> s:69 var
+binder 9611:9611 <> a:72
+R9625:9627 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9616:9620 Clef.RFC0001.TypeCase <> mtype def
+R9622:9622 Clef.RFC0001.Laws <> G:67 var
+R9624:9624 Clef.RFC0001.Laws <> a:72 var
+R9628:9631 Corelib.Init.Datatypes <> Some constr
+R9633:9633 Clef.RFC0001.Laws <> t:58 var
+R9669:9672 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9660:9662 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9645:9649 Clef.RFC0001.Laws <> linst def
+R9651:9651 Clef.RFC0001.Laws <> s:69 var
+R9654:9656 Clef.RFC0001.Laws <> lhs proj
+R9658:9658 Clef.RFC0001.Laws <> l:68 var
+R9663:9666 Corelib.Init.Datatypes <> Some constr
+R9668:9668 Clef.RFC0001.Laws <> m:70 var
+R9698:9705 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9688:9690 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9673:9677 Clef.RFC0001.Laws <> linst def
+R9679:9679 Clef.RFC0001.Laws <> s:69 var
+R9682:9684 Clef.RFC0001.Laws <> rhs proj
+R9686:9686 Clef.RFC0001.Laws <> l:68 var
+R9691:9694 Corelib.Init.Datatypes <> Some constr
+R9696:9697 Clef.RFC0001.Laws <> m':71 var
+R9706:9707 Clef.RFC0001.Laws <> rw:59 ind
+R9718:9718 Clef.RFC0001.Laws <> m:70 var
+R9715:9716 Clef.RFC0001.Laws <> m':71 var
+R9713:9713 Clef.RFC0001.Laws <> G:67 var
+R9711:9711 Clef.RFC0001.Laws <> t:58 var
+R9709:9709 Clef.RFC0001.Laws <> L:57 var
+R9734:9737 Corelib.Init.Datatypes <> list ind
+R9739:9740 Clef.Spec.Types <> ty ind
+binder 9730:9730 <> G:73
+R9748:9749 Clef.Spec.Witnesses <> op defax
+binder 9744:9744 <> o:74
+R9760:9762 Clef.RFC0001.TypeCase <> mtm ind
+binder 9753:9753 <> a:75
+binder 9755:9756 <> a':76
+R9784:9787 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9771:9772 Clef.RFC0001.Laws <> rw:59 ind
+R9782:9783 Clef.RFC0001.Laws <> a':76 var
+R9780:9780 Clef.RFC0001.Laws <> a:75 var
+R9778:9778 Clef.RFC0001.Laws <> G:73 var
+R9776:9776 Clef.RFC0001.Laws <> t:58 var
+R9774:9774 Clef.RFC0001.Laws <> L:57 var
+R9788:9789 Clef.RFC0001.Laws <> rw:59 ind
+R9810:9814 Clef.RFC0001.TypeCase <> MPrim constr
+R9816:9816 Clef.RFC0001.Laws <> o:74 var
+R9818:9819 Clef.RFC0001.Laws <> a':76 var
+R9798:9802 Clef.RFC0001.TypeCase <> MPrim constr
+R9804:9804 Clef.RFC0001.Laws <> o:74 var
+R9806:9806 Clef.RFC0001.Laws <> a:75 var
+R9795:9795 Clef.RFC0001.Laws <> G:73 var
+R9793:9793 Clef.RFC0001.Laws <> t:58 var
+R9791:9791 Clef.RFC0001.Laws <> L:57 var
+R9837:9840 Corelib.Init.Datatypes <> list ind
+R9842:9843 Clef.Spec.Types <> ty ind
+binder 9833:9833 <> G:77
+R9856:9858 Clef.RFC0001.TypeCase <> mtm ind
+binder 9847:9847 <> a:78
+binder 9849:9850 <> a':79
+binder 9852:9852 <> b:80
+R9880:9883 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9867:9868 Clef.RFC0001.Laws <> rw:59 ind
+R9878:9879 Clef.RFC0001.Laws <> a':79 var
+R9876:9876 Clef.RFC0001.Laws <> a:78 var
+R9874:9874 Clef.RFC0001.Laws <> G:77 var
+R9872:9872 Clef.RFC0001.Laws <> t:58 var
+R9870:9870 Clef.RFC0001.Laws <> L:57 var
+R9884:9885 Clef.RFC0001.Laws <> rw:59 ind
+R9906:9910 Clef.RFC0001.TypeCase <> MPair constr
+R9912:9913 Clef.RFC0001.Laws <> a':79 var
+R9915:9915 Clef.RFC0001.Laws <> b:80 var
+R9894:9898 Clef.RFC0001.TypeCase <> MPair constr
+R9900:9900 Clef.RFC0001.Laws <> a:78 var
+R9902:9902 Clef.RFC0001.Laws <> b:80 var
+R9891:9891 Clef.RFC0001.Laws <> G:77 var
+R9889:9889 Clef.RFC0001.Laws <> t:58 var
+R9887:9887 Clef.RFC0001.Laws <> L:57 var
+R9933:9936 Corelib.Init.Datatypes <> list ind
+R9938:9939 Clef.Spec.Types <> ty ind
+binder 9929:9929 <> G:81
+R9952:9954 Clef.RFC0001.TypeCase <> mtm ind
+binder 9943:9943 <> a:82
+binder 9945:9945 <> b:83
+binder 9947:9948 <> b':84
+R9976:9979 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R9963:9964 Clef.RFC0001.Laws <> rw:59 ind
+R9974:9975 Clef.RFC0001.Laws <> b':84 var
+R9972:9972 Clef.RFC0001.Laws <> b:83 var
+R9970:9970 Clef.RFC0001.Laws <> G:81 var
+R9968:9968 Clef.RFC0001.Laws <> t:58 var
+R9966:9966 Clef.RFC0001.Laws <> L:57 var
+R9980:9981 Clef.RFC0001.Laws <> rw:59 ind
+R10002:10006 Clef.RFC0001.TypeCase <> MPair constr
+R10008:10008 Clef.RFC0001.Laws <> a:82 var
+R10010:10011 Clef.RFC0001.Laws <> b':84 var
+R9990:9994 Clef.RFC0001.TypeCase <> MPair constr
+R9996:9996 Clef.RFC0001.Laws <> a:82 var
+R9998:9998 Clef.RFC0001.Laws <> b:83 var
+R9987:9987 Clef.RFC0001.Laws <> G:81 var
+R9985:9985 Clef.RFC0001.Laws <> t:58 var
+R9983:9983 Clef.RFC0001.Laws <> L:57 var
+R10027:10030 Corelib.Init.Datatypes <> list ind
+R10032:10033 Clef.Spec.Types <> ty ind
+binder 10023:10023 <> G:85
+R10044:10046 Clef.RFC0001.TypeCase <> mtm ind
+binder 10037:10037 <> a:86
+binder 10039:10040 <> a':87
+R10068:10071 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10055:10056 Clef.RFC0001.Laws <> rw:59 ind
+R10066:10067 Clef.RFC0001.Laws <> a':87 var
+R10064:10064 Clef.RFC0001.Laws <> a:86 var
+R10062:10062 Clef.RFC0001.Laws <> G:85 var
+R10060:10060 Clef.RFC0001.Laws <> t:58 var
+R10058:10058 Clef.RFC0001.Laws <> L:57 var
+R10072:10073 Clef.RFC0001.Laws <> rw:59 ind
+R10091:10094 Clef.RFC0001.TypeCase <> MFst constr
+R10096:10097 Clef.RFC0001.Laws <> a':87 var
+R10082:10085 Clef.RFC0001.TypeCase <> MFst constr
+R10087:10087 Clef.RFC0001.Laws <> a:86 var
+R10079:10079 Clef.RFC0001.Laws <> G:85 var
+R10077:10077 Clef.RFC0001.Laws <> t:58 var
+R10075:10075 Clef.RFC0001.Laws <> L:57 var
+R10113:10116 Corelib.Init.Datatypes <> list ind
+R10118:10119 Clef.Spec.Types <> ty ind
+binder 10109:10109 <> G:88
+R10130:10132 Clef.RFC0001.TypeCase <> mtm ind
+binder 10123:10123 <> a:89
+binder 10125:10126 <> a':90
+R10154:10157 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10141:10142 Clef.RFC0001.Laws <> rw:59 ind
+R10152:10153 Clef.RFC0001.Laws <> a':90 var
+R10150:10150 Clef.RFC0001.Laws <> a:89 var
+R10148:10148 Clef.RFC0001.Laws <> G:88 var
+R10146:10146 Clef.RFC0001.Laws <> t:58 var
+R10144:10144 Clef.RFC0001.Laws <> L:57 var
+R10158:10159 Clef.RFC0001.Laws <> rw:59 ind
+R10177:10180 Clef.RFC0001.TypeCase <> MSnd constr
+R10182:10183 Clef.RFC0001.Laws <> a':90 var
+R10168:10171 Clef.RFC0001.TypeCase <> MSnd constr
+R10173:10173 Clef.RFC0001.Laws <> a:89 var
+R10165:10165 Clef.RFC0001.Laws <> G:88 var
+R10163:10163 Clef.RFC0001.Laws <> t:58 var
+R10161:10161 Clef.RFC0001.Laws <> L:57 var
+R10200:10203 Corelib.Init.Datatypes <> list ind
+R10205:10206 Clef.Spec.Types <> ty ind
+binder 10196:10196 <> G:91
+R10219:10221 Clef.RFC0001.TypeCase <> mtm ind
+binder 10210:10210 <> a:92
+binder 10212:10213 <> a':93
+binder 10215:10215 <> b:94
+R10243:10246 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10230:10231 Clef.RFC0001.Laws <> rw:59 ind
+R10241:10242 Clef.RFC0001.Laws <> a':93 var
+R10239:10239 Clef.RFC0001.Laws <> a:92 var
+R10237:10237 Clef.RFC0001.Laws <> G:91 var
+R10235:10235 Clef.RFC0001.Laws <> t:58 var
+R10233:10233 Clef.RFC0001.Laws <> L:57 var
+R10247:10248 Clef.RFC0001.Laws <> rw:59 ind
+R10268:10271 Clef.RFC0001.TypeCase <> MLet constr
+R10273:10274 Clef.RFC0001.Laws <> a':93 var
+R10276:10276 Clef.RFC0001.Laws <> b:94 var
+R10257:10260 Clef.RFC0001.TypeCase <> MLet constr
+R10262:10262 Clef.RFC0001.Laws <> a:92 var
+R10264:10264 Clef.RFC0001.Laws <> b:94 var
+R10254:10254 Clef.RFC0001.Laws <> G:91 var
+R10252:10252 Clef.RFC0001.Laws <> t:58 var
+R10250:10250 Clef.RFC0001.Laws <> L:57 var
+R10293:10296 Corelib.Init.Datatypes <> list ind
+R10298:10299 Clef.Spec.Types <> ty ind
+binder 10289:10289 <> G:95
+R10312:10314 Clef.RFC0001.TypeCase <> mtm ind
+binder 10303:10303 <> a:96
+binder 10305:10305 <> b:97
+binder 10307:10308 <> b':98
+R10322:10323 Clef.Spec.Types <> ty ind
+binder 10318:10318 <> x:99
+R10350:10353 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10341:10343 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R10332:10336 Clef.RFC0001.TypeCase <> mtype def
+R10338:10338 Clef.RFC0001.Laws <> G:95 var
+R10340:10340 Clef.RFC0001.Laws <> a:96 var
+R10344:10347 Corelib.Init.Datatypes <> Some constr
+R10349:10349 Clef.RFC0001.Laws <> x:99 var
+R10374:10377 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10354:10355 Clef.RFC0001.Laws <> rw:59 ind
+R10372:10373 Clef.RFC0001.Laws <> b':98 var
+R10370:10370 Clef.RFC0001.Laws <> b:97 var
+R10363:10366 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R10362:10362 Clef.RFC0001.Laws <> x:99 var
+R10367:10367 Clef.RFC0001.Laws <> G:95 var
+R10359:10359 Clef.RFC0001.Laws <> t:58 var
+R10357:10357 Clef.RFC0001.Laws <> L:57 var
+R10378:10379 Clef.RFC0001.Laws <> rw:59 ind
+R10399:10402 Clef.RFC0001.TypeCase <> MLet constr
+R10404:10404 Clef.RFC0001.Laws <> a:96 var
+R10406:10407 Clef.RFC0001.Laws <> b':98 var
+R10388:10391 Clef.RFC0001.TypeCase <> MLet constr
+R10393:10393 Clef.RFC0001.Laws <> a:96 var
+R10395:10395 Clef.RFC0001.Laws <> b:97 var
+R10385:10385 Clef.RFC0001.Laws <> G:95 var
+R10383:10383 Clef.RFC0001.Laws <> t:58 var
+R10381:10381 Clef.RFC0001.Laws <> L:57 var
+scheme 9211:9212 <> rw_ind
+scheme 9211:9212 <> rw_sind
+ind 10458:10460 <> rws
+constr 10526:10532 <> RwsRefl
+constr 10562:10568 <> RwsStep
+R10467:10470 Corelib.Init.Datatypes <> list ind
+R10472:10474 Clef.RFC0001.Laws <> law rec
+binder 10463:10463 <> L:100
+R10482:10483 Clef.Spec.Types <> ty ind
+binder 10478:10478 <> t:101
+R10491:10494 Corelib.Init.Datatypes <> list ind
+R10496:10497 Clef.Spec.Types <> ty ind
+binder 10487:10487 <> G:102
+R10505:10508 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10502:10504 Clef.RFC0001.TypeCase <> mtm ind
+R10512:10515 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10509:10511 Clef.RFC0001.TypeCase <> mtm ind
+R10539:10541 Clef.RFC0001.TypeCase <> mtm ind
+binder 10535:10535 <> m:105
+R10546:10548 Clef.RFC0001.Laws <> rws:103 ind
+R10558:10558 Clef.RFC0001.Laws <> m:105 var
+R10556:10556 Clef.RFC0001.Laws <> m:105 var
+R10554:10554 Clef.RFC0001.Laws <> G:102 var
+R10552:10552 Clef.RFC0001.Laws <> t:101 var
+R10550:10550 Clef.RFC0001.Laws <> L:100 var
+R10582:10584 Clef.RFC0001.TypeCase <> mtm ind
+binder 10571:10571 <> m:106
+binder 10573:10574 <> m':107
+binder 10576:10578 <> m'':108
+R10602:10605 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10589:10590 Clef.RFC0001.Laws <> rw ind
+R10592:10592 Clef.RFC0001.Laws <> L:100 var
+R10594:10594 Clef.RFC0001.Laws <> t:101 var
+R10596:10596 Clef.RFC0001.Laws <> G:102 var
+R10598:10598 Clef.RFC0001.Laws <> m:106 var
+R10600:10601 Clef.RFC0001.Laws <> m':107 var
+R10622:10625 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10606:10608 Clef.RFC0001.Laws <> rws:103 ind
+R10619:10621 Clef.RFC0001.Laws <> m'':108 var
+R10616:10617 Clef.RFC0001.Laws <> m':107 var
+R10614:10614 Clef.RFC0001.Laws <> G:102 var
+R10612:10612 Clef.RFC0001.Laws <> t:101 var
+R10610:10610 Clef.RFC0001.Laws <> L:100 var
+R10626:10628 Clef.RFC0001.Laws <> rws:103 ind
+R10638:10640 Clef.RFC0001.Laws <> m'':108 var
+R10636:10636 Clef.RFC0001.Laws <> m:106 var
+R10634:10634 Clef.RFC0001.Laws <> G:102 var
+R10632:10632 Clef.RFC0001.Laws <> t:101 var
+R10630:10630 Clef.RFC0001.Laws <> L:100 var
+scheme 10458:10460 <> rws_ind
+scheme 10458:10460 <> rws_sind
+prf 10741:10750 <> linst_eval
+R10759:10762 Corelib.Init.Datatypes <> list ind
+R10764:10766 Clef.Spec.Runtime <> val ind
+binder 10753:10755 <> env:109
+R10774:10777 Corelib.Init.Datatypes <> list ind
+R10779:10781 Clef.RFC0001.TypeCase <> mtm ind
+binder 10770:10770 <> s:110
+R10790:10793 Corelib.Init.Datatypes <> list ind
+R10795:10797 Clef.Spec.Runtime <> val ind
+binder 10785:10786 <> vs:111
+R10804:10804 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10870:10876 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 10812:10812 <> n:112
+binder 10814:10814 <> a:113
+R10839:10842 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10830:10832 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R10817:10825 Stdlib.Lists.List <> nth_error def
+R10829:10829 Clef.RFC0001.Laws <> n:112 var
+R10827:10827 Clef.RFC0001.Laws <> s:110 var
+R10833:10836 Corelib.Init.Datatypes <> Some constr
+R10838:10838 Clef.RFC0001.Laws <> a:113 var
+R10853:10855 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R10843:10846 Clef.RFC0001.TypeCase <> eval def
+R10848:10850 Clef.RFC0001.Laws <> env:109 var
+R10852:10852 Clef.RFC0001.Laws <> a:113 var
+R10856:10864 Stdlib.Lists.List <> nth_error def
+R10869:10869 Clef.RFC0001.Laws <> n:112 var
+R10866:10867 Clef.RFC0001.Laws <> vs:111 var
+R10889:10893 Clef.RFC0001.Laws <> lterm ind
+binder 10885:10885 <> p:114
+R10901:10903 Clef.RFC0001.TypeCase <> mtm ind
+binder 10897:10897 <> m:115
+R10925:10928 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R10916:10918 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R10907:10911 Clef.RFC0001.Laws <> linst def
+R10913:10913 Clef.RFC0001.Laws <> s:110 var
+R10915:10915 Clef.RFC0001.Laws <> p:114 var
+R10919:10922 Corelib.Init.Datatypes <> Some constr
+R10924:10924 Clef.RFC0001.Laws <> m:115 var
+R10939:10941 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R10929:10932 Clef.RFC0001.TypeCase <> eval def
+R10934:10936 Clef.RFC0001.Laws <> env:109 var
+R10938:10938 Clef.RFC0001.Laws <> m:115 var
+R10942:10947 Clef.RFC0001.Laws <> levalI def
+R10949:10953 Clef.Spec.Witnesses <> apply defax
+R10955:10956 Clef.RFC0001.Laws <> vs:111 var
+R10958:10958 Clef.RFC0001.Laws <> p:114 var
+R11095:11099 Clef.RFC0001.Laws <> linst def
+R11095:11099 Clef.RFC0001.Laws <> linst def
+R11192:11198 Corelib.Init.Logic <> eq_refl constr
+R11192:11198 Corelib.Init.Logic <> eq_refl constr
+R11192:11198 Corelib.Init.Logic <> eq_refl constr
+R11229:11233 Clef.RFC0001.Laws <> linst def
+R11229:11233 Clef.RFC0001.Laws <> linst def
+R11282:11286 Clef.RFC0001.Laws <> linst def
+R11282:11286 Clef.RFC0001.Laws <> linst def
+R11367:11373 Corelib.Init.Logic <> eq_refl constr
+R11384:11390 Corelib.Init.Logic <> eq_refl constr
+R11367:11373 Corelib.Init.Logic <> eq_refl constr
+R11367:11373 Corelib.Init.Logic <> eq_refl constr
+R11384:11390 Corelib.Init.Logic <> eq_refl constr
+R11384:11390 Corelib.Init.Logic <> eq_refl constr
+prf 11505:11517 <> args_evaluate
+R11524:11527 Corelib.Init.Datatypes <> list ind
+R11529:11530 Clef.Spec.Types <> ty ind
+binder 11520:11520 <> G:116
+R11540:11543 Corelib.Init.Datatypes <> list ind
+R11545:11547 Clef.Spec.Runtime <> val ind
+binder 11534:11536 <> env:117
+R11555:11556 Clef.Spec.Types <> ty ind
+binder 11551:11551 <> t:118
+R11583:11588 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R11563:11569 Stdlib.Lists.List <> Forall2 ind
+R11582:11582 Clef.RFC0001.Laws <> G:116 var
+R11578:11580 Clef.RFC0001.Laws <> env:117 var
+R11571:11576 Clef.Spec.Runtime <> has_ty ind
+R11600:11603 Corelib.Init.Datatypes <> list ind
+R11605:11607 Clef.RFC0001.TypeCase <> mtm ind
+binder 11596:11596 <> s:119
+R11648:11653 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R11610:11615 Corelib.Lists.ListDef <> Forall ind
+R11647:11647 Clef.RFC0001.Laws <> s:119 var
+binder 11622:11622 <> a:120
+R11636:11638 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R11627:11631 Clef.RFC0001.TypeCase <> mtype def
+R11633:11633 Clef.RFC0001.Laws <> G:116 var
+R11635:11635 Clef.RFC0001.Laws <> a:120 var
+R11639:11642 Corelib.Init.Datatypes <> Some constr
+R11644:11644 Clef.RFC0001.Laws <> t:118 var
+R11654:11660 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R11663:11664 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 11661:11662 <> vs:121
+R11704:11711 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R11665:11671 Stdlib.Lists.List <> Forall2 ind
+R11684:11689 Corelib.Lists.ListDef <> repeat def
+R11694:11699 Corelib.Init.Datatypes <> length def
+R11701:11701 Clef.RFC0001.Laws <> s:119 var
+R11691:11691 Clef.RFC0001.Laws <> t:118 var
+R11680:11681 Clef.RFC0001.Laws <> vs:121 var
+R11673:11678 Clef.Spec.Runtime <> has_ty ind
+binder 11719:11719 <> n:122
+binder 11721:11721 <> a:123
+R11746:11749 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R11737:11739 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R11724:11732 Stdlib.Lists.List <> nth_error def
+R11736:11736 Clef.RFC0001.Laws <> n:122 var
+R11734:11734 Clef.RFC0001.Laws <> s:119 var
+R11740:11743 Corelib.Init.Datatypes <> Some constr
+R11745:11745 Clef.RFC0001.Laws <> a:123 var
+R11760:11762 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R11750:11753 Clef.RFC0001.TypeCase <> eval def
+R11755:11757 Clef.RFC0001.Laws <> env:117 var
+R11759:11759 Clef.RFC0001.Laws <> a:123 var
+R11763:11771 Stdlib.Lists.List <> nth_error def
+R11776:11776 Clef.RFC0001.Laws <> n:122 var
+R11773:11774 Clef.RFC0001.Laws <> vs:121 var
+R11849:11850 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R11849:11850 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R11965:11986 Clef.RFC0001.TypeCase <> specialization_is_safe thm
+R11965:11986 Clef.RFC0001.TypeCase <> specialization_is_safe thm
+R12035:12038 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R12035:12038 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+prf 12726:12738 <> rewrite_sound
+R12745:12748 Corelib.Init.Datatypes <> list ind
+R12750:12752 Clef.RFC0001.Laws <> law rec
+binder 12741:12741 <> L:124
+R12760:12761 Clef.Spec.Types <> ty ind
+binder 12756:12756 <> t:125
+R12768:12768 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R12801:12807 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 12776:12776 <> l:126
+R12785:12788 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R12779:12780 Stdlib.Lists.List <> In def
+R12784:12784 Clef.RFC0001.Laws <> L:124 var
+R12782:12782 Clef.RFC0001.Laws <> l:126 var
+R12789:12796 Clef.RFC0001.Laws <> holds_at def
+R12798:12798 Clef.RFC0001.Laws <> t:125 var
+R12800:12800 Clef.RFC0001.Laws <> l:126 var
+R12820:12823 Corelib.Init.Datatypes <> list ind
+R12825:12826 Clef.Spec.Types <> ty ind
+binder 12816:12816 <> G:127
+R12837:12839 Clef.RFC0001.TypeCase <> mtm ind
+binder 12830:12830 <> m:128
+binder 12832:12833 <> m':129
+R12856:12861 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R12843:12844 Clef.RFC0001.Laws <> rw ind
+R12846:12846 Clef.RFC0001.Laws <> L:124 var
+R12848:12848 Clef.RFC0001.Laws <> t:125 var
+R12850:12850 Clef.RFC0001.Laws <> G:127 var
+R12852:12852 Clef.RFC0001.Laws <> m:128 var
+R12854:12855 Clef.RFC0001.Laws <> m':129 var
+R12875:12878 Corelib.Init.Datatypes <> list ind
+R12880:12882 Clef.Spec.Runtime <> val ind
+binder 12869:12871 <> env:130
+R12905:12908 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R12885:12891 Stdlib.Lists.List <> Forall2 ind
+R12904:12904 Clef.RFC0001.Laws <> G:127 var
+R12900:12902 Clef.RFC0001.Laws <> env:130 var
+R12893:12898 Clef.Spec.Runtime <> has_ty ind
+R12919:12921 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R12909:12912 Clef.RFC0001.TypeCase <> eval def
+R12914:12916 Clef.RFC0001.Laws <> env:130 var
+R12918:12918 Clef.RFC0001.Laws <> m:128 var
+R12922:12925 Clef.RFC0001.TypeCase <> eval def
+R12927:12929 Clef.RFC0001.Laws <> env:130 var
+R12931:12932 Clef.RFC0001.Laws <> m':129 var
+R13198:13210 Clef.RFC0001.Laws <> args_evaluate thm
+R13198:13210 Clef.RFC0001.Laws <> args_evaluate thm
+R13260:13269 Clef.RFC0001.Laws <> linst_eval thm
+R13293:13302 Clef.RFC0001.Laws <> linst_eval thm
+R13260:13269 Clef.RFC0001.Laws <> linst_eval thm
+R13260:13269 Clef.RFC0001.Laws <> linst_eval thm
+R13293:13302 Clef.RFC0001.Laws <> linst_eval thm
+R13293:13302 Clef.RFC0001.Laws <> linst_eval thm
+R13389:13401 Clef.RFC0001.Laws <> args_evaluate thm
+R13389:13401 Clef.RFC0001.Laws <> args_evaluate thm
+R13451:13460 Clef.RFC0001.Laws <> linst_eval thm
+R13484:13493 Clef.RFC0001.Laws <> linst_eval thm
+R13451:13460 Clef.RFC0001.Laws <> linst_eval thm
+R13451:13460 Clef.RFC0001.Laws <> linst_eval thm
+R13484:13493 Clef.RFC0001.Laws <> linst_eval thm
+R13484:13493 Clef.RFC0001.Laws <> linst_eval thm
+R13867:13888 Clef.RFC0001.TypeCase <> specialization_is_safe thm
+R13867:13888 Clef.RFC0001.TypeCase <> specialization_is_safe thm
+prf 14080:14093 <> rewrites_sound
+R14100:14103 Corelib.Init.Datatypes <> list ind
+R14105:14107 Clef.RFC0001.Laws <> law rec
+binder 14096:14096 <> L:131
+R14115:14116 Clef.Spec.Types <> ty ind
+binder 14111:14111 <> t:132
+R14123:14123 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R14156:14162 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 14131:14131 <> l:133
+R14140:14143 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R14134:14135 Stdlib.Lists.List <> In def
+R14139:14139 Clef.RFC0001.Laws <> L:131 var
+R14137:14137 Clef.RFC0001.Laws <> l:133 var
+R14144:14151 Clef.RFC0001.Laws <> holds_at def
+R14153:14153 Clef.RFC0001.Laws <> t:132 var
+R14155:14155 Clef.RFC0001.Laws <> l:133 var
+R14175:14178 Corelib.Init.Datatypes <> list ind
+R14180:14181 Clef.Spec.Types <> ty ind
+binder 14171:14171 <> G:134
+R14192:14194 Clef.RFC0001.TypeCase <> mtm ind
+binder 14185:14185 <> m:135
+binder 14187:14188 <> m':136
+R14212:14217 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R14198:14200 Clef.RFC0001.Laws <> rws ind
+R14202:14202 Clef.RFC0001.Laws <> L:131 var
+R14204:14204 Clef.RFC0001.Laws <> t:132 var
+R14206:14206 Clef.RFC0001.Laws <> G:134 var
+R14208:14208 Clef.RFC0001.Laws <> m:135 var
+R14210:14211 Clef.RFC0001.Laws <> m':136 var
+R14231:14234 Corelib.Init.Datatypes <> list ind
+R14236:14238 Clef.Spec.Runtime <> val ind
+binder 14225:14227 <> env:137
+R14261:14264 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R14241:14247 Stdlib.Lists.List <> Forall2 ind
+R14260:14260 Clef.RFC0001.Laws <> G:134 var
+R14256:14258 Clef.RFC0001.Laws <> env:137 var
+R14249:14254 Clef.Spec.Runtime <> has_ty ind
+R14275:14277 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R14265:14268 Clef.RFC0001.TypeCase <> eval def
+R14270:14272 Clef.RFC0001.Laws <> env:137 var
+R14274:14274 Clef.RFC0001.Laws <> m:135 var
+R14278:14281 Clef.RFC0001.TypeCase <> eval def
+R14283:14285 Clef.RFC0001.Laws <> env:137 var
+R14287:14288 Clef.RFC0001.Laws <> m':136 var
+R14396:14408 Clef.RFC0001.Laws <> rewrite_sound thm
+R14396:14408 Clef.RFC0001.Laws <> rewrite_sound thm
+R14396:14408 Clef.RFC0001.Laws <> rewrite_sound thm
+def 14540:14543 <> vars
+R14552:14554 Corelib.Init.Datatypes <> nat ind
+binder 14546:14546 <> i:138
+binder 14548:14548 <> k:139
+R14559:14562 Corelib.Init.Datatypes <> list ind
+R14564:14566 Clef.RFC0001.TypeCase <> mtm ind
+R14579:14579 Clef.RFC0001.Laws <> k:139 var
+R14595:14596 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R14602:14602 Corelib.Init.Datatypes <> S constr
+R14615:14618 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R14609:14612 Clef.RFC0001.TypeCase <> MVar constr
+R14614:14614 Clef.RFC0001.Laws <> i:138 var
+R14619:14622 Clef.RFC0001.Laws <> vars:140 def
+R14630:14630 Clef.RFC0001.Laws <> k:139 var
+R14625:14625 Corelib.Init.Datatypes <> S constr
+R14627:14627 Clef.RFC0001.Laws <> i:138 var
+prf 14646:14656 <> vars_length
+R14663:14665 Corelib.Init.Datatypes <> nat ind
+binder 14659:14659 <> k:142
+binder 14677:14677 <> i:143
+R14697:14699 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R14680:14685 Corelib.Init.Datatypes <> length def
+R14688:14691 Clef.RFC0001.Laws <> vars def
+R14693:14693 Clef.RFC0001.Laws <> i:143 var
+R14695:14695 Clef.RFC0001.Laws <> k:142 var
+R14700:14700 Clef.RFC0001.Laws <> k:142 var
+prf 14807:14814 <> vars_nth
+R14821:14823 Corelib.Init.Datatypes <> nat ind
+binder 14817:14817 <> k:144
+R14844:14846 Corelib.Init.Datatypes <> nat ind
+binder 14838:14838 <> i:145
+binder 14840:14840 <> n:146
+R14854:14856 Clef.RFC0001.TypeCase <> mtm ind
+binder 14850:14850 <> a:147
+R14891:14894 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R14882:14884 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R14860:14868 Stdlib.Lists.List <> nth_error def
+R14881:14881 Clef.RFC0001.Laws <> n:146 var
+R14871:14874 Clef.RFC0001.Laws <> vars def
+R14876:14876 Clef.RFC0001.Laws <> i:145 var
+R14878:14878 Clef.RFC0001.Laws <> k:144 var
+R14885:14888 Corelib.Init.Datatypes <> Some constr
+R14890:14890 Clef.RFC0001.Laws <> a:147 var
+R14896:14898 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R14895:14895 Clef.RFC0001.Laws <> a:147 var
+R14899:14902 Clef.RFC0001.TypeCase <> MVar constr
+R14906:14908 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R14905:14905 Clef.RFC0001.Laws <> i:145 var
+R14909:14909 Clef.RFC0001.Laws <> n:146 var
+R15063:15073 Stdlib.Arith.PeanoNat Nat add_0_r thm
+R15063:15073 Stdlib.Arith.PeanoNat Nat add_0_r thm
+R15063:15073 Stdlib.Arith.PeanoNat Nat add_0_r thm
+R15103:15116 Stdlib.Arith.PeanoNat Nat add_succ_r thm
+R15103:15116 Stdlib.Arith.PeanoNat Nat add_succ_r thm
+R15103:15116 Stdlib.Arith.PeanoNat Nat add_succ_r thm
+R15130:15130 Corelib.Init.Datatypes <> S constr
+R15130:15130 Corelib.Init.Datatypes <> S constr
+prf 15155:15164 <> repeat_nth
+R15171:15172 Clef.Spec.Types <> ty ind
+binder 15167:15167 <> t:148
+R15180:15182 Corelib.Init.Datatypes <> nat ind
+binder 15176:15176 <> k:149
+binder 15196:15196 <> n:150
+R15204:15207 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R15200:15202 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R15199:15199 Clef.RFC0001.Laws <> n:150 var
+R15203:15203 Clef.RFC0001.Laws <> k:149 var
+R15232:15234 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R15208:15216 Stdlib.Lists.List <> nth_error def
+R15231:15231 Clef.RFC0001.Laws <> n:150 var
+R15219:15224 Corelib.Lists.ListDef <> repeat def
+R15228:15228 Clef.RFC0001.Laws <> k:149 var
+R15226:15226 Clef.RFC0001.Laws <> t:148 var
+R15235:15238 Corelib.Init.Datatypes <> Some constr
+R15240:15240 Clef.RFC0001.Laws <> t:148 var
+prf 15445:15454 <> vars_typed
+R15461:15462 Clef.Spec.Types <> ty ind
+binder 15457:15457 <> t:151
+R15470:15472 Corelib.Init.Datatypes <> nat ind
+binder 15466:15466 <> k:152
+R15479:15484 Corelib.Lists.ListDef <> Forall ind
+R15528:15531 Clef.RFC0001.Laws <> vars def
+R15535:15535 Clef.RFC0001.Laws <> k:152 var
+binder 15491:15491 <> a:153
+R15516:15518 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R15496:15500 Clef.RFC0001.TypeCase <> mtype def
+R15503:15508 Corelib.Lists.ListDef <> repeat def
+R15512:15512 Clef.RFC0001.Laws <> k:152 var
+R15510:15510 Clef.RFC0001.Laws <> t:151 var
+R15515:15515 Clef.RFC0001.Laws <> a:153 var
+R15519:15522 Corelib.Init.Datatypes <> Some constr
+R15524:15524 Clef.RFC0001.Laws <> t:151 var
+R15554:15566 Stdlib.Lists.List <> Forall_forall thm
+R15554:15566 Stdlib.Lists.List <> Forall_forall thm
+R15589:15600 Stdlib.Lists.List <> In_nth_error thm
+R15589:15600 Stdlib.Lists.List <> In_nth_error thm
+R15651:15653 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R15651:15653 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R15674:15684 Clef.RFC0001.Laws <> vars_length thm
+R15674:15684 Clef.RFC0001.Laws <> vars_length thm
+R15674:15684 Clef.RFC0001.Laws <> vars_length thm
+R15698:15711 Stdlib.Lists.List <> nth_error_Some thm
+R15698:15711 Stdlib.Lists.List <> nth_error_Some thm
+R15750:15757 Clef.RFC0001.Laws <> vars_nth thm
+R15750:15757 Clef.RFC0001.Laws <> vars_nth thm
+R15788:15797 Clef.RFC0001.Laws <> repeat_nth thm
+R15788:15797 Clef.RFC0001.Laws <> repeat_nth thm
+prf 15890:15898 <> vars_eval
+R15906:15909 Corelib.Init.Datatypes <> list ind
+R15911:15913 Clef.Spec.Runtime <> val ind
+binder 15901:15902 <> vs:154
+R15921:15923 Corelib.Init.Datatypes <> nat ind
+binder 15917:15917 <> k:155
+binder 15937:15937 <> n:156
+binder 15939:15939 <> a:157
+R15973:15976 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R15964:15966 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R15942:15950 Stdlib.Lists.List <> nth_error def
+R15963:15963 Clef.RFC0001.Laws <> n:156 var
+R15953:15956 Clef.RFC0001.Laws <> vars def
+R15960:15960 Clef.RFC0001.Laws <> k:155 var
+R15967:15970 Corelib.Init.Datatypes <> Some constr
+R15972:15972 Clef.RFC0001.Laws <> a:157 var
+R15986:15988 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R15977:15980 Clef.RFC0001.TypeCase <> eval def
+R15982:15983 Clef.RFC0001.Laws <> vs:154 var
+R15985:15985 Clef.RFC0001.Laws <> a:157 var
+R15989:15997 Stdlib.Lists.List <> nth_error def
+R16002:16002 Clef.RFC0001.Laws <> n:156 var
+R15999:16000 Clef.RFC0001.Laws <> vs:154 var
+R16034:16041 Clef.RFC0001.Laws <> vars_nth thm
+R16034:16041 Clef.RFC0001.Laws <> vars_nth thm
+def 16188:16194 <> lscoped
+R16201:16203 Corelib.Init.Datatypes <> nat ind
+binder 16197:16197 <> k:158
+R16211:16215 Clef.RFC0001.Laws <> lterm ind
+binder 16207:16207 <> p:159
+R16220:16223 Corelib.Init.Datatypes <> bool ind
+R16236:16236 Clef.RFC0001.Laws <> p:159 var
+R16247:16250 Clef.RFC0001.Laws <> LVar constr
+R16258:16261 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R16262:16262 Clef.RFC0001.Laws <> k:158 var
+R16268:16272 Clef.RFC0001.Laws <> LPrim constr
+R16281:16287 Clef.RFC0001.Laws <> lscoped:160 def
+R16289:16289 Clef.RFC0001.Laws <> k:158 var
+R16297:16301 Clef.RFC0001.Laws <> LPair constr
+R16321:16324 Corelib.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R16310:16316 Clef.RFC0001.Laws <> lscoped:160 def
+R16318:16318 Clef.RFC0001.Laws <> k:158 var
+R16325:16331 Clef.RFC0001.Laws <> lscoped:160 def
+R16333:16333 Clef.RFC0001.Laws <> k:158 var
+prf 16428:16439 <> linst_scoped
+R16446:16449 Corelib.Init.Datatypes <> list ind
+R16451:16453 Clef.RFC0001.TypeCase <> mtm ind
+binder 16442:16442 <> s:162
+R16461:16465 Clef.RFC0001.Laws <> lterm ind
+binder 16457:16457 <> p:163
+R16499:16502 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R16492:16494 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R16472:16478 Clef.RFC0001.Laws <> lscoped def
+R16481:16486 Corelib.Init.Datatypes <> length def
+R16488:16488 Clef.RFC0001.Laws <> s:162 var
+R16491:16491 Clef.RFC0001.Laws <> p:163 var
+R16495:16498 Corelib.Init.Datatypes <> true constr
+R16503:16509 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R16511:16512 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 16510:16510 <> m:164
+R16522:16524 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R16513:16517 Clef.RFC0001.Laws <> linst def
+R16519:16519 Clef.RFC0001.Laws <> s:162 var
+R16521:16521 Clef.RFC0001.Laws <> p:163 var
+R16525:16528 Corelib.Init.Datatypes <> Some constr
+R16530:16530 Clef.RFC0001.Laws <> m:164 var
+R16612:16621 Stdlib.Arith.PeanoNat Nat ltb_lt thm
+R16612:16621 Stdlib.Arith.PeanoNat Nat ltb_lt thm
+R16639:16647 Stdlib.Lists.List <> nth_error def
+R16639:16647 Stdlib.Lists.List <> nth_error def
+R16711:16724 Stdlib.Lists.List <> nth_error_None thm
+R16711:16724 Stdlib.Lists.List <> nth_error_None thm
+R16776:16780 Clef.RFC0001.TypeCase <> MPrim constr
+R16776:16780 Clef.RFC0001.TypeCase <> MPrim constr
+R16823:16835 Stdlib.Bool.Bool <> andb_true_iff thm
+R16823:16835 Stdlib.Bool.Bool <> andb_true_iff thm
+R16940:16944 Clef.RFC0001.TypeCase <> MPair constr
+R16940:16944 Clef.RFC0001.TypeCase <> MPair constr
+prf 17460:17474 <> law_iff_rewrite
+R17481:17482 Clef.Spec.Types <> ty ind
+binder 17477:17477 <> t:165
+R17490:17492 Clef.RFC0001.Laws <> law rec
+binder 17486:17486 <> l:166
+R17531:17534 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R17524:17526 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R17499:17505 Clef.RFC0001.Laws <> lscoped def
+R17508:17512 Clef.RFC0001.Laws <> arity proj
+R17514:17514 Clef.RFC0001.Laws <> l:166 var
+R17518:17520 Clef.RFC0001.Laws <> lhs proj
+R17522:17522 Clef.RFC0001.Laws <> l:166 var
+R17527:17530 Corelib.Init.Datatypes <> true constr
+R17567:17573 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R17722:17722 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R17560:17562 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R17535:17541 Clef.RFC0001.Laws <> lscoped def
+R17544:17548 Clef.RFC0001.Laws <> arity proj
+R17550:17550 Clef.RFC0001.Laws <> l:166 var
+R17554:17556 Clef.RFC0001.Laws <> rhs proj
+R17558:17558 Clef.RFC0001.Laws <> l:166 var
+R17563:17566 Corelib.Init.Datatypes <> true constr
+R17586:17593 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+R17574:17581 Clef.RFC0001.Laws <> holds_at def
+R17583:17583 Clef.RFC0001.Laws <> t:165 var
+R17585:17585 Clef.RFC0001.Laws <> l:166 var
+R17606:17609 Corelib.Init.Datatypes <> list ind
+R17611:17612 Clef.Spec.Types <> ty ind
+binder 17602:17602 <> G:167
+R17623:17625 Clef.RFC0001.TypeCase <> mtm ind
+binder 17616:17616 <> m:168
+binder 17618:17619 <> m':169
+R17644:17650 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R17629:17630 Clef.RFC0001.Laws <> rw ind
+R17632:17632 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R17634:17634 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R17633:17633 Clef.RFC0001.Laws <> l:166 var
+R17636:17636 Clef.RFC0001.Laws <> t:165 var
+R17638:17638 Clef.RFC0001.Laws <> G:167 var
+R17640:17640 Clef.RFC0001.Laws <> m:168 var
+R17642:17643 Clef.RFC0001.Laws <> m':169 var
+R17664:17667 Corelib.Init.Datatypes <> list ind
+R17669:17671 Clef.Spec.Runtime <> val ind
+binder 17658:17660 <> env:170
+R17694:17697 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R17674:17680 Stdlib.Lists.List <> Forall2 ind
+R17693:17693 Clef.RFC0001.Laws <> G:167 var
+R17689:17691 Clef.RFC0001.Laws <> env:170 var
+R17682:17687 Clef.Spec.Runtime <> has_ty ind
+R17708:17710 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R17698:17701 Clef.RFC0001.TypeCase <> eval def
+R17703:17705 Clef.RFC0001.Laws <> env:170 var
+R17707:17707 Clef.RFC0001.Laws <> m:168 var
+R17711:17714 Clef.RFC0001.TypeCase <> eval def
+R17716:17718 Clef.RFC0001.Laws <> env:170 var
+R17720:17721 Clef.RFC0001.Laws <> m':169 var
+R17775:17787 Clef.RFC0001.Laws <> rewrite_sound thm
+R17775:17787 Clef.RFC0001.Laws <> rewrite_sound thm
+R17866:17876 Clef.RFC0001.Laws <> vars_length thm
+R17879:17883 Clef.RFC0001.Laws <> arity proj
+R17866:17876 Clef.RFC0001.Laws <> vars_length thm
+R17879:17883 Clef.RFC0001.Laws <> arity proj
+R17866:17876 Clef.RFC0001.Laws <> vars_length thm
+R17879:17883 Clef.RFC0001.Laws <> arity proj
+R17916:17927 Clef.RFC0001.Laws <> linst_scoped thm
+R17916:17927 Clef.RFC0001.Laws <> linst_scoped thm
+R17960:17971 Clef.RFC0001.Laws <> linst_scoped thm
+R17960:17971 Clef.RFC0001.Laws <> linst_scoped thm
+R18010:18019 Clef.RFC0001.Laws <> linst_eval thm
+R18030:18038 Clef.RFC0001.Laws <> vars_eval thm
+R18044:18048 Clef.RFC0001.Laws <> arity proj
+R18010:18019 Clef.RFC0001.Laws <> linst_eval thm
+R18030:18038 Clef.RFC0001.Laws <> vars_eval thm
+R18044:18048 Clef.RFC0001.Laws <> arity proj
+R18010:18019 Clef.RFC0001.Laws <> linst_eval thm
+R18030:18038 Clef.RFC0001.Laws <> vars_eval thm
+R18044:18048 Clef.RFC0001.Laws <> arity proj
+R18080:18089 Clef.RFC0001.Laws <> linst_eval thm
+R18100:18108 Clef.RFC0001.Laws <> vars_eval thm
+R18114:18118 Clef.RFC0001.Laws <> arity proj
+R18080:18089 Clef.RFC0001.Laws <> linst_eval thm
+R18100:18108 Clef.RFC0001.Laws <> vars_eval thm
+R18114:18118 Clef.RFC0001.Laws <> arity proj
+R18080:18089 Clef.RFC0001.Laws <> linst_eval thm
+R18100:18108 Clef.RFC0001.Laws <> vars_eval thm
+R18114:18118 Clef.RFC0001.Laws <> arity proj
+R18148:18153 Corelib.Lists.ListDef <> repeat def
+R18158:18162 Clef.RFC0001.Laws <> arity proj
+R18148:18153 Corelib.Lists.ListDef <> repeat def
+R18158:18162 Clef.RFC0001.Laws <> arity proj
+R18196:18200 Clef.RFC0001.Laws <> RwLaw constr
+R18202:18202 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R18204:18204 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R18213:18216 Clef.RFC0001.Laws <> vars def
+R18221:18225 Clef.RFC0001.Laws <> arity proj
+R18196:18200 Clef.RFC0001.Laws <> RwLaw constr
+R18202:18202 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R18204:18204 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R18213:18216 Clef.RFC0001.Laws <> vars def
+R18221:18225 Clef.RFC0001.Laws <> arity proj
+R18276:18286 Clef.RFC0001.Laws <> vars_length thm
+R18276:18286 Clef.RFC0001.Laws <> vars_length thm
+R18301:18310 Clef.RFC0001.Laws <> vars_typed thm
+R18301:18310 Clef.RFC0001.Laws <> vars_typed thm
+prf 18959:18992 <> rewritten_definition_keeps_meaning
+R19003:19006 Clef.RFC0001.Constraints <> cset def
+binder 18999:18999 <> C:171
+R19014:19017 Corelib.Init.Datatypes <> list ind
+R19019:19021 Clef.RFC0001.Laws <> law rec
+binder 19010:19010 <> L:172
+R19029:19032 Corelib.Init.Datatypes <> list ind
+R19034:19036 Clef.Spec.Types <> oty ind
+binder 19025:19025 <> G:173
+R19044:19045 Clef.RFC0001.TypeCase <> tm ind
+binder 19040:19040 <> e:174
+R19053:19055 Clef.Spec.Types <> oty ind
+binder 19049:19049 <> r:175
+R19082:19087 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R19075:19077 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R19062:19066 Clef.RFC0001.TypeCase <> check def
+R19068:19068 Clef.RFC0001.Laws <> C:171 var
+R19070:19070 Clef.RFC0001.Laws <> G:173 var
+R19072:19072 Clef.RFC0001.Laws <> e:174 var
+R19074:19074 Clef.RFC0001.Laws <> r:175 var
+R19078:19081 Corelib.Init.Datatypes <> true constr
+R19088:19088 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R19120:19126 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 19096:19096 <> l:176
+R19105:19108 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R19099:19100 Stdlib.Lists.List <> In def
+R19104:19104 Clef.RFC0001.Laws <> L:172 var
+R19102:19102 Clef.RFC0001.Laws <> l:176 var
+R19109:19115 Clef.RFC0001.Laws <> carries def
+R19117:19117 Clef.RFC0001.Laws <> C:171 var
+R19119:19119 Clef.RFC0001.Laws <> l:176 var
+R19138:19139 Clef.Spec.Types <> ty ind
+binder 19134:19134 <> t:177
+R19149:19154 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R19142:19144 Clef.RFC0001.Constraints <> sat def
+R19146:19146 Clef.RFC0001.Laws <> t:177 var
+R19148:19148 Clef.RFC0001.Laws <> C:171 var
+R19169:19171 Clef.RFC0001.TypeCase <> mtm ind
+binder 19162:19162 <> m:178
+binder 19164:19165 <> m':179
+R19191:19194 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R19182:19184 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R19174:19177 Clef.RFC0001.TypeCase <> spec def
+R19179:19179 Clef.RFC0001.Laws <> t:177 var
+R19181:19181 Clef.RFC0001.Laws <> e:174 var
+R19185:19188 Corelib.Init.Datatypes <> Some constr
+R19190:19190 Clef.RFC0001.Laws <> m:178 var
+R19224:19229 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R19195:19197 Clef.RFC0001.Laws <> rws ind
+R19199:19199 Clef.RFC0001.Laws <> L:172 var
+R19201:19201 Clef.RFC0001.Laws <> t:177 var
+R19204:19206 Corelib.Lists.ListDef <> map def
+R19217:19217 Clef.RFC0001.Laws <> G:173 var
+R19209:19212 Clef.Spec.Types <> inst def
+R19214:19214 Clef.RFC0001.Laws <> t:177 var
+R19220:19220 Clef.RFC0001.Laws <> m:178 var
+R19222:19223 Clef.RFC0001.Laws <> m':179 var
+R19243:19246 Corelib.Init.Datatypes <> list ind
+R19248:19250 Clef.Spec.Runtime <> val ind
+binder 19237:19239 <> env:180
+R19288:19293 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R19253:19259 Stdlib.Lists.List <> Forall2 ind
+R19273:19275 Corelib.Lists.ListDef <> map def
+R19286:19286 Clef.RFC0001.Laws <> G:173 var
+R19278:19281 Clef.Spec.Types <> inst def
+R19283:19283 Clef.RFC0001.Laws <> t:177 var
+R19268:19270 Clef.RFC0001.Laws <> env:180 var
+R19261:19266 Clef.Spec.Runtime <> has_ty ind
+R19294:19300 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R19302:19303 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 19301:19301 <> v:181
+R19324:19327 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R19315:19317 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R19304:19307 Clef.RFC0001.TypeCase <> eval def
+R19309:19311 Clef.RFC0001.Laws <> env:180 var
+R19313:19314 Clef.RFC0001.Laws <> m':179 var
+R19318:19321 Corelib.Init.Datatypes <> Some constr
+R19323:19323 Clef.RFC0001.Laws <> v:181 var
+R19350:19353 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R19341:19343 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R19328:19332 Clef.RFC0001.TypeCase <> seval def
+R19334:19334 Clef.RFC0001.Laws <> t:177 var
+R19336:19338 Clef.RFC0001.Laws <> env:180 var
+R19340:19340 Clef.RFC0001.Laws <> e:174 var
+R19344:19347 Corelib.Init.Datatypes <> Some constr
+R19349:19349 Clef.RFC0001.Laws <> v:181 var
+R19354:19359 Clef.Spec.Runtime <> has_ty ind
+R19361:19361 Clef.RFC0001.Laws <> v:181 var
+R19364:19367 Clef.Spec.Types <> inst def
+R19369:19369 Clef.RFC0001.Laws <> t:177 var
+R19371:19371 Clef.RFC0001.Laws <> r:175 var
+R19434:19456 Clef.RFC0001.TypeCase <> checked_definition_runs thm
+R19434:19456 Clef.RFC0001.TypeCase <> checked_definition_runs thm
+R19555:19568 Clef.RFC0001.Laws <> rewrites_sound thm
+binder 19579:19579 <> l:182
+binder 19581:19582 <> Hl:183
+R19590:19590 Clef.RFC0001.Laws <> l:182 var
+R19592:19593 Clef.RFC0001.Laws <> Hl:183 var
+R19555:19568 Clef.RFC0001.Laws <> rewrites_sound thm
+binder 19579:19579 <> l:184
+binder 19581:19582 <> Hl:185
+R19590:19590 Clef.RFC0001.Laws <> l:184 var
+R19592:19593 Clef.RFC0001.Laws <> Hl:185 var
+R19555:19568 Clef.RFC0001.Laws <> rewrites_sound thm
+binder 19579:19579 <> l:186
+binder 19581:19582 <> Hl:187
+R19590:19590 Clef.RFC0001.Laws <> l:186 var
+R19592:19593 Clef.RFC0001.Laws <> Hl:187 var
+R19635:19666 Clef.RFC0001.TypeCase <> specialization_preserves_meaning thm
+R19635:19666 Clef.RFC0001.TypeCase <> specialization_preserves_meaning thm
+R19635:19666 Clef.RFC0001.TypeCase <> specialization_preserves_meaning thm
+def 20188:20202 <> library_theorem
+R20209:20212 Corelib.Init.Datatypes <> list ind
+R20214:20216 Clef.RFC0001.Laws <> law rec
+binder 20205:20205 <> P:188
+R20224:20226 Clef.RFC0001.Laws <> law rec
+binder 20220:20220 <> c:189
+R20239:20242 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R20237:20238 Clef.Spec.Types <> ty ind
+binder 20230:20233 <> side:190
+binder 20268:20268 <> t:191
+R20277:20280 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R20271:20274 Clef.RFC0001.Laws <> side:190 var
+R20276:20276 Clef.RFC0001.Laws <> t:191 var
+R20281:20281 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R20314:20318 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 20289:20289 <> l:192
+R20298:20301 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R20292:20293 Stdlib.Lists.List <> In def
+R20297:20297 Clef.RFC0001.Laws <> P:188 var
+R20295:20295 Clef.RFC0001.Laws <> l:192 var
+R20302:20309 Clef.RFC0001.Laws <> holds_at def
+R20311:20311 Clef.RFC0001.Laws <> t:191 var
+R20313:20313 Clef.RFC0001.Laws <> l:192 var
+R20319:20326 Clef.RFC0001.Laws <> holds_at def
+R20328:20328 Clef.RFC0001.Laws <> t:191 var
+R20330:20330 Clef.RFC0001.Laws <> c:189 var
+prf 20804:20814 <> derived_law
+R20821:20824 Corelib.Init.Datatypes <> list ind
+R20826:20828 Clef.RFC0001.Laws <> law rec
+binder 20817:20817 <> L:193
+R20836:20837 Clef.Spec.Types <> ty ind
+binder 20832:20832 <> t:194
+R20845:20847 Corelib.Init.Datatypes <> nat ind
+binder 20841:20841 <> n:195
+R20857:20861 Clef.RFC0001.Laws <> lterm ind
+binder 20851:20851 <> a:196
+binder 20853:20853 <> b:197
+R20873:20875 Clef.RFC0001.TypeCase <> mtm ind
+binder 20865:20866 <> ma:198
+binder 20868:20869 <> mb:199
+R20882:20882 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R20915:20921 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 20890:20890 <> l:200
+R20899:20902 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R20893:20894 Stdlib.Lists.List <> In def
+R20898:20898 Clef.RFC0001.Laws <> L:193 var
+R20896:20896 Clef.RFC0001.Laws <> l:200 var
+R20903:20910 Clef.RFC0001.Laws <> holds_at def
+R20912:20912 Clef.RFC0001.Laws <> t:194 var
+R20914:20914 Clef.RFC0001.Laws <> l:200 var
+R20950:20953 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R20940:20942 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R20922:20926 Clef.RFC0001.Laws <> linst def
+R20929:20932 Clef.RFC0001.Laws <> vars def
+R20936:20936 Clef.RFC0001.Laws <> n:195 var
+R20939:20939 Clef.RFC0001.Laws <> a:196 var
+R20943:20946 Corelib.Init.Datatypes <> Some constr
+R20948:20949 Clef.RFC0001.Laws <> ma:198 var
+R20982:20987 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R20972:20974 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R20954:20958 Clef.RFC0001.Laws <> linst def
+R20961:20964 Clef.RFC0001.Laws <> vars def
+R20968:20968 Clef.RFC0001.Laws <> n:195 var
+R20971:20971 Clef.RFC0001.Laws <> b:197 var
+R20975:20978 Corelib.Init.Datatypes <> Some constr
+R20980:20981 Clef.RFC0001.Laws <> mb:199 var
+R21014:21019 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R20988:20990 Clef.RFC0001.Laws <> rws ind
+R20992:20992 Clef.RFC0001.Laws <> L:193 var
+R20994:20994 Clef.RFC0001.Laws <> t:194 var
+R20997:21002 Corelib.Lists.ListDef <> repeat def
+R21006:21006 Clef.RFC0001.Laws <> n:195 var
+R21004:21004 Clef.RFC0001.Laws <> t:194 var
+R21009:21010 Clef.RFC0001.Laws <> ma:198 var
+R21012:21013 Clef.RFC0001.Laws <> mb:199 var
+R21020:21027 Clef.RFC0001.Laws <> holds_at def
+R21029:21029 Clef.RFC0001.Laws <> t:194 var
+R21032:21034 Clef.RFC0001.Laws <> Law constr
+R21036:21036 Clef.RFC0001.Laws <> n:195 var
+R21038:21038 Clef.RFC0001.Laws <> a:196 var
+R21040:21040 Clef.RFC0001.Laws <> b:197 var
+R21105:21114 Clef.RFC0001.Laws <> linst_eval thm
+R21125:21133 Clef.RFC0001.Laws <> vars_eval thm
+R21105:21114 Clef.RFC0001.Laws <> linst_eval thm
+R21125:21133 Clef.RFC0001.Laws <> vars_eval thm
+R21105:21114 Clef.RFC0001.Laws <> linst_eval thm
+R21125:21133 Clef.RFC0001.Laws <> vars_eval thm
+R21165:21174 Clef.RFC0001.Laws <> linst_eval thm
+R21185:21193 Clef.RFC0001.Laws <> vars_eval thm
+R21165:21174 Clef.RFC0001.Laws <> linst_eval thm
+R21185:21193 Clef.RFC0001.Laws <> vars_eval thm
+R21165:21174 Clef.RFC0001.Laws <> linst_eval thm
+R21185:21193 Clef.RFC0001.Laws <> vars_eval thm
+R21220:21233 Clef.RFC0001.Laws <> rewrites_sound thm
+R21220:21233 Clef.RFC0001.Laws <> rewrites_sound thm
+def 21350:21357 <> reversed
+R21364:21365 Clef.Spec.Witnesses <> op defax
+binder 21360:21360 <> o:201
+R21370:21372 Clef.RFC0001.Laws <> law rec
+R21379:21381 Clef.RFC0001.Laws <> Law constr
+R21386:21388 Clef.RFC0001.Laws <> bin def
+R21390:21390 Clef.RFC0001.Laws <> o:201 var
+R21393:21395 Clef.RFC0001.Laws <> bin def
+R21397:21397 Clef.RFC0001.Laws <> o:201 var
+R21400:21403 Clef.RFC0001.Laws <> LVar constr
+R21409:21412 Clef.RFC0001.Laws <> LVar constr
+R21419:21422 Clef.RFC0001.Laws <> LVar constr
+R21429:21431 Clef.RFC0001.Laws <> bin def
+R21433:21433 Clef.RFC0001.Laws <> o:201 var
+R21436:21439 Clef.RFC0001.Laws <> LVar constr
+R21445:21447 Clef.RFC0001.Laws <> bin def
+R21449:21449 Clef.RFC0001.Laws <> o:201 var
+R21452:21455 Clef.RFC0001.Laws <> LVar constr
+R21461:21464 Clef.RFC0001.Laws <> LVar constr
+prf 21878:21904 <> reversal_from_commutativity
+R21911:21912 Clef.Spec.Witnesses <> op defax
+binder 21907:21907 <> o:202
+R21919:21933 Clef.RFC0001.Laws <> library_theorem def
+R21935:21935 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R21949:21949 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R21936:21946 Clef.RFC0001.Laws <> commutative def
+R21948:21948 Clef.RFC0001.Laws <> o:202 var
+R21952:21959 Clef.RFC0001.Laws <> reversed def
+R21961:21961 Clef.RFC0001.Laws <> o:202 var
+binder 21969:21969 <> t:203
+R21995:21997 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R21974:21980 Clef.Spec.Witnesses <> witness defax
+R21982:21982 Clef.RFC0001.Laws <> o:202 var
+R21985:21989 Clef.Spec.Types <> TPair constr
+R21991:21991 Clef.RFC0001.Laws <> t:203 var
+R21993:21993 Clef.RFC0001.Laws <> t:203 var
+R21998:22001 Corelib.Init.Datatypes <> Some constr
+R22003:22003 Clef.RFC0001.Laws <> t:203 var
+R22046:22050 Clef.RFC0001.TypeCase <> MPrim constr
+R22055:22059 Clef.RFC0001.TypeCase <> MPair constr
+R22062:22065 Clef.RFC0001.TypeCase <> MVar constr
+R22071:22074 Clef.RFC0001.TypeCase <> MVar constr
+R22046:22050 Clef.RFC0001.TypeCase <> MPrim constr
+R22055:22059 Clef.RFC0001.TypeCase <> MPair constr
+R22062:22065 Clef.RFC0001.TypeCase <> MVar constr
+R22071:22074 Clef.RFC0001.TypeCase <> MVar constr
+R22096:22100 Clef.RFC0001.TypeCase <> MPrim constr
+R22105:22109 Clef.RFC0001.TypeCase <> MPair constr
+R22112:22115 Clef.RFC0001.TypeCase <> MVar constr
+R22121:22124 Clef.RFC0001.TypeCase <> MVar constr
+R22096:22100 Clef.RFC0001.TypeCase <> MPrim constr
+R22105:22109 Clef.RFC0001.TypeCase <> MPair constr
+R22112:22115 Clef.RFC0001.TypeCase <> MVar constr
+R22121:22124 Clef.RFC0001.TypeCase <> MVar constr
+R22141:22151 Clef.RFC0001.Laws <> derived_law thm
+R22153:22153 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R22167:22167 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R22154:22164 Clef.RFC0001.Laws <> commutative def
+R22174:22176 Clef.RFC0001.Laws <> lhs proj
+R22179:22186 Clef.RFC0001.Laws <> reversed def
+R22193:22195 Clef.RFC0001.Laws <> rhs proj
+R22198:22205 Clef.RFC0001.Laws <> reversed def
+R22223:22227 Clef.RFC0001.TypeCase <> MPrim constr
+R22232:22236 Clef.RFC0001.TypeCase <> MPair constr
+R22242:22245 Clef.RFC0001.TypeCase <> MVar constr
+R22253:22257 Clef.RFC0001.TypeCase <> MPrim constr
+R22262:22266 Clef.RFC0001.TypeCase <> MPair constr
+R22269:22272 Clef.RFC0001.TypeCase <> MVar constr
+R22285:22291 Corelib.Init.Logic <> eq_refl constr
+R22293:22299 Corelib.Init.Logic <> eq_refl constr
+R22141:22151 Clef.RFC0001.Laws <> derived_law thm
+R22153:22153 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R22167:22167 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R22154:22164 Clef.RFC0001.Laws <> commutative def
+R22174:22176 Clef.RFC0001.Laws <> lhs proj
+R22179:22186 Clef.RFC0001.Laws <> reversed def
+R22193:22195 Clef.RFC0001.Laws <> rhs proj
+R22198:22205 Clef.RFC0001.Laws <> reversed def
+R22223:22227 Clef.RFC0001.TypeCase <> MPrim constr
+R22232:22236 Clef.RFC0001.TypeCase <> MPair constr
+R22242:22245 Clef.RFC0001.TypeCase <> MVar constr
+R22253:22257 Clef.RFC0001.TypeCase <> MPrim constr
+R22262:22266 Clef.RFC0001.TypeCase <> MPair constr
+R22269:22272 Clef.RFC0001.TypeCase <> MVar constr
+R22285:22291 Corelib.Init.Logic <> eq_refl constr
+R22293:22299 Corelib.Init.Logic <> eq_refl constr
+R22312:22318 Clef.RFC0001.Laws <> RwsStep constr
+R22329:22333 Clef.RFC0001.TypeCase <> MPrim constr
+R22338:22342 Clef.RFC0001.TypeCase <> MPair constr
+R22345:22348 Clef.RFC0001.TypeCase <> MVar constr
+R22312:22318 Clef.RFC0001.Laws <> RwsStep constr
+R22329:22333 Clef.RFC0001.TypeCase <> MPrim constr
+R22338:22342 Clef.RFC0001.TypeCase <> MPair constr
+R22345:22348 Clef.RFC0001.TypeCase <> MVar constr
+R22371:22375 Clef.RFC0001.Laws <> RwLaw constr
+R22384:22394 Clef.RFC0001.Laws <> commutative def
+R22399:22399 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22402:22403 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22410:22410 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22404:22407 Clef.RFC0001.TypeCase <> MVar constr
+R22371:22375 Clef.RFC0001.Laws <> RwLaw constr
+R22384:22394 Clef.RFC0001.Laws <> commutative def
+R22399:22399 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22402:22403 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22410:22410 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22404:22407 Clef.RFC0001.TypeCase <> MVar constr
+R22589:22595 Clef.RFC0001.Laws <> RwsStep constr
+R22606:22610 Clef.RFC0001.TypeCase <> MPrim constr
+R22615:22619 Clef.RFC0001.TypeCase <> MPair constr
+R22622:22625 Clef.RFC0001.TypeCase <> MVar constr
+R22646:22652 Clef.RFC0001.Laws <> RwsRefl constr
+R22589:22595 Clef.RFC0001.Laws <> RwsStep constr
+R22606:22610 Clef.RFC0001.TypeCase <> MPrim constr
+R22615:22619 Clef.RFC0001.TypeCase <> MPair constr
+R22622:22625 Clef.RFC0001.TypeCase <> MVar constr
+R22646:22652 Clef.RFC0001.Laws <> RwsRefl constr
+R22666:22671 Clef.RFC0001.Laws <> RwPrim constr
+R22666:22671 Clef.RFC0001.Laws <> RwPrim constr
+R22680:22686 Clef.RFC0001.Laws <> RwPairR constr
+R22680:22686 Clef.RFC0001.Laws <> RwPairR constr
+R22700:22704 Clef.RFC0001.Laws <> RwLaw constr
+R22713:22723 Clef.RFC0001.Laws <> commutative def
+R22728:22728 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22735:22736 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22743:22743 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22729:22732 Clef.RFC0001.TypeCase <> MVar constr
+R22737:22740 Clef.RFC0001.TypeCase <> MVar constr
+R22700:22704 Clef.RFC0001.Laws <> RwLaw constr
+R22713:22723 Clef.RFC0001.Laws <> commutative def
+R22728:22728 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22735:22736 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22743:22743 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R22729:22732 Clef.RFC0001.TypeCase <> MVar constr
+R22737:22740 Clef.RFC0001.TypeCase <> MVar constr
+prf 23310:23327 <> theorem_per_member
+R23334:23337 Corelib.Init.Datatypes <> list ind
+R23339:23341 Clef.RFC0001.Laws <> law rec
+binder 23330:23330 <> P:204
+R23349:23351 Clef.RFC0001.Laws <> law rec
+binder 23345:23345 <> c:205
+R23364:23367 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R23362:23363 Clef.Spec.Types <> ty ind
+binder 23355:23358 <> side:206
+R23379:23382 Clef.RFC0001.Constraints <> cset def
+binder 23375:23375 <> C:207
+R23413:23418 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R23389:23403 Clef.RFC0001.Laws <> library_theorem def
+R23405:23405 Clef.RFC0001.Laws <> P:204 var
+R23407:23407 Clef.RFC0001.Laws <> c:205 var
+R23409:23412 Clef.RFC0001.Laws <> side:206 var
+R23419:23419 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R23447:23453 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 23427:23427 <> t:208
+R23437:23440 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R23430:23432 Clef.RFC0001.Constraints <> sat def
+R23434:23434 Clef.RFC0001.Laws <> t:208 var
+R23436:23436 Clef.RFC0001.Laws <> C:207 var
+R23441:23444 Clef.RFC0001.Laws <> side:206 var
+R23446:23446 Clef.RFC0001.Laws <> t:208 var
+R23454:23454 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R23486:23492 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 23462:23462 <> l:209
+R23471:23474 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R23465:23466 Stdlib.Lists.List <> In def
+R23470:23470 Clef.RFC0001.Laws <> P:204 var
+R23468:23468 Clef.RFC0001.Laws <> l:209 var
+R23475:23481 Clef.RFC0001.Laws <> carries def
+R23483:23483 Clef.RFC0001.Laws <> C:207 var
+R23485:23485 Clef.RFC0001.Laws <> l:209 var
+R23493:23499 Clef.RFC0001.Laws <> carries def
+R23501:23501 Clef.RFC0001.Laws <> C:207 var
+R23503:23503 Clef.RFC0001.Laws <> c:205 var
+prf 23730:23753 <> reversal_at_every_member
+R23760:23763 Clef.RFC0001.Constraints <> cset def
+binder 23756:23756 <> C:210
+R23771:23772 Clef.Spec.Witnesses <> op defax
+binder 23767:23767 <> o:211
+R23779:23779 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R23831:23837 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 23787:23787 <> t:212
+R23797:23800 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R23790:23792 Clef.RFC0001.Constraints <> sat def
+R23794:23794 Clef.RFC0001.Laws <> t:212 var
+R23796:23796 Clef.RFC0001.Laws <> C:210 var
+R23822:23824 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R23801:23807 Clef.Spec.Witnesses <> witness defax
+R23809:23809 Clef.RFC0001.Laws <> o:211 var
+R23812:23816 Clef.Spec.Types <> TPair constr
+R23818:23818 Clef.RFC0001.Laws <> t:212 var
+R23820:23820 Clef.RFC0001.Laws <> t:212 var
+R23825:23828 Corelib.Init.Datatypes <> Some constr
+R23830:23830 Clef.RFC0001.Laws <> t:212 var
+R23863:23866 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R23838:23844 Clef.RFC0001.Laws <> carries def
+R23846:23846 Clef.RFC0001.Laws <> C:210 var
+R23849:23859 Clef.RFC0001.Laws <> commutative def
+R23861:23861 Clef.RFC0001.Laws <> o:211 var
+R23867:23873 Clef.RFC0001.Laws <> carries def
+R23875:23875 Clef.RFC0001.Laws <> C:210 var
+R23878:23885 Clef.RFC0001.Laws <> reversed def
+R23887:23887 Clef.RFC0001.Laws <> o:211 var
+R23923:23940 Clef.RFC0001.Laws <> theorem_per_member thm
+R23942:23942 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R23956:23956 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R23943:23953 Clef.RFC0001.Laws <> commutative def
+R23959:23966 Clef.RFC0001.Laws <> reversed def
+R23976:24002 Clef.RFC0001.Laws <> reversal_from_commutativity thm
+R23923:23940 Clef.RFC0001.Laws <> theorem_per_member thm
+R23942:23942 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R23956:23956 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R23943:23953 Clef.RFC0001.Laws <> commutative def
+R23959:23966 Clef.RFC0001.Laws <> reversed def
+R23976:24002 Clef.RFC0001.Laws <> reversal_from_commutativity thm
+def 24770:24773 <> uses
+R24780:24783 Corelib.Init.Datatypes <> list ind
+R24785:24786 Clef.Spec.Types <> ty ind
+binder 24776:24776 <> G:213
+R24794:24798 Clef.RFC0001.Laws <> lterm ind
+binder 24790:24790 <> p:214
+R24803:24806 Corelib.Init.Datatypes <> list ind
+R24811:24813 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R24809:24810 Clef.Spec.Witnesses <> op defax
+R24814:24815 Clef.Spec.Types <> ty ind
+R24829:24829 Clef.RFC0001.Laws <> p:214 var
+R24840:24843 Clef.RFC0001.Laws <> LVar constr
+R24850:24851 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R24857:24861 Clef.RFC0001.Laws <> LPrim constr
+R24882:24886 Clef.RFC0001.Laws <> ltype def
+R24888:24888 Clef.RFC0001.Laws <> G:213 var
+R24905:24908 Corelib.Init.Datatypes <> Some constr
+R24921:24924 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R24915:24915 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R24917:24918 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R24920:24920 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R24925:24928 Clef.RFC0001.Laws <> uses:215 def
+R24930:24930 Clef.RFC0001.Laws <> G:213 var
+R24942:24945 Corelib.Init.Datatypes <> None constr
+R24950:24953 Clef.RFC0001.Laws <> uses:215 def
+R24955:24955 Clef.RFC0001.Laws <> G:213 var
+R24973:24977 Clef.RFC0001.Laws <> LPair constr
+R24994:24997 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R24986:24989 Clef.RFC0001.Laws <> uses:215 def
+R24991:24991 Clef.RFC0001.Laws <> G:213 var
+R24998:25001 Clef.RFC0001.Laws <> uses:215 def
+R25003:25003 Clef.RFC0001.Laws <> G:213 var
+def 25071:25078 <> law_uses
+R25085:25086 Clef.Spec.Types <> ty ind
+binder 25081:25081 <> t:217
+R25094:25096 Clef.RFC0001.Laws <> law rec
+binder 25090:25090 <> l:218
+R25101:25104 Corelib.Init.Datatypes <> list ind
+R25109:25111 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R25107:25108 Clef.Spec.Witnesses <> op defax
+R25112:25113 Clef.Spec.Types <> ty ind
+R25154:25157 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R25121:25124 Clef.RFC0001.Laws <> uses def
+R25127:25132 Corelib.Lists.ListDef <> repeat def
+R25137:25141 Clef.RFC0001.Laws <> arity proj
+R25143:25143 Clef.RFC0001.Laws <> l:218 var
+R25134:25134 Clef.RFC0001.Laws <> t:217 var
+R25148:25150 Clef.RFC0001.Laws <> lhs proj
+R25152:25152 Clef.RFC0001.Laws <> l:218 var
+R25158:25161 Clef.RFC0001.Laws <> uses def
+R25164:25169 Corelib.Lists.ListDef <> repeat def
+R25174:25178 Clef.RFC0001.Laws <> arity proj
+R25180:25180 Clef.RFC0001.Laws <> l:218 var
+R25171:25171 Clef.RFC0001.Laws <> t:217 var
+R25185:25187 Clef.RFC0001.Laws <> rhs proj
+R25189:25189 Clef.RFC0001.Laws <> l:218 var
+def 25279:25287 <> law_typed
+R25294:25295 Clef.Spec.Types <> ty ind
+binder 25290:25290 <> t:219
+R25303:25305 Clef.RFC0001.Laws <> law rec
+binder 25299:25299 <> l:220
+R25320:25326 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R25328:25329 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 25327:25327 <> r:221
+R25373:25388 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R25364:25366 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R25330:25334 Clef.RFC0001.Laws <> ltype def
+R25337:25342 Corelib.Lists.ListDef <> repeat def
+R25347:25351 Clef.RFC0001.Laws <> arity proj
+R25353:25353 Clef.RFC0001.Laws <> l:220 var
+R25344:25344 Clef.RFC0001.Laws <> t:219 var
+R25358:25360 Clef.RFC0001.Laws <> lhs proj
+R25362:25362 Clef.RFC0001.Laws <> l:220 var
+R25367:25370 Corelib.Init.Datatypes <> Some constr
+R25372:25372 Clef.RFC0001.Laws <> r:221 var
+R25423:25425 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R25389:25393 Clef.RFC0001.Laws <> ltype def
+R25396:25401 Corelib.Lists.ListDef <> repeat def
+R25406:25410 Clef.RFC0001.Laws <> arity proj
+R25412:25412 Clef.RFC0001.Laws <> l:220 var
+R25403:25403 Clef.RFC0001.Laws <> t:219 var
+R25417:25419 Clef.RFC0001.Laws <> rhs proj
+R25421:25421 Clef.RFC0001.Laws <> l:220 var
+R25426:25429 Corelib.Init.Datatypes <> Some constr
+R25431:25431 Clef.RFC0001.Laws <> r:221 var
+def 25550:25559 <> sound_impl
+R25566:25569 Clef.RFC0001.Laws <> impl def
+binder 25562:25562 <> I:222
+R25596:25597 Clef.Spec.Witnesses <> op defax
+binder 25592:25592 <> o:223
+R25607:25608 Clef.Spec.Types <> ty ind
+binder 25601:25601 <> a:224
+binder 25603:25603 <> r:225
+R25616:25618 Clef.Spec.Runtime <> val ind
+binder 25612:25612 <> v:226
+R25646:25649 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R25637:25639 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R25626:25632 Clef.Spec.Witnesses <> witness defax
+R25634:25634 Clef.RFC0001.Laws <> o:223 var
+R25636:25636 Clef.RFC0001.Laws <> a:224 var
+R25640:25643 Corelib.Init.Datatypes <> Some constr
+R25645:25645 Clef.RFC0001.Laws <> r:225 var
+R25660:25667 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R25650:25655 Clef.Spec.Runtime <> has_ty ind
+R25657:25657 Clef.RFC0001.Laws <> v:226 var
+R25659:25659 Clef.RFC0001.Laws <> a:224 var
+R25668:25674 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R25676:25677 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 25675:25675 <> w:227
+R25692:25695 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R25683:25685 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R25678:25678 Clef.RFC0001.Laws <> I:222 var
+R25680:25680 Clef.RFC0001.Laws <> o:223 var
+R25682:25682 Clef.RFC0001.Laws <> v:226 var
+R25686:25689 Corelib.Init.Datatypes <> Some constr
+R25691:25691 Clef.RFC0001.Laws <> w:227 var
+R25696:25701 Clef.Spec.Runtime <> has_ty ind
+R25703:25703 Clef.RFC0001.Laws <> w:227 var
+R25705:25705 Clef.RFC0001.Laws <> r:225 var
+prf 25807:25817 <> apply_sound
+R25821:25830 Clef.RFC0001.Laws <> sound_impl def
+R25832:25836 Clef.Spec.Witnesses <> apply defax
+R25854:25866 Clef.Spec.Witnesses <> witness_sound prfax
+R25854:25866 Clef.Spec.Witnesses <> witness_sound prfax
+prf 25964:25968 <> lsafe
+R25975:25978 Clef.RFC0001.Laws <> impl def
+binder 25971:25971 <> I:228
+R25997:26002 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R25985:25994 Clef.RFC0001.Laws <> sound_impl def
+R25996:25996 Clef.RFC0001.Laws <> I:228 var
+R26015:26018 Corelib.Init.Datatypes <> list ind
+R26020:26021 Clef.Spec.Types <> ty ind
+binder 26011:26011 <> G:229
+R26030:26033 Corelib.Init.Datatypes <> list ind
+R26035:26037 Clef.Spec.Runtime <> val ind
+binder 26025:26026 <> vs:230
+R26060:26065 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R26041:26047 Stdlib.Lists.List <> Forall2 ind
+R26059:26059 Clef.RFC0001.Laws <> G:229 var
+R26056:26057 Clef.RFC0001.Laws <> vs:230 var
+R26049:26054 Clef.Spec.Runtime <> has_ty ind
+R26078:26082 Clef.RFC0001.Laws <> lterm ind
+binder 26074:26074 <> p:231
+R26090:26091 Clef.Spec.Types <> ty ind
+binder 26086:26086 <> r:232
+R26113:26118 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R26104:26106 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R26095:26099 Clef.RFC0001.Laws <> ltype def
+R26101:26101 Clef.RFC0001.Laws <> G:229 var
+R26103:26103 Clef.RFC0001.Laws <> p:231 var
+R26107:26110 Corelib.Init.Datatypes <> Some constr
+R26112:26112 Clef.RFC0001.Laws <> r:232 var
+R26119:26125 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R26127:26128 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 26126:26126 <> v:233
+R26151:26154 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R26142:26144 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R26129:26134 Clef.RFC0001.Laws <> levalI def
+R26136:26136 Clef.RFC0001.Laws <> I:228 var
+R26138:26139 Clef.RFC0001.Laws <> vs:230 var
+R26141:26141 Clef.RFC0001.Laws <> p:231 var
+R26145:26148 Corelib.Init.Datatypes <> Some constr
+R26150:26150 Clef.RFC0001.Laws <> v:233 var
+R26155:26160 Clef.Spec.Runtime <> has_ty ind
+R26162:26162 Clef.RFC0001.Laws <> v:233 var
+R26164:26164 Clef.RFC0001.Laws <> r:232 var
+R26275:26286 Clef.RFC0001.TypeCase <> lookup_typed thm
+R26275:26286 Clef.RFC0001.TypeCase <> lookup_typed thm
+R26318:26322 Clef.RFC0001.Laws <> ltype def
+R26318:26322 Clef.RFC0001.Laws <> ltype def
+R26500:26504 Clef.RFC0001.Laws <> ltype def
+R26500:26504 Clef.RFC0001.Laws <> ltype def
+R26560:26564 Clef.RFC0001.Laws <> ltype def
+R26560:26564 Clef.RFC0001.Laws <> ltype def
+R26812:26816 Clef.Spec.Runtime <> VPair constr
+R26812:26816 Clef.Spec.Runtime <> VPair constr
+prf 26975:26985 <> leval_agree
+R26994:26997 Clef.RFC0001.Laws <> impl def
+binder 26988:26988 <> I:234
+binder 26990:26990 <> J:235
+R27016:27021 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R27004:27013 Clef.RFC0001.Laws <> sound_impl def
+R27015:27015 Clef.RFC0001.Laws <> I:234 var
+R27034:27037 Corelib.Init.Datatypes <> list ind
+R27039:27040 Clef.Spec.Types <> ty ind
+binder 27030:27030 <> G:236
+R27049:27052 Corelib.Init.Datatypes <> list ind
+R27054:27056 Clef.Spec.Runtime <> val ind
+binder 27044:27045 <> vs:237
+R27079:27084 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R27060:27066 Stdlib.Lists.List <> Forall2 ind
+R27078:27078 Clef.RFC0001.Laws <> G:236 var
+R27075:27076 Clef.RFC0001.Laws <> vs:237 var
+R27068:27073 Clef.Spec.Runtime <> has_ty ind
+R27097:27101 Clef.RFC0001.Laws <> lterm ind
+binder 27093:27093 <> p:238
+R27109:27110 Clef.Spec.Types <> ty ind
+binder 27105:27105 <> r:239
+R27132:27137 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R27123:27125 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R27114:27118 Clef.RFC0001.Laws <> ltype def
+R27120:27120 Clef.RFC0001.Laws <> G:236 var
+R27122:27122 Clef.RFC0001.Laws <> p:238 var
+R27126:27129 Corelib.Init.Datatypes <> Some constr
+R27131:27131 Clef.RFC0001.Laws <> r:239 var
+R27138:27138 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R27212:27218 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 27146:27146 <> o:240
+binder 27148:27148 <> a:241
+R27171:27174 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R27151:27152 Stdlib.Lists.List <> In def
+R27162:27165 Clef.RFC0001.Laws <> uses def
+R27167:27167 Clef.RFC0001.Laws <> G:236 var
+R27169:27169 Clef.RFC0001.Laws <> p:238 var
+R27154:27154 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27156:27157 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27159:27159 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27155:27155 Clef.RFC0001.Laws <> o:240 var
+R27158:27158 Clef.RFC0001.Laws <> a:241 var
+binder 27182:27182 <> v:242
+R27195:27198 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R27185:27190 Clef.Spec.Runtime <> has_ty ind
+R27192:27192 Clef.RFC0001.Laws <> v:242 var
+R27194:27194 Clef.RFC0001.Laws <> a:241 var
+R27204:27206 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R27199:27199 Clef.RFC0001.Laws <> I:234 var
+R27201:27201 Clef.RFC0001.Laws <> o:240 var
+R27203:27203 Clef.RFC0001.Laws <> v:242 var
+R27207:27207 Clef.RFC0001.Laws <> J:235 var
+R27209:27209 Clef.RFC0001.Laws <> o:240 var
+R27211:27211 Clef.RFC0001.Laws <> v:242 var
+R27232:27234 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R27219:27224 Clef.RFC0001.Laws <> levalI def
+R27226:27226 Clef.RFC0001.Laws <> I:234 var
+R27228:27229 Clef.RFC0001.Laws <> vs:237 var
+R27231:27231 Clef.RFC0001.Laws <> p:238 var
+R27235:27240 Clef.RFC0001.Laws <> levalI def
+R27242:27242 Clef.RFC0001.Laws <> J:235 var
+R27244:27245 Clef.RFC0001.Laws <> vs:237 var
+R27247:27247 Clef.RFC0001.Laws <> p:238 var
+R27381:27385 Clef.RFC0001.Laws <> ltype def
+R27381:27385 Clef.RFC0001.Laws <> ltype def
+R27462:27464 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R27444:27447 Clef.RFC0001.Laws <> uses def
+R27452:27456 Clef.RFC0001.Laws <> LPrim constr
+R27471:27474 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R27465:27465 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27467:27468 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27470:27470 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27475:27478 Clef.RFC0001.Laws <> uses def
+R27462:27464 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R27444:27447 Clef.RFC0001.Laws <> uses def
+R27452:27456 Clef.RFC0001.Laws <> LPrim constr
+R27471:27474 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R27465:27465 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27467:27468 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27470:27470 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27475:27478 Clef.RFC0001.Laws <> uses def
+R27573:27575 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R27560:27565 Clef.RFC0001.Laws <> levalI def
+R27576:27581 Clef.RFC0001.Laws <> levalI def
+R27573:27575 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R27560:27565 Clef.RFC0001.Laws <> levalI def
+R27576:27581 Clef.RFC0001.Laws <> levalI def
+R27716:27720 Clef.RFC0001.Laws <> lsafe thm
+R27716:27720 Clef.RFC0001.Laws <> lsafe thm
+R27864:27868 Clef.RFC0001.Laws <> ltype def
+R27864:27868 Clef.RFC0001.Laws <> ltype def
+R27924:27928 Clef.RFC0001.Laws <> ltype def
+R27924:27928 Clef.RFC0001.Laws <> ltype def
+R28000:28002 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R27987:27992 Clef.RFC0001.Laws <> levalI def
+R28003:28008 Clef.RFC0001.Laws <> levalI def
+R28000:28002 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R27987:27992 Clef.RFC0001.Laws <> levalI def
+R28003:28008 Clef.RFC0001.Laws <> levalI def
+R28123:28131 Stdlib.Lists.List <> in_or_app thm
+R28123:28131 Stdlib.Lists.List <> in_or_app thm
+R28183:28185 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R28170:28175 Clef.RFC0001.Laws <> levalI def
+R28186:28191 Clef.RFC0001.Laws <> levalI def
+R28183:28185 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R28170:28175 Clef.RFC0001.Laws <> levalI def
+R28186:28191 Clef.RFC0001.Laws <> levalI def
+R28306:28314 Stdlib.Lists.List <> in_or_app thm
+R28306:28314 Stdlib.Lists.List <> in_or_app thm
+prf 29103:29136 <> evidence_survives_unrelated_change
+R29145:29148 Clef.RFC0001.Laws <> impl def
+binder 29139:29139 <> I:243
+binder 29141:29141 <> J:244
+R29156:29157 Clef.Spec.Types <> ty ind
+binder 29152:29152 <> t:245
+R29165:29167 Clef.RFC0001.Laws <> law rec
+binder 29161:29161 <> l:246
+R29186:29189 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R29174:29183 Clef.RFC0001.Laws <> sound_impl def
+R29185:29185 Clef.RFC0001.Laws <> I:243 var
+R29203:29208 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R29190:29198 Clef.RFC0001.Laws <> law_typed def
+R29200:29200 Clef.RFC0001.Laws <> t:245 var
+R29202:29202 Clef.RFC0001.Laws <> l:246 var
+R29209:29209 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R29287:29293 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 29217:29217 <> o:247
+binder 29219:29219 <> a:248
+R29246:29249 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R29222:29223 Stdlib.Lists.List <> In def
+R29233:29240 Clef.RFC0001.Laws <> law_uses def
+R29242:29242 Clef.RFC0001.Laws <> t:245 var
+R29244:29244 Clef.RFC0001.Laws <> l:246 var
+R29225:29225 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R29227:29228 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R29230:29230 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R29226:29226 Clef.RFC0001.Laws <> o:247 var
+R29229:29229 Clef.RFC0001.Laws <> a:248 var
+binder 29257:29257 <> v:249
+R29270:29273 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R29260:29265 Clef.Spec.Runtime <> has_ty ind
+R29267:29267 Clef.RFC0001.Laws <> v:249 var
+R29269:29269 Clef.RFC0001.Laws <> a:248 var
+R29279:29281 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R29274:29274 Clef.RFC0001.Laws <> I:243 var
+R29276:29276 Clef.RFC0001.Laws <> o:247 var
+R29278:29278 Clef.RFC0001.Laws <> v:249 var
+R29282:29282 Clef.RFC0001.Laws <> J:244 var
+R29284:29284 Clef.RFC0001.Laws <> o:247 var
+R29286:29286 Clef.RFC0001.Laws <> v:249 var
+R29306:29309 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R29294:29299 Clef.RFC0001.Laws <> holdsI def
+R29301:29301 Clef.RFC0001.Laws <> I:243 var
+R29303:29303 Clef.RFC0001.Laws <> t:245 var
+R29305:29305 Clef.RFC0001.Laws <> l:246 var
+R29310:29315 Clef.RFC0001.Laws <> holdsI def
+R29317:29317 Clef.RFC0001.Laws <> J:244 var
+R29319:29319 Clef.RFC0001.Laws <> t:245 var
+R29321:29321 Clef.RFC0001.Laws <> l:246 var
+R29375:29382 Clef.RFC0001.Laws <> law_uses def
+R29405:29415 Clef.RFC0001.Laws <> leval_agree thm
+R29434:29436 Clef.RFC0001.Laws <> lhs proj
+binder 29467:29467 <> o:250
+binder 29469:29469 <> a:251
+binder 29471:29473 <> Hin:252
+R29481:29481 Clef.RFC0001.Laws <> o:250 var
+R29483:29483 Clef.RFC0001.Laws <> a:251 var
+R29486:29494 Stdlib.Lists.List <> in_or_app thm
+R29503:29511 Corelib.Init.Logic <> or_introl constr
+R29513:29515 Clef.RFC0001.Laws <> Hin:252 var
+R29405:29415 Clef.RFC0001.Laws <> leval_agree thm
+R29434:29436 Clef.RFC0001.Laws <> lhs proj
+binder 29467:29467 <> o:253
+binder 29469:29469 <> a:254
+binder 29471:29473 <> Hin:255
+R29481:29481 Clef.RFC0001.Laws <> o:253 var
+R29483:29483 Clef.RFC0001.Laws <> a:254 var
+R29486:29494 Stdlib.Lists.List <> in_or_app thm
+R29503:29511 Corelib.Init.Logic <> or_introl constr
+R29513:29515 Clef.RFC0001.Laws <> Hin:255 var
+R29405:29415 Clef.RFC0001.Laws <> leval_agree thm
+R29434:29436 Clef.RFC0001.Laws <> lhs proj
+binder 29467:29467 <> o:256
+binder 29469:29469 <> a:257
+binder 29471:29473 <> Hin:258
+R29481:29481 Clef.RFC0001.Laws <> o:256 var
+R29483:29483 Clef.RFC0001.Laws <> a:257 var
+R29486:29494 Stdlib.Lists.List <> in_or_app thm
+R29503:29511 Corelib.Init.Logic <> or_introl constr
+R29513:29515 Clef.RFC0001.Laws <> Hin:258 var
+R29536:29546 Clef.RFC0001.Laws <> leval_agree thm
+R29565:29567 Clef.RFC0001.Laws <> rhs proj
+binder 29598:29598 <> o:259
+binder 29600:29600 <> a:260
+binder 29602:29604 <> Hin:261
+R29612:29612 Clef.RFC0001.Laws <> o:259 var
+R29614:29614 Clef.RFC0001.Laws <> a:260 var
+R29617:29625 Stdlib.Lists.List <> in_or_app thm
+R29634:29642 Corelib.Init.Logic <> or_intror constr
+R29644:29646 Clef.RFC0001.Laws <> Hin:261 var
+R29536:29546 Clef.RFC0001.Laws <> leval_agree thm
+R29565:29567 Clef.RFC0001.Laws <> rhs proj
+binder 29598:29598 <> o:262
+binder 29600:29600 <> a:263
+binder 29602:29604 <> Hin:264
+R29612:29612 Clef.RFC0001.Laws <> o:262 var
+R29614:29614 Clef.RFC0001.Laws <> a:263 var
+R29617:29625 Stdlib.Lists.List <> in_or_app thm
+R29634:29642 Corelib.Init.Logic <> or_intror constr
+R29644:29646 Clef.RFC0001.Laws <> Hin:264 var
+R29536:29546 Clef.RFC0001.Laws <> leval_agree thm
+R29565:29567 Clef.RFC0001.Laws <> rhs proj
+binder 29598:29598 <> o:265
+binder 29600:29600 <> a:266
+binder 29602:29604 <> Hin:267
+R29612:29612 Clef.RFC0001.Laws <> o:265 var
+R29614:29614 Clef.RFC0001.Laws <> a:266 var
+R29617:29625 Stdlib.Lists.List <> in_or_app thm
+R29634:29642 Corelib.Init.Logic <> or_intror constr
+R29644:29646 Clef.RFC0001.Laws <> Hin:267 var

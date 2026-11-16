@@ -119,7 +119,8 @@ Qed.
 **Measures form an abelian group under this equality.**
 
 The product is associative and commutative, `1` is its identity, and every measure cancels against
-its reciprocal. These are the laws the specification's measure arithmetic relies on, and they hold
+its reciprocal. These are the laws the specification's
+[measure arithmetic](https://clef-lang.com/spec/draft/units-of-measure/#relations-of-measures) relies on, and they hold
 for the representation used here.
 *)
 Theorem measure_group_laws (a b c : measure) :

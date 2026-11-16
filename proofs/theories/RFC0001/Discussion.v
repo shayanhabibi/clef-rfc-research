@@ -22,6 +22,14 @@ specialized terms. It has no functions as values and no inference.
 | A typed specialization evaluates to a value of its type | Proved from an assumption: `specialization_is_safe` |
 | A definition that checks runs at every member | Proved from an assumption: `checked_definition_runs` |
 | A body with no type-case cannot observe its instantiation | Proved: `case_free_parametric` |
+| Extension: the obligations of a set and a list of laws are a finite list | Proved: `obligations_exact` |
+| Extension: evidence for a law moves to narrower sets and to intersections | Proved: `law_narrowing`, `meet_carries`, `carries_member` |
+| Extension: rewriting a specialization by a law the member satisfies keeps its result | Proved from an assumption: `rewrite_sound`, `law_iff_rewrite` |
+| Extension: a checked definition rewritten by the laws its set carries keeps its meaning | Proved from an assumption: `rewritten_definition_keeps_meaning` |
+| Extension: a law derived by rewriting holds wherever its premises do | Proved from an assumption: `derived_law`, `reversal_from_commutativity`, `theorem_per_member` |
+| Extension: evidence for a law depends only on the witnesses the law uses | Proved: `evidence_survives_unrelated_change` |
+| Extension: a law holds or fails at a particular type, such as `int` or `float` | Not modelled. Operations are assumptions of the model |
+| Extension: a rewritten specialization still has its declared type | Not proved |
 | Inference with closed-set constraints keeps principal types | Not proved. `meet_greatest` is the lemma it would need |
 | The local type equation of an arm is sound with inference | Not proved. No inference is modelled |
 | An unconstrained variable stays parametric | Not proved. The rule is stated in prose |
@@ -71,7 +79,8 @@ reading of the spec and is not a quotation from it.
 
 ## Relation to the verification tiers
 
-The specification organises checking into tiers.
+The specification organises checking into
+[tiers](https://clef-lang.com/spec/draft/terms-and-definitions/#verification).
 
 | Tier | Covers | Evidence |
 |---|---|---|
@@ -82,7 +91,8 @@ The specification organises checking into tiers.
 
 The design documents describe checking as facts attached to the compilation stages (source, the
 program graph, the MLIR levels, the native binary) that must agree along every step.
-`ntu-dimensional-architecture.md` §7.2 adds that every Tier 1 check is an equality and that no
+[NTU Dimensional Architecture §7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity)
+adds that every Tier 1 check is an equality and that no
 ordering is needed.
 
 The research note
@@ -99,6 +109,8 @@ are a reading of the specification and the design documents, and none is a theor
 | Coverage (`coverage_total`) | 1 | A finite cover check |
 | Specialisation (`specialization_preserves_meaning`) | 1, one step | The commuting condition for the saturation step. After it the constraint is discharged and nothing reaches MLIR |
 | Untagged unions (`untagged_union_discriminable_falsified`) | The last stage | The native stage holds no type fact, so a type test cannot be decided there |
+| Extension: a law at a member (`carries`, `rewrite_sound`) | 2 | One obligation per member, about what an operation computes. An analysis or a solver discharges it |
+| Extension: a library theorem at a member (`theorem_per_member`) | 3 | A theorem proved once, instantiated at a member with its premises discharged |
 
 Three points follow.
 
@@ -113,18 +125,21 @@ Three points follow.
   the source and graph stages and is absent at the native stage. A type test must be decided where
   the fact is still present, which is what the static type-case does: it is reduced at saturation.
 
-The one conflict with the letter of §7.2 is that entailment is an order. It is mild: §7.2 speaks of
+The one conflict with the letter of [§7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity) is that
+entailment is an order. It is mild: §7.2 speaks of
 the components of a type, and a member set is a constraint on a variable, not a component of a
 type.
 
 ## Possible extensions
 
 These are not part of the RFC. They are recorded because the tier placement points at them, and
-the research note gives each in more detail. None is modelled.
+the research note gives each in more detail. Items 4 and 5 are modelled in
+[Laws](Clef.RFC0001.Laws.html). The others are not modelled.
 
 1. **Member sets over other sorts (Tier 1).** [Constraints](Clef.RFC0001.Constraints.html) uses one
    fact about types: equality is decidable. The same theory would hold over measures, memory
-   spaces, access kinds and regions. §7.2 forbids subtyping on those components, and a closed-set
+   spaces, access kinds and regions.
+   [§7.2](https://clef-lang.com/spec/draft/ntu-dimensional-architecture/#72-dimensional-type-identity) forbids subtyping on those components, and a closed-set
    constraint gives bounded polymorphism over them without it, as in
    `'a : (ReadOnly | ReadWrite)`.
 2. **Member sets as fibres of a map (Tier 1).** A dimension in
@@ -136,13 +151,41 @@ the research note gives each in more detail. None is modelled.
    unresolved questions 2 and 5.
 4. **Laws per member (Tier 2).** A member set could carry declared laws, each checked once per
    member. Integer addition passes associativity and floating-point addition fails it, which is
-   the reassociation hazard the specification already names. A body may then rewrite by the laws
-   its set carries.
+   the reassociation hazard
+   [Numeric Selection §10.5.1](https://clef-lang.com/spec/draft/numeric-selection/#1051-obligations-by-arithmetic-family)
+   names. A body may then rewrite by the laws its set carries. [Laws](Clef.RFC0001.Laws.html)
+   models this. A rewrite by a law is sound exactly when the law holds at the member
+   (`law_iff_rewrite`), and a checked definition rewritten by the laws its set carries keeps its
+   meaning at every member (`rewritten_definition_keeps_meaning`).
 5. **Theorems per member (Tier 3).** A library theorem stated over `'T : C` is instantiated once
    per member with its premises discharged. This is available only because the set is closed: an
    open member constraint has instances the compiler cannot enumerate. `derived_satisfaction` is
    this pattern for typing, and `call_through_entailment` is the rule that moves the evidence to a
-   narrower set.
+   narrower set. [Laws](Clef.RFC0001.Laws.html) models a library theorem as a derivation of one
+   law from others (`derived_law`, `theorem_per_member`), with `law_narrowing` as the rule that
+   moves evidence to a narrower set.
+
+**What the model of items 4 and 5 settles, and what it leaves.**
+
+| Question | Answer |
+|---|---|
+| How many obligations a set has | One per member and law: `obligations_exact`, `obligations_count` |
+| What a member added to a set costs | Its own obligations, and no evidence is lost: `carries_member` |
+| What removing a member, or unifying two sets, costs | Nothing: `law_narrowing`, `meet_carries` |
+| What a law permits | Rewriting a specialization at a member where it holds, with arguments of the member's type: `rewrite_sound` |
+| Whether the law is needed | Yes. Where it fails, some rewrite by it changes a result: `law_iff_rewrite` |
+| How a library theorem is proved once | As a sequence of rewrite steps: `derived_law`, with `reversal_from_commutativity` as the example |
+| What must be discharged again when an operation's implementation changes | Only laws that use that operation at that argument type: `evidence_survives_unrelated_change` |
+
+The last row is the invalidation rule of
+[Conformance §6.1](https://clef-lang.com/spec/draft/conformance/#61-verification-evidence-and-composition),
+item 6, for this kind of evidence.
+
+Three things are left. The model does not decide a law: operations are assumptions of the model,
+so "integer addition is associative and floating-point addition is not" is the motivating example
+and is not a theorem here. It gives no syntax for declaring a law on a member set. And it proves
+a rewritten specialization returns the same value, but does not prove the rewritten term is still
+typed by the checker, which needs each law to have one type on both sides.
 6. **Equivalent arms (Tier 4).** A type-case whose arms are proved to compute the same result
    behaves like one function. That would recover, up to the equivalence, the uniformity
    `case_free_parametric` proves for bodies with no type-case, and it answers the first drawback
@@ -162,12 +205,12 @@ so no conforming program changes meaning.
 
 | Chapter | Change |
 |---|---|
-| Types and Type Constraints | New grammar alternative, a new subsection on closed-set constraints, and a replacement for the example that uses `obj` |
-| Inference and Constraint Solving | A new subsection on solving closed-set constraints, with derived satisfaction added to the member, equality and comparison rules |
-| Patterns | Static type-case rules added to dynamic type-test patterns |
-| Namespace and Module Signatures | A conformance rule for member sets |
-| Error Handling | New diagnostics: ill-formed member set, empty intersection, operation not shared by all members, test against a non-member, type test on an unconstrained variable |
-| Program Semantic Graph | Saturation reduces static type-cases per specialization |
+| [Types and Type Constraints](https://clef-lang.com/spec/draft/types-and-type-constraints/) | New grammar alternative, a new subsection on closed-set constraints, and a replacement for the example that uses `obj` |
+| [Inference and Constraint Solving](https://clef-lang.com/spec/draft/inference-constraint-solving/) | A new subsection on solving closed-set constraints, with derived satisfaction added to the member, equality and comparison rules |
+| [Patterns](https://clef-lang.com/spec/draft/patterns/) | Static type-case rules added to dynamic type-test patterns |
+| [Namespace and Module Signatures](https://clef-lang.com/spec/draft/namespace-and-module-signatures/) | A conformance rule for member sets |
+| [Error Handling](https://clef-lang.com/spec/draft/error-handling/) | New diagnostics: ill-formed member set, empty intersection, operation not shared by all members, test against a non-member, type test on an unconstrained variable |
+| [Program Semantic Graph](https://clef-lang.com/spec/draft/program-semantic-graph/) | Saturation reduces static type-cases per specialization |
 
 No representation chapter changes.
 
