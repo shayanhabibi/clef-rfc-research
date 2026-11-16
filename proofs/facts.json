@@ -2,9 +2,9 @@
   "rocqVersion": "9.1.0",
   "digests": {
     "theories/RFC0001/Constraints.v": "bb993d3d23e9c717054ab0ba27203ed4",
-    "theories/RFC0001/Discussion.v": "7ef9b9a807136461f36a85d617c91fc3",
-    "theories/RFC0001/Laws.v": "017889f134571d5b574aa4c0a80a9dea",
-    "theories/RFC0001/Overview.v": "701de8485a20b73c5264016bc95877f0",
+    "theories/RFC0001/Discussion.v": "02eabd4a66874f5b5b902bb532203956",
+    "theories/RFC0001/Laws.v": "927c90670916a1f03502f15415db710b",
+    "theories/RFC0001/Overview.v": "6668288c5fbfa297f4e89fdfa5e8fa54",
     "theories/RFC0001/Representation.v": "b8c7101f4c4bfaaff499261a9a8f8d8b",
     "theories/RFC0001/TypeCase.v": "ac18369418ee5ad858fbd48d0e561307",
     "theories/RFC0002/Bodies.v": "86cd0c9cabb147e13924a65659d9e4f8",
@@ -437,6 +437,18 @@
       "type": "Types.ty -> Laws.law -> Prop",
       "binders": {}
     },
+    "Clef.RFC0001.Laws.law_typed_neutral": {
+      "type": "forall (t : Types.ty) (l : Laws.law),\nLaws.law_typed t l -> Laws.type_neutral t l",
+      "binders": {
+        "l": "Laws.law",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
     "Clef.RFC0001.Laws.law_uses": {
       "type": "Types.ty -> Laws.law -> list (Witnesses.op * Types.ty)",
       "binders": {}
@@ -491,6 +503,19 @@
         "s": "list TypeCase.mtm"
       },
       "assumptions": [
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.Laws.linst_type": {
+      "type": "forall (G : list Types.ty) (t : Types.ty) (s : list TypeCase.mtm),\nListDef.Forall (fun a : TypeCase.mtm => TypeCase.mtype G a = Some t) s ->\nforall (p : Laws.lterm) (m : TypeCase.mtm),\nLaws.linst s p = Some m ->\nTypeCase.mtype G m = Laws.ltype (ListDef.repeat t (length s)) p",
+      "binders": {
+        "G": "list Types.ty",
+        "s": "list TypeCase.mtm",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon",
         "Witnesses.op"
       ]
     },
@@ -585,6 +610,17 @@
         "Witnesses.apply"
       ]
     },
+    "Clef.RFC0001.Laws.option_ty_eq_dec": {
+      "type": "forall a b : option Types.ty, {a = b} + {a <> b}",
+      "binders": {
+        "a": "option Types.ty",
+        "b": "option Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
     "Clef.RFC0001.Laws.repeat_nth": {
       "type": "forall (t : Types.ty) (k n : nat),\nn < k -> List.nth_error (ListDef.repeat t k) n = Some t",
       "binders": {
@@ -629,6 +665,18 @@
       "type": "Witnesses.op -> Laws.law",
       "binders": {}
     },
+    "Clef.RFC0001.Laws.rewrite_preserves_type": {
+      "type": "forall (L : list Laws.law) (t : Types.ty),\n(forall l : Laws.law, List.In l L -> Laws.type_neutral t l) ->\nforall (G : list Types.ty) (m m' : TypeCase.mtm),\nLaws.rw L t G m m' -> TypeCase.mtype G m = TypeCase.mtype G m'",
+      "binders": {
+        "L": "list Laws.law",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
     "Clef.RFC0001.Laws.rewrite_sound": {
       "type": "forall (L : list Laws.law) (t : Types.ty),\n(forall l : Laws.law, List.In l L -> Laws.holds_at t l) ->\nforall (G : list Types.ty) (m m' : TypeCase.mtm),\nLaws.rw L t G m m' ->\nforall env : list Runtime.val,\nList.Forall2 Runtime.has_ty env G ->\nTypeCase.eval env m = TypeCase.eval env m'",
       "binders": {
@@ -642,6 +690,18 @@
         "Witnesses.op",
         "Runtime.atom",
         "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.rewrites_preserve_type": {
+      "type": "forall (L : list Laws.law) (t : Types.ty),\n(forall l : Laws.law, List.In l L -> Laws.type_neutral t l) ->\nforall (G : list Types.ty) (m m' : TypeCase.mtm),\nLaws.rws L t G m m' -> TypeCase.mtype G m = TypeCase.mtype G m'",
+      "binders": {
+        "L": "list Laws.law",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op"
       ]
     },
     "Clef.RFC0001.Laws.rewrites_sound": {
@@ -661,6 +721,41 @@
     },
     "Clef.RFC0001.Laws.rewritten_definition_keeps_meaning": {
       "type": "forall (C : Constraints.cset) (L : list Laws.law) \n  (G : list Types.oty) (e : TypeCase.tm) (r : Types.oty),\nTypeCase.check C G e r = true ->\n(forall l : Laws.law, List.In l L -> Laws.carries C l) ->\nforall t : Types.ty,\nConstraints.sat t C ->\nforall m m' : TypeCase.mtm,\nTypeCase.spec t e = Some m ->\nLaws.rws L t (ListDef.map (Types.inst t) G) m m' ->\nforall env : list Runtime.val,\nList.Forall2 Runtime.has_ty env (ListDef.map (Types.inst t) G) ->\nexists v : Runtime.val,\n  TypeCase.eval env m' = Some v /\\\n  TypeCase.seval t env e = Some v /\\ Runtime.has_ty v (Types.inst t r)",
+      "binders": {
+        "C": "Constraints.cset",
+        "G": "list Types.oty",
+        "L": "list Laws.law",
+        "e": "TypeCase.tm",
+        "r": "Types.oty"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.rewritten_definition_keeps_type": {
+      "type": "forall (C : Constraints.cset) (L : list Laws.law) \n  (G : list Types.oty) (e : TypeCase.tm) (r : Types.oty),\nTypeCase.check C G e r = true ->\n(forall (l : Laws.law) (t : Types.ty),\n List.In l L -> Constraints.sat t C -> Laws.type_neutral t l) ->\nforall t : Types.ty,\nConstraints.sat t C ->\nforall m m' : TypeCase.mtm,\nTypeCase.spec t e = Some m ->\nLaws.rws L t (ListDef.map (Types.inst t) G) m m' ->\nTypeCase.mtype (ListDef.map (Types.inst t) G) m' =\nSome (Types.inst t r)",
+      "binders": {
+        "C": "Constraints.cset",
+        "G": "list Types.oty",
+        "L": "list Laws.law",
+        "e": "TypeCase.tm",
+        "r": "Types.oty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.Laws.rewritten_specialization_is_safe": {
+      "type": "forall (C : Constraints.cset) (L : list Laws.law) \n  (G : list Types.oty) (e : TypeCase.tm) (r : Types.oty),\nTypeCase.check C G e r = true ->\n(forall (l : Laws.law) (t : Types.ty),\n List.In l L -> Constraints.sat t C -> Laws.type_neutral t l) ->\nforall t : Types.ty,\nConstraints.sat t C ->\nforall m m' : TypeCase.mtm,\nTypeCase.spec t e = Some m ->\nLaws.rws L t (ListDef.map (Types.inst t) G) m m' ->\nforall env : list Runtime.val,\nList.Forall2 Runtime.has_ty env (ListDef.map (Types.inst t) G) ->\nexists v : Runtime.val,\n  TypeCase.eval env m' = Some v /\\ Runtime.has_ty v (Types.inst t r)",
       "binders": {
         "C": "Constraints.cset",
         "G": "list Types.oty",
@@ -741,6 +836,35 @@
         "Witnesses.op",
         "Runtime.atom",
         "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0001.Laws.type_neutral": {
+      "type": "Types.ty -> Laws.law -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0001.Laws.type_neutral_dec": {
+      "type": "forall (t : Types.ty) (l : Laws.law),\n{Laws.type_neutral t l} + {~ Laws.type_neutral t l}",
+      "binders": {
+        "l": "Laws.law",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0001.Laws.type_neutral_iff_preserving": {
+      "type": "forall (t : Types.ty) (l : Laws.law),\nLaws.lscoped (Laws.arity l) (Laws.lhs l) = true ->\nLaws.lscoped (Laws.arity l) (Laws.rhs l) = true ->\nLaws.type_neutral t l <->\n(forall (G : list Types.ty) (m m' : TypeCase.mtm),\n Laws.rw (l :: nil) t G m m' ->\n TypeCase.mtype G m = TypeCase.mtype G m')",
+      "binders": {
+        "l": "Laws.law",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op"
       ]
     },
     "Clef.RFC0001.Laws.uses": {

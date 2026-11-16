@@ -37,6 +37,10 @@ The model cannot decide whether a law holds. An operation is an assumption of th
 member. That is the position of a compiler: a law is an obligation, discharged per member by an
 analysis or a solver, which is Tier 2 work. The theorems here say what a discharged obligation
 permits and when it must be discharged again.
+
+A rewritten specialization must also still be typed. That is a second condition on a law, that
+its two sides have the same type at the member. It is separate from the law holding, and it is
+decided by computation. `rewritten_definition_keeps_type` is type preservation under it.
 *)
 
 (**md ## Laws
@@ -487,6 +491,191 @@ Proof.
   rewrite <- (specialization_preserves_meaning e t m Hs env). exact Hv.
 Qed.
 
+(**md ## Rewriting keeps the type
+
+`rewrite_sound` says a rewritten specialization returns the same value. This section says the
+checker still accepts it, at the same type. The two are separate obligations. A law that holds at
+a member need not be typed there: an operation is an assumption of the model, so two sides of
+different types can be equal on every value. What typing needs is a condition on the law's two
+sides alone, and it is decided by computing two types.
+*)
+
+(** A law is typed at a member when its two sides have one type there. *)
+Definition law_typed (t : ty) (l : law) : Prop :=
+  exists r, ltype (repeat t (arity l)) (lhs l) = Some r /\
+            ltype (repeat t (arity l)) (rhs l) = Some r.
+
+(** A law is type-neutral at a member when the checker gives its two sides the same answer there:
+    the same type, or no type for either. *)
+Definition type_neutral (t : ty) (l : law) : Prop :=
+  ltype (repeat t (arity l)) (lhs l) = ltype (repeat t (arity l)) (rhs l).
+
+(** A law typed at a member is type-neutral there. *)
+Lemma law_typed_neutral (t : ty) (l : law) : law_typed t l -> type_neutral t l.
+Proof.
+  intros [r [Hl Hr]]. unfold type_neutral. rewrite Hl, Hr. reflexivity.
+Qed.
+
+Lemma option_ty_eq_dec (a b : option ty) : {a = b} + {a <> b}.
+Proof.
+  decide equality. apply ty_eq_dec.
+Qed.
+
+(** Whether a law is type-neutral at a member is decided by computing the types of its sides. No
+    value is examined, so this is a structural check and not a solver query. *)
+Lemma type_neutral_dec (t : ty) (l : law) : {type_neutral t l} + {~ type_neutral t l}.
+Proof.
+  apply option_ty_eq_dec.
+Qed.
+
+(** An instance of a side has the side's type, where every argument has the member's type. *)
+Lemma linst_type (G : list ty) (t : ty) (s : list mtm) :
+  Forall (fun a => mtype G a = Some t) s ->
+  forall (p : lterm) (m : mtm), linst s p = Some m ->
+  mtype G m = ltype (repeat t (length s)) p.
+Proof.
+  intros Hs p. rewrite Forall_forall in Hs.
+  induction p as [n | o a IH | a IHa b IHb]; intros m Hm; simpl in Hm.
+  - simpl. rewrite repeat_nth.
+    + apply Hs. apply (nth_error_In s n Hm).
+    + apply nth_error_Some. rewrite Hm. discriminate.
+  - destruct (linst s a) as [x |]; [| discriminate]. simpl in Hm. injection Hm as <-.
+    simpl. rewrite (IH x eq_refl). reflexivity.
+  - destruct (linst s a) as [x |]; [| discriminate].
+    destruct (linst s b) as [y |]; [| discriminate].
+    injection Hm as <-. simpl. rewrite (IHa x eq_refl), (IHb y eq_refl). reflexivity.
+Qed.
+
+(**md
+**Rewriting by type-neutral laws does not change what the checker says.**
+
+Take a specialization at a member and laws that are type-neutral at that member. A term obtained
+by one rewrite step has the type the term had, in the same context, and has no type if the term
+had none. The laws need not hold. The proof is by induction on the rewrite step and uses no
+assumption about what an operation computes.
+
+- [L:] the laws used.
+- [t:] the member.
+*)
+Theorem rewrite_preserves_type (L : list law) (t : ty) :
+  (forall l, In l L -> type_neutral t l) ->
+  forall (G : list ty) (m m' : mtm), rw L t G m m' -> mtype G m = mtype G m'.
+Proof.
+  intros HL G m m' H.
+  induction H as
+    [G l s m m' Hl Hlen Hs Hm Hm' | G l s m m' Hl Hlen Hs Hm Hm'
+    | G o a a' _ IH | G a a' b _ IH | G a b b' _ IH | G a a' _ IH | G a a' _ IH
+    | G a a' b _ IH | G a b b' x Hx _ IH].
+  - rewrite (linst_type G t s Hs _ _ Hm), (linst_type G t s Hs _ _ Hm'), Hlen.
+    apply (HL l Hl).
+  - rewrite (linst_type G t s Hs _ _ Hm), (linst_type G t s Hs _ _ Hm'), Hlen.
+    symmetry. apply (HL l Hl).
+  - simpl. rewrite IH. reflexivity.
+  - simpl. rewrite IH. reflexivity.
+  - simpl. rewrite IH. reflexivity.
+  - simpl. rewrite IH. reflexivity.
+  - simpl. rewrite IH. reflexivity.
+  - simpl. rewrite IH. reflexivity.
+  - simpl. rewrite Hx. exact IH.
+Qed.
+
+(** Any number of rewrite steps by type-neutral laws do not change what the checker says. *)
+Lemma rewrites_preserve_type (L : list law) (t : ty) :
+  (forall l, In l L -> type_neutral t l) ->
+  forall (G : list ty) (m m' : mtm), rws L t G m m' -> mtype G m = mtype G m'.
+Proof.
+  intros HL G m m' H. induction H as [m | m m' m'' H1 _ IH].
+  - reflexivity.
+  - rewrite (rewrite_preserves_type L t HL G m m' H1). exact IH.
+Qed.
+
+(**md
+**A law keeps types exactly when it is type-neutral.**
+
+A law is type-neutral at a member if and only if every rewrite step by it, in every
+specialization at that member, leaves the checker's answer unchanged. So the condition cannot be
+weakened: a law whose sides differ in type at a member turns some term the checker accepts into
+one it rejects or types differently.
+
+- [t:] the member.
+- [l:] the law, whose sides mention only its own variables.
+*)
+Theorem type_neutral_iff_preserving (t : ty) (l : law) :
+  lscoped (arity l) (lhs l) = true -> lscoped (arity l) (rhs l) = true ->
+  (type_neutral t l <->
+   forall (G : list ty) (m m' : mtm), rw [l] t G m m' -> mtype G m = mtype G m').
+Proof.
+  intros Hl Hr. split.
+  - intros H. apply rewrite_preserves_type. intros l' [E | []]. subst l'. exact H.
+  - intros H. unfold type_neutral.
+    rewrite <- (vars_length (arity l) 0) in Hl, Hr.
+    destruct (linst_scoped _ _ Hl) as [ma Hma]. destruct (linst_scoped _ _ Hr) as [mb Hmb].
+    pose proof (linst_type (repeat t (arity l)) t _ (vars_typed t (arity l)) _ _ Hma) as Ea.
+    pose proof (linst_type (repeat t (arity l)) t _ (vars_typed t (arity l)) _ _ Hmb) as Eb.
+    rewrite vars_length in Ea, Eb. rewrite <- Ea, <- Eb.
+    apply H. apply (RwLaw [l] t _ l (vars 0 (arity l)) ma mb).
+    + left. reflexivity.
+    + apply vars_length.
+    + apply vars_typed.
+    + exact Hma.
+    + exact Hmb.
+Qed.
+
+(**md
+**A definition rewritten by type-neutral laws still has its declared type.**
+
+Take a definition that checks, laws that are type-neutral at every member, and any member. A
+specialization rewritten by those laws, in any number of steps, is typed by the checker at the
+declared result type. This is type preservation for the rewritten specialization. With
+`rewritten_definition_keeps_meaning` it gives both halves: the rewritten term is accepted at the
+declared type, and it returns the value the definition means.
+
+- [C:] the member set of the variable.
+- [L:] the laws used.
+- [e:] the body.
+- [r:] the declared result type.
+*)
+Theorem rewritten_definition_keeps_type
+    (C : cset) (L : list law) (G : list oty) (e : tm) (r : oty) :
+  check C G e r = true ->
+  (forall l t, In l L -> sat t C -> type_neutral t l) ->
+  forall t : ty, sat t C ->
+  forall m m' : mtm, spec t e = Some m -> rws L t (map (inst t) G) m m' ->
+  mtype (map (inst t) G) m' = Some (inst t r).
+Proof.
+  intros Hc HL t Ht m m' Hs Hrw.
+  destruct (derived_satisfaction C G e r Hc t Ht) as [m0 [Hs0 Hm0]].
+  rewrite Hs in Hs0. injection Hs0 as <-.
+  rewrite <- (rewrites_preserve_type L t (fun l Hl => HL l t Hl Ht) _ m m' Hrw). exact Hm0.
+Qed.
+
+(**md
+**A rewritten specialization is safe to run, whether or not the laws hold.**
+
+A specialization rewritten by type-neutral laws runs to a value of the declared result type on
+every input of the right types. Nothing is assumed about the laws holding. A rewrite by a
+type-neutral law that is false at the member may return a different value, but it cannot produce
+a stuck program or a value of the wrong type. Safety needs the structural check only. Keeping the
+result needs the law. This rests on the assumption that every witness is implemented at its
+declared type.
+
+- [C:] the member set of the variable.
+- [L:] the laws used.
+*)
+Corollary rewritten_specialization_is_safe
+    (C : cset) (L : list law) (G : list oty) (e : tm) (r : oty) :
+  check C G e r = true ->
+  (forall l t, In l L -> sat t C -> type_neutral t l) ->
+  forall t : ty, sat t C ->
+  forall m m' : mtm, spec t e = Some m -> rws L t (map (inst t) G) m m' ->
+  forall env : list val, Forall2 has_ty env (map (inst t) G) ->
+  exists v, eval env m' = Some v /\ has_ty v (inst t r).
+Proof.
+  intros Hc HL t Ht m m' Hs Hrw env HE.
+  apply (specialization_is_safe m' _ env (inst t r) HE).
+  apply (rewritten_definition_keeps_type C L G e r Hc HL t Ht m m' Hs Hrw).
+Qed.
+
 (**md ## Theorems per member
 
 A library theorem here derives one law from others. It is stated once, for any type that meets a
@@ -622,11 +811,6 @@ Fixpoint uses (G : list ty) (p : lterm) : list (op * ty) :=
 Definition law_uses (t : ty) (l : law) : list (op * ty) :=
   uses (repeat t (arity l)) (lhs l) ++ uses (repeat t (arity l)) (rhs l).
 
-(** A law is typed at a member when its two sides have one type there. *)
-Definition law_typed (t : ty) (l : law) : Prop :=
-  exists r, ltype (repeat t (arity l)) (lhs l) = Some r /\
-            ltype (repeat t (arity l)) (rhs l) = Some r.
-
 (** An implementation is sound when each operation returns a value of its witness's result
     type. *)
 Definition sound_impl (I : impl) : Prop :=
@@ -721,7 +905,8 @@ Qed.
 These parts of the extension are not modelled.
 
 1. **Declaring a law.** How a member set states the laws it carries, and whether a law is declared
-   on the constraint or on a named member set, is not designed.
+   on the constraint or on a named member set, is not designed. A declaration would be rejected
+   where the law is not type-neutral at some member, which `type_neutral_dec` decides.
 2. **Discharging an obligation.** The model takes a discharged obligation as given. Which analysis
    or solver fragment decides a law at a member, and what happens when it cannot, is the
    specification's Tier 2 question and is not answered here.

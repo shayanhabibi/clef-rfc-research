@@ -29,7 +29,9 @@ specialized terms. It has no functions as values and no inference.
 | Extension: a law derived by rewriting holds wherever its premises do | Proved from an assumption: `derived_law`, `reversal_from_commutativity`, `theorem_per_member` |
 | Extension: evidence for a law depends only on the witnesses the law uses | Proved: `evidence_survives_unrelated_change` |
 | Extension: a law holds or fails at a particular type, such as `int` or `float` | Not modelled. Operations are assumptions of the model |
-| Extension: a rewritten specialization still has its declared type | Not proved |
+| Extension: a specialization rewritten by laws whose sides have one type still has its declared type | Proved: `rewrite_preserves_type`, `rewritten_definition_keeps_type` |
+| Extension: that condition on a law is the weakest that keeps types, and is decidable | Proved: `type_neutral_iff_preserving`, `type_neutral_dec` |
+| Extension: a specialization rewritten by such laws runs to a value of its declared type, whether or not the laws hold | Proved from an assumption: `rewritten_specialization_is_safe` |
 | Inference with closed-set constraints keeps principal types | Not proved. `meet_greatest` is the lemma it would need |
 | The local type equation of an arm is sound with inference | Not proved. No inference is modelled |
 | An unconstrained variable stays parametric | Not proved. The rule is stated in prose |
@@ -109,6 +111,7 @@ are a reading of the specification and the design documents, and none is a theor
 | Coverage (`coverage_total`) | 1 | A finite cover check |
 | Specialisation (`specialization_preserves_meaning`) | 1, one step | The commuting condition for the saturation step. After it the constraint is discharged and nothing reaches MLIR |
 | Untagged unions (`untagged_union_discriminable_falsified`) | The last stage | The native stage holds no type fact, so a type test cannot be decided there |
+| Extension: the two sides of a law have one type at a member (`type_neutral`) | 1 | Two types are computed and compared for equality. `type_neutral_dec` decides it |
 | Extension: a law at a member (`carries`, `rewrite_sound`) | 2 | One obligation per member, about what an operation computes. An analysis or a solver discharges it |
 | Extension: a library theorem at a member (`theorem_per_member`) | 3 | A theorem proved once, instantiated at a member with its premises discharged |
 
@@ -156,7 +159,9 @@ the research note gives each in more detail. Items 4 and 5 are modelled in
    names. A body may then rewrite by the laws its set carries. [Laws](Clef.RFC0001.Laws.html)
    models this. A rewrite by a law is sound exactly when the law holds at the member
    (`law_iff_rewrite`), and a checked definition rewritten by the laws its set carries keeps its
-   meaning at every member (`rewritten_definition_keeps_meaning`).
+   meaning at every member (`rewritten_definition_keeps_meaning`). It keeps its declared type
+   when the two sides of each law have the same type at the member
+   (`rewritten_definition_keeps_type`).
 5. **Theorems per member (Tier 3).** A library theorem stated over `'T : C` is instantiated once
    per member with its premises discharged. This is available only because the set is closed: an
    open member constraint has instances the compiler cannot enumerate. `derived_satisfaction` is
@@ -174,6 +179,9 @@ the research note gives each in more detail. Items 4 and 5 are modelled in
 | What removing a member, or unifying two sets, costs | Nothing: `law_narrowing`, `meet_carries` |
 | What a law permits | Rewriting a specialization at a member where it holds, with arguments of the member's type: `rewrite_sound` |
 | Whether the law is needed | Yes. Where it fails, some rewrite by it changes a result: `law_iff_rewrite` |
+| Whether the rewritten specialization is still typed | Yes, at the declared type, when the two sides of each law have the same type at the member: `rewrite_preserves_type`, `rewritten_definition_keeps_type` |
+| Whether that typing condition is needed | Yes. A law without it changes the type of some term: `type_neutral_iff_preserving` |
+| What a rewrite by a law that is typed but false can do | Change the value. It cannot make the program stuck or return a value of the wrong type: `rewritten_specialization_is_safe` |
 | How a library theorem is proved once | As a sequence of rewrite steps: `derived_law`, with `reversal_from_commutativity` as the example |
 | What must be discharged again when an operation's implementation changes | Only laws that use that operation at that argument type: `evidence_survives_unrelated_change` |
 
@@ -181,11 +189,18 @@ The last row is the invalidation rule of
 [Conformance §6.1](https://clef-lang.com/spec/draft/conformance/#61-verification-evidence-and-composition),
 item 6, for this kind of evidence.
 
-Three things are left. The model does not decide a law: operations are assumptions of the model,
+**A law has two obligations at a member, in different tiers.** The first is that its two sides
+have the same type there. It is decided by computing two types and comparing them, which is a
+Tier 1 check, and it is what type preservation needs. The second is that the two sides are equal
+on every value, which is the Tier 2 obligation, and it is what preserving the result needs.
+Neither implies the other. A law can be typed and false, as associativity of floating-point
+addition is. A law can also hold without being typed, because an operation is an assumption of
+the model and nothing stops two sides of different types from being equal on every value. The
+typing theorems use no assumption about what an operation computes.
+
+Two things are left. The model does not decide a law: operations are assumptions of the model,
 so "integer addition is associative and floating-point addition is not" is the motivating example
-and is not a theorem here. It gives no syntax for declaring a law on a member set. And it proves
-a rewritten specialization returns the same value, but does not prove the rewritten term is still
-typed by the checker, which needs each law to have one type on both sides.
+and is not a theorem here. And it gives no syntax for declaring a law on a member set.
 6. **Equivalent arms (Tier 4).** A type-case whose arms are proved to compute the same result
    behaves like one function. That would recover, up to the equivalence, the uniformity
    `case_free_parametric` proves for bodies with no type-case, and it answers the first drawback
