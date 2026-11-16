@@ -46,13 +46,26 @@ equation reading. Member types are closed, as in RFC 0001.
 | A definition and its rearrangement that both pass the check type-check alike and return the same result | Proved: `reordered_definition_means_the_same` |
 | The whole-body check accepts some match in both orders | Proved for one family of constraints: `check_accepts_both_orders` |
 | A bound on the work the whole-body check does | Not proved |
-| Agreement, the second way of gluing, for an inner match | Not modelled |
+| Inner arms that glue over a set of instantiations may be written in any order | Proved from an assumption: `inner_glued_order_irrelevant` |
+| The overlap check over a region, with no two arms equally specific there, glues | Proved: `inner_priority_glues` |
+| Two inner arms with the same body and the same number of binders glue | Proved, any region, any scrutinee: `inner_same_body_glues` |
+| Agreement accepts an inner match the overlap check over its region rejects | Proved for one family of constraints: `inner_agreement_accepts_what_region_check_rejects` |
+| A body that glues means the same after any rearrangement of the arms of any of its matches | Proved from an assumption: `glued_body_means_the_same_reordered` |
+| A definition and its rearrangement that both glue type-check alike and return the same result | Proved from an assumption: `glued_definition_means_the_same_reordered` |
+| The gluing condition accepts in both orders a definition the whole-body overlap check rejects | Proved for one family of constraints: `gluing_accepts_what_overlap_check_rejects` |
+| A body that passes the whole-body overlap check satisfies the gluing condition | Not proved. The two examine an arm's body over different sets |
+| Under agreement, an arm's body need be examined only where the arm is selected | Not settled. Neither proved nor refuted |
+| Agreement of two arms in Bodies gives agreement of the same arms as inner arms | Not proved |
+| A computed check that implies the gluing condition | Not modelled |
 | A nested match under the membership reading | Not modelled |
 | Inference with a constraint `'T : ('A or 'B)` keeps principal types | Not proved. The research note argues it does not, without a restriction |
 | More than two tested variables, and generic members | Not modelled |
 
 `checked_match_runs` and `checked_nested_runs` rest on `witness_sound`, the assumption that every
-witness is implemented at its declared type. No other theorem here uses an assumption beyond decidable equality of type
+witness is implemented at its declared type. So do the three theorems on gluing in a nested
+body, `inner_glued_order_irrelevant`, `glued_body_means_the_same_reordered` and
+`glued_definition_means_the_same_reordered`: agreement is asked only for scrutinees of the right
+type, and that a scrutinee evaluates to one is the safety theorem. No other theorem here uses an assumption beyond decidable equality of type
 constructors, `tycon_eq_dec`. The refutations hold whenever two different closed types exist, or,
 for the two about evaluation, whenever some type has a value.
 
@@ -111,6 +124,9 @@ The model's agreement asks for equal results on every scrutinee of the type `'T`
 to, with the other parameters unrestricted. That is stronger than needed, since the other
 parameters also have known types, and a rule that used them would accept more.
 
+Both rules carry over to a match nested in an arm. The section on nested matches below gives the
+statements.
+
 ## Relation to the verification tiers
 
 The specification organises checking into
@@ -132,6 +148,8 @@ are a reading of the specification and the design documents, and none is a theor
 | A nested match (`ncheck`) | Edge of 1 | Each test is an equality between two closed types at an instantiation. The check still enumerates the table |
 | The overlap check for an inner match (`ordered_in`) | Edge of 1 | The same enumeration as the overlap check, over part of the table. It compares arms by generality, as that check does |
 | The whole-body overlap check (`nordered`) | Edge of 1 | One walk over the body. At each arm the set of instantiations is filtered by equalities between closed types |
+| Agreement of inner arms by identical bodies (`inner_same_body_glues`) | 1 | A structural comparison, with a count of binders. It does not look at the region |
+| The gluing condition of a whole body (`nglued`) | 1 to 4 | It is a statement and not a procedure. Its tier is that of the rule used for each overlap: priority, identical bodies, or a proof |
 | Agreement by proved equivalence | 4 | A relation between two programs |
 
 **The constraint is a disjunction of equations between variables.** `'T : ('A | 'B)` says `'T` is
@@ -204,6 +222,37 @@ compared over. The proofs give this answer.
    type is not a variable. With more than two tested variables the regions are coarser and the
    question would arise more often. That case is not modelled.
 
+**Agreement in an inner match.** [Nested](Clef.RFC0002.Nested.html) states agreement and the gluing
+condition for an inner match, over the region of the match. The proofs give these points.
+
+1. **Both ways of gluing carry over.** Arms that glue over a set containing the instantiations
+   the match runs at may be written in any order (`inner_glued_order_irrelevant`). The overlap
+   check over the set with no two arms equally specific is one way to glue
+   (`inner_priority_glues`). Two arms with the same body and the same number of binders is
+   another, in every region and on every scrutinee (`inner_same_body_glues`).
+2. **Agreement must include the type.** The check of a nested body types the arm selected. Two
+   arms that return the same value could still have bodies of different types where only one is
+   typed. So agreement of inner arms asks for the same type and the same value. In Bodies the
+   check types every matching arm, and agreement there asks for the value only.
+3. **Agreement accepts what priority rejects, in a region.** For `'A : (x | y)` and `'B : (y)`,
+   an inner match in an arm `:? 'A` with arms `:? 'A` then `:? 'B` and one body is rejected by
+   the overlap check over its region and glues
+   (`inner_agreement_accepts_what_region_check_rejects`). Priority accepts these two arms only in
+   the other order.
+4. **Under agreement an arm's body is examined wherever its test succeeds.** Under priority the
+   arm selected is the same in every accepted order, so the whole-body check examines an arm's
+   body where the arm is selected. Under agreement either of two agreeing arms may be first, so
+   either body can run on the overlap. The gluing condition of a whole body, `nglued`, examines
+   an arm's body at every instantiation of the region where its test succeeds. A body that
+   glues, and glues again with the arms of any of its matches rearranged, has the same type and
+   value at every instantiation (`glued_body_means_the_same_reordered`,
+   `glued_definition_means_the_same_reordered`), and a definition priority rejects meets the
+   hypotheses in both orders (`gluing_accepts_what_overlap_check_rejects`).
+5. **The two whole-body conditions are not yet related.** A body that passes `nordered` is not
+   shown to satisfy `nglued`, because the sets differ and neither condition is preserved when
+   its set changes. Whether `nglued` could use the smaller set is not settled either. Both are
+   listed in the table above.
+
 ## Possible extensions
 
 These are not part of the RFC. They are recorded because the model points at them. The research
@@ -257,13 +306,14 @@ Nothing in a program without a closed-set constraint changes. The RFC depends on
 
 1. Whether agreement is admitted beside priority, and in which form: identical bodies only, or
    bodies proved equivalent. An arm such as `:? 'A | :? 'B` covering several regions is the
-   surface form of the first.
+   surface form of the first. The model now supports either answer for an inner match as well as
+   for the outer one. If agreement is admitted, an arm's body has to be checked wherever its test
+   succeeds, and whether that can be narrowed to where the arm is selected is open.
 2. Whether a missing reachable intersection arm is an error. The overlap check as modelled makes it
    one, unless the overlapping arms agree.
 3. What the whole-body overlap check costs. [Nested](Clef.RFC0002.Nested.html) computes the region
    of every inner match by filtering the table once for each arm, and proves the check does its
-   job. No bound on that work is proved. Whether agreement is admitted for an inner match is part
-   of question 1.
+   job. No bound on that work is proved.
 4. Constraints declared but never inferred, as the restriction that keeps inference principal.
 5. The diagnostic for two arms with equivalent tests.
 *)

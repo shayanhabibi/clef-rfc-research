@@ -69,6 +69,11 @@ The proofs in [Nested](Clef.RFC0002.Nested.html) allow a match anywhere in a bod
   a correctly ordered match.
 - The region of every inner match is computed by one walk over the body. A body that passes the
   resulting check means the same after any rearrangement of the arms of any of its matches.
+- Agreement carries over to an inner match. Two overlapping inner arms whose bodies have the same
+  type and compute the same result may be written in either order, and two arms with one body
+  always qualify. A body all of whose matches glue, by priority or by agreement, means the same
+  after any rearrangement of its arms. Under agreement an arm's body is examined wherever its
+  test succeeds.
 
 ## The reading of `:? 'A`
 
@@ -89,6 +94,6 @@ The readings agree on every program whose member sets are disjoint
 |---|---|
 | [Regions](Clef.RFC0002.Regions.html) | Instantiations, arm tests under both readings, selection, the overlap check and the theorems |
 | [Bodies](Clef.RFC0002.Bodies.html) | Arm bodies, the check of a definition, what it computes, and the two ways overlapping arms are glued |
-| [Nested](Clef.RFC0002.Nested.html) | A match anywhere in a body: typing, specialization, erasure, safety, what an inner match knows about the arm it is in, and the overlap check for inner matches with the region of each computed from the body |
+| [Nested](Clef.RFC0002.Nested.html) | A match anywhere in a body: typing, specialization, erasure, safety, what an inner match knows about the arm it is in, the overlap check for inner matches with the region of each computed from the body, and agreement for inner matches |
 | [Discussion](Clef.RFC0002.Discussion.html) | What the proofs do not cover, the reasons for the adopted reading, the relation to the verification tiers, drawbacks and alternatives |
 *)

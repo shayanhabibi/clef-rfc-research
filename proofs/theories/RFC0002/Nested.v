@@ -20,7 +20,7 @@ let g<'A, 'B, 'T when 'A : (int | string)
     | :? 'B as b -> b
 ```
 
-Six questions are answered.
+Seven questions are answered.
 
 1. Is a nested type-case still erased? A specialization has no type to inspect, at any depth.
 2. Is a definition that checks still safe to run at every instantiation?
@@ -28,6 +28,7 @@ Six questions are answered.
 4. Does the model agree with [Bodies](Clef.RFC0002.Bodies.html) where there is no nesting?
 5. Over which instantiations are the arms of an inner match compared by the overlap check?
 6. How is that set of instantiations computed from a body?
+7. May two overlapping arms of an inner match be written in either order when their bodies agree?
 
 Only the equation reading is modelled, since it is the one the RFC adopts. A test `:? 'A` on a
 scrutinee succeeds when the scrutinee's type is the type `'A` is instantiated to.
@@ -1847,18 +1848,604 @@ Proof.
     rewrite ?tyeqb_refl, ?Q1, ?Q2; reflexivity.
 Qed.
 
+(**md ## Agreement in an inner match
+
+[Bodies](Clef.RFC0002.Bodies.html) gives two ways to make arm order irrelevant: priority, where
+the more specific of two overlapping arms wins, and agreement, where the two bodies compute the
+same result on the overlap. The sections above carry priority to an inner match. This section
+carries agreement.
+
+Two things change from Bodies. The overlap is taken over the region of the match, as the overlap
+check is. And agreement includes the type of the two bodies, because the check of this module
+types only the arm selected: if the other arm were selected in another order, its body must have
+the same type there.
+*)
+
+(** One test is strictly more specific than another over a set of instantiations.
+    - [R:] the instantiations considered.
+    - [u:] the type of the scrutinee at each instantiation.
+    - [p:] the more specific test.
+    - [q:] the more general test. *)
+Definition lt_in (R : list inst3) (u : inst3 -> ty) (p q : test) : bool :=
+  le_in R u p q && negb (le_in R u q p).
+
+(** Two arms agree at an instantiation when their bodies have the same type there and return the
+    same result for every scrutinee of the scrutinee's type.
+    - [s:] the instantiation.
+    - [G:] the types of the variables in scope around the match.
+    - [t:] the type of the scrutinee.
+    - [a:] one arm.
+    - [b:] the other arm. *)
+Definition agree_in (s : inst3) (G : list ty) (t : ty) (a b : test * ntm) : Prop :=
+  ntype s (binder_types s (fst a) ++ G) (snd a) =
+  ntype s (binder_types s (fst b) ++ G) (snd b) /\
+  forall (env : list val) (v : val), has_ty v t ->
+    nseval s (binder_types s (fst a) ++ G) (repeat v (arity (fst a)) ++ env) (snd a) =
+    nseval s (binder_types s (fst b) ++ G) (repeat v (arity (fst b)) ++ env) (snd b).
+
+(** The arms of a match glue over a set of instantiations when, at each of them, the selected
+    arm is strictly more specific over the set than each other arm that matches, or agrees with
+    it.
+    - [R:] the instantiations the match is checked over.
+    - [u:] the type of the scrutinee at each of them.
+    - [Gf:] the types of the variables in scope at each of them.
+    - [arms:] the arms. *)
+Definition glues_in (R : list inst3) (u : inst3 -> ty) (Gf : inst3 -> list ty)
+  (arms : list (test * ntm)) : Prop :=
+  forall (s : inst3) (p q : test * ntm),
+    In s R ->
+    pickn s (u s) arms = Some p ->
+    In q arms -> holds s (u s) (fst q) = true ->
+    lt_in R u (fst p) (fst q) = true \/ agree_in s (Gf s) (u s) p q.
+
+Lemma agree_in_refl (s : inst3) (G : list ty) (t : ty) (a : test * ntm) : agree_in s G t a a.
+Proof.
+  split; [reflexivity | intros; reflexivity].
+Qed.
+
+Lemma agree_in_sym (s : inst3) (G : list ty) (t : ty) (a b : test * ntm) :
+  agree_in s G t a b -> agree_in s G t b a.
+Proof.
+  intros [T V]. split; [symmetry; exact T |]. intros env v Hv. symmetry. exact (V env v Hv).
+Qed.
+
+Lemma lt_in_asym (R : list inst3) (u : inst3 -> ty) (p q : test) :
+  lt_in R u p q = true -> lt_in R u q p = true -> False.
+Proof.
+  unfold lt_in. intros H1 H2. apply andb_true_iff in H1. apply andb_true_iff in H2.
+  destruct H1 as [H1 _]. destruct H2 as [_ H2]. rewrite H1 in H2. discriminate.
+Qed.
+
+Lemma lt_in_ext (R : list inst3) (u u' : inst3 -> ty) (p q : test) :
+  (forall s, In s R -> u s = u' s) -> lt_in R u p q = lt_in R u' p q.
+Proof.
+  intros H. unfold lt_in. rewrite (le_in_ext R u u' p q H), (le_in_ext R u u' q p H).
+  reflexivity.
+Qed.
+
+(** A body that has a type returns a value of that type, on values of the types in scope. This
+    is the safety theorem of RFC 0001 carried through the specialization, and it rests on the
+    same assumption about witnesses. *)
+Lemma nseval_typed (s : inst3) (G : list ty) (e : ntm) (t : ty) (env : list val) :
+  ntype s G e = Some t -> Forall2 has_ty env G ->
+  exists v, nseval s G env e = Some v /\ has_ty v t.
+Proof.
+  intros T HE. destruct (typed_body_specializes s e G t T) as [m [Hm Ht]].
+  rewrite (nested_specialization_preserves_meaning s e G m Hm).
+  exact (specialization_is_safe m G env t HE Ht).
+Qed.
+
+(** The binders of an arm that matches hold values of their types. *)
+Lemma binders_typed (s : inst3) (t : ty) (p : test) (v : val) (env : list val) (G : list ty) :
+  holds s t p = true -> has_ty v t -> Forall2 has_ty env G ->
+  Forall2 has_ty (repeat v (arity p) ++ env) (binder_types s p ++ G).
+Proof.
+  intros M Hv HE. rewrite (holds_binders s t p M).
+  induction (arity p) as [| k IH]; simpl; [exact HE | constructor; assumption].
+Qed.
+
+(** Under gluing, two lists holding the same arms select arms that agree. *)
+Lemma glued_selection
+    (R : list inst3) (u : inst3 -> ty) (Gf : inst3 -> list ty) (l1 l2 : list (test * ntm))
+    (s : inst3) :
+  glues_in R u Gf l1 -> glues_in R u Gf l2 ->
+  (forall a, In a l1 <-> In a l2) ->
+  In s R ->
+  match pickn s (u s) l1 with
+  | Some a =>
+      match pickn s (u s) l2 with
+      | Some b => agree_in s (Gf s) (u s) a b
+      | None => False
+      end
+  | None => pickn s (u s) l2 = None
+  end.
+Proof.
+  intros G1 G2 P Hs.
+  destruct (pickn s (u s) l1) as [a1 |] eqn:F1; destruct (pickn s (u s) l2) as [a2 |] eqn:F2.
+  - destruct (find_some _ _ F1) as [I1 M1]. destruct (find_some _ _ F2) as [I2 M2].
+    cbn beta in M1, M2.
+    destruct (G1 s a1 a2 Hs F1 (proj2 (P a2) I2) M2) as [L1 | A1]; [| exact A1].
+    destruct (G2 s a2 a1 Hs F2 (proj1 (P a1) I1) M1) as [L2 | A2].
+    + destruct (lt_in_asym R u _ _ L1 L2).
+    + apply agree_in_sym. exact A2.
+  - destruct (find_some _ _ F1) as [I1 M1]. cbn beta in M1.
+    pose proof (find_none _ _ F2 a1 (proj1 (P a1) I1)) as E. cbn beta in E.
+    rewrite M1 in E. discriminate.
+  - destruct (find_some _ _ F2) as [I2 M2]. cbn beta in M2.
+    pose proof (find_none _ _ F1 a2 (proj2 (P a2) I2)) as E. cbn beta in E.
+    rewrite M2 in E. discriminate.
+  - reflexivity.
+Qed.
+
+(**md
+**Inner arms that glue compute the same result in any order.**
+
+Take two lists holding the same arms, both gluing over a set of instantiations. At every
+instantiation in the set where the scrutinee has the stated type, the two matches have the same
+type, and on values of the types in scope they return the same value. The arm selected may differ
+between the two orders. Where it does, the two arms agree.
+
+This is `glued_order_irrelevant` for an inner match. It covers priority, agreement, and a match
+that uses each on different overlaps. It uses the assumption that every witness is implemented
+at its declared type, because agreement is asked only for scrutinees of the scrutinee's type, and
+that the scrutinee evaluates to such a value is the safety theorem.
+
+- [R:] the instantiations the match is checked over.
+- [u:] the type of the scrutinee at each of them.
+- [Gf:] the types of the variables in scope at each of them.
+- [l1:] the arms in one order.
+- [l2:] the same arms in another order.
+- [e:] the scrutinee.
+*)
+Theorem inner_glued_order_irrelevant
+    (R : list inst3) (u : inst3 -> ty) (Gf : inst3 -> list ty) (l1 l2 : list (test * ntm))
+    (s : inst3) (e : ntm) :
+  glues_in R u Gf l1 -> glues_in R u Gf l2 ->
+  (forall a, In a l1 <-> In a l2) ->
+  In s R -> ntype s (Gf s) e = Some (u s) ->
+  ntype s (Gf s) (NMatch e l1) = ntype s (Gf s) (NMatch e l2) /\
+  forall env : list val, Forall2 has_ty env (Gf s) ->
+    nseval s (Gf s) env (NMatch e l1) = nseval s (Gf s) env (NMatch e l2).
+Proof.
+  intros G1 G2 P Hs H.
+  pose proof (glued_selection R u Gf l1 l2 s G1 G2 P Hs) as K. split.
+  - rewrite !ntype_match, H.
+    destruct (pickn s (u s) l1) as [[p1 b1] |].
+    + destruct (pickn s (u s) l2) as [[p2 b2] |]; [exact (proj1 K) | destruct K].
+    + rewrite K. reflexivity.
+  - intros env HE. rewrite !nseval_match, H.
+    destruct (nseval_typed s (Gf s) e (u s) env H HE) as [v [Ev Hv]]. rewrite Ev.
+    destruct (pickn s (u s) l1) as [[p1 b1] |].
+    + destruct (pickn s (u s) l2) as [[p2 b2] |]; [exact (proj2 K env v Hv) | destruct K].
+    + rewrite K. reflexivity.
+Qed.
+
+(**md
+**The overlap check over a region glues when no two arms are equally specific there.**
+
+If the arms of a match pass the overlap check over a set of instantiations, and no two different
+arms are equally specific over the set, the arms glue over it. So priority is one way to meet the
+gluing condition for an inner match, and `inner_order_is_irrelevant` is a case of the theorem
+above. This is `priority_glues` for an inner match.
+
+- [R:] the instantiations the match is checked over.
+- [u:] the type of the scrutinee at each of them.
+- [Gf:] the types of the variables in scope at each of them.
+- [arms:] the arms.
+*)
+Theorem inner_priority_glues
+    (R : list inst3) (u : inst3 -> ty) (Gf : inst3 -> list ty) (arms : list (test * ntm)) :
+  ordered_in R u [] (map fst arms) = true ->
+  (forall a b, In a arms -> In b arms ->
+     le_in R u (fst a) (fst b) = true -> le_in R u (fst b) (fst a) = true -> a = b) ->
+  glues_in R u Gf arms.
+Proof.
+  intros O D s p q Hs F Hq M. destruct (find_some _ _ F) as [Hp _].
+  assert (L : le_in R u (fst p) (fst q) = true).
+  { apply (inner_first_match_is_most_specific R u (map fst arms) s (fst p) (fst q) O Hs).
+    - rewrite find_map. unfold pickn in F. rewrite F. reflexivity.
+    - apply in_map. exact Hq.
+    - exact M. }
+  destruct (le_in R u (fst q) (fst p)) eqn:L2.
+  - right. rewrite (D p q Hp Hq L L2). apply agree_in_refl.
+  - left. unfold lt_in. rewrite L, L2. reflexivity.
+Qed.
+
+(** Two arms with the same body and the same number of binders agree wherever both tests
+    succeed. There the binders of both are at the scrutinee's type. *)
+Lemma same_body_agrees (s : inst3) (G : list ty) (t : ty) (p q : test) (b : ntm) :
+  holds s t p = true -> holds s t q = true -> arity p = arity q ->
+  agree_in s G t (p, b) (q, b).
+Proof.
+  intros Hp Hq E. unfold agree_in. cbn [fst snd].
+  rewrite (holds_binders s t p Hp), (holds_binders s t q Hq), E.
+  split; [reflexivity | intros; reflexivity].
+Qed.
+
+(**md
+**Two inner arms with the same body glue, whatever the region is.**
+
+Two arms that bind the same number of names and have the same body glue over every set of
+instantiations, on every scrutinee. Where both tests succeed, the binders of each arm are at the
+scrutinee's type, so the one body is typed and run the same way under either test. The body may
+hold further matches. This is the structural form of agreement, and `same_body_glues` is the case
+of the two tests `:? 'A` and `:? 'B` on the parameter of type `'T`.
+
+- [p:] the test of one arm.
+- [q:] the test of the other.
+- [b:] the body both arms have.
+*)
+Theorem inner_same_body_glues
+    (R : list inst3) (u : inst3 -> ty) (Gf : inst3 -> list ty) (p q : test) (b : ntm) :
+  arity p = arity q -> glues_in R u Gf [(p, b); (q, b)].
+Proof.
+  intros E s a c Hs F Hc M. right. destruct (find_some _ _ F) as [Ha Ma]. cbn beta in Ma.
+  simpl in Ha, Hc.
+  destruct Ha as [<- | [<- | []]]; destruct Hc as [<- | [<- | []]]; cbn [fst] in Ma, M;
+    apply same_body_agrees;
+    first [assumption | reflexivity | exact E | symmetry; exact E].
+Qed.
+
+(**md
+**Agreement accepts an inner match the overlap check over its region rejects.**
+
+Take `'A : (x | y)` and `'B : (y)`, and an inner match on a scrutinee of type `'T` inside an arm
+`:? 'A` that is written first. Its arms are `:? 'A` then `:? 'B`, with the same body. In that
+region `:? 'A` always succeeds and `:? 'B` succeeds only where the two variables are the same
+type, so the general arm is written before the specific one and the overlap check over the region
+rejects the match. The arms glue all the same, because the body that runs is the same either way.
+
+`region_check_accepts_what_table_check_rejects` has the same two arms in the other order, which
+priority accepts. Agreement accepts both orders.
+
+- [x:] a member of the first set only.
+- [y:] the member the two sets share.
+- [b:] the body both arms have.
+- [Gf:] the types of the variables in scope at each instantiation.
+*)
+Theorem inner_agreement_accepts_what_region_check_rejects
+    (x y : ty) (b : ntm) (Gf : inst3 -> list ty) :
+  x <> y ->
+  glues_in (restrict (table [x; y] [y]) iT IsA) iT Gf [(IsA, b); (IsB, b)] /\
+  ordered_in (restrict (table [x; y] [y]) iT IsA) iT [] [IsA; IsB] = false.
+Proof.
+  intros N. split; [apply inner_same_body_glues; reflexivity |].
+  destruct (ordered_in (restrict (table [x; y] [y]) iT IsA) iT [] [IsA; IsB]) eqn:O;
+    [| reflexivity].
+  exfalso.
+  assert (I1 : In (Inst y y y) (restrict (table [x; y] [y]) iT IsA)).
+  { unfold restrict. apply filter_In. split.
+    - apply table_iff_valid. unfold valid, sat. simpl. intuition.
+    - cbn [holds iT iA]. apply tyeqb_refl. }
+  assert (I2 : In (Inst x y x) (restrict (table [x; y] [y]) iT IsA)).
+  { unfold restrict. apply filter_In. split.
+    - apply table_iff_valid. unfold valid, sat. simpl. intuition.
+    - cbn [holds iT iA]. apply tyeqb_refl. }
+  assert (L : le_in (restrict (table [x; y] [y]) iT IsA) iT IsA IsB = true).
+  { apply (inner_first_match_is_most_specific _ iT [IsA; IsB] (Inst y y y) IsA IsB O I1).
+    - cbn [find holds iT iA]. rewrite tyeqb_refl. reflexivity.
+    - simpl. auto.
+    - cbn [holds iT iB]. apply tyeqb_refl. }
+  apply N. apply tyeqb_iff.
+  exact (proj1 (le_in_iff _ iT IsA IsB) L (Inst x y x) I2 (tyeqb_refl x)).
+Qed.
+
+(**md ### Gluing a whole body
+
+The overlap check of a whole body hands an arm's body the instantiations at which the arm is
+selected. Under agreement that set is too small. When two arms agree, either may be written
+first, so an arm's body can run at any instantiation where its test succeeds. The gluing
+condition for a whole body therefore checks an arm's body over every instantiation in the region
+where the arm's test succeeds.
+*)
+
+(** The gluing condition of a whole body. The arms of every match in the body glue over the
+    instantiations that can reach it, and the body of each arm is examined wherever the arm's
+    test succeeds.
+    - [R:] the instantiations that can reach the body.
+    - [Gf:] the types of the variables in scope at each instantiation.
+    - [e:] the body. *)
+Fixpoint nglued (R : list inst3) (Gf : inst3 -> list ty) (e : ntm) : Prop :=
+  match e with
+  | NVar _ => True
+  | NPrim _ a => nglued R Gf a
+  | NPair a b => nglued R Gf a /\ nglued R Gf b
+  | NFst a => nglued R Gf a
+  | NSnd a => nglued R Gf a
+  | NLet a b => nglued R Gf a /\ nglued R (let_ctx Gf a) b
+  | NMatch a arms =>
+      nglued R Gf a /\
+      glues_in R (scrut_ty Gf a) Gf arms /\
+      (fix go (l : list (test * ntm)) : Prop :=
+         match l with
+         | [] => True
+         | (p, b) :: r =>
+             nglued (restrict R (scrut_ty Gf a) p) (arm_ctx Gf p) b /\ go r
+         end) arms
+  end.
+
+(** What the gluing condition of a match consists of. *)
+Lemma nglued_match (R : list inst3) (Gf : inst3 -> list ty) (a : ntm)
+  (arms : list (test * ntm)) :
+  nglued R Gf (NMatch a arms) ->
+  nglued R Gf a /\
+  glues_in R (scrut_ty Gf a) Gf arms /\
+  forall p b, In (p, b) arms -> nglued (restrict R (scrut_ty Gf a) p) (arm_ctx Gf p) b.
+Proof.
+  cbn [nglued]. intros [H1 [H2 H3]]. split; [exact H1 |]. split; [exact H2 |].
+  clear H1 H2. induction arms as [| [p0 b0] r IH]; intros p b I; [destruct I |].
+  destruct H3 as [H3 H4]. destruct I as [E | I].
+  - injection E as <- <-. exact H3.
+  - exact (IH H4 p b I).
+Qed.
+
+(** A body that glues, and still glues after its arms are rearranged, has the same type and, on
+    values of the types in scope, the same value at every instantiation that reaches it. The two
+    contexts may differ outside the set. *)
+Lemma glued_reorder_same (f : list (test * ntm) -> list (test * ntm)) :
+  (forall l a, In a (f l) <-> In a l) ->
+  forall (e : ntm) (R : list inst3) (Gf Gf' : inst3 -> list ty),
+    (forall s, In s R -> Gf' s = Gf s) ->
+    nglued R Gf e -> nglued R Gf' (reorder f e) ->
+    forall s, In s R ->
+      ntype s (Gf' s) (reorder f e) = ntype s (Gf s) e /\
+      forall env : list val, Forall2 has_ty env (Gf s) ->
+        nseval s (Gf' s) env (reorder f e) = nseval s (Gf s) env e.
+Proof.
+  intros Hf e.
+  induction e as [n | o e IH | a b IHa IHb | e IH | e IH | a b IHa IHb | a arms IHa IH]
+    using ntm_arms_ind; intros R Gf Gf' HG N1 N2 s Hs.
+  - cbn [reorder ntype nseval]. rewrite (HG s Hs). split; [reflexivity | intros; reflexivity].
+  - cbn [reorder nglued] in N1, N2. destruct (IH R Gf Gf' HG N1 N2 s Hs) as [T V].
+    cbn [reorder ntype nseval]. split; [rewrite T; reflexivity |].
+    intros env HE. rewrite (V env HE). reflexivity.
+  - cbn [reorder nglued] in N1, N2. destruct N1 as [N1a N1b]. destruct N2 as [N2a N2b].
+    destruct (IHa R Gf Gf' HG N1a N2a s Hs) as [Ta Va].
+    destruct (IHb R Gf Gf' HG N1b N2b s Hs) as [Tb Vb].
+    cbn [reorder ntype nseval]. split; [rewrite Ta, Tb; reflexivity |].
+    intros env HE. rewrite (Va env HE), (Vb env HE). reflexivity.
+  - cbn [reorder nglued] in N1, N2. destruct (IH R Gf Gf' HG N1 N2 s Hs) as [T V].
+    cbn [reorder ntype nseval]. split; [rewrite T; reflexivity |].
+    intros env HE. rewrite (V env HE). reflexivity.
+  - cbn [reorder nglued] in N1, N2. destruct (IH R Gf Gf' HG N1 N2 s Hs) as [T V].
+    cbn [reorder ntype nseval]. split; [rewrite T; reflexivity |].
+    intros env HE. rewrite (V env HE). reflexivity.
+  - cbn [reorder nglued] in N1, N2. destruct N1 as [N1a N1b]. destruct N2 as [N2a N2b].
+    assert (HG' : forall s', In s' R -> let_ctx Gf' (reorder f a) s' = let_ctx Gf a s').
+    { intros s' Hs'. unfold let_ctx. destruct (IHa R Gf Gf' HG N1a N2a s' Hs') as [T _].
+      rewrite T, (HG s' Hs'). reflexivity. }
+    destruct (IHa R Gf Gf' HG N1a N2a s Hs) as [Ta Va].
+    destruct (IHb R (let_ctx Gf a) (let_ctx Gf' (reorder f a)) HG' N1b N2b s Hs) as [Tb Vb].
+    unfold let_ctx in Tb, Vb. rewrite Ta in Tb, Vb.
+    cbn [reorder ntype nseval]. rewrite Ta.
+    destruct (ntype s (Gf s) a) as [x |] eqn:Tx; [| split; [reflexivity | intros; reflexivity]].
+    cbn beta iota in Tb, Vb.
+    split; [exact Tb |]. intros env HE. rewrite (Va env HE).
+    destruct (nseval_typed s (Gf s) a x env Tx HE) as [v [Ev Hv]]. rewrite Ev.
+    apply Vb. constructor; assumption.
+  - cbn [reorder] in N2. cbn [reorder].
+    apply nglued_match in N1. destruct N1 as [N1a [GL1 A1]].
+    apply nglued_match in N2. destruct N2 as [N2a [GL2 A2]].
+    remember (f (map (fun pb => (fst pb, reorder f (snd pb))) arms)) as arms' eqn:EA.
+    assert (U : forall s', In s' R ->
+              scrut_ty Gf' (reorder f a) s' = scrut_ty Gf a s').
+    { intros s' Hs'. unfold scrut_ty. destruct (IHa R Gf Gf' HG N1a N2a s' Hs') as [T _].
+      rewrite T. reflexivity. }
+    assert (INV : forall q b', In (q, b') arms' ->
+              exists bq, In (q, bq) arms /\ b' = reorder f bq).
+    { intros q b' I. rewrite EA in I. apply (proj1 (Hf _ _)) in I. apply in_map_iff in I.
+      destruct I as [[py pb] [E Iy]]. cbn [fst snd] in E. injection E as -> <-.
+      exists pb. split; [exact Iy | reflexivity]. }
+    assert (FWD : forall p b, In (p, b) arms -> In (p, reorder f b) arms').
+    { intros p b I. rewrite EA. apply (proj2 (Hf _ _)). apply in_map_iff.
+      exists (p, b). split; [reflexivity | exact I]. }
+    destruct (IHa R Gf Gf' HG N1a N2a s Hs) as [Ta Va].
+    rewrite Forall_forall in IH.
+    assert (ARM : forall t p b, ntype s (Gf s) a = Some t -> In (p, b) arms ->
+              holds s t p = true ->
+              ntype s (binder_types s p ++ Gf' s) (reorder f b) =
+              ntype s (binder_types s p ++ Gf s) b /\
+              forall (env : list val) (v : val), Forall2 has_ty env (Gf s) -> has_ty v t ->
+                nseval s (binder_types s p ++ Gf' s) (repeat v (arity p) ++ env) (reorder f b) =
+                nseval s (binder_types s p ++ Gf s) (repeat v (arity p) ++ env) b).
+    { intros t p b Ht I M.
+      assert (Us : scrut_ty Gf a s = t) by (unfold scrut_ty; rewrite Ht; reflexivity).
+      pose proof (A1 p b I) as B1. pose proof (A2 p (reorder f b) (FWD p b I)) as B2.
+      assert (RE : restrict R (scrut_ty Gf' (reorder f a)) p = restrict R (scrut_ty Gf a) p).
+      { unfold restrict. apply filter_ext_in. intros s' Hs'. rewrite (U s' Hs'). reflexivity. }
+      rewrite RE in B2.
+      assert (HGa : forall s', In s' (restrict R (scrut_ty Gf a) p) ->
+                arm_ctx Gf' p s' = arm_ctx Gf p s').
+      { intros s' Hs'. unfold restrict in Hs'. apply filter_In in Hs'.
+        unfold arm_ctx. rewrite (HG s' (proj1 Hs')). reflexivity. }
+      assert (Sin : In s (restrict R (scrut_ty Gf a) p)).
+      { unfold restrict. apply filter_In. split; [exact Hs |]. cbn beta. rewrite Us. exact M. }
+      destruct (IH (p, b) I _ (arm_ctx Gf p) (arm_ctx Gf' p) HGa B1 B2 s Sin) as [T V].
+      unfold arm_ctx in T, V. cbn [snd] in T, V. split; [exact T |].
+      intros env v HE Hv. apply V. exact (binders_typed s t p v env (Gf s) M Hv HE). }
+    assert (K : forall t, ntype s (Gf s) a = Some t ->
+              match pickn s t arms with
+              | None => pickn s t arms' = None
+              | Some (p, b) =>
+                  exists q b', pickn s t arms' = Some (q, b') /\
+                  ntype s (binder_types s q ++ Gf' s) b' =
+                  ntype s (binder_types s p ++ Gf s) b /\
+                  forall (env : list val) (v : val), Forall2 has_ty env (Gf s) -> has_ty v t ->
+                    nseval s (binder_types s q ++ Gf' s) (repeat v (arity q) ++ env) b' =
+                    nseval s (binder_types s p ++ Gf s) (repeat v (arity p) ++ env) b
+              end).
+    { intros t Ht.
+      assert (Us : scrut_ty Gf a s = t) by (unfold scrut_ty; rewrite Ht; reflexivity).
+      assert (Us' : scrut_ty Gf' (reorder f a) s = t) by (rewrite (U s Hs); exact Us).
+      destruct (pickn s t arms) as [[p b] |] eqn:F1.
+      - destruct (find_some _ _ F1) as [I1 M1]. cbn beta in M1. cbn [fst] in M1.
+        destruct (pickn s t arms') as [[q b'] |] eqn:F2.
+        + destruct (find_some _ _ F2) as [I2 M2]. cbn beta in M2. cbn [fst] in M2.
+          destruct (INV q b' I2) as [bq [Iq ->]].
+          exists q, (reorder f bq). split; [reflexivity |].
+          destruct (ARM t p b Ht I1 M1) as [TP VP].
+          destruct (ARM t q bq Ht Iq M2) as [TQ VQ].
+          assert (F1' : pickn s (scrut_ty Gf a s) arms = Some (p, b))
+            by (rewrite Us; exact F1).
+          assert (M2' : holds s (scrut_ty Gf a s) (fst (q, bq)) = true)
+            by (rewrite Us; exact M2).
+          destruct (GL1 s (p, b) (q, bq) Hs F1' Iq M2') as [L1 | [AT AV]].
+          * assert (F2' : pickn s (scrut_ty Gf' (reorder f a) s) arms' =
+                          Some (q, reorder f bq)) by (rewrite Us'; exact F2).
+            assert (M1' : holds s (scrut_ty Gf' (reorder f a) s) (fst (p, reorder f b)) = true)
+              by (rewrite Us'; exact M1).
+            destruct (GL2 s (q, reorder f bq) (p, reorder f b) Hs F2' (FWD p b I1) M1')
+              as [L2 | [BT BV]].
+            -- exfalso. rewrite (lt_in_ext R _ _ _ _ U) in L2. cbn [fst] in L1, L2.
+               exact (lt_in_asym R _ _ _ L1 L2).
+            -- cbn [fst snd] in BT, BV. rewrite Us' in BV. split.
+               ++ rewrite BT. exact TP.
+               ++ intros env v HE Hv. rewrite (BV env v Hv). exact (VP env v HE Hv).
+          * cbn [fst snd] in AT, AV. rewrite Us in AV. split.
+            -- rewrite TQ. symmetry. exact AT.
+            -- intros env v HE Hv. rewrite (VQ env v HE Hv). symmetry. exact (AV env v Hv).
+        + exfalso. pose proof (find_none _ _ F2 _ (FWD p b I1)) as E. cbn beta in E.
+          cbn [fst] in E. rewrite M1 in E. discriminate.
+      - destruct (pickn s t arms') as [[q b'] |] eqn:F2; [| reflexivity]. exfalso.
+        destruct (find_some _ _ F2) as [I2 M2]. cbn beta in M2. cbn [fst] in M2.
+        destruct (INV q b' I2) as [bq [Iq _]].
+        pose proof (find_none _ _ F1 _ Iq) as E. cbn beta in E. cbn [fst] in E.
+        rewrite M2 in E. discriminate. }
+    split.
+    + rewrite !ntype_match, Ta. destruct (ntype s (Gf s) a) as [t |]; [| reflexivity].
+      specialize (K t eq_refl). destruct (pickn s t arms) as [[p b] |].
+      * destruct K as [q [b' [K1 [K2 _]]]]. rewrite K1. exact K2.
+      * rewrite K. reflexivity.
+    + intros env HE. rewrite !nseval_match, Ta, (Va env HE).
+      destruct (ntype s (Gf s) a) as [t |] eqn:Tt; [| reflexivity].
+      destruct (nseval_typed s (Gf s) a t env Tt HE) as [v [Ev Hv]]. rewrite Ev.
+      specialize (K t eq_refl). destruct (pickn s t arms) as [[p b] |].
+      * destruct K as [q [b' [K1 [_ K3]]]]. rewrite K1. exact (K3 env v HE Hv).
+      * rewrite K. reflexivity.
+Qed.
+
+(**md
+**A body that glues means the same after any rearrangement of its arms.**
+
+Take a body, and the same body with the arms of every match rearranged, at any depth. If both
+glue over a set of instantiations, they have the same type at every instantiation in the set,
+and on values of the types in scope they return the same value. A match in the body may be glued
+by priority, by agreement, or by each on different overlaps.
+
+This is `reordering_arms_changes_nothing` with agreement admitted. The arm selected by a match
+may differ between the two bodies, which it cannot under priority alone. The proof follows the
+body that runs in each: both are examined at the instantiation, because each is examined
+wherever its test succeeds.
+
+- [f:] the rearrangement applied to each list of arms. It keeps the same arms.
+- [e:] the body.
+- [R:] the instantiations that reach the body.
+- [Gf:] the types of the variables in scope at each of them.
+*)
+Theorem glued_body_means_the_same_reordered
+    (f : list (test * ntm) -> list (test * ntm)) (e : ntm)
+    (R : list inst3) (Gf : inst3 -> list ty) :
+  (forall l a, In a (f l) <-> In a l) ->
+  nglued R Gf e -> nglued R Gf (reorder f e) ->
+  forall s, In s R ->
+    ntype s (Gf s) (reorder f e) = ntype s (Gf s) e /\
+    forall env : list val, Forall2 has_ty env (Gf s) ->
+      nseval s (Gf s) env (reorder f e) = nseval s (Gf s) env e.
+Proof.
+  intros Hf N1 N2. exact (glued_reorder_same f Hf e R Gf Gf (fun _ _ => eq_refl) N1 N2).
+Qed.
+
+(**md
+**A definition that glues may have the arms of any of its matches rearranged.**
+
+For a definition, the gluing condition starts from the whole table. If the definition and its
+rearrangement both glue, the rearrangement passes the type check exactly when the definition
+does, and at every instantiation that satisfies the constraints the two return the same result
+on a scrutinee and arguments of the declared types.
+
+- [G:] the types of the other parameters.
+- [e:] the body.
+- [res:] the declared result type.
+- [f:] the rearrangement applied to each list of arms.
+*)
+Theorem glued_definition_means_the_same_reordered
+    (CA CB : cset) (G : list oty3) (e : ntm) (res : oty3)
+    (f : list (test * ntm) -> list (test * ntm)) :
+  (forall l a, In a (f l) <-> In a l) ->
+  nglued (table CA CB) (top_ctx G) e ->
+  nglued (table CA CB) (top_ctx G) (reorder f e) ->
+  ncheck CA CB G (reorder f e) res = ncheck CA CB G e res /\
+  forall (s : inst3) (env : list val) (x : val),
+    valid CA CB s -> has_ty x (iT s) ->
+    Forall2 has_ty env (map (inst3ty s) G) ->
+    nseval s (iT s :: map (inst3ty s) G) (x :: env) (reorder f e) =
+    nseval s (iT s :: map (inst3ty s) G) (x :: env) e.
+Proof.
+  intros Hf N1 N2.
+  pose proof (glued_body_means_the_same_reordered f e (table CA CB) (top_ctx G) Hf N1 N2) as K.
+  split.
+  - unfold ncheck. apply forallb_eq_in. intros s Hs. destruct (K s Hs) as [T _].
+    unfold top_ctx in T. rewrite T. reflexivity.
+  - intros s env x V Hx HE. destruct (K s (proj2 (table_iff_valid CA CB s) V)) as [_ E].
+    apply E. unfold top_ctx. constructor; assumption.
+Qed.
+
+(**md
+**The gluing condition accepts in both orders a definition the overlap check rejects.**
+
+For `'A : (x | y)` and `'B : (y)`, the two-arm match whose arms both return the scrutinee glues,
+and so does the same match with its arms reversed. The whole-body overlap check rejects it,
+because the arms overlap and neither is more specific. So the hypotheses of the two theorems
+above can be met by a definition that priority does not admit.
+
+- [x:] a member of the first set only.
+- [y:] the member the two sets share.
+*)
+Theorem gluing_accepts_what_overlap_check_rejects (x y : ty) :
+  x <> y ->
+  nglued (table [x; y] [y]) (top_ctx []) two_arms /\
+  nglued (table [x; y] [y]) (top_ctx []) (reorder (@rev (test * ntm)) two_arms) /\
+  nordered (table [x; y] [y]) (top_ctx []) two_arms = false.
+Proof.
+  intros N. split; [| split].
+  - unfold two_arms. cbn [nglued]. split; [exact I |]. split; [| repeat split].
+    apply inner_same_body_glues. reflexivity.
+  - unfold two_arms. cbn [reorder map rev app fst snd nglued].
+    split; [exact I |]. split; [| repeat split].
+    apply inner_same_body_glues. reflexivity.
+  - destruct (nordered (table [x; y] [y]) (top_ctx []) two_arms) eqn:E; [| reflexivity].
+    unfold two_arms in E. apply nordered_match in E. destruct E as [_ [O _]].
+    change (ordered_in (table [x; y] [y]) iT [] [IsA; IsB] = true) in O.
+    rewrite ordered_in_table, (unordered_overlap_rejected x y N) in O. discriminate.
+Qed.
+
 (**md ## Rules stated in prose
 
 These parts of a nested type-case are not modelled.
 
-1. **Agreement for an inner match.** Bodies accepts two overlapping arms that compute the same
-   result. That second way of gluing is not stated for an inner match.
-2. **Every matching arm.** This module types the arm selected at each instantiation. Bodies types
-   every arm that matches. The results on arm order do not need the stronger check, because they
-   show the same arm is selected in either order.
-3. **Unreachable inner arms.** An inner arm whose computed set is empty can never run. The model
+1. **The gluing condition is not a computed check.** `nglued` is a statement, because agreement
+   of two bodies is not decidable in general. A compiler would decide it by priority, by
+   identical bodies (`inner_same_body_glues`), or by a proof it is given. No such procedure is
+   modelled, and none is proved to imply `nglued`.
+2. **The overlap check of a whole body does not imply the gluing condition.** `nordered` examines
+   an arm's body where the arm is selected, and `nglued` examines it wherever the arm's test
+   succeeds. Neither check is preserved when its set is made larger or smaller, because whether
+   one test is strictly more specific than another depends on the set. So a body that passes
+   `nordered` is not shown to satisfy `nglued`. The two reordering theorems stand side by side.
+3. **A tighter set under agreement.** Whether the gluing condition could examine an arm's body
+   only where the arm is selected, as `nordered` does, is not settled. The proof of
+   `glued_body_means_the_same_reordered` needs both of two agreeing bodies examined at the
+   overlap, and with the smaller set each order examines only one of them. No counterexample is
+   proved.
+4. **Agreement here and in Bodies.** Agreement of two inner arms includes the type of the two
+   bodies. Agreement in Bodies does not, because its check types every arm that matches. That
+   the first follows from the second for a match with no nesting is not proved.
+5. **Every matching arm.** This module types the arm selected at each instantiation. Bodies types
+   every arm that matches. The results on arm order do not need the stronger check: under
+   priority the same arm is selected in either order, and agreement asks for equal types.
+6. **Unreachable inner arms.** An inner arm whose computed set is empty can never run. The model
    accepts it. A compiler would report it, as it reports an unreachable rule.
    `inner_tests_decided_in_a_region` shows when this happens for a scrutinee of variable type.
-4. **The cost of the check.** The check filters the set once for each arm of each match. No bound
+7. **The cost of the check.** The check filters the set once for each arm of each match. No bound
    on that work is stated.
 *)
