@@ -41,7 +41,11 @@ equation reading. Member types are closed, as in RFC 0001.
 | The check over the region accepts an inner match the check over the table rejects | Proved for one family of constraints: `region_check_accepts_what_table_check_rejects` |
 | Under the check over its region, with no two arms equally specific there, the order of an inner match's arms changes neither its type nor its value | Proved: `inner_order_is_irrelevant` |
 | Inside an arm of the three-arm match, a test on a scrutinee of variable type is constant | Proved: `inner_tests_decided_in_a_region` |
-| The region an inner match runs in, computed from a body | Not modelled. The theorems hold for any set that contains it |
+| The set computed for an arm is exactly where that arm is selected | Proved: `reach_is_where_the_arm_is_selected` |
+| A body that passes the whole-body overlap check means the same after any rearrangement of the arms of any of its matches | Proved: `reordering_arms_changes_nothing` |
+| A definition and its rearrangement that both pass the check type-check alike and return the same result | Proved: `reordered_definition_means_the_same` |
+| The whole-body check accepts some match in both orders | Proved for one family of constraints: `check_accepts_both_orders` |
+| A bound on the work the whole-body check does | Not proved |
 | Agreement, the second way of gluing, for an inner match | Not modelled |
 | A nested match under the membership reading | Not modelled |
 | Inference with a constraint `'T : ('A or 'B)` keeps principal types | Not proved. The research note argues it does not, without a restriction |
@@ -127,6 +131,7 @@ are a reading of the specification and the design documents, and none is a theor
 | Agreement by identical bodies | 1 | A structural comparison |
 | A nested match (`ncheck`) | Edge of 1 | Each test is an equality between two closed types at an instantiation. The check still enumerates the table |
 | The overlap check for an inner match (`ordered_in`) | Edge of 1 | The same enumeration as the overlap check, over part of the table. It compares arms by generality, as that check does |
+| The whole-body overlap check (`nordered`) | Edge of 1 | One walk over the body. At each arm the set of instantiations is filtered by equalities between closed types |
 | Agreement by proved equivalence | 4 | A relation between two programs |
 
 **The constraint is a disjunction of equations between variables.** `'T : ('A | 'B)` says `'T` is
@@ -186,7 +191,13 @@ compared over. The proofs give this answer.
 3. **So the check is taken over the region.** It accepts everything the other accepts, rejects
    nothing whose order is safe where it runs, and costs no more: it enumerates fewer
    instantiations.
-4. **In this model the question rarely arises.** Inside an arm of the three-arm match, every test
+4. **The region is computed by one walk over the body.** The check `nordered` starts from the
+   whole table and, at each match, hands each arm's body the instantiations at which that arm is
+   selected. That set is exact (`reach_is_where_the_arm_is_selected`). A body that passes, and
+   passes again with the arms of any of its matches rearranged, has the same type and value at
+   every instantiation (`reordering_arms_changes_nothing`,
+   `reordered_definition_means_the_same`). No region is supplied from outside.
+5. **In this model the question rarely arises.** Inside an arm of the three-arm match, every test
    on a scrutinee whose type is one of the variables is constant
    (`inner_tests_decided_in_a_region`). Such an inner match needs one arm. The check decides
    something only for an inner match in an arm that overlaps a later arm, or on a scrutinee whose
@@ -249,10 +260,10 @@ Nothing in a program without a closed-set constraint changes. The RFC depends on
    surface form of the first.
 2. Whether a missing reachable intersection arm is an error. The overlap check as modelled makes it
    one, unless the overlapping arms agree.
-3. How the compiler computes the region of an inner match from a body. [Nested](Clef.RFC0002.Nested.html)
-   settles that the overlap check for an inner match is taken over that region, and proves its
-   theorems for any set that contains it. Whether agreement is admitted for an inner match is
-   part of question 1.
+3. What the whole-body overlap check costs. [Nested](Clef.RFC0002.Nested.html) computes the region
+   of every inner match by filtering the table once for each arm, and proves the check does its
+   job. No bound on that work is proved. Whether agreement is admitted for an inner match is part
+   of question 1.
 4. Constraints declared but never inferred, as the restriction that keeps inference principal.
 5. The diagnostic for two arms with equivalent tests.
 *)

@@ -20,13 +20,14 @@ let g<'A, 'B, 'T when 'A : (int | string)
     | :? 'B as b -> b
 ```
 
-Five questions are answered.
+Six questions are answered.
 
 1. Is a nested type-case still erased? A specialization has no type to inspect, at any depth.
 2. Is a definition that checks still safe to run at every instantiation?
 3. What does an inner match know about the arm it is in?
 4. Does the model agree with [Bodies](Clef.RFC0002.Bodies.html) where there is no nesting?
 5. Over which instantiations are the arms of an inner match compared by the overlap check?
+6. How is that set of instantiations computed from a body?
 
 Only the equation reading is modelled, since it is the one the RFC adopts. A test `:? 'A` on a
 scrutinee succeeds when the scrutinee's type is the type `'A` is instantiated to.
@@ -1296,20 +1297,568 @@ Proof.
   apply (var_test_by_equations s1 s2 o Ho E1 E2). rewrite A1, A2, E1, E2. reflexivity.
 Qed.
 
+(**md ## Computing the region from a body
+
+The theorems above take the region of an inner match as given. This section computes it. The
+check walks the body once with a set of instantiations in hand, starting from the whole table.
+At a match it narrows the set for each arm to the instantiations at which that arm is selected,
+and checks the arm's body over the narrowed set. Every match is thereby checked over the
+instantiations that reach it, at any depth.
+*)
+
+(** The instantiations of a set at which an arm is selected: its test succeeds and the test of
+    no earlier arm does.
+    - [R:] the instantiations the match runs at.
+    - [u:] the type of its scrutinee at each instantiation.
+    - [seen:] the tests of the earlier arms.
+    - [p:] the test of the arm. *)
+Definition reach (R : list inst3) (u : inst3 -> ty) (seen : list test) (p : test) : list inst3 :=
+  filter (fun s => holds s (u s) p && negb (existsb (fun q => holds s (u s) q) seen)) R.
+
+(** The type of a scrutinee at each instantiation. Where the scrutinee has no type the match is
+    rejected by the type check, and the choice made here is not used.
+    - [Gf:] the types of the variables in scope at each instantiation.
+    - [a:] the scrutinee. *)
+Definition scrut_ty (Gf : inst3 -> list ty) (a : ntm) (s : inst3) : ty :=
+  match ntype s (Gf s) a with
+  | Some t => t
+  | None => iT s
+  end.
+
+(** The context of an arm's body at each instantiation. *)
+Definition arm_ctx (Gf : inst3 -> list ty) (p : test) (s : inst3) : list ty :=
+  binder_types s p ++ Gf s.
+
+(** The context of the body of a binding at each instantiation. *)
+Definition let_ctx (Gf : inst3 -> list ty) (a : ntm) (s : inst3) : list ty :=
+  match ntype s (Gf s) a with
+  | Some x => x :: Gf s
+  | None => Gf s
+  end.
+
+(** Whether no two tests in a list are equally specific over a set of instantiations. This is
+    the requirement `priority_glues` adds to the overlap check, computed. *)
+Fixpoint distinct_in (R : list inst3) (u : inst3 -> ty) (l : list test) : bool :=
+  match l with
+  | [] => true
+  | p :: r =>
+      forallb (fun q => negb (le_in R u p q && le_in R u q p)) r && distinct_in R u r
+  end.
+
+(** A check of each arm of a match, given the tests of the arms before it.
+    - [chk:] the check of one arm, given the tests before it, its test and its body.
+    - [seen:] the tests of the arms before the ones being checked.
+    - [l:] the arms still to check. *)
+Fixpoint arms_ok (chk : list test -> test -> ntm -> bool) (seen : list test)
+  (l : list (test * ntm)) : bool :=
+  match l with
+  | [] => true
+  | (p, b) :: r => chk seen p b && arms_ok chk (seen ++ [p]) r
+  end.
+
+(** The overlap check of a whole body. Every match in the body passes the overlap check over the
+    instantiations that reach it, and has no two arms equally specific there.
+    - [R:] the instantiations that reach the body.
+    - [Gf:] the types of the variables in scope at each instantiation.
+    - [e:] the body. *)
+Fixpoint nordered (R : list inst3) (Gf : inst3 -> list ty) (e : ntm) : bool :=
+  match e with
+  | NVar _ => true
+  | NPrim _ a => nordered R Gf a
+  | NPair a b => nordered R Gf a && nordered R Gf b
+  | NFst a => nordered R Gf a
+  | NSnd a => nordered R Gf a
+  | NLet a b => nordered R Gf a && nordered R (let_ctx Gf a) b
+  | NMatch a arms =>
+      nordered R Gf a
+      && ordered_in R (scrut_ty Gf a) [] (map fst arms)
+      && distinct_in R (scrut_ty Gf a) (map fst arms)
+      && arms_ok
+           (fun seen p b => nordered (reach R (scrut_ty Gf a) seen p) (arm_ctx Gf p) b)
+           [] arms
+  end.
+
+Lemma existsb_false_find {A : Type} (f : A -> bool) (l : list A) :
+  existsb f l = false <-> find f l = None.
+Proof.
+  induction l as [| a l IH]; simpl; [tauto |].
+  destruct (f a); simpl; [split; discriminate | exact IH].
+Qed.
+
+(** An arm is selected exactly where its test succeeds and no earlier test does, given that its
+    test is not among the earlier ones. *)
+Lemma reach_pred_iff (s : inst3) (t : ty) (seen rest : list test) (p : test) :
+  ~ In p seen ->
+  (holds s t p && negb (existsb (fun q => holds s t q) seen) = true <->
+   find (fun q => holds s t q) (seen ++ p :: rest) = Some p).
+Proof.
+  intros NI. rewrite find_app. split.
+  - intros H. apply andb_true_iff in H. destruct H as [Hp Hn]. apply negb_true_iff in Hn.
+    apply existsb_false_find in Hn. rewrite Hn. simpl. rewrite Hp. reflexivity.
+  - intros H. destruct (find (fun q => holds s t q) seen) as [q |] eqn:F.
+    + injection H as ->. destruct (find_some _ _ F) as [I _]. contradiction.
+    + apply existsb_false_find in F. rewrite F. simpl in H.
+      destruct (holds s t p) eqn:Hp; [reflexivity |].
+      destruct (find_some _ _ H) as [_ M]. cbn beta in M. rewrite Hp in M. discriminate.
+Qed.
+
+Lemma distinct_head (R : list inst3) (u : inst3 -> ty) (p : test) (l : list test) (q : test) :
+  distinct_in R u (p :: l) = true -> In q l -> le_in R u p q && le_in R u q p = false.
+Proof.
+  cbn [distinct_in]. intros H Hq. apply andb_true_iff in H. destruct H as [H _].
+  rewrite forallb_forall in H. specialize (H q Hq). cbn beta in H.
+  apply negb_true_iff in H. exact H.
+Qed.
+
+Lemma distinct_tail (R : list inst3) (u : inst3 -> ty) (p : test) (l : list test) :
+  distinct_in R u (p :: l) = true -> distinct_in R u l = true.
+Proof.
+  cbn [distinct_in]. intros H. apply andb_true_iff in H. exact (proj2 H).
+Qed.
+
+(** Among tests that are pairwise not equally specific, two that are equally specific are the
+    same test. *)
+Lemma distinct_antisym (R : list inst3) (u : inst3 -> ty) (l : list test) :
+  distinct_in R u l = true ->
+  forall p q, In p l -> In q l ->
+    le_in R u p q = true -> le_in R u q p = true -> p = q.
+Proof.
+  induction l as [| x r IH]; intros D p q Hp Hq L1 L2; [destruct Hp |].
+  destruct Hp as [<- | Hp]; destruct Hq as [<- | Hq].
+  - reflexivity.
+  - pose proof (distinct_head R u x r q D Hq) as E. rewrite L1, L2 in E. discriminate.
+  - pose proof (distinct_head R u x r p D Hp) as E. rewrite L1, L2 in E. discriminate.
+  - apply (IH (distinct_tail R u x r D) p q Hp Hq L1 L2).
+Qed.
+
+(** A test does not occur before itself in such a list. *)
+Lemma distinct_notin (R : list inst3) (u : inst3 -> ty) (l1 : list test) (p : test)
+  (l2 : list test) :
+  distinct_in R u (l1 ++ p :: l2) = true -> ~ In p l1.
+Proof.
+  induction l1 as [| x r IH]; intros D I; [exact I |].
+  destruct I as [-> | I].
+  - pose proof (distinct_head R u p (r ++ p :: l2) p D (in_elt p r l2)) as E.
+    rewrite le_in_refl in E. simpl in E. discriminate.
+  - apply (IH (distinct_tail R u x _ D) I).
+Qed.
+
+(** Arms whose tests are pairwise not equally specific are told apart by their tests. *)
+Lemma distinct_fst_inj (R : list inst3) (u : inst3 -> ty) (l : list (test * ntm)) :
+  distinct_in R u (map fst l) = true ->
+  forall y z, In y l -> In z l -> fst y = fst z -> y = z.
+Proof.
+  induction l as [| x r IH]; intros D y z Hy Hz E; [destruct Hy |].
+  cbn [map] in D. destruct Hy as [<- | Hy]; destruct Hz as [<- | Hz].
+  - reflexivity.
+  - pose proof (distinct_head R u (fst x) (map fst r) (fst z) D (in_map fst r z Hz)) as K.
+    rewrite <- E, le_in_refl in K. simpl in K. discriminate.
+  - pose proof (distinct_head R u (fst x) (map fst r) (fst y) D (in_map fst r y Hy)) as K.
+    rewrite E, le_in_refl in K. simpl in K. discriminate.
+  - apply (IH (distinct_tail R u (fst x) _ D) y z Hy Hz E).
+Qed.
+
+Lemma arms_ok_split (chk : list test -> test -> ntm -> bool) :
+  forall (pre : list (test * ntm)) (seen : list test) (p : test) (b : ntm)
+         (post : list (test * ntm)),
+    arms_ok chk seen (pre ++ (p, b) :: post) = true ->
+    chk (seen ++ map fst pre) p b = true.
+Proof.
+  induction pre as [| [p0 b0] pre IH]; intros seen p b post H; simpl in H;
+    apply andb_true_iff in H; destruct H as [H1 H2].
+  - simpl. rewrite app_nil_r. exact H1.
+  - specialize (IH (seen ++ [p0]) p b post H2). rewrite <- app_assoc in IH. exact IH.
+Qed.
+
+(** What the check of a match consists of. *)
+Lemma nordered_match (R : list inst3) (Gf : inst3 -> list ty) (a : ntm)
+  (arms : list (test * ntm)) :
+  nordered R Gf (NMatch a arms) = true ->
+  nordered R Gf a = true /\
+  ordered_in R (scrut_ty Gf a) [] (map fst arms) = true /\
+  distinct_in R (scrut_ty Gf a) (map fst arms) = true /\
+  forall pre p b post, arms = pre ++ (p, b) :: post ->
+    nordered (reach R (scrut_ty Gf a) (map fst pre) p) (arm_ctx Gf p) b = true.
+Proof.
+  cbn [nordered]. intros H.
+  apply andb_true_iff in H. destruct H as [H H4].
+  apply andb_true_iff in H. destruct H as [H H3].
+  apply andb_true_iff in H. destruct H as [H1 H2].
+  split; [exact H1 |]. split; [exact H2 |]. split; [exact H3 |].
+  intros pre p b post E. rewrite E in H4.
+  exact (arms_ok_split _ pre [] p b post H4).
+Qed.
+
+(**md
+**The set computed for an arm is exactly where that arm is selected.**
+
+For an arm whose test is not among the earlier tests, an instantiation is in the computed set if
+and only if it is in the set the match runs at and the match selects that arm there. So the set
+handed down to an arm's body holds every instantiation at which the body runs, and no other.
+
+- [R:] the instantiations the match runs at.
+- [u:] the type of its scrutinee at each of them.
+- [pre:] the arms before this one.
+- [p:] the test of this arm.
+- [b:] its body.
+- [post:] the arms after it.
+*)
+Theorem reach_is_where_the_arm_is_selected
+    (R : list inst3) (u : inst3 -> ty) (pre : list (test * ntm)) (p : test) (b : ntm)
+    (post : list (test * ntm)) (s : inst3) :
+  ~ In p (map fst pre) ->
+  (In s (reach R u (map fst pre) p) <->
+   In s R /\ pickn s (u s) (pre ++ (p, b) :: post) = Some (p, b)).
+Proof.
+  intros NI. unfold reach, pickn. rewrite filter_In, find_app. cbn beta. split.
+  - intros [Hs H]. split; [exact Hs |].
+    apply andb_true_iff in H. destruct H as [Hp Hn]. apply negb_true_iff in Hn.
+    destruct (find (fun a => holds s (u s) (fst a)) pre) as [x |] eqn:F.
+    + destruct (find_some _ _ F) as [I M]. cbn beta in M.
+      assert (X : existsb (fun q => holds s (u s) q) (map fst pre) = true).
+      { apply existsb_exists. exists (fst x). split; [apply in_map; exact I | exact M]. }
+      rewrite X in Hn. discriminate.
+    + simpl. rewrite Hp. reflexivity.
+  - intros [Hs H]. split; [exact Hs |].
+    destruct (find (fun a => holds s (u s) (fst a)) pre) as [x |] eqn:F.
+    + injection H as ->. destruct (find_some _ _ F) as [I _]. exfalso. apply NI.
+      apply (in_map fst _ _ I).
+    + simpl in H. destruct (holds s (u s) p) eqn:Hp.
+      * simpl. apply negb_true_iff.
+        destruct (existsb (fun q => holds s (u s) q) (map fst pre)) eqn:X; [| reflexivity].
+        apply existsb_exists in X. destruct X as [q [Iq Mq]].
+        apply in_map_iff in Iq. destruct Iq as [y [<- Iy]].
+        pose proof (find_none _ _ F y Iy) as Z. cbn beta in Z. rewrite Mq in Z. discriminate.
+      * destruct (find_some _ _ H) as [_ M]. cbn beta in M. simpl in M.
+        rewrite Hp in M. discriminate.
+Qed.
+
+(**md ### Reordering the arms of any match *)
+
+(** A body with the arms of every match rearranged.
+    - [f:] the rearrangement applied to each list of arms.
+    - [e:] the body. *)
+Fixpoint reorder (f : list (test * ntm) -> list (test * ntm)) (e : ntm) : ntm :=
+  match e with
+  | NVar n => NVar n
+  | NPrim o a => NPrim o (reorder f a)
+  | NPair a b => NPair (reorder f a) (reorder f b)
+  | NFst a => NFst (reorder f a)
+  | NSnd a => NSnd (reorder f a)
+  | NLet a b => NLet (reorder f a) (reorder f b)
+  | NMatch a arms =>
+      NMatch (reorder f a) (f (map (fun pb => (fst pb, reorder f (snd pb))) arms))
+  end.
+
+Lemma forallb_eq_in {A : Type} (f g : A -> bool) (l : list A) :
+  (forall a, In a l -> f a = g a) -> forallb f l = forallb g l.
+Proof.
+  induction l as [| a l IH]; intros H; simpl; [reflexivity |].
+  rewrite (H a (or_introl eq_refl)), IH; [reflexivity |].
+  intros x Hx. apply H. right. exact Hx.
+Qed.
+
+Lemma le_in_ext (R : list inst3) (u u' : inst3 -> ty) (p q : test) :
+  (forall s, In s R -> u s = u' s) -> le_in R u p q = le_in R u' p q.
+Proof.
+  intros H. unfold le_in. apply forallb_eq_in. intros s Hs. rewrite (H s Hs). reflexivity.
+Qed.
+
+(** The overlap check over a set depends on the scrutinee's type only at that set. *)
+Lemma ordered_in_ext (R : list inst3) (u u' : inst3 -> ty) (arms : list test) :
+  (forall s, In s R -> u s = u' s) ->
+  forall seen, ordered_in R u seen arms = ordered_in R u' seen arms.
+Proof.
+  intros H. induction arms as [| q rest IH]; intros seen; cbn [ordered_in]; [reflexivity |].
+  rewrite IH. f_equal. apply forallb_eq_in. intros s Hs. rewrite (H s Hs).
+  destruct (find (fun p => holds s (u' s) p) seen) as [p |]; [| reflexivity].
+  rewrite (le_in_ext R u u' p q H). reflexivity.
+Qed.
+
+(** Under the check over a set, two lists holding the same tests, pairwise not equally specific,
+    select the same test at every instantiation in the set. *)
+Lemma test_selection_order_free (R : list inst3) (u : inst3 -> ty) (t1 t2 : list test) :
+  ordered_in R u [] t1 = true ->
+  ordered_in R u [] t2 = true ->
+  (forall p, In p t1 <-> In p t2) ->
+  (forall p q, In p t1 -> In q t1 ->
+     le_in R u p q = true -> le_in R u q p = true -> p = q) ->
+  forall s, In s R ->
+    find (fun t => holds s (u s) t) t1 = find (fun t => holds s (u s) t) t2.
+Proof.
+  intros O1 O2 P D s Hs.
+  destruct (find (fun t => holds s (u s) t) t1) as [p1 |] eqn:F1;
+    destruct (find (fun t => holds s (u s) t) t2) as [p2 |] eqn:F2.
+  - destruct (find_some _ _ F1) as [I1 M1]. destruct (find_some _ _ F2) as [I2 M2].
+    f_equal. apply (D p1 p2 I1 (proj2 (P p2) I2)).
+    + apply (inner_first_match_is_most_specific R u t1 s p1 p2 O1 Hs F1);
+        [apply P; exact I2 | exact M2].
+    + apply (inner_first_match_is_most_specific R u t2 s p2 p1 O2 Hs F2);
+        [apply P; exact I1 | exact M1].
+  - destruct (find_some _ _ F1) as [I1 M1].
+    pose proof (find_none _ _ F2 p1 (proj1 (P p1) I1)) as E. cbn beta in E.
+    cbn beta in M1. rewrite M1 in E. discriminate.
+  - destruct (find_some _ _ F2) as [I2 M2].
+    pose proof (find_none _ _ F1 p2 (proj2 (P p2) I2)) as E. cbn beta in E.
+    cbn beta in M2. rewrite M2 in E. discriminate.
+  - reflexivity.
+Qed.
+
+(** The rearranged arms test what the arms test. *)
+Lemma reorder_tests (f : list (test * ntm) -> list (test * ntm)) (g : ntm -> ntm)
+  (arms : list (test * ntm)) :
+  (forall l a, In a (f l) <-> In a l) ->
+  forall p, In p (map fst arms) <->
+            In p (map fst (f (map (fun pb => (fst pb, g (snd pb))) arms))).
+Proof.
+  intros Hf p. rewrite !in_map_iff. split.
+  - intros [y [E I]]. exists (fst y, g (snd y)). split; [exact E |].
+    apply (proj2 (Hf _ _)). apply in_map_iff. exists y. split; [reflexivity | exact I].
+  - intros [x [E I]]. apply (proj1 (Hf _ _)) in I. apply in_map_iff in I. destruct I as [y [E2 I]].
+    exists y. split; [| exact I]. rewrite <- E, <- E2. reflexivity.
+Qed.
+
+(** A body that passes the check, and still passes it after its arms are rearranged, has the
+    same type and value at every instantiation that reaches it. The two contexts may differ
+    outside the set. *)
+Lemma reorder_same (f : list (test * ntm) -> list (test * ntm)) :
+  (forall l a, In a (f l) <-> In a l) ->
+  forall (e : ntm) (R : list inst3) (Gf Gf' : inst3 -> list ty),
+    (forall s, In s R -> Gf' s = Gf s) ->
+    nordered R Gf e = true -> nordered R Gf' (reorder f e) = true ->
+    forall s, In s R ->
+      ntype s (Gf' s) (reorder f e) = ntype s (Gf s) e /\
+      forall env : list val,
+        nseval s (Gf' s) env (reorder f e) = nseval s (Gf s) env e.
+Proof.
+  intros Hf e.
+  induction e as [n | o e IH | a b IHa IHb | e IH | e IH | a b IHa IHb | a arms IHa IH]
+    using ntm_arms_ind; intros R Gf Gf' HG N1 N2 s Hs.
+  - cbn [reorder ntype nseval]. rewrite (HG s Hs). split; reflexivity.
+  - cbn [reorder nordered] in N1, N2. destruct (IH R Gf Gf' HG N1 N2 s Hs) as [T V].
+    cbn [reorder ntype nseval]. split; [rewrite T; reflexivity |].
+    intros env. rewrite V. reflexivity.
+  - cbn [reorder nordered] in N1, N2.
+    apply andb_true_iff in N1. destruct N1 as [N1a N1b].
+    apply andb_true_iff in N2. destruct N2 as [N2a N2b].
+    destruct (IHa R Gf Gf' HG N1a N2a s Hs) as [Ta Va].
+    destruct (IHb R Gf Gf' HG N1b N2b s Hs) as [Tb Vb].
+    cbn [reorder ntype nseval]. split; [rewrite Ta, Tb; reflexivity |].
+    intros env. rewrite Va, Vb. reflexivity.
+  - cbn [reorder nordered] in N1, N2. destruct (IH R Gf Gf' HG N1 N2 s Hs) as [T V].
+    cbn [reorder ntype nseval]. split; [rewrite T; reflexivity |].
+    intros env. rewrite V. reflexivity.
+  - cbn [reorder nordered] in N1, N2. destruct (IH R Gf Gf' HG N1 N2 s Hs) as [T V].
+    cbn [reorder ntype nseval]. split; [rewrite T; reflexivity |].
+    intros env. rewrite V. reflexivity.
+  - cbn [reorder nordered] in N1, N2.
+    apply andb_true_iff in N1. destruct N1 as [N1a N1b].
+    apply andb_true_iff in N2. destruct N2 as [N2a N2b].
+    assert (HG' : forall s', In s' R -> let_ctx Gf' (reorder f a) s' = let_ctx Gf a s').
+    { intros s' Hs'. unfold let_ctx. destruct (IHa R Gf Gf' HG N1a N2a s' Hs') as [T _].
+      rewrite T, (HG s' Hs'). reflexivity. }
+    destruct (IHa R Gf Gf' HG N1a N2a s Hs) as [Ta Va].
+    destruct (IHb R (let_ctx Gf a) (let_ctx Gf' (reorder f a)) HG' N1b N2b s Hs) as [Tb Vb].
+    unfold let_ctx in Tb, Vb. rewrite Ta in Tb, Vb.
+    cbn [reorder ntype nseval]. rewrite Ta.
+    destruct (ntype s (Gf s) a) as [x |]; [| split; reflexivity].
+    split; [exact Tb |]. intros env. rewrite Va.
+    destruct (nseval s (Gf s) env a) as [v |]; [apply Vb | reflexivity].
+  - cbn [reorder] in N2. cbn [reorder].
+    apply nordered_match in N1. destruct N1 as [N1a [O1 [D1 A1]]].
+    apply nordered_match in N2. destruct N2 as [N2a [O2 [D2 A2]]].
+    remember (f (map (fun pb => (fst pb, reorder f (snd pb))) arms)) as arms' eqn:EA.
+    assert (U : forall s', In s' R ->
+              scrut_ty Gf' (reorder f a) s' = scrut_ty Gf a s').
+    { intros s' Hs'. unfold scrut_ty. destruct (IHa R Gf Gf' HG N1a N2a s' Hs') as [T _].
+      rewrite T. reflexivity. }
+    rewrite (ordered_in_ext R _ _ (map fst arms') U) in O2.
+    assert (TM : forall p, In p (map fst arms) <-> In p (map fst arms')).
+    { rewrite EA. apply reorder_tests. exact Hf. }
+    pose proof (test_selection_order_free R (scrut_ty Gf a) (map fst arms) (map fst arms')
+                  O1 O2 TM (distinct_antisym R _ _ D1)) as SEL.
+    destruct (IHa R Gf Gf' HG N1a N2a s Hs) as [Ta Va].
+    assert (K : forall t, ntype s (Gf s) a = Some t ->
+              match pickn s t arms with
+              | None => pickn s t arms' = None
+              | Some (p, b) =>
+                  pickn s t arms' = Some (p, reorder f b) /\
+                  ntype s (binder_types s p ++ Gf' s) (reorder f b) =
+                  ntype s (binder_types s p ++ Gf s) b /\
+                  forall env : list val,
+                    nseval s (binder_types s p ++ Gf' s) env (reorder f b) =
+                    nseval s (binder_types s p ++ Gf s) env b
+              end).
+    { intros t Ht.
+      assert (Us : scrut_ty Gf a s = t) by (unfold scrut_ty; rewrite Ht; reflexivity).
+      pose proof (SEL s Hs) as S. rewrite Us in S. rewrite !find_map in S. unfold pickn.
+      destruct (find (fun a0 => holds s t (fst a0)) arms) as [[p b] |] eqn:F1.
+      - destruct (find (fun a0 => holds s t (fst a0)) arms') as [[p' b'] |] eqn:F2;
+          [| discriminate S].
+        simpl in S. injection S as <-.
+        destruct (find_some _ _ F1) as [I1 _]. destruct (find_some _ _ F2) as [I2 _].
+        pose proof I2 as I2'. rewrite EA in I2'. apply (proj1 (Hf _ _)) in I2'.
+        apply in_map_iff in I2'. destruct I2' as [[py pb] [E Iy]]. simpl in E.
+        injection E as E1 E2. subst py b'.
+        pose proof (distinct_fst_inj R _ arms D1 (p, pb) (p, b) Iy I1 eq_refl) as Q.
+        injection Q as ->.
+        split; [reflexivity |].
+        destruct (in_split _ _ I1) as [pre [post Ea]].
+        destruct (in_split _ _ I2) as [pre' [post' Ea']].
+        pose proof (A1 pre p b post Ea) as B1.
+        pose proof (A2 pre' p (reorder f b) post' Ea') as B2.
+        assert (NI1 : ~ In p (map fst pre)).
+        { pose proof D1 as D. rewrite Ea, map_app in D. exact (distinct_notin _ _ _ _ _ D). }
+        assert (NI2 : ~ In p (map fst pre')).
+        { pose proof D2 as D. rewrite Ea', map_app in D. exact (distinct_notin _ _ _ _ _ D). }
+        assert (RE : reach R (scrut_ty Gf' (reorder f a)) (map fst pre') p =
+                     reach R (scrut_ty Gf a) (map fst pre) p).
+        { unfold reach. apply filter_ext_in. intros s' Hs'. rewrite (U s' Hs').
+          apply Bool.eq_iff_eq_true.
+          rewrite (reach_pred_iff s' _ (map fst pre') (map fst post') p NI2).
+          rewrite (reach_pred_iff s' _ (map fst pre) (map fst post) p NI1).
+          pose proof (SEL s' Hs') as S'. rewrite Ea, Ea', !map_app in S'.
+          cbn [map fst] in S'. rewrite S'. tauto. }
+        rewrite RE in B2.
+        assert (HGa : forall s', In s' (reach R (scrut_ty Gf a) (map fst pre) p) ->
+                  arm_ctx Gf' p s' = arm_ctx Gf p s').
+        { intros s' Hs'. unfold reach in Hs'. apply filter_In in Hs'.
+          unfold arm_ctx. rewrite (HG s' (proj1 Hs')). reflexivity. }
+        assert (Sin : In s (reach R (scrut_ty Gf a) (map fst pre) p)).
+        { unfold reach. apply filter_In. split; [exact Hs |]. cbn beta. rewrite Us.
+          apply (reach_pred_iff s t (map fst pre) (map fst post) p NI1).
+          pose proof (find_map (fun q => holds s t q) fst arms) as FM. cbn beta in FM.
+          rewrite F1, Ea, map_app in FM. exact FM. }
+        rewrite Forall_forall in IH.
+        destruct (IH (p, b) I1 _ (arm_ctx Gf p) (arm_ctx Gf' p) HGa B1 B2 s Sin) as [T V].
+        unfold arm_ctx in T, V. split; assumption.
+      - destruct (find (fun a0 => holds s t (fst a0)) arms') as [x |] eqn:F2;
+          [simpl in S; discriminate S | reflexivity]. }
+    split.
+    + rewrite !ntype_match, Ta. destruct (ntype s (Gf s) a) as [t |]; [| reflexivity].
+      specialize (K t eq_refl). destruct (pickn s t arms) as [[p b] |].
+      * destruct K as [K1 [K2 _]]. rewrite K1. exact K2.
+      * rewrite K. reflexivity.
+    + intros env. rewrite !nseval_match, Ta, Va.
+      destruct (ntype s (Gf s) a) as [t |]; [| reflexivity].
+      destruct (nseval s (Gf s) env a) as [v |]; [| reflexivity].
+      specialize (K t eq_refl). destruct (pickn s t arms) as [[p b] |].
+      * destruct K as [K1 [_ K3]]. rewrite K1. apply K3.
+      * rewrite K. reflexivity.
+Qed.
+
+(**md
+**A body that passes the check means the same after any rearrangement of its arms.**
+
+Take a body, and the same body with the arms of every match rearranged, at any depth. If both
+pass the overlap check over a set of instantiations, they have the same type and return the same
+value at every instantiation in the set. The check uses the region it computes for each match,
+and nothing else is supplied.
+
+This is the statement the region is computed for. `inner_order_is_irrelevant` assumes a set
+that contains the instantiations one match runs at. Here the check finds that set for every
+match in the body.
+
+- [f:] the rearrangement applied to each list of arms. It keeps the same arms.
+- [e:] the body.
+- [R:] the instantiations that reach the body.
+- [Gf:] the types of the variables in scope at each of them.
+*)
+Theorem reordering_arms_changes_nothing
+    (f : list (test * ntm) -> list (test * ntm)) (e : ntm)
+    (R : list inst3) (Gf : inst3 -> list ty) :
+  (forall l a, In a (f l) <-> In a l) ->
+  nordered R Gf e = true -> nordered R Gf (reorder f e) = true ->
+  forall s, In s R ->
+    ntype s (Gf s) (reorder f e) = ntype s (Gf s) e /\
+    forall env : list val, nseval s (Gf s) env (reorder f e) = nseval s (Gf s) env e.
+Proof.
+  intros Hf N1 N2. exact (reorder_same f Hf e R Gf Gf (fun _ _ => eq_refl) N1 N2).
+Qed.
+
+(** The context of a definition's body at each instantiation: the scrutinee, then the other
+    parameters. *)
+Definition top_ctx (G : list oty3) (s : inst3) : list ty := iT s :: map (inst3ty s) G.
+
+(**md
+**A definition that passes the check may have the arms of any of its matches rearranged.**
+
+For a definition, the check starts from the whole table. If the definition and its rearrangement
+both pass, the rearrangement passes the type check exactly when the definition does, and at
+every instantiation that satisfies the constraints the two return the same result.
+
+- [G:] the types of the other parameters.
+- [e:] the body.
+- [res:] the declared result type.
+- [f:] the rearrangement applied to each list of arms.
+*)
+Theorem reordered_definition_means_the_same
+    (CA CB : cset) (G : list oty3) (e : ntm) (res : oty3)
+    (f : list (test * ntm) -> list (test * ntm)) :
+  (forall l a, In a (f l) <-> In a l) ->
+  nordered (table CA CB) (top_ctx G) e = true ->
+  nordered (table CA CB) (top_ctx G) (reorder f e) = true ->
+  ncheck CA CB G (reorder f e) res = ncheck CA CB G e res /\
+  forall (s : inst3) (env : list val) (x : val),
+    valid CA CB s ->
+    nseval s (iT s :: map (inst3ty s) G) (x :: env) (reorder f e) =
+    nseval s (iT s :: map (inst3ty s) G) (x :: env) e.
+Proof.
+  intros Hf N1 N2.
+  pose proof (reordering_arms_changes_nothing f e (table CA CB) (top_ctx G) Hf N1 N2) as K.
+  split.
+  - unfold ncheck. apply forallb_eq_in. intros s Hs. destruct (K s Hs) as [T _].
+    unfold top_ctx in T. rewrite T. reflexivity.
+  - intros s env x V. destruct (K s (proj2 (table_iff_valid CA CB s) V)) as [_ E].
+    exact (E (x :: env)).
+Qed.
+
+(** A match with one arm on each variable, and the same match with its arms swapped. *)
+Definition two_arms : ntm := NMatch (NVar 0) [(IsA, NVar 0); (IsB, NVar 0)].
+
+(**md
+**The check accepts a match in both orders when its arms cannot overlap.**
+
+For `'A : (x)` and `'B : (y)` with `x` and `y` different types, the two-arm match passes the
+check, and so does the same match with its arms reversed. So the hypotheses of the two theorems
+above can be met by a match whose arms are in fact reordered.
+
+- [x:] the only member of the first set.
+- [y:] the only member of the second set.
+*)
+Theorem check_accepts_both_orders (x y : ty) :
+  x <> y ->
+  nordered (table [x] [y]) (top_ctx []) two_arms = true /\
+  nordered (table [x] [y]) (top_ctx []) (reorder (@rev (test * ntm)) two_arms) = true.
+Proof.
+  intros N.
+  assert (Q1 : tyeqb x y = false) by (apply tyeqb_false; exact N).
+  assert (Q2 : tyeqb y x = false) by (apply tyeqb_false; congruence).
+  assert (T : table [x] [y] = [Inst x y x; Inst x y y]).
+  { unfold table. cbn [flat_map app]. unfold rows. rewrite Q1. reflexivity. }
+  rewrite T. unfold two_arms.
+  split;
+    cbn [reorder map rev app fst snd nordered arms_ok ordered_in distinct_in forallb find
+         existsb reach filter le_in holds scrut_ty ntype nth_error top_ctx iT iA iB];
+    rewrite ?tyeqb_refl, ?Q1, ?Q2;
+    cbn [reorder map rev app fst snd nordered arms_ok ordered_in distinct_in forallb find
+         existsb reach filter le_in holds scrut_ty ntype nth_error top_ctx iT iA iB
+         andb orb negb implb];
+    rewrite ?tyeqb_refl, ?Q1, ?Q2; reflexivity.
+Qed.
+
 (**md ## Rules stated in prose
 
 These parts of a nested type-case are not modelled.
 
-1. **Computing the region.** The theorems above hold for any set that contains every
-   instantiation an inner match runs at. The model does not compute that set from a body. For an
-   arm written first it is `restrict`. For a later arm it is smaller, since earlier arms take
-   some instantiations.
-2. **Agreement for an inner match.** Bodies accepts two overlapping arms that compute the same
+1. **Agreement for an inner match.** Bodies accepts two overlapping arms that compute the same
    result. That second way of gluing is not stated for an inner match.
-3. **Every matching arm.** This module types the arm selected at each instantiation. Bodies types
-   every arm that matches. `inner_order_is_irrelevant` does not need the stronger check, because
-   it shows the same arm is selected in either order.
-4. **Unreachable inner arms.** An inner arm whose test fails throughout its region can never run.
-   The model accepts it. A compiler would report it, as it reports an unreachable rule.
+2. **Every matching arm.** This module types the arm selected at each instantiation. Bodies types
+   every arm that matches. The results on arm order do not need the stronger check, because they
+   show the same arm is selected in either order.
+3. **Unreachable inner arms.** An inner arm whose computed set is empty can never run. The model
+   accepts it. A compiler would report it, as it reports an unreachable rule.
    `inner_tests_decided_in_a_region` shows when this happens for a scrutinee of variable type.
+4. **The cost of the check.** The check filters the set once for each arm of each match. No bound
+   on that work is stated.
 *)
