@@ -6,13 +6,14 @@
 | **Date** | 2026-11-15 |
 | **Written against** | `clef-lang-spec` commit `0ad783d` (2026-09-26) |
 | **Assumes** | [Spec.Types](Clef.Spec.Types.html), [Spec.Witnesses](Clef.Spec.Witnesses.html), [Spec.Runtime](Clef.Spec.Runtime.html), [RFC 0001 Constraints](Clef.RFC0001.Constraints.html), [RFC 0001 TypeCase](Clef.RFC0001.TypeCase.html) |
-| **Process note** | Not yet submitted as a suggestion. One design question is open, and this RFC is written to inform it. |
+| **Process note** | Not yet submitted as a suggestion. Approval in principle is still required before this enters Review. |
 
 ## Summary
 
 RFC 0001 constrains one type variable to a closed set of types. This RFC lets a definition have
 several such variables, lets a variable be constrained to be one of the others, `'T : ('A | 'B)`,
-and lets a static type-case test the scrutinee against a variable: `:? 'A`. Two arms that test
+and lets a static type-case test the scrutinee against a variable: `:? 'A`. The test succeeds when
+the scrutinee's type is the type `'A` is instantiated to. Two arms that test
 different variables overlap wherever those variables are instantiated to the same type. The RFC
 adds one check on a match: an arm that overlaps an earlier arm must be more general than it, unless
 a still earlier arm takes the instantiations they share. Under that check the first matching arm is
@@ -36,7 +37,7 @@ and neither is more specific than the other. With only those two arms the body t
 which arm is written first. The author's position is that the overlap must be handled by an arm of
 its own, written first because it is the most specific.
 
-## What is settled and what is open
+## What is settled
 
 The proofs in [Regions](Clef.RFC0002.Regions.html) settle these points.
 
@@ -54,12 +55,15 @@ The proofs in [Bodies](Clef.RFC0002.Bodies.html) give each arm a body and settle
 - There is a second way to make order irrelevant. Two overlapping arms may also be accepted when
   their bodies compute the same result, and then no intersection arm is needed.
 
-One point is left open: what `:? 'A` tests. Both readings are modelled.
+## The reading of `:? 'A`
 
-| Reading | `:? 'A` succeeds when | Binder of `:? 'A as v` |
-|---|---|---|
-| Equation | the scrutinee's type is the type `'A` is instantiated to | Sound at `'A`: `equation_refines`, `checked_match_runs` |
-| Membership | the scrutinee's type is a member of `'A`'s set | Unsound at `'A`: `membership_refines_falsified`, `membership_binding_falsified` |
+The RFC adopts the equation reading. The membership reading was the alternative. It stays in the
+model as a second `reading`, so that each reason for rejecting it is a checked theorem.
+
+| Reading | Status | `:? 'A` succeeds when | Binder of `:? 'A as v` |
+|---|---|---|---|
+| Equation | Adopted | the scrutinee's type is the type `'A` is instantiated to | Sound at `'A`: `equation_refines`, `checked_match_runs` |
+| Membership | Rejected | the scrutinee's type is a member of `'A`'s set | Unsound at `'A`: `membership_refines_falsified`, `membership_binding_falsified` |
 
 The readings agree on every program whose member sets are disjoint
 (`readings_agree_when_disjoint`) and differ on overlapping sets (`readings_agree_falsified`).
@@ -70,5 +74,5 @@ The readings agree on every program whose member sets are disjoint
 |---|---|
 | [Regions](Clef.RFC0002.Regions.html) | Instantiations, arm tests under both readings, selection, the overlap check and the theorems |
 | [Bodies](Clef.RFC0002.Bodies.html) | Arm bodies, the check of a definition, what it computes, and the two ways overlapping arms are glued |
-| [Discussion](Clef.RFC0002.Discussion.html) | What the proofs do not cover, the evidence on the open question, the relation to the verification tiers, drawbacks and alternatives |
+| [Discussion](Clef.RFC0002.Discussion.html) | What the proofs do not cover, the reasons for the adopted reading, the relation to the verification tiers, drawbacks and alternatives |
 *)

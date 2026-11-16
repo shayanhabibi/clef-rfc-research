@@ -36,14 +36,14 @@ its declared type. No other theorem here uses an assumption beyond decidable equ
 constructors, `tycon_eq_dec`. The refutations hold whenever two different closed types exist, or,
 for the two about evaluation, whenever some type has a value.
 
-## The open question
+## The reading of `:? 'A`
 
-What does `:? 'A` test?
+The RFC adopts the equation reading. The alternative was the membership reading.
 
 - **Equation.** The scrutinee's type is the type `'A` is instantiated to.
 - **Membership.** The scrutinee's type is a member of the set `'A` is constrained to.
 
-The proofs give this evidence.
+The proofs give these reasons.
 
 1. **The question matters only for overlapping sets.** Where the member sets share no type, both
    readings select the same arm of every match (`readings_agree_when_disjoint`).
@@ -62,9 +62,10 @@ The proofs give this evidence.
 6. **Everything else is the same.** Coverage, reachability of the intersection arm, the effect of
    arm order, the overlap check and both ways of gluing hold under both readings.
 
-The evidence favours the equation reading: it is the one under which the intersection arm means
+The equation reading is adopted on these grounds. It is the one under which the intersection arm means
 "the two variables unify", and the one under which an arm learns a type equation that a checked
-body can rely on. The RFC does not adopt it yet.
+body can rely on. The membership reading stays in the model as the
+rejected alternative, so that each reason above remains a checked theorem.
 
 ## Two ways to glue overlapping arms
 
@@ -113,7 +114,7 @@ are a reading of the specification and the design documents, and none is a theor
 several incomparable solutions where the unification Tier 1 relies on has one most general
 solution. The research note sketches an encoding of Boolean satisfiability into such constraints.
 If the sketch holds, a compiler that had to infer them would be doing a solver's work. That
-supports unresolved question 5: these constraints are declared and never inferred, so the compiler
+supports unresolved question 4: these constraints are declared and never inferred, so the compiler
 checks a given table and does not search for one.
 
 **In the staged picture, arms are local definitions and the body is their gluing.** The design
@@ -158,9 +159,11 @@ note gives each in more detail.
   first on the overlap. `two_arms_order_matters_iff` shows the cost: reordering arms changes the
   program.
 - **Reject overlapping constraints.** Requiring the member sets of tested variables to be disjoint
-  removes the intersection arm and the open question together, and removes the feature's point.
+  removes the intersection arm and the choice of reading together, and removes the feature's point.
 - **Sort the arms by specificity.** Sorting cannot order two arms where neither is more specific,
   which is the case this RFC is about.
+- **The membership reading of a test.** Rejected for the reasons given above: a binder typed at
+  the tested variable is unsound under it, and without that binding it adds nothing to RFC 0001.
 - **Agreement only.** Drop the overlap check and require every overlap to agree. This rejects the
   author's three-arm match whenever the intersection arm does something of its own, which is the
   reason to write it.
@@ -171,13 +174,12 @@ Nothing in a program without a closed-set constraint changes. The RFC depends on
 
 ## Unresolved questions
 
-1. The reading of `:? 'A`, above.
-2. Whether agreement is admitted beside priority, and in which form: identical bodies only, or
+1. Whether agreement is admitted beside priority, and in which form: identical bodies only, or
    bodies proved equivalent. An arm such as `:? 'A | :? 'B` covering several regions is the
    surface form of the first.
-3. Whether a missing reachable intersection arm is an error. The overlap check as modelled makes it
+2. Whether a missing reachable intersection arm is an error. The overlap check as modelled makes it
    one, unless the overlapping arms agree.
-4. A type-case nested in an arm body, with the equations of the outer region in scope.
-5. Constraints declared but never inferred, as the restriction that keeps inference principal.
-6. The diagnostic for two arms with equivalent tests.
+3. A type-case nested in an arm body, with the equations of the outer region in scope.
+4. Constraints declared but never inferred, as the restriction that keeps inference principal.
+5. The diagnostic for two arms with equivalent tests.
 *)

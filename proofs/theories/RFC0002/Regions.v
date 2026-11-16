@@ -20,8 +20,9 @@ let f<'A, 'B, 'T when 'A : (int | string)
 This module defines what an instantiation of the three variables is, what an arm tests, and how an
 arm is selected. It then proves or refutes each claim the RFC makes about the match.
 
-One question is left open on purpose: what `:? 'A` tests. Both answers are modelled, as a
-`reading`, and every theorem says which reading it holds for.
+The RFC adopts the equation reading of `:? 'A`: the test succeeds when the scrutinee's type is the
+type `'A` is instantiated to. The rejected membership reading is modelled beside it, as a
+`reading`, so that the comparison is proved. Every theorem says which reading it holds for.
 *)
 
 (**md ## Instantiations *)
@@ -100,7 +101,7 @@ Qed.
 An arm tests the type of the scrutinee, which is the third variable.
 *)
 
-(** What `:? 'A` tests. This is the open question of the RFC.
+(** What `:? 'A` tests. The RFC adopts `Equation`.
     `Equation` reads it as: the scrutinee's type is the type `'A` is instantiated to.
     `Membership` reads it as: the scrutinee's type is a member of the set `'A` is constrained to. *)
 Inductive reading : Type :=
@@ -482,7 +483,7 @@ Proof.
   exact (proj1 (le_iff Equation [x; y] [y] IsA IsB) L (Inst x y x) V2 (tyeqb_refl x)).
 Qed.
 
-(**md ## The open question: what `:? 'A` tests
+(**md ## Why the equation reading is adopted
 
 An arm `:? 'A as v` binds `v` at the type `'A`. That is sound only if the scrutinee's type is the
 type `'A` stands for.
@@ -565,7 +566,7 @@ Qed.
 **The two readings select the same arm when the member sets share no type.**
 
 If the intersection of the two member sets is empty, every match selects the same arm at every
-instantiation under either reading. The open question changes no program whose constraints are
+instantiation under either reading. The choice of reading changes no program whose constraints are
 disjoint.
 *)
 Theorem readings_agree_when_disjoint (CA CB : cset) (s : inst3) (arms : list test) :
@@ -582,7 +583,7 @@ Qed.
 The claim that the readings always agree is false whenever two different types exist. With
 `'A : (x | y)`, `'B : (y)`, `'A` instantiated to `x` and the scrutinee of type `y`, the equation
 reading selects the arm `:? 'B` and the membership reading selects the intersection arm. The
-question must be settled before overlapping constraints are allowed.
+choice of reading therefore decides what a program with overlapping constraints means.
 *)
 Theorem readings_agree_falsified (x y : ty) :
   x <> y ->

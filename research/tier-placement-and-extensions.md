@@ -20,7 +20,7 @@ The word *sheaf* does not occur in the specification clone. The sheaf descriptio
 
 1. **RFC 0001 fits inside Tier 1.** Its checks are equality against a finite list, its member set behaves like the ordered facts Tier 1 already carries, and its one semantic theorem is the commuting condition for one compilation step.
 2. **RFC 0002 sits at the edge of Tier 1.** Its checks are finite and need no solver, but they are not polynomial in the number of variables and they are not pure equality.
-3. **The tier discipline favours the equation reading of `:? 'A`**, the open question of RFC 0002. That reading is an equality check. The membership reading is a set test.
+3. **The tier discipline favours the equation reading of `:? 'A`**, which was the open question of RFC 0002 when this note was written and has since been adopted. That reading is an equality check. The membership reading is a set test.
 4. **Six extensions follow.** The strongest rests on one property: a closed set turns a statement about all admitted types into a finite conjunction, which an open constraint cannot do.
 
 ## 1. The tier system, as used here
@@ -75,13 +75,13 @@ RFC 0001 conflicts with the letter of §7.2 in one place: entailment is an order
 
 **Inferring such constraints is probably NP-hard. This is a sketch and has not been checked with care.** Take two distinct closed types `tt` and `ff`. For each Boolean variable take type variables `'X` and `'N`, both constrained to `(tt | ff)`, and a variable `'P` constrained to `((tt * ff) | (ff * tt))` and unified with `'X * 'N` by a use. Then `'N` is forced to differ from `'X`. For a clause over three literals take `'D : ('L2 | 'L3)` and `'C : ('L1 | 'D)`, and unify `'C` with `tt`. The constraints have a solution exactly when the formula is satisfiable. The sketch uses tuple types as members and unification of a constrained variable with a constructed type. If it holds, a solver that must decide whether such a system has any solution does the work of a SAT solver, which is outside the polynomial bound claimed for Tier 1.
 
-This supports the restriction RFC 0002 already lists as unresolved question 5: these constraints are declared and never inferred. The compiler then checks a given table. It does not search for one.
+This supports the restriction RFC 0002 lists among its unresolved questions: these constraints are declared and never inferred. The compiler then checks a given table. It does not search for one.
 
 **If a solver were used, the fragment is not one the specification lists.** Disjunctive type equations over constructed types belong to equality with datatypes. The Tier 2 entry names `QF_LIA`, `QF_LRA` and `QF_BV`.
 
-### Evidence on the open question
+### Evidence on the reading of a test
 
-RFC 0002 leaves open what `:? 'A` tests. Under the equation reading the test is "the scrutinee's type equals the type `'A` is instantiated to". Under the membership reading it is "the scrutinee's type is in `'A`'s set". The first is an equality between two types, which is the only kind of check §7.2 admits. The second is a set test. The tier discipline therefore points the same way as `equation_refines` and `membership_refines_falsified`. This is supporting evidence and not a proof.
+When this note was written, RFC 0002 left open what `:? 'A` tests. It has since adopted the equation reading. Under the equation reading the test is "the scrutinee's type equals the type `'A` is instantiated to". Under the membership reading it is "the scrutinee's type is in `'A`'s set". The first is an equality between two types, which is the only kind of check §7.2 admits. The second is a set test. The tier discipline therefore points the same way as `equation_refines` and `membership_refines_falsified`. This is supporting evidence and not a proof.
 
 ## 4. Extensions
 
@@ -167,7 +167,7 @@ Missing: a model of obligations attached to members, and the invalidation rule �
 - **RFC 0002 should model arm bodies next.** Done after this note was written: see 4.3. With bodies, a definition that checks is proved safe to run under the equation reading (`checked_match_runs`) and shown unsafe under the membership reading (`membership_binding_falsified`).
 - **RFC 0001's largest drawback has a possible answer.** The RFC lists non-parametric generic code first among its drawbacks, and `case_free_parametric` confines the loss to bodies with a type-case. Under 4.3 with proved equivalence, a body with a type-case would be parametric up to that equivalence.
 - **4.6 changes what the feature is for.** RFC 0001 is motivated by typing: errors at the definition, and the admitted set in the signature. A closed set that also makes proof obligations finite is a stronger argument for the feature than convenience.
-- **The equation reading should be adopted**, on the combined evidence of RFC 0002 and section 3.
+- **The equation reading should be adopted**, on the combined evidence of RFC 0002 and section 3. RFC 0002 has since adopted it.
 
 ## 6. Not established
 
