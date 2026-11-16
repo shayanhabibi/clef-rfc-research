@@ -21,7 +21,8 @@ let f<'A, 'B, 'T when 'A : (int | string)
 ```
 
 A body is a term of [RFC 0001](Clef.RFC0001.TypeCase.html) with no type-case of its own. A
-type-case nested in an arm is not modelled.
+type-case nested in an arm is modelled in [Nested](Clef.RFC0002.Nested.html), which agrees with this
+module where there is no nesting (`nested_extends_bodies`).
 *)
 
 (**md ## Types open in the three variables *)

@@ -4,8 +4,10 @@
 
 The model has three type variables: two with closed-set constraints and one constrained to be
 either of them. An arm is a test and a body. The model says which arm a specialization selects,
-types the body of an arm, and evaluates it. A body is a term of RFC 0001 with no type-case of its
-own. Member types are closed, as in RFC 0001.
+types the body of an arm, and evaluates it. In [Regions](Clef.RFC0002.Regions.html) and
+[Bodies](Clef.RFC0002.Bodies.html) a body is a term of RFC 0001 with no type-case of its own.
+[Nested](Clef.RFC0002.Nested.html) allows a match anywhere in a body, on any scrutinee, under the
+equation reading. Member types are closed, as in RFC 0001.
 
 | Claim | Status |
 |---|---|
@@ -26,13 +28,20 @@ own. Member types are closed, as in RFC 0001.
 | A definition whose arm bodies check runs to a value of its declared type | Proved from an assumption under the equation reading: `checked_match_runs`. Refuted under the membership reading: `membership_binding_falsified` |
 | The two readings select the same arm | Proved for disjoint sets: `readings_agree_when_disjoint`. Refuted in general: `readings_agree_falsified` |
 | The overlap check accepts a match that agreement rejects | Not proved. The three-arm match with three different bodies is the expected example |
-| Specialization preserves meaning with several variables | Not proved. A body here has no type-case, so a specialization is the selected body and there is nothing to preserve. RFC 0001 proves it for one variable with nested cases |
-| A type-case nested in an arm body | Not modelled |
+| Specialization preserves meaning with several variables and nested matches | Proved, equation reading: `nested_specialization_preserves_meaning` |
+| A body with nested matches that has a type specializes, at that type | Proved, equation reading: `typed_body_specializes` |
+| A definition with nested matches that checks runs to a value of its declared type | Proved from an assumption, equation reading: `checked_nested_runs` |
+| An arm of a nested match is checked and run only where its test succeeds | Proved: `arm_checked_where_it_matches` |
+| A conjunction of tests is a nested test | Proved, for a match with one arm: `conjunction_is_nesting` |
+| An inner match need cover only the region of the arm it is in | Proved for one definition, with every pair of member sets: `nested_match_checked_in_its_region` |
+| The model of nested matches agrees with Bodies where there is no nesting | Proved, one direction for the check: `nested_extends_bodies` |
+| The overlap check and gluing for an inner match | Not modelled. They are stated for a match on the parameter of type `'T`, over the whole table |
+| A nested match under the membership reading | Not modelled |
 | Inference with a constraint `'T : ('A or 'B)` keeps principal types | Not proved. The research note argues it does not, without a restriction |
 | More than two tested variables, and generic members | Not modelled |
 
-`checked_match_runs` rests on `witness_sound`, the assumption that every witness is implemented at
-its declared type. No other theorem here uses an assumption beyond decidable equality of type
+`checked_match_runs` and `checked_nested_runs` rest on `witness_sound`, the assumption that every
+witness is implemented at its declared type. No other theorem here uses an assumption beyond decidable equality of type
 constructors, `tycon_eq_dec`. The refutations hold whenever two different closed types exist, or,
 for the two about evaluation, whenever some type has a value.
 
@@ -109,6 +118,7 @@ are a reading of the specification and the design documents, and none is a theor
 | The overlap check | Edge of 1 | Up to 2ⁿ − 1 regions for n tested variables. It compares arms by generality, which is an order, where Tier 1 checks are equalities |
 | Binder typing under the equation reading | 1 | The arm learns an equation between types |
 | Agreement by identical bodies | 1 | A structural comparison |
+| A nested match (`ncheck`) | Edge of 1 | Each test is an equality between two closed types at an instantiation. The check still enumerates the table |
 | Agreement by proved equivalence | 4 | A relation between two programs |
 
 **The constraint is a disjunction of equations between variables.** `'T : ('A | 'B)` says `'T` is
@@ -124,6 +134,33 @@ documents describe a program as facts attached to stages that must agree along e
 same shape appears here inside one definition. Each arm defines the function over a region of the
 table, and the regions overlap. Priority and agreement are the two standard ways to obtain one
 function from overlapping pieces: let the smallest piece win, or require the pieces to agree.
+
+## Nested matches
+
+[Nested](Clef.RFC0002.Nested.html) answers what was unresolved question 3: a type-case nested in an arm
+body, with the equations of the outer region in scope.
+
+1. **A nested type-case is erased.** A specialization of a body with matches at any depth
+   computes what the body means and holds no type (`nested_specialization_preserves_meaning`).
+   The proof uses no assumption.
+2. **A checked definition is safe.** `checked_nested_runs` is `checked_match_runs` with matches
+   allowed anywhere in a body.
+3. **The outer equations are in scope because of where an arm is checked.** An arm's body is
+   typed and run only at instantiations where its test succeeds
+   (`arm_checked_where_it_matches`). No rule adds the outer equation to a context. An inner arm
+   is simply never examined where an enclosing test fails.
+4. **Coverage of an inner match is relative to its region.** A one-arm inner match that would be
+   rejected as a definition of its own is accepted inside the arm whose test makes it exhaustive
+   (`nested_match_checked_in_its_region`).
+5. **The intersection arm is a nested test.** `:? 'A & :? 'B -> b` and
+   `:? 'A as a -> (match a with :? 'B -> b)` have the same type and value
+   (`conjunction_is_nesting`). The forms differ when more arms follow: a conjunction that fails
+   falls through to the next arm, and an inner match that fails has no arm.
+
+Two differences from Bodies are deliberate and are stated on the module's page. The check types
+the arm selected at each instantiation, where Bodies types every arm that matches. And the
+overlap check is not defined for an inner match. Both are needed before arm order in an inner
+match can be discussed, and neither is needed for safety.
 
 ## Possible extensions
 
@@ -181,7 +218,9 @@ Nothing in a program without a closed-set constraint changes. The RFC depends on
    surface form of the first.
 2. Whether a missing reachable intersection arm is an error. The overlap check as modelled makes it
    one, unless the overlapping arms agree.
-3. A type-case nested in an arm body, with the equations of the outer region in scope.
+3. The overlap check for an inner match. Typing, erasure and safety of a nested type-case are
+   settled in [Nested](Clef.RFC0002.Nested.html). What is open is how arms of an inner match are
+   compared: over the whole table, or over the region of the enclosing arms.
 4. Constraints declared but never inferred, as the restriction that keeps inference principal.
 5. The diagnostic for two arms with equivalent tests.
 *)

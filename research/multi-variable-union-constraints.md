@@ -338,6 +338,8 @@ Each is over an extended model: a finite list of type variables, an environment 
 11. **Table entailment is sound and complete, and join is the greatest lower bound.** The multi-variable `entails_iff_sat` and `meet_greatest`; and the solved-variable rule: if all rows of a selection agree on a variable, every satisfying instantiation maps it to that type (`meet_singleton` for tables).
 12. **Projection-keyed checking is equivalent to per-row checking.** If a subterm's typing depends only on a subset of variables, checking once per distinct projection accepts exactly when checking at every row does. Worth proving only if the optimisation is specified.
 
+Since this note was written, RFC 0002 has proved statements 9 and 10 for its three-variable model, with matches nested to any depth, in its [Nested](https://shayanhabibi.github.io/clef-rfc-research/proofs/Clef.RFC0002.Nested.html) module (`nested_specialization_preserves_meaning`, `checked_nested_runs`). The part of statement 7 about equations of a selected arm is `equation_refines` in Regions, and Nested shows an inner match may rely on them (`arm_checked_where_it_matches`, `nested_match_checked_in_its_region`). The statements over a general list of variables are not proved.
+
 ### 3.5 Questions for the author
 
 1. R1 or R3 (short answer, item 7)?

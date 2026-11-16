@@ -55,6 +55,16 @@ The proofs in [Bodies](Clef.RFC0002.Bodies.html) give each arm a body and settle
 - There is a second way to make order irrelevant. Two overlapping arms may also be accepted when
   their bodies compute the same result, and then no intersection arm is needed.
 
+The proofs in [Nested](Clef.RFC0002.Nested.html) allow a match anywhere in a body and settle these.
+
+- A type-case nested to any depth is erased: a specialization computes what the body means and
+  holds no type.
+- A definition with nested matches that checks returns a value of its declared type at every
+  instantiation.
+- An inner match is checked against the region of the arm it is in. It need cover only that
+  region, and its arms may use the outer arm's type equation.
+- The intersection arm can be written as a test nested in another.
+
 ## The reading of `:? 'A`
 
 The RFC adopts the equation reading. The membership reading was the alternative. It stays in the
@@ -74,5 +84,6 @@ The readings agree on every program whose member sets are disjoint
 |---|---|
 | [Regions](Clef.RFC0002.Regions.html) | Instantiations, arm tests under both readings, selection, the overlap check and the theorems |
 | [Bodies](Clef.RFC0002.Bodies.html) | Arm bodies, the check of a definition, what it computes, and the two ways overlapping arms are glued |
+| [Nested](Clef.RFC0002.Nested.html) | A match anywhere in a body: typing, specialization, erasure, safety, and what an inner match knows about the arm it is in |
 | [Discussion](Clef.RFC0002.Discussion.html) | What the proofs do not cover, the reasons for the adopted reading, the relation to the verification tiers, drawbacks and alternatives |
 *)

@@ -7,9 +7,10 @@
     "theories/RFC0001/Overview.v": "6668288c5fbfa297f4e89fdfa5e8fa54",
     "theories/RFC0001/Representation.v": "b8c7101f4c4bfaaff499261a9a8f8d8b",
     "theories/RFC0001/TypeCase.v": "ac18369418ee5ad858fbd48d0e561307",
-    "theories/RFC0002/Bodies.v": "86cd0c9cabb147e13924a65659d9e4f8",
-    "theories/RFC0002/Discussion.v": "bd3d0a79431e56b62106fdb7de473160",
-    "theories/RFC0002/Overview.v": "5d9b3ff216202af387fb86f01e7c80df",
+    "theories/RFC0002/Bodies.v": "35492047b3a779fec5119decfef48d0c",
+    "theories/RFC0002/Discussion.v": "e5bfbd264c832a1c669a1584ff7d1e47",
+    "theories/RFC0002/Nested.v": "e51fd7b79e4ed4c0b1c9c3066bf29b2c",
+    "theories/RFC0002/Overview.v": "687e1f4a61ca8fed5cb70bbf93743978",
     "theories/RFC0002/Regions.v": "55439ab54c6dc484ac5680c4df570aed",
     "theories/RFC0003/Conversion.v": "87d6abfbe5310fd32a19f4822dbb4989",
     "theories/RFC0003/Discussion.v": "39d46a4bf9622b3054dd2d5e71f342f0",
@@ -1672,6 +1673,598 @@
     "Clef.RFC0002.Bodies.selecta": {
       "type": "Regions.reading ->\nConstraints.cset ->\nConstraints.cset ->\nlist Bodies.arm -> Regions.inst3 -> option Bodies.arm",
       "binders": {}
+    },
+    "Clef.RFC0002.Nested.NFst": {
+      "type": "Nested.ntm -> Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NLet": {
+      "type": "Nested.ntm -> Nested.ntm -> Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NMatch": {
+      "type": "Nested.ntm -> list (Regions.test * Nested.ntm) -> Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NPair": {
+      "type": "Nested.ntm -> Nested.ntm -> Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NPrim": {
+      "type": "Witnesses.op -> Nested.ntm -> Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NSnd": {
+      "type": "Nested.ntm -> Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NVar": {
+      "type": "nat -> Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NtmInduction.HFst": {
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NtmInduction.HLet": {
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NtmInduction.HMatch": {
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NtmInduction.HPair": {
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NtmInduction.HPrim": {
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NtmInduction.HSnd": {
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NtmInduction.HVar": {
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.NtmInduction.P": {
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.arity_pos": {
+      "type": "forall p : Regions.test, exists j : nat, Bodies.arity p = S j",
+      "binders": {
+        "p": "Regions.test"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0002.Nested.arm_checked_where_it_matches": {
+      "type": "forall (s : Regions.inst3) (G : list Types.ty) \n  (e : Nested.ntm) (arms : list (Regions.test * Nested.ntm))\n  (u : Types.ty),\nNested.ntype s G e = Some u ->\nlet live :=\n  List.filter\n    (fun a : Regions.test * Nested.ntm => Nested.holds s u (fst a))\n    arms\n  in\nNested.ntype s G (Nested.NMatch e arms) =\nNested.ntype s G (Nested.NMatch e live) /\\\n(forall env : list Runtime.val,\n Nested.nseval s G env (Nested.NMatch e arms) =\n Nested.nseval s G env (Nested.NMatch e live))",
+      "binders": {
+        "G": "list Types.ty",
+        "arms": "list (Regions.test * Nested.ntm)",
+        "e": "Nested.ntm",
+        "s": "Regions.inst3",
+        "u": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Nested.as_arm": {
+      "type": "Bodies.arm -> Regions.test * Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.binder_ctx": {
+      "type": "forall (s : Regions.inst3) (u : Types.ty) (p : Regions.test)\n  (G : list Types.ty),\nNested.holds s u p = true ->\n(Regions.binder_types s p ++ G)%list =\n(ListDef.repeat u (Nat.pred (Bodies.arity p)) ++ u :: G)%list",
+      "binders": {
+        "G": "list Types.ty",
+        "p": "Regions.test",
+        "s": "Regions.inst3",
+        "u": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Nested.binder_env": {
+      "type": "forall (v : Runtime.val) (p : Regions.test) (env : list Runtime.val),\n(ListDef.repeat v (Bodies.arity p) ++ env)%list =\n(ListDef.repeat v (Nat.pred (Bodies.arity p)) ++ v :: env)%list",
+      "binders": {
+        "env": "list Runtime.val",
+        "p": "Regions.test",
+        "v": "Runtime.val"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Runtime.atom"
+      ]
+    },
+    "Clef.RFC0002.Nested.binder_head": {
+      "type": "forall (s : Regions.inst3) (u : Types.ty) (p : Regions.test)\n  (G : list Types.ty),\nNested.holds s u p = true ->\nList.nth_error (Regions.binder_types s p ++ G) 0 = Some u",
+      "binders": {
+        "G": "list Types.ty",
+        "p": "Regions.test",
+        "s": "Regions.inst3",
+        "u": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Nested.binder_length": {
+      "type": "forall (s : Regions.inst3) (p : Regions.test),\nlength (Regions.binder_types s p) = Bodies.arity p",
+      "binders": {
+        "p": "Regions.test",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Nested.binds": {
+      "type": "nat -> TypeCase.mtm -> TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.checked_nested_runs": {
+      "type": "forall (CA CB : Constraints.cset) (G : list Bodies.oty3)\n  (e : Nested.ntm) (res : Bodies.oty3) (s : Regions.inst3)\n  (env : list Runtime.val) (x : Runtime.val),\nNested.ncheck CA CB G e res = true ->\nRegions.valid CA CB s ->\nRuntime.has_ty x (Regions.iT s) ->\nList.Forall2 Runtime.has_ty env (ListDef.map (Bodies.inst3ty s) G) ->\nexists v : Runtime.val,\n  Nested.nseval s (Regions.iT s :: ListDef.map (Bodies.inst3ty s) G)\n    (x :: env) e =\n  Some v /\\ Runtime.has_ty v (Bodies.inst3ty s res)",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "G": "list Bodies.oty3",
+        "e": "Nested.ntm",
+        "env": "list Runtime.val",
+        "res": "Bodies.oty3",
+        "s": "Regions.inst3",
+        "x": "Runtime.val"
+      },
+      "assumptions": [
+        "Witnesses.witness_sound",
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Nested.conjunction_is_nesting": {
+      "type": "forall (s : Regions.inst3) (G : list Types.ty) \n  (e : Nested.ntm) (p q : Regions.test) (b : Nested.ntm),\nlet flat := Nested.NMatch e ((Regions.Both p q, b) :: nil) in\nlet nested :=\n  Nested.NMatch e\n    ((p, Nested.NMatch (Nested.NVar 0) ((q, b) :: nil)) :: nil)\n  in\nNested.ntype s G flat = Nested.ntype s G nested /\\\n(forall env : list Runtime.val,\n Nested.nseval s G env flat = Nested.nseval s G env nested)",
+      "binders": {
+        "G": "list Types.ty",
+        "b": "Nested.ntm",
+        "e": "Nested.ntm",
+        "p": "Regions.test",
+        "q": "Regions.test",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Nested.eval_binds": {
+      "type": "forall (k : nat) (b : TypeCase.mtm) (v : Runtime.val)\n  (env : list Runtime.val),\nTypeCase.eval (v :: env) (Nested.binds k b) =\nTypeCase.eval (ListDef.repeat v k ++ v :: env) b",
+      "binders": {
+        "b": "TypeCase.mtm",
+        "env": "list Runtime.val",
+        "k": "nat",
+        "v": "Runtime.val"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Nested.eval_shift": {
+      "type": "forall (m : TypeCase.mtm) (pre env : list Runtime.val)\n  (x : Runtime.val),\nTypeCase.eval (pre ++ x :: env) (Nested.mshift (length pre) m) =\nTypeCase.eval (pre ++ env) m",
+      "binders": {
+        "env": "list Runtime.val",
+        "m": "TypeCase.mtm",
+        "pre": "list Runtime.val",
+        "x": "Runtime.val"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Nested.find_ext": {
+      "type": "forall (A : Type) (f g : A -> bool) (l : list A),\n(forall a : A, f a = g a) -> List.find f l = List.find g l",
+      "binders": {
+        "A": "Type",
+        "f": "A -> bool",
+        "g": "A -> bool",
+        "l": "list A"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0002.Nested.find_filter": {
+      "type": "forall (A : Type) (f : A -> bool) (l : list A),\nList.find f (List.filter f l) = List.find f l",
+      "binders": {
+        "A": "Type",
+        "f": "A -> bool",
+        "l": "list A"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0002.Nested.flat": {
+      "type": "list Bodies.arm -> Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.holds": {
+      "type": "Regions.inst3 -> Types.ty -> Regions.test -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.holds_binders": {
+      "type": "forall (s : Regions.inst3) (u : Types.ty) (p : Regions.test),\nNested.holds s u p = true ->\nRegions.binder_types s p = ListDef.repeat u (Bodies.arity p)",
+      "binders": {
+        "p": "Regions.test",
+        "s": "Regions.inst3",
+        "u": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Nested.holds_scrutinee": {
+      "type": "forall (CA CB : Constraints.cset) (s : Regions.inst3)\n  (p : Regions.test),\nNested.holds s (Regions.iT s) p =\nRegions.matches Regions.Equation CA CB s p",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "p": "Regions.test",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Nested.inner_alone": {
+      "type": "Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.mshift": {
+      "type": "nat -> TypeCase.mtm -> TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.mtype_binds": {
+      "type": "forall (k : nat) (b : TypeCase.mtm) (u : Types.ty) (G : list Types.ty),\nTypeCase.mtype (u :: G) (Nested.binds k b) =\nTypeCase.mtype (ListDef.repeat u k ++ u :: G) b",
+      "binders": {
+        "G": "list Types.ty",
+        "b": "TypeCase.mtm",
+        "k": "nat",
+        "u": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.mtype_shift": {
+      "type": "forall (m : TypeCase.mtm) (pre G : list Types.ty) (x : Types.ty),\nTypeCase.mtype (pre ++ x :: G) (Nested.mshift (length pre) m) =\nTypeCase.mtype (pre ++ G) m",
+      "binders": {
+        "G": "list Types.ty",
+        "m": "TypeCase.mtm",
+        "pre": "list Types.ty",
+        "x": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.ncheck": {
+      "type": "Constraints.cset ->\nConstraints.cset ->\nlist Bodies.oty3 -> Nested.ntm -> Bodies.oty3 -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.nested_extends_bodies": {
+      "type": "forall (CA CB : Constraints.cset) (G : list Bodies.oty3)\n  (arms : list Bodies.arm) (res : Bodies.oty3),\nBodies.check3 Regions.Equation CA CB G arms res = true ->\nNested.ncheck CA CB G (Nested.flat arms) res = true /\\\n(forall (s : Regions.inst3) (env : list Runtime.val) (x : Runtime.val),\n Regions.valid CA CB s ->\n Nested.nseval s (Regions.iT s :: ListDef.map (Bodies.inst3ty s) G)\n   (x :: env) (Nested.flat arms) =\n Bodies.run Regions.Equation CA CB arms s env x)",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "G": "list Bodies.oty3",
+        "arms": "list Bodies.arm",
+        "res": "Bodies.oty3"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Nested.nested_match_checked_in_its_region": {
+      "type": "(forall CA CB : Constraints.cset,\n Nested.ncheck CA CB (Bodies.VT :: nil) Nested.region_example\n   Bodies.VT =\n true) /\\\n(forall x y : Types.ty,\n x <> y ->\n Nested.ncheck (x :: y :: nil)%list (y :: nil)%list \n   (Bodies.VT :: nil) Nested.inner_alone Bodies.VT =\n false)",
+      "binders": {},
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.nested_specialization_preserves_meaning": {
+      "type": "forall (s : Regions.inst3) (e : Nested.ntm) \n  (G : list Types.ty) (m : TypeCase.mtm),\nNested.nspec s G e = Some m ->\nforall env : list Runtime.val,\nNested.nseval s G env e = TypeCase.eval env m",
+      "binders": {
+        "G": "list Types.ty",
+        "e": "Nested.ntm",
+        "m": "TypeCase.mtm",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Nested.nseval": {
+      "type": "Regions.inst3 ->\nlist Types.ty -> list Runtime.val -> Nested.ntm -> option Runtime.val",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.nseval_match": {
+      "type": "forall (s : Regions.inst3) (G : list Types.ty)\n  (env : list Runtime.val) (a : Nested.ntm)\n  (arms : list (Regions.test * Nested.ntm)),\nNested.nseval s G env (Nested.NMatch a arms) =\nmatch Nested.ntype s G a with\n| Some u =>\n    match Nested.nseval s G env a with\n    | Some v =>\n        match Nested.pickn s u arms with\n        | Some (p, b) =>\n            Nested.nseval s (Regions.binder_types s p ++ G)\n              (ListDef.repeat v (Bodies.arity p) ++ env) b\n        | None => None\n        end\n    | None => None\n    end\n| None => None\nend",
+      "binders": {
+        "G": "list Types.ty",
+        "a": "Nested.ntm",
+        "arms": "list (Regions.test * Nested.ntm)",
+        "env": "list Runtime.val",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Nested.nseval_ofm": {
+      "type": "forall (m : TypeCase.mtm) (s : Regions.inst3) \n  (G : list Types.ty) (env : list Runtime.val) \n  (t : Types.ty),\nTypeCase.mtype G m = Some t ->\nNested.nseval s G env (Nested.ofm m) = TypeCase.eval env m",
+      "binders": {
+        "G": "list Types.ty",
+        "env": "list Runtime.val",
+        "m": "TypeCase.mtm",
+        "s": "Regions.inst3",
+        "t": "Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Nested.nseval_one": {
+      "type": "forall (s : Regions.inst3) (G : list Types.ty)\n  (env : list Runtime.val) (e : Nested.ntm) \n  (p : Regions.test) (b : Nested.ntm),\nNested.nseval s G env (Nested.NMatch e ((p, b) :: nil)) =\nmatch Nested.ntype s G e with\n| Some u =>\n    match Nested.nseval s G env e with\n    | Some v =>\n        if Nested.holds s u p\n        then\n         Nested.nseval s (Regions.binder_types s p ++ G)\n           (ListDef.repeat v (Bodies.arity p) ++ env) b\n        else None\n    | None => None\n    end\n| None => None\nend",
+      "binders": {
+        "G": "list Types.ty",
+        "b": "Nested.ntm",
+        "e": "Nested.ntm",
+        "env": "list Runtime.val",
+        "p": "Regions.test",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Nested.nspec": {
+      "type": "Regions.inst3 -> list Types.ty -> Nested.ntm -> option TypeCase.mtm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.nspec_match": {
+      "type": "forall (s : Regions.inst3) (G : list Types.ty) \n  (a : Nested.ntm) (arms : list (Regions.test * Nested.ntm)),\nNested.nspec s G (Nested.NMatch a arms) =\nmatch Nested.ntype s G a with\n| Some u =>\n    match Nested.nspec s G a with\n    | Some ma =>\n        match Nested.pickn s u arms with\n        | Some (p, b) =>\n            option_map\n              (fun mb : TypeCase.mtm =>\n               TypeCase.MLet ma\n                 (Nested.binds (Nat.pred (Bodies.arity p)) mb))\n              (Nested.nspec s (Regions.binder_types s p ++ G) b)\n        | None => None\n        end\n    | None => None\n    end\n| None => None\nend",
+      "binders": {
+        "G": "list Types.ty",
+        "a": "Nested.ntm",
+        "arms": "list (Regions.test * Nested.ntm)",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.nth_error_insert": {
+      "type": "forall (A : Type) (pre l : list A) (x : A) (n : nat),\nList.nth_error (pre ++ x :: l)\n  (if PeanoNat.Nat.ltb n (length pre) then n else S n) =\nList.nth_error (pre ++ l) n",
+      "binders": {
+        "A": "Type",
+        "l": "list A",
+        "n": "nat",
+        "pre": "list A",
+        "x": "A"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0002.Nested.ntm": {
+      "type": "Type",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.ntm_arms_ind": {
+      "type": "forall P : Nested.ntm -> Prop,\n(forall n : nat, P (Nested.NVar n)) ->\n(forall (o : Witnesses.op) (e : Nested.ntm),\n P e -> P (Nested.NPrim o e)) ->\n(forall a b : Nested.ntm, P a -> P b -> P (Nested.NPair a b)) ->\n(forall e : Nested.ntm, P e -> P (Nested.NFst e)) ->\n(forall e : Nested.ntm, P e -> P (Nested.NSnd e)) ->\n(forall a b : Nested.ntm, P a -> P b -> P (Nested.NLet a b)) ->\n(forall (e : Nested.ntm) (arms : list (Regions.test * Nested.ntm)),\n P e ->\n ListDef.Forall (fun arm : Regions.test * Nested.ntm => P (snd arm))\n   arms ->\n P (Nested.NMatch e arms)) ->\nforall e : Nested.ntm, P e",
+      "binders": {
+        "P": "Nested.ntm -> Prop"
+      }
+    },
+    "Clef.RFC0002.Nested.ntm_ind": {
+      "type": "forall P : Nested.ntm -> Prop,\n(forall n : nat, P (Nested.NVar n)) ->\n(forall (o : Witnesses.op) (e : Nested.ntm),\n P e -> P (Nested.NPrim o e)) ->\n(forall a : Nested.ntm,\n P a -> forall b : Nested.ntm, P b -> P (Nested.NPair a b)) ->\n(forall e : Nested.ntm, P e -> P (Nested.NFst e)) ->\n(forall e : Nested.ntm, P e -> P (Nested.NSnd e)) ->\n(forall a : Nested.ntm,\n P a -> forall b : Nested.ntm, P b -> P (Nested.NLet a b)) ->\n(forall e : Nested.ntm,\n P e ->\n forall arms : list (Regions.test * Nested.ntm),\n P (Nested.NMatch e arms)) ->\nforall n : Nested.ntm, P n",
+      "binders": {
+        "P": "Nested.ntm -> Prop"
+      }
+    },
+    "Clef.RFC0002.Nested.ntm_rec": {
+      "type": "forall P : Nested.ntm -> Set,\n(forall n : nat, P (Nested.NVar n)) ->\n(forall (o : Witnesses.op) (e : Nested.ntm),\n P e -> P (Nested.NPrim o e)) ->\n(forall a : Nested.ntm,\n P a -> forall b : Nested.ntm, P b -> P (Nested.NPair a b)) ->\n(forall e : Nested.ntm, P e -> P (Nested.NFst e)) ->\n(forall e : Nested.ntm, P e -> P (Nested.NSnd e)) ->\n(forall a : Nested.ntm,\n P a -> forall b : Nested.ntm, P b -> P (Nested.NLet a b)) ->\n(forall e : Nested.ntm,\n P e ->\n forall arms : list (Regions.test * Nested.ntm),\n P (Nested.NMatch e arms)) ->\nforall n : Nested.ntm, P n",
+      "binders": {
+        "P": "Nested.ntm -> Set"
+      }
+    },
+    "Clef.RFC0002.Nested.ntm_rect": {
+      "type": "forall P : Nested.ntm -> Type,\n(forall n : nat, P (Nested.NVar n)) ->\n(forall (o : Witnesses.op) (e : Nested.ntm),\n P e -> P (Nested.NPrim o e)) ->\n(forall a : Nested.ntm,\n P a -> forall b : Nested.ntm, P b -> P (Nested.NPair a b)) ->\n(forall e : Nested.ntm, P e -> P (Nested.NFst e)) ->\n(forall e : Nested.ntm, P e -> P (Nested.NSnd e)) ->\n(forall a : Nested.ntm,\n P a -> forall b : Nested.ntm, P b -> P (Nested.NLet a b)) ->\n(forall e : Nested.ntm,\n P e ->\n forall arms : list (Regions.test * Nested.ntm),\n P (Nested.NMatch e arms)) ->\nforall n : Nested.ntm, P n",
+      "binders": {
+        "P": "Nested.ntm -> Type"
+      }
+    },
+    "Clef.RFC0002.Nested.ntm_sind": {
+      "type": "forall P : Nested.ntm -> SProp,\n(forall n : nat, P (Nested.NVar n)) ->\n(forall (o : Witnesses.op) (e : Nested.ntm),\n P e -> P (Nested.NPrim o e)) ->\n(forall a : Nested.ntm,\n P a -> forall b : Nested.ntm, P b -> P (Nested.NPair a b)) ->\n(forall e : Nested.ntm, P e -> P (Nested.NFst e)) ->\n(forall e : Nested.ntm, P e -> P (Nested.NSnd e)) ->\n(forall a : Nested.ntm,\n P a -> forall b : Nested.ntm, P b -> P (Nested.NLet a b)) ->\n(forall e : Nested.ntm,\n P e ->\n forall arms : list (Regions.test * Nested.ntm),\n P (Nested.NMatch e arms)) ->\nforall n : Nested.ntm, P n",
+      "binders": {
+        "P": "Nested.ntm -> SProp"
+      }
+    },
+    "Clef.RFC0002.Nested.ntype": {
+      "type": "Regions.inst3 -> list Types.ty -> Nested.ntm -> option Types.ty",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.ntype_flat": {
+      "type": "forall (CA CB : Constraints.cset) (s : Regions.inst3)\n  (G : list Types.ty) (arms : list Bodies.arm),\nNested.ntype s (Regions.iT s :: G) (Nested.flat arms) =\nmatch Bodies.selecta Regions.Equation CA CB arms s with\n| Some a =>\n    TypeCase.mtype (Regions.binder_types s (Bodies.atest a) ++ G)\n      (Bodies.abody a)\n| None => None\nend",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "G": "list Types.ty",
+        "arms": "list Bodies.arm",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.ntype_match": {
+      "type": "forall (s : Regions.inst3) (G : list Types.ty) \n  (a : Nested.ntm) (arms : list (Regions.test * Nested.ntm)),\nNested.ntype s G (Nested.NMatch a arms) =\nmatch Nested.ntype s G a with\n| Some u =>\n    match Nested.pickn s u arms with\n    | Some (p, b) => Nested.ntype s (Regions.binder_types s p ++ G) b\n    | None => None\n    end\n| None => None\nend",
+      "binders": {
+        "G": "list Types.ty",
+        "a": "Nested.ntm",
+        "arms": "list (Regions.test * Nested.ntm)",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.ntype_ofm": {
+      "type": "forall (m : TypeCase.mtm) (s : Regions.inst3) (G : list Types.ty),\nNested.ntype s G (Nested.ofm m) = TypeCase.mtype G m",
+      "binders": {
+        "G": "list Types.ty",
+        "m": "TypeCase.mtm",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.ntype_one": {
+      "type": "forall (s : Regions.inst3) (G : list Types.ty) \n  (e : Nested.ntm) (p : Regions.test) (b : Nested.ntm),\nNested.ntype s G (Nested.NMatch e ((p, b) :: nil)) =\nmatch Nested.ntype s G e with\n| Some u =>\n    if Nested.holds s u p\n    then Nested.ntype s (Regions.binder_types s p ++ G) b\n    else None\n| None => None\nend",
+      "binders": {
+        "G": "list Types.ty",
+        "b": "Nested.ntm",
+        "e": "Nested.ntm",
+        "p": "Regions.test",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.ofm": {
+      "type": "TypeCase.mtm -> Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.pickn": {
+      "type": "Regions.inst3 ->\nTypes.ty ->\nlist (Regions.test * Nested.ntm) -> option (Regions.test * Nested.ntm)",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.pickn_flat": {
+      "type": "forall (CA CB : Constraints.cset) (s : Regions.inst3)\n  (arms : list Bodies.arm),\nNested.pickn s (Regions.iT s) (ListDef.map Nested.as_arm arms) =\noption_map Nested.as_arm\n  (Bodies.selecta Regions.Equation CA CB arms s)",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "arms": "list Bodies.arm",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.region_example": {
+      "type": "Nested.ntm",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.repeat_head": {
+      "type": "forall (v : Runtime.val) (p : Regions.test) (env : list Runtime.val),\nList.nth_error (ListDef.repeat v (Bodies.arity p) ++ env) 0 = Some v",
+      "binders": {
+        "env": "list Runtime.val",
+        "p": "Regions.test",
+        "v": "Runtime.val"
+      },
+      "assumptions": [
+        "Types.tycon",
+        "Runtime.atom"
+      ]
+    },
+    "Clef.RFC0002.Nested.repeat_shift": {
+      "type": "forall (A : Type) (v : A) (k : nat) (l : list A),\n(ListDef.repeat v k ++ v :: l)%list =\n(v :: ListDef.repeat v k ++ l)%list",
+      "binders": {
+        "A": "Type",
+        "k": "nat",
+        "l": "list A",
+        "v": "A"
+      },
+      "assumptions": "closed"
+    },
+    "Clef.RFC0002.Nested.typed_body_specializes": {
+      "type": "forall (s : Regions.inst3) (e : Nested.ntm) \n  (G : list Types.ty) (r : Types.ty),\nNested.ntype s G e = Some r ->\nexists m : TypeCase.mtm,\n  Nested.nspec s G e = Some m /\\ TypeCase.mtype G m = Some r",
+      "binders": {
+        "G": "list Types.ty",
+        "e": "Nested.ntm",
+        "r": "Types.ty",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
     },
     "Clef.RFC0002.Regions.Both": {
       "type": "Regions.test -> Regions.test -> Regions.test",

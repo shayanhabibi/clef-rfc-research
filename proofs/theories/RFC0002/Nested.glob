@@ -1,0 +1,2519 @@
+DIGEST e51fd7b79e4ed4c0b1c9c3066bf29b2c
+FClef.RFC0002.Nested
+R27:30 Stdlib.Lists.List <> <> lib
+R32:35 Stdlib.Bool.Bool <> <> lib
+R37:44 Stdlib.Arith.PeanoNat <> <> lib
+R46:48 Stdlib.micromega.Lia <> <> lib
+R58:70 Stdlib.Lists.List ListNotations <> mod
+R98:107 Clef.Spec.Types <> <> lib
+R109:120 Clef.Spec.Runtime <> <> lib
+R122:135 Clef.Spec.Witnesses <> <> lib
+R163:181 Clef.RFC0001.Constraints <> <> lib
+R183:198 Clef.RFC0001.TypeCase <> <> lib
+R200:214 Clef.RFC0002.Regions <> <> lib
+R216:229 Clef.RFC0002.Bodies <> <> lib
+ind 1565:1567 <> ntm
+constr 1581:1584 <> NVar
+constr 1598:1602 <> NPrim
+constr 1625:1629 <> NPair
+constr 1645:1648 <> NFst
+constr 1662:1665 <> NSnd
+constr 1679:1682 <> NLet
+constr 1698:1703 <> NMatch
+R1591:1593 Corelib.Init.Datatypes <> nat ind
+binder 1587:1587 <> n:3
+R1609:1610 Clef.Spec.Witnesses <> op defax
+binder 1605:1605 <> o:4
+R1618:1620 Clef.RFC0002.Nested <> ntm:1 ind
+binder 1614:1614 <> e:5
+R1638:1640 Clef.RFC0002.Nested <> ntm:1 ind
+binder 1632:1632 <> a:6
+binder 1634:1634 <> b:7
+R1655:1657 Clef.RFC0002.Nested <> ntm:1 ind
+binder 1651:1651 <> e:8
+R1672:1674 Clef.RFC0002.Nested <> ntm:1 ind
+binder 1668:1668 <> e:9
+R1691:1693 Clef.RFC0002.Nested <> ntm:1 ind
+binder 1685:1685 <> a:10
+binder 1687:1687 <> b:11
+R1710:1712 Clef.RFC0002.Nested <> ntm:1 ind
+binder 1706:1706 <> e:12
+R1723:1726 Corelib.Init.Datatypes <> list ind
+R1733:1735 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R1729:1732 Clef.RFC0002.Regions <> test ind
+R1736:1738 Clef.RFC0002.Nested <> ntm:1 ind
+binder 1716:1719 <> arms:13
+scheme 1565:1567 <> ntm_rect
+scheme 1565:1567 <> ntm_ind
+scheme 1565:1567 <> ntm_rec
+scheme 1565:1567 <> ntm_sind
+sec 1849:1860 <> NtmInduction
+var 1874:1874 NtmInduction P
+R1881:1884 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1878:1880 Clef.RFC0002.Nested <> ntm ind
+var 1904:1907 NtmInduction HVar
+binder 1918:1918 <> n:16
+R1921:1921 Clef.RFC0002.Nested <> NtmInduction.P var
+R1924:1927 Clef.RFC0002.Nested <> NVar constr
+R1929:1929 Clef.RFC0002.Nested <> n:16 var
+var 1946:1950 NtmInduction HPrim
+binder 1961:1961 <> o:19
+binder 1963:1963 <> e:20
+R1969:1972 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1966:1966 Clef.RFC0002.Nested <> NtmInduction.P var
+R1968:1968 Clef.RFC0002.Nested <> e:20 var
+R1973:1973 Clef.RFC0002.Nested <> NtmInduction.P var
+R1976:1980 Clef.RFC0002.Nested <> NPrim constr
+R1982:1982 Clef.RFC0002.Nested <> o:19 var
+R1984:1984 Clef.RFC0002.Nested <> e:20 var
+var 2001:2005 NtmInduction HPair
+binder 2016:2016 <> a:23
+binder 2018:2018 <> b:24
+R2024:2027 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2021:2021 Clef.RFC0002.Nested <> NtmInduction.P var
+R2023:2023 Clef.RFC0002.Nested <> a:23 var
+R2031:2034 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2028:2028 Clef.RFC0002.Nested <> NtmInduction.P var
+R2030:2030 Clef.RFC0002.Nested <> b:24 var
+R2035:2035 Clef.RFC0002.Nested <> NtmInduction.P var
+R2038:2042 Clef.RFC0002.Nested <> NPair constr
+R2044:2044 Clef.RFC0002.Nested <> a:23 var
+R2046:2046 Clef.RFC0002.Nested <> b:24 var
+var 2063:2066 NtmInduction HFst
+binder 2077:2077 <> e:27
+R2083:2086 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2080:2080 Clef.RFC0002.Nested <> NtmInduction.P var
+R2082:2082 Clef.RFC0002.Nested <> e:27 var
+R2087:2087 Clef.RFC0002.Nested <> NtmInduction.P var
+R2090:2093 Clef.RFC0002.Nested <> NFst constr
+R2095:2095 Clef.RFC0002.Nested <> e:27 var
+var 2112:2115 NtmInduction HSnd
+binder 2126:2126 <> e:30
+R2132:2135 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2129:2129 Clef.RFC0002.Nested <> NtmInduction.P var
+R2131:2131 Clef.RFC0002.Nested <> e:30 var
+R2136:2136 Clef.RFC0002.Nested <> NtmInduction.P var
+R2139:2142 Clef.RFC0002.Nested <> NSnd constr
+R2144:2144 Clef.RFC0002.Nested <> e:30 var
+var 2161:2164 NtmInduction HLet
+binder 2175:2175 <> a:33
+binder 2177:2177 <> b:34
+R2183:2186 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2180:2180 Clef.RFC0002.Nested <> NtmInduction.P var
+R2182:2182 Clef.RFC0002.Nested <> a:33 var
+R2190:2193 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2187:2187 Clef.RFC0002.Nested <> NtmInduction.P var
+R2189:2189 Clef.RFC0002.Nested <> b:34 var
+R2194:2194 Clef.RFC0002.Nested <> NtmInduction.P var
+R2197:2200 Clef.RFC0002.Nested <> NLet constr
+R2202:2202 Clef.RFC0002.Nested <> a:33 var
+R2204:2204 Clef.RFC0002.Nested <> b:34 var
+var 2221:2226 NtmInduction HMatch
+binder 2237:2237 <> e:37
+binder 2239:2242 <> arms:38
+R2252:2255 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2249:2249 Clef.RFC0002.Nested <> NtmInduction.P var
+R2251:2251 Clef.RFC0002.Nested <> e:37 var
+R2292:2295 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2256:2261 Corelib.Lists.ListDef <> Forall ind
+R2288:2291 Clef.RFC0002.Nested <> arms:38 var
+binder 2268:2270 <> arm:39
+R2275:2275 Clef.RFC0002.Nested <> NtmInduction.P var
+R2278:2280 Corelib.Init.Datatypes <> snd def
+R2282:2284 Clef.RFC0002.Nested <> arm:39 var
+R2296:2296 Clef.RFC0002.Nested <> NtmInduction.P var
+R2299:2304 Clef.RFC0002.Nested <> NMatch constr
+R2306:2306 Clef.RFC0002.Nested <> e:37 var
+R2308:2311 Clef.RFC0002.Nested <> arms:38 var
+def 2327:2338 <> ntm_arms_ind
+R2345:2347 Clef.RFC0002.Nested <> ntm ind
+binder 2341:2341 <> e:42
+R2352:2352 Clef.RFC0002.Nested <> NtmInduction.P var
+R2354:2354 Clef.RFC0002.Nested <> e:42 var
+R2369:2369 Clef.RFC0002.Nested <> e:42 var
+R2382:2385 Clef.RFC0002.Nested <> NVar constr
+R2392:2395 Clef.RFC0002.Nested <> NtmInduction.HVar var
+R2405:2409 Clef.RFC0002.Nested <> NPrim constr
+R2418:2422 Clef.RFC0002.Nested <> NtmInduction.HPrim var
+R2429:2440 Clef.RFC0002.Nested <> ntm_arms_ind:43 def
+R2451:2455 Clef.RFC0002.Nested <> NPair constr
+R2464:2468 Clef.RFC0002.Nested <> NtmInduction.HPair var
+R2475:2486 Clef.RFC0002.Nested <> ntm_arms_ind:43 def
+R2492:2503 Clef.RFC0002.Nested <> ntm_arms_ind:43 def
+R2514:2517 Clef.RFC0002.Nested <> NFst constr
+R2524:2527 Clef.RFC0002.Nested <> NtmInduction.HFst var
+R2532:2543 Clef.RFC0002.Nested <> ntm_arms_ind:43 def
+R2554:2557 Clef.RFC0002.Nested <> NSnd constr
+R2564:2567 Clef.RFC0002.Nested <> NtmInduction.HSnd var
+R2572:2583 Clef.RFC0002.Nested <> ntm_arms_ind:43 def
+R2594:2597 Clef.RFC0002.Nested <> NLet constr
+R2606:2609 Clef.RFC0002.Nested <> NtmInduction.HLet var
+R2616:2627 Clef.RFC0002.Nested <> ntm_arms_ind:43 def
+R2633:2644 Clef.RFC0002.Nested <> ntm_arms_ind:43 def
+R2655:2660 Clef.RFC0002.Nested <> NMatch constr
+R2680:2685 Clef.RFC0002.Nested <> NtmInduction.HMatch var
+R2695:2706 Clef.RFC0002.Nested <> ntm_arms_ind:43 def
+R2735:2738 Corelib.Init.Datatypes <> list ind
+R2745:2747 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R2741:2744 Clef.RFC0002.Regions <> test ind
+R2748:2750 Clef.RFC0002.Nested <> ntm ind
+binder 2731:2731 <> l:45
+R2756:2761 Corelib.Lists.ListDef <> Forall ind
+R2788:2788 Clef.RFC0002.Nested <> l:45 var
+binder 2768:2770 <> arm:46
+R2775:2775 Clef.RFC0002.Nested <> NtmInduction.P var
+R2778:2780 Corelib.Init.Datatypes <> snd def
+R2782:2784 Clef.RFC0002.Nested <> arm:46 var
+R2813:2813 Clef.RFC0002.Nested <> l:45 var
+R2836:2837 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2842:2851 Corelib.Lists.ListDef <> Forall_nil constr
+R2877:2880 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R2871:2871 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2873:2874 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2876:2876 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2886:2896 Corelib.Lists.ListDef <> Forall_cons constr
+R2923:2924 Clef.RFC0002.Nested <> go:47 var
+R2906:2917 Clef.RFC0002.Nested <> ntm_arms_ind:43 def
+R2898:2898 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2900:2901 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2903:2903 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2967:2978 Clef.RFC0002.Nested NtmInduction <> sec
+def 3432:3436 <> holds
+R3443:3447 Clef.RFC0002.Regions <> inst3 rec
+binder 3439:3439 <> s:49
+R3455:3456 Clef.Spec.Types <> ty ind
+binder 3451:3451 <> u:50
+R3464:3467 Clef.RFC0002.Regions <> test ind
+binder 3460:3460 <> p:51
+R3472:3475 Corelib.Init.Datatypes <> bool ind
+R3488:3488 Clef.RFC0002.Nested <> p:51 var
+R3499:3501 Clef.RFC0002.Regions <> IsA constr
+R3506:3510 Clef.RFC0002.Regions <> tyeqb def
+R3512:3512 Clef.RFC0002.Nested <> u:50 var
+R3515:3516 Clef.RFC0002.Regions <> iA proj
+R3518:3518 Clef.RFC0002.Nested <> s:49 var
+R3525:3527 Clef.RFC0002.Regions <> IsB constr
+R3532:3536 Clef.RFC0002.Regions <> tyeqb def
+R3538:3538 Clef.RFC0002.Nested <> u:50 var
+R3541:3542 Clef.RFC0002.Regions <> iB proj
+R3544:3544 Clef.RFC0002.Nested <> s:49 var
+R3551:3554 Clef.RFC0002.Regions <> Both constr
+R3574:3577 Corelib.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R3563:3567 Clef.RFC0002.Nested <> holds:52 def
+R3573:3573 Clef.RFC0002.Nested <> p:51 var
+R3571:3571 Clef.RFC0002.Nested <> u:50 var
+R3569:3569 Clef.RFC0002.Nested <> s:49 var
+R3578:3582 Clef.RFC0002.Nested <> holds:52 def
+R3586:3586 Clef.RFC0002.Nested <> u:50 var
+R3584:3584 Clef.RFC0002.Nested <> s:49 var
+prf 3698:3712 <> holds_scrutinee
+R3723:3726 Clef.RFC0001.Constraints <> cset def
+binder 3715:3716 <> CA:54
+binder 3718:3719 <> CB:55
+R3734:3738 Clef.RFC0002.Regions <> inst3 rec
+binder 3730:3730 <> s:56
+R3746:3749 Clef.RFC0002.Regions <> test ind
+binder 3742:3742 <> p:57
+R3772:3774 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3756:3760 Clef.RFC0002.Nested <> holds def
+R3762:3762 Clef.RFC0002.Nested <> s:56 var
+R3765:3766 Clef.RFC0002.Regions <> iT proj
+R3768:3768 Clef.RFC0002.Nested <> s:56 var
+R3771:3771 Clef.RFC0002.Nested <> p:57 var
+R3775:3781 Clef.RFC0002.Regions <> matches def
+R3783:3790 Clef.RFC0002.Regions <> Equation constr
+R3792:3793 Clef.RFC0002.Nested <> CA:54 var
+R3795:3796 Clef.RFC0002.Nested <> CB:55 var
+R3798:3798 Clef.RFC0002.Nested <> s:56 var
+R3800:3800 Clef.RFC0002.Nested <> p:57 var
+prf 3981:3989 <> arity_pos
+R3996:3999 Clef.RFC0002.Regions <> test ind
+binder 3992:3992 <> p:58
+R4004:4010 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R4012:4013 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 4011:4011 <> j:59
+R4021:4023 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4014:4018 Clef.RFC0002.Bodies <> arity def
+R4020:4020 Clef.RFC0002.Nested <> p:58 var
+R4024:4024 Corelib.Init.Datatypes <> S constr
+R4026:4026 Clef.RFC0002.Nested <> j:59 var
+R4172:4174 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R4175:4179 Clef.RFC0002.Bodies <> arity def
+R4172:4174 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R4175:4179 Clef.RFC0002.Bodies <> arity def
+prf 4262:4274 <> binder_length
+R4281:4285 Clef.RFC0002.Regions <> inst3 rec
+binder 4277:4277 <> s:60
+R4293:4296 Clef.RFC0002.Regions <> test ind
+binder 4289:4289 <> p:61
+R4326:4328 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4301:4306 Corelib.Init.Datatypes <> length def
+R4309:4320 Clef.RFC0002.Regions <> binder_types def
+R4322:4322 Clef.RFC0002.Nested <> s:60 var
+R4324:4324 Clef.RFC0002.Nested <> p:61 var
+R4329:4333 Clef.RFC0002.Bodies <> arity def
+R4335:4335 Clef.RFC0002.Nested <> p:61 var
+R4431:4440 Stdlib.Lists.List <> length_app thm
+R4431:4440 Stdlib.Lists.List <> length_app thm
+R4431:4440 Stdlib.Lists.List <> length_app thm
+prf 4620:4632 <> holds_binders
+R4639:4643 Clef.RFC0002.Regions <> inst3 rec
+binder 4635:4635 <> s:62
+R4651:4652 Clef.Spec.Types <> ty ind
+binder 4647:4647 <> u:63
+R4660:4663 Clef.RFC0002.Regions <> test ind
+binder 4656:4656 <> p:64
+R4688:4691 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4681:4683 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4670:4674 Clef.RFC0002.Nested <> holds def
+R4676:4676 Clef.RFC0002.Nested <> s:62 var
+R4678:4678 Clef.RFC0002.Nested <> u:63 var
+R4680:4680 Clef.RFC0002.Nested <> p:64 var
+R4684:4687 Corelib.Init.Datatypes <> true constr
+R4708:4710 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4692:4703 Clef.RFC0002.Regions <> binder_types def
+R4705:4705 Clef.RFC0002.Nested <> s:62 var
+R4707:4707 Clef.RFC0002.Nested <> p:64 var
+R4711:4716 Corelib.Lists.ListDef <> repeat def
+R4721:4725 Clef.RFC0002.Bodies <> arity def
+R4727:4727 Clef.RFC0002.Nested <> p:64 var
+R4718:4718 Clef.RFC0002.Nested <> u:63 var
+R4803:4811 Clef.RFC0002.Regions <> tyeqb_iff thm
+R4803:4811 Clef.RFC0002.Regions <> tyeqb_iff thm
+R4853:4861 Clef.RFC0002.Regions <> tyeqb_iff thm
+R4853:4861 Clef.RFC0002.Regions <> tyeqb_iff thm
+R4903:4915 Stdlib.Bool.Bool <> andb_true_iff thm
+R4903:4915 Stdlib.Bool.Bool <> andb_true_iff thm
+R4978:4987 Stdlib.Lists.List <> repeat_app thm
+R4978:4987 Stdlib.Lists.List <> repeat_app thm
+R4978:4987 Stdlib.Lists.List <> repeat_app thm
+prf 5015:5026 <> repeat_shift
+binder 5029:5029 <> A:65
+R5044:5044 Clef.RFC0002.Nested <> A:65 var
+binder 5040:5040 <> v:66
+R5052:5054 Corelib.Init.Datatypes <> nat ind
+binder 5048:5048 <> k:67
+R5062:5065 Corelib.Init.Datatypes <> list ind
+R5067:5067 Clef.RFC0002.Nested <> A:65 var
+binder 5058:5058 <> l:68
+R5094:5096 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5084:5087 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R5074:5079 Corelib.Lists.ListDef <> repeat def
+R5083:5083 Clef.RFC0002.Nested <> k:67 var
+R5081:5081 Clef.RFC0002.Nested <> v:66 var
+R5089:5092 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R5088:5088 Clef.RFC0002.Nested <> v:66 var
+R5093:5093 Clef.RFC0002.Nested <> l:68 var
+R5098:5101 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R5097:5097 Clef.RFC0002.Nested <> v:66 var
+R5112:5115 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R5102:5107 Corelib.Lists.ListDef <> repeat def
+R5111:5111 Clef.RFC0002.Nested <> k:67 var
+R5109:5109 Clef.RFC0002.Nested <> v:66 var
+R5116:5116 Clef.RFC0002.Nested <> l:68 var
+prf 5286:5295 <> binder_ctx
+R5302:5306 Clef.RFC0002.Regions <> inst3 rec
+binder 5298:5298 <> s:69
+R5314:5315 Clef.Spec.Types <> ty ind
+binder 5310:5310 <> u:70
+R5323:5326 Clef.RFC0002.Regions <> test ind
+binder 5319:5319 <> p:71
+R5334:5337 Corelib.Init.Datatypes <> list ind
+R5339:5340 Clef.Spec.Types <> ty ind
+binder 5330:5330 <> G:72
+R5365:5370 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5358:5360 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5347:5351 Clef.RFC0002.Nested <> holds def
+R5353:5353 Clef.RFC0002.Nested <> s:69 var
+R5355:5355 Clef.RFC0002.Nested <> u:70 var
+R5357:5357 Clef.RFC0002.Nested <> p:71 var
+R5361:5364 Corelib.Init.Datatypes <> true constr
+R5392:5394 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5387:5390 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R5371:5382 Clef.RFC0002.Regions <> binder_types def
+R5384:5384 Clef.RFC0002.Nested <> s:69 var
+R5386:5386 Clef.RFC0002.Nested <> p:71 var
+R5391:5391 Clef.RFC0002.Nested <> G:72 var
+R5420:5423 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R5395:5400 Corelib.Lists.ListDef <> repeat def
+R5405:5408 Corelib.Init.Peano <> pred abbrev
+R5411:5415 Clef.RFC0002.Bodies <> arity def
+R5417:5417 Clef.RFC0002.Nested <> p:71 var
+R5402:5402 Clef.RFC0002.Nested <> u:70 var
+R5425:5428 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R5424:5424 Clef.RFC0002.Nested <> u:70 var
+R5429:5429 Clef.RFC0002.Nested <> G:72 var
+R5460:5472 Clef.RFC0002.Nested <> holds_binders thm
+R5460:5472 Clef.RFC0002.Nested <> holds_binders thm
+R5460:5472 Clef.RFC0002.Nested <> holds_binders thm
+R5494:5502 Clef.RFC0002.Nested <> arity_pos thm
+R5494:5502 Clef.RFC0002.Nested <> arity_pos thm
+R5535:5546 Clef.RFC0002.Nested <> repeat_shift thm
+R5535:5546 Clef.RFC0002.Nested <> repeat_shift thm
+R5535:5546 Clef.RFC0002.Nested <> repeat_shift thm
+prf 5649:5658 <> binder_env
+R5665:5667 Clef.Spec.Runtime <> val ind
+binder 5661:5661 <> v:73
+R5675:5678 Clef.RFC0002.Regions <> test ind
+binder 5671:5671 <> p:74
+R5688:5691 Corelib.Init.Datatypes <> list ind
+R5693:5695 Clef.Spec.Runtime <> val ind
+binder 5682:5684 <> env:75
+R5727:5729 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5720:5723 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R5702:5707 Corelib.Lists.ListDef <> repeat def
+R5712:5716 Clef.RFC0002.Bodies <> arity def
+R5718:5718 Clef.RFC0002.Nested <> p:74 var
+R5709:5709 Clef.RFC0002.Nested <> v:73 var
+R5724:5726 Clef.RFC0002.Nested <> env:75 var
+R5755:5758 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R5730:5735 Corelib.Lists.ListDef <> repeat def
+R5740:5743 Corelib.Init.Peano <> pred abbrev
+R5746:5750 Clef.RFC0002.Bodies <> arity def
+R5752:5752 Clef.RFC0002.Nested <> p:74 var
+R5737:5737 Clef.RFC0002.Nested <> v:73 var
+R5760:5763 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R5759:5759 Clef.RFC0002.Nested <> v:73 var
+R5764:5766 Clef.RFC0002.Nested <> env:75 var
+R5788:5796 Clef.RFC0002.Nested <> arity_pos thm
+R5788:5796 Clef.RFC0002.Nested <> arity_pos thm
+R5827:5838 Clef.RFC0002.Nested <> repeat_shift thm
+R5827:5838 Clef.RFC0002.Nested <> repeat_shift thm
+R5827:5838 Clef.RFC0002.Nested <> repeat_shift thm
+prf 5943:5953 <> binder_head
+R5960:5964 Clef.RFC0002.Regions <> inst3 rec
+binder 5956:5956 <> s:76
+R5972:5973 Clef.Spec.Types <> ty ind
+binder 5968:5968 <> u:77
+R5981:5984 Clef.RFC0002.Regions <> test ind
+binder 5977:5977 <> p:78
+R5992:5995 Corelib.Init.Datatypes <> list ind
+R5997:5998 Clef.Spec.Types <> ty ind
+binder 5988:5988 <> G:79
+R6023:6026 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6016:6018 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6005:6009 Clef.RFC0002.Nested <> holds def
+R6011:6011 Clef.RFC0002.Nested <> s:76 var
+R6013:6013 Clef.RFC0002.Nested <> u:77 var
+R6015:6015 Clef.RFC0002.Nested <> p:78 var
+R6019:6022 Corelib.Init.Datatypes <> true constr
+R6062:6064 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6027:6035 Stdlib.Lists.List <> nth_error def
+R6054:6057 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R6038:6049 Clef.RFC0002.Regions <> binder_types def
+R6051:6051 Clef.RFC0002.Nested <> s:76 var
+R6053:6053 Clef.RFC0002.Nested <> p:78 var
+R6058:6058 Clef.RFC0002.Nested <> G:79 var
+R6065:6068 Corelib.Init.Datatypes <> Some constr
+R6070:6070 Clef.RFC0002.Nested <> u:77 var
+R6101:6113 Clef.RFC0002.Nested <> holds_binders thm
+R6101:6113 Clef.RFC0002.Nested <> holds_binders thm
+R6101:6113 Clef.RFC0002.Nested <> holds_binders thm
+R6135:6143 Clef.RFC0002.Nested <> arity_pos thm
+R6135:6143 Clef.RFC0002.Nested <> arity_pos thm
+prf 6243:6253 <> repeat_head
+R6260:6262 Clef.Spec.Runtime <> val ind
+binder 6256:6256 <> v:80
+R6270:6273 Clef.RFC0002.Regions <> test ind
+binder 6266:6266 <> p:81
+R6283:6286 Corelib.Init.Datatypes <> list ind
+R6288:6290 Clef.Spec.Runtime <> val ind
+binder 6277:6279 <> env:82
+R6336:6338 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6297:6305 Stdlib.Lists.List <> nth_error def
+R6326:6329 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R6308:6313 Corelib.Lists.ListDef <> repeat def
+R6318:6322 Clef.RFC0002.Bodies <> arity def
+R6324:6324 Clef.RFC0002.Nested <> p:81 var
+R6315:6315 Clef.RFC0002.Nested <> v:80 var
+R6330:6332 Clef.RFC0002.Nested <> env:82 var
+R6339:6342 Corelib.Init.Datatypes <> Some constr
+R6344:6344 Clef.RFC0002.Nested <> v:80 var
+R6366:6374 Clef.RFC0002.Nested <> arity_pos thm
+R6366:6374 Clef.RFC0002.Nested <> arity_pos thm
+def 7113:7117 <> ntype
+R7124:7128 Clef.RFC0002.Regions <> inst3 rec
+binder 7120:7120 <> s:83
+R7136:7139 Corelib.Init.Datatypes <> list ind
+R7141:7142 Clef.Spec.Types <> ty ind
+binder 7132:7132 <> G:84
+R7150:7152 Clef.RFC0002.Nested <> ntm ind
+binder 7146:7146 <> e:85
+R7157:7162 Corelib.Init.Datatypes <> option ind
+R7164:7165 Clef.Spec.Types <> ty ind
+R7178:7178 Clef.RFC0002.Nested <> e:85 var
+R7189:7192 Clef.RFC0002.Nested <> NVar constr
+R7199:7207 Stdlib.Lists.List <> nth_error def
+R7209:7209 Clef.RFC0002.Nested <> G:84 var
+R7217:7221 Clef.RFC0002.Nested <> NPrim constr
+R7242:7246 Clef.RFC0002.Nested <> ntype:86 def
+R7250:7250 Clef.RFC0002.Nested <> G:84 var
+R7248:7248 Clef.RFC0002.Nested <> s:83 var
+R7267:7270 Corelib.Init.Datatypes <> Some constr
+R7277:7283 Clef.Spec.Witnesses <> witness defax
+R7297:7300 Corelib.Init.Datatypes <> None constr
+R7305:7308 Corelib.Init.Datatypes <> None constr
+R7324:7328 Clef.RFC0002.Nested <> NPair constr
+R7362:7366 Clef.RFC0002.Nested <> ntype:86 def
+R7370:7370 Clef.RFC0002.Nested <> G:84 var
+R7368:7368 Clef.RFC0002.Nested <> s:83 var
+R7349:7353 Clef.RFC0002.Nested <> ntype:86 def
+R7357:7357 Clef.RFC0002.Nested <> G:84 var
+R7355:7355 Clef.RFC0002.Nested <> s:83 var
+R7387:7390 Corelib.Init.Datatypes <> Some constr
+R7395:7398 Corelib.Init.Datatypes <> Some constr
+R7405:7408 Corelib.Init.Datatypes <> Some constr
+R7411:7415 Clef.Spec.Types <> TPair constr
+R7438:7441 Corelib.Init.Datatypes <> None constr
+R7457:7460 Clef.RFC0002.Nested <> NFst constr
+R7479:7483 Clef.RFC0002.Nested <> ntype:86 def
+R7487:7487 Clef.RFC0002.Nested <> G:84 var
+R7485:7485 Clef.RFC0002.Nested <> s:83 var
+R7504:7507 Corelib.Init.Datatypes <> Some constr
+R7510:7514 Clef.Spec.Types <> TPair constr
+R7524:7527 Corelib.Init.Datatypes <> Some constr
+R7544:7547 Corelib.Init.Datatypes <> None constr
+R7563:7566 Clef.RFC0002.Nested <> NSnd constr
+R7585:7589 Clef.RFC0002.Nested <> ntype:86 def
+R7593:7593 Clef.RFC0002.Nested <> G:84 var
+R7591:7591 Clef.RFC0002.Nested <> s:83 var
+R7610:7613 Corelib.Init.Datatypes <> Some constr
+R7616:7620 Clef.Spec.Types <> TPair constr
+R7630:7633 Corelib.Init.Datatypes <> Some constr
+R7650:7653 Corelib.Init.Datatypes <> None constr
+R7669:7672 Clef.RFC0002.Nested <> NLet constr
+R7693:7697 Clef.RFC0002.Nested <> ntype:86 def
+R7701:7701 Clef.RFC0002.Nested <> G:84 var
+R7699:7699 Clef.RFC0002.Nested <> s:83 var
+R7718:7721 Corelib.Init.Datatypes <> Some constr
+R7728:7732 Clef.RFC0002.Nested <> ntype:86 def
+R7738:7741 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R7742:7742 Clef.RFC0002.Nested <> G:84 var
+R7734:7734 Clef.RFC0002.Nested <> s:83 var
+R7755:7758 Corelib.Init.Datatypes <> None constr
+R7763:7766 Corelib.Init.Datatypes <> None constr
+R7782:7787 Clef.RFC0002.Nested <> NMatch constr
+R7811:7815 Clef.RFC0002.Nested <> ntype:86 def
+R7819:7819 Clef.RFC0002.Nested <> G:84 var
+R7817:7817 Clef.RFC0002.Nested <> s:83 var
+R7836:7839 Corelib.Init.Datatypes <> Some constr
+R7869:7872 Corelib.Init.Datatypes <> list ind
+R7879:7881 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R7875:7878 Clef.RFC0002.Regions <> test ind
+R7882:7884 Clef.RFC0002.Nested <> ntm ind
+binder 7865:7865 <> l:88
+R7890:7895 Corelib.Init.Datatypes <> option ind
+R7897:7898 Clef.Spec.Types <> ty ind
+R7922:7922 Clef.RFC0002.Nested <> l:88 var
+R7944:7945 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R7950:7953 Corelib.Init.Datatypes <> None constr
+R7976:7979 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R7970:7970 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R7972:7973 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R7975:7975 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R8005:8009 Clef.RFC0002.Nested <> holds def
+R8011:8011 Clef.RFC0002.Nested <> s:83 var
+R8061:8062 Clef.RFC0002.Nested <> go:89 var
+R8022:8026 Clef.RFC0002.Nested <> ntype:86 def
+R8047:8050 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R8031:8042 Clef.RFC0002.Regions <> binder_types def
+R8044:8044 Clef.RFC0002.Nested <> s:83 var
+R8051:8051 Clef.RFC0002.Nested <> G:84 var
+R8028:8028 Clef.RFC0002.Nested <> s:83 var
+R8097:8100 Corelib.Init.Datatypes <> None constr
+R8105:8108 Corelib.Init.Datatypes <> None constr
+def 8233:8237 <> pickn
+R8244:8248 Clef.RFC0002.Regions <> inst3 rec
+binder 8240:8240 <> s:91
+R8256:8257 Clef.Spec.Types <> ty ind
+binder 8252:8252 <> u:92
+R8268:8271 Corelib.Init.Datatypes <> list ind
+R8278:8280 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R8274:8277 Clef.RFC0002.Regions <> test ind
+R8281:8283 Clef.RFC0002.Nested <> ntm ind
+binder 8261:8264 <> arms:93
+R8289:8294 Corelib.Init.Datatypes <> option ind
+R8301:8303 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R8297:8300 Clef.RFC0002.Regions <> test ind
+R8304:8306 Clef.RFC0002.Nested <> ntm ind
+R8314:8317 Stdlib.Lists.List <> find def
+R8348:8351 Clef.RFC0002.Nested <> arms:93 var
+binder 8324:8324 <> a:94
+R8329:8333 Clef.RFC0002.Nested <> holds def
+R8335:8335 Clef.RFC0002.Nested <> s:91 var
+R8337:8337 Clef.RFC0002.Nested <> u:92 var
+R8340:8342 Corelib.Init.Datatypes <> fst def
+R8344:8344 Clef.RFC0002.Nested <> a:94 var
+prf 8423:8433 <> ntype_match
+R8440:8444 Clef.RFC0002.Regions <> inst3 rec
+binder 8436:8436 <> s:95
+R8452:8455 Corelib.Init.Datatypes <> list ind
+R8457:8458 Clef.Spec.Types <> ty ind
+binder 8448:8448 <> G:96
+R8466:8468 Clef.RFC0002.Nested <> ntm ind
+binder 8462:8462 <> a:97
+R8479:8482 Corelib.Init.Datatypes <> list ind
+R8489:8491 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R8485:8488 Clef.RFC0002.Regions <> test ind
+R8492:8494 Clef.RFC0002.Nested <> ntm ind
+binder 8472:8475 <> arms:98
+R8527:8531 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8502:8506 Clef.RFC0002.Nested <> ntype def
+R8508:8508 Clef.RFC0002.Nested <> s:95 var
+R8510:8510 Clef.RFC0002.Nested <> G:96 var
+R8513:8518 Clef.RFC0002.Nested <> NMatch constr
+R8520:8520 Clef.RFC0002.Nested <> a:97 var
+R8522:8525 Clef.RFC0002.Nested <> arms:98 var
+R8538:8542 Clef.RFC0002.Nested <> ntype def
+R8544:8544 Clef.RFC0002.Nested <> s:95 var
+R8546:8546 Clef.RFC0002.Nested <> G:96 var
+R8548:8548 Clef.RFC0002.Nested <> a:97 var
+R8559:8562 Corelib.Init.Datatypes <> Some constr
+R8581:8585 Clef.RFC0002.Nested <> pickn def
+R8587:8587 Clef.RFC0002.Nested <> s:95 var
+R8591:8594 Clef.RFC0002.Nested <> arms:98 var
+R8609:8612 Corelib.Init.Datatypes <> Some constr
+R8614:8614 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R8616:8617 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R8619:8619 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R8624:8628 Clef.RFC0002.Nested <> ntype def
+R8630:8630 Clef.RFC0002.Nested <> s:95 var
+R8649:8652 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R8633:8644 Clef.RFC0002.Regions <> binder_types def
+R8646:8646 Clef.RFC0002.Nested <> s:95 var
+R8653:8653 Clef.RFC0002.Nested <> G:96 var
+R8666:8669 Corelib.Init.Datatypes <> None constr
+R8674:8677 Corelib.Init.Datatypes <> None constr
+R8693:8696 Corelib.Init.Datatypes <> None constr
+R8701:8704 Corelib.Init.Datatypes <> None constr
+R8739:8743 Clef.RFC0002.Nested <> ntype def
+R8739:8743 Clef.RFC0002.Nested <> ntype def
+R8788:8792 Clef.RFC0002.Nested <> pickn def
+R8865:8869 Clef.RFC0002.Nested <> holds def
+R8865:8869 Clef.RFC0002.Nested <> holds def
+def 9286:9290 <> binds
+R9297:9299 Corelib.Init.Datatypes <> nat ind
+binder 9293:9293 <> k:99
+R9307:9309 Clef.RFC0001.TypeCase <> mtm ind
+binder 9303:9303 <> b:100
+R9314:9316 Clef.RFC0001.TypeCase <> mtm ind
+R9329:9329 Clef.RFC0002.Nested <> k:99 var
+R9345:9345 Clef.RFC0002.Nested <> b:100 var
+R9351:9351 Corelib.Init.Datatypes <> S constr
+R9358:9361 Clef.RFC0001.TypeCase <> MLet constr
+R9364:9367 Clef.RFC0001.TypeCase <> MVar constr
+R9373:9377 Clef.RFC0002.Nested <> binds:101 def
+R9381:9381 Clef.RFC0002.Nested <> b:100 var
+R9379:9379 Clef.RFC0002.Nested <> k:99 var
+def 9665:9669 <> nspec
+R9676:9680 Clef.RFC0002.Regions <> inst3 rec
+binder 9672:9672 <> s:103
+R9688:9691 Corelib.Init.Datatypes <> list ind
+R9693:9694 Clef.Spec.Types <> ty ind
+binder 9684:9684 <> G:104
+R9702:9704 Clef.RFC0002.Nested <> ntm ind
+binder 9698:9698 <> e:105
+R9709:9714 Corelib.Init.Datatypes <> option ind
+R9716:9718 Clef.RFC0001.TypeCase <> mtm ind
+R9731:9731 Clef.RFC0002.Nested <> e:105 var
+R9742:9745 Clef.RFC0002.Nested <> NVar constr
+R9752:9755 Corelib.Init.Datatypes <> Some constr
+R9758:9761 Clef.RFC0001.TypeCase <> MVar constr
+R9770:9774 Clef.RFC0002.Nested <> NPrim constr
+R9783:9792 Corelib.Init.Datatypes <> option_map def
+R9805:9809 Clef.RFC0002.Nested <> nspec:106 def
+R9813:9813 Clef.RFC0002.Nested <> G:104 var
+R9811:9811 Clef.RFC0002.Nested <> s:103 var
+R9795:9799 Clef.RFC0001.TypeCase <> MPrim constr
+R9822:9826 Clef.RFC0002.Nested <> NPair constr
+R9860:9864 Clef.RFC0002.Nested <> nspec:106 def
+R9868:9868 Clef.RFC0002.Nested <> G:104 var
+R9866:9866 Clef.RFC0002.Nested <> s:103 var
+R9847:9851 Clef.RFC0002.Nested <> nspec:106 def
+R9855:9855 Clef.RFC0002.Nested <> G:104 var
+R9853:9853 Clef.RFC0002.Nested <> s:103 var
+R9885:9888 Corelib.Init.Datatypes <> Some constr
+R9893:9896 Corelib.Init.Datatypes <> Some constr
+R9903:9906 Corelib.Init.Datatypes <> Some constr
+R9909:9913 Clef.RFC0001.TypeCase <> MPair constr
+R9936:9939 Corelib.Init.Datatypes <> None constr
+R9955:9958 Clef.RFC0002.Nested <> NFst constr
+R9965:9974 Corelib.Init.Datatypes <> option_map def
+R9982:9986 Clef.RFC0002.Nested <> nspec:106 def
+R9990:9990 Clef.RFC0002.Nested <> G:104 var
+R9988:9988 Clef.RFC0002.Nested <> s:103 var
+R9976:9979 Clef.RFC0001.TypeCase <> MFst constr
+R9999:10002 Clef.RFC0002.Nested <> NSnd constr
+R10009:10018 Corelib.Init.Datatypes <> option_map def
+R10026:10030 Clef.RFC0002.Nested <> nspec:106 def
+R10034:10034 Clef.RFC0002.Nested <> G:104 var
+R10032:10032 Clef.RFC0002.Nested <> s:103 var
+R10020:10023 Clef.RFC0001.TypeCase <> MSnd constr
+R10043:10046 Clef.RFC0002.Nested <> NLet constr
+R10080:10084 Clef.RFC0002.Nested <> nspec:106 def
+R10088:10088 Clef.RFC0002.Nested <> G:104 var
+R10086:10086 Clef.RFC0002.Nested <> s:103 var
+R10067:10071 Clef.RFC0002.Nested <> ntype def
+R10073:10073 Clef.RFC0002.Nested <> s:103 var
+R10075:10075 Clef.RFC0002.Nested <> G:104 var
+R10105:10108 Corelib.Init.Datatypes <> Some constr
+R10113:10116 Corelib.Init.Datatypes <> Some constr
+R10124:10133 Corelib.Init.Datatypes <> option_map def
+R10146:10150 Clef.RFC0002.Nested <> nspec:106 def
+R10156:10159 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R10160:10160 Clef.RFC0002.Nested <> G:104 var
+R10152:10152 Clef.RFC0002.Nested <> s:103 var
+R10136:10139 Clef.RFC0001.TypeCase <> MLet constr
+R10182:10185 Corelib.Init.Datatypes <> None constr
+R10201:10206 Clef.RFC0002.Nested <> NMatch constr
+R10243:10247 Clef.RFC0002.Nested <> nspec:106 def
+R10251:10251 Clef.RFC0002.Nested <> G:104 var
+R10249:10249 Clef.RFC0002.Nested <> s:103 var
+R10230:10234 Clef.RFC0002.Nested <> ntype def
+R10236:10236 Clef.RFC0002.Nested <> s:103 var
+R10238:10238 Clef.RFC0002.Nested <> G:104 var
+R10268:10271 Corelib.Init.Datatypes <> Some constr
+R10276:10279 Corelib.Init.Datatypes <> Some constr
+R10310:10313 Corelib.Init.Datatypes <> list ind
+R10320:10322 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R10316:10319 Clef.RFC0002.Regions <> test ind
+R10323:10325 Clef.RFC0002.Nested <> ntm ind
+binder 10306:10306 <> l:108
+R10331:10336 Corelib.Init.Datatypes <> option ind
+R10338:10340 Clef.RFC0001.TypeCase <> mtm ind
+R10364:10364 Clef.RFC0002.Nested <> l:108 var
+R10386:10387 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R10392:10395 Corelib.Init.Datatypes <> None constr
+R10418:10421 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R10412:10412 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R10414:10415 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R10417:10417 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R10447:10451 Clef.RFC0002.Nested <> holds def
+R10453:10453 Clef.RFC0002.Nested <> s:103 var
+R10622:10623 Clef.RFC0002.Nested <> go:109 var
+R10481:10490 Corelib.Init.Datatypes <> option_map def
+R10565:10569 Clef.RFC0002.Nested <> nspec:106 def
+R10590:10593 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R10574:10585 Clef.RFC0002.Regions <> binder_types def
+R10587:10587 Clef.RFC0002.Nested <> s:103 var
+R10594:10594 Clef.RFC0002.Nested <> G:104 var
+R10571:10571 Clef.RFC0002.Nested <> s:103 var
+binder 10497:10498 <> mb:111
+R10503:10506 Clef.RFC0001.TypeCase <> MLet constr
+R10512:10516 Clef.RFC0002.Nested <> binds def
+R10519:10522 Corelib.Init.Peano <> pred abbrev
+R10525:10529 Clef.RFC0002.Bodies <> arity def
+R10535:10536 Clef.RFC0002.Nested <> mb:111 var
+R10666:10669 Corelib.Init.Datatypes <> None constr
+prf 10769:10779 <> nspec_match
+R10786:10790 Clef.RFC0002.Regions <> inst3 rec
+binder 10782:10782 <> s:112
+R10798:10801 Corelib.Init.Datatypes <> list ind
+R10803:10804 Clef.Spec.Types <> ty ind
+binder 10794:10794 <> G:113
+R10812:10814 Clef.RFC0002.Nested <> ntm ind
+binder 10808:10808 <> a:114
+R10825:10828 Corelib.Init.Datatypes <> list ind
+R10835:10837 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R10831:10834 Clef.RFC0002.Regions <> test ind
+R10838:10840 Clef.RFC0002.Nested <> ntm ind
+binder 10818:10821 <> arms:115
+R10873:10877 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R10848:10852 Clef.RFC0002.Nested <> nspec def
+R10854:10854 Clef.RFC0002.Nested <> s:112 var
+R10856:10856 Clef.RFC0002.Nested <> G:113 var
+R10859:10864 Clef.RFC0002.Nested <> NMatch constr
+R10866:10866 Clef.RFC0002.Nested <> a:114 var
+R10868:10871 Clef.RFC0002.Nested <> arms:115 var
+R10897:10901 Clef.RFC0002.Nested <> nspec def
+R10903:10903 Clef.RFC0002.Nested <> s:112 var
+R10905:10905 Clef.RFC0002.Nested <> G:113 var
+R10907:10907 Clef.RFC0002.Nested <> a:114 var
+R10884:10888 Clef.RFC0002.Nested <> ntype def
+R10890:10890 Clef.RFC0002.Nested <> s:112 var
+R10892:10892 Clef.RFC0002.Nested <> G:113 var
+R10894:10894 Clef.RFC0002.Nested <> a:114 var
+R10918:10921 Corelib.Init.Datatypes <> Some constr
+R10926:10929 Corelib.Init.Datatypes <> Some constr
+R10949:10953 Clef.RFC0002.Nested <> pickn def
+R10955:10955 Clef.RFC0002.Nested <> s:112 var
+R10959:10962 Clef.RFC0002.Nested <> arms:115 var
+R10977:10980 Corelib.Init.Datatypes <> Some constr
+R10982:10982 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R10984:10985 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R10987:10987 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R11002:11011 Corelib.Init.Datatypes <> option_map def
+R11074:11078 Clef.RFC0002.Nested <> nspec def
+R11080:11080 Clef.RFC0002.Nested <> s:112 var
+R11099:11102 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R11083:11094 Clef.RFC0002.Regions <> binder_types def
+R11096:11096 Clef.RFC0002.Nested <> s:112 var
+R11103:11103 Clef.RFC0002.Nested <> G:113 var
+binder 11018:11019 <> mb:116
+R11024:11027 Clef.RFC0001.TypeCase <> MLet constr
+R11033:11037 Clef.RFC0002.Nested <> binds def
+R11040:11043 Corelib.Init.Peano <> pred abbrev
+R11046:11050 Clef.RFC0002.Bodies <> arity def
+R11056:11057 Clef.RFC0002.Nested <> mb:116 var
+R11117:11120 Corelib.Init.Datatypes <> None constr
+R11125:11128 Corelib.Init.Datatypes <> None constr
+R11152:11155 Corelib.Init.Datatypes <> None constr
+R11190:11194 Clef.RFC0002.Nested <> ntype def
+R11190:11194 Clef.RFC0002.Nested <> ntype def
+R11242:11246 Clef.RFC0002.Nested <> nspec def
+R11242:11246 Clef.RFC0002.Nested <> nspec def
+R11292:11296 Clef.RFC0002.Nested <> pickn def
+R11369:11373 Clef.RFC0002.Nested <> holds def
+R11369:11373 Clef.RFC0002.Nested <> holds def
+prf 11503:11513 <> mtype_binds
+R11520:11522 Corelib.Init.Datatypes <> nat ind
+binder 11516:11516 <> k:117
+R11530:11532 Clef.RFC0001.TypeCase <> mtm ind
+binder 11526:11526 <> b:118
+R11551:11552 Clef.Spec.Types <> ty ind
+binder 11547:11547 <> u:119
+R11560:11563 Corelib.Init.Datatypes <> list ind
+R11565:11566 Clef.Spec.Types <> ty ind
+binder 11556:11556 <> G:120
+R11600:11602 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R11574:11578 Clef.RFC0001.TypeCase <> mtype def
+R11582:11585 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R11581:11581 Clef.RFC0002.Nested <> u:119 var
+R11586:11586 Clef.RFC0002.Nested <> G:120 var
+R11590:11594 Clef.RFC0002.Nested <> binds def
+R11596:11596 Clef.RFC0002.Nested <> k:117 var
+R11598:11598 Clef.RFC0002.Nested <> b:118 var
+R11603:11607 Clef.RFC0001.TypeCase <> mtype def
+R11620:11623 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R11610:11615 Corelib.Lists.ListDef <> repeat def
+R11619:11619 Clef.RFC0002.Nested <> k:117 var
+R11617:11617 Clef.RFC0002.Nested <> u:119 var
+R11625:11628 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R11624:11624 Clef.RFC0002.Nested <> u:119 var
+R11629:11629 Clef.RFC0002.Nested <> G:120 var
+R11632:11632 Clef.RFC0002.Nested <> b:118 var
+R11719:11730 Clef.RFC0002.Nested <> repeat_shift thm
+R11719:11730 Clef.RFC0002.Nested <> repeat_shift thm
+R11719:11730 Clef.RFC0002.Nested <> repeat_shift thm
+prf 11825:11834 <> eval_binds
+R11841:11843 Corelib.Init.Datatypes <> nat ind
+binder 11837:11837 <> k:121
+R11851:11853 Clef.RFC0001.TypeCase <> mtm ind
+binder 11847:11847 <> b:122
+R11872:11874 Clef.Spec.Runtime <> val ind
+binder 11868:11868 <> v:123
+R11884:11887 Corelib.Init.Datatypes <> list ind
+R11889:11891 Clef.Spec.Runtime <> val ind
+binder 11878:11880 <> env:124
+R11926:11928 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R11899:11902 Clef.RFC0001.TypeCase <> eval def
+R11906:11909 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R11905:11905 Clef.RFC0002.Nested <> v:123 var
+R11910:11912 Clef.RFC0002.Nested <> env:124 var
+R11916:11920 Clef.RFC0002.Nested <> binds def
+R11922:11922 Clef.RFC0002.Nested <> k:121 var
+R11924:11924 Clef.RFC0002.Nested <> b:122 var
+R11929:11932 Clef.RFC0001.TypeCase <> eval def
+R11945:11948 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R11935:11940 Corelib.Lists.ListDef <> repeat def
+R11944:11944 Clef.RFC0002.Nested <> k:121 var
+R11942:11942 Clef.RFC0002.Nested <> v:123 var
+R11950:11953 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R11949:11949 Clef.RFC0002.Nested <> v:123 var
+R11954:11956 Clef.RFC0002.Nested <> env:124 var
+R11959:11959 Clef.RFC0002.Nested <> b:122 var
+R12048:12059 Clef.RFC0002.Nested <> repeat_shift thm
+R12048:12059 Clef.RFC0002.Nested <> repeat_shift thm
+R12048:12059 Clef.RFC0002.Nested <> repeat_shift thm
+def 12734:12739 <> nseval
+R12746:12750 Clef.RFC0002.Regions <> inst3 rec
+binder 12742:12742 <> s:125
+R12758:12761 Corelib.Init.Datatypes <> list ind
+R12763:12764 Clef.Spec.Types <> ty ind
+binder 12754:12754 <> G:126
+R12774:12777 Corelib.Init.Datatypes <> list ind
+R12779:12781 Clef.Spec.Runtime <> val ind
+binder 12768:12770 <> env:127
+R12789:12791 Clef.RFC0002.Nested <> ntm ind
+binder 12785:12785 <> e:128
+R12796:12801 Corelib.Init.Datatypes <> option ind
+R12803:12805 Clef.Spec.Runtime <> val ind
+R12818:12818 Clef.RFC0002.Nested <> e:128 var
+R12829:12832 Clef.RFC0002.Nested <> NVar constr
+R12839:12847 Stdlib.Lists.List <> nth_error def
+R12849:12851 Clef.RFC0002.Nested <> env:127 var
+R12859:12863 Clef.RFC0002.Nested <> NPrim constr
+R12884:12889 Clef.RFC0002.Nested <> nseval:129 def
+R12895:12897 Clef.RFC0002.Nested <> env:127 var
+R12893:12893 Clef.RFC0002.Nested <> G:126 var
+R12891:12891 Clef.RFC0002.Nested <> s:125 var
+R12914:12917 Corelib.Init.Datatypes <> Some constr
+R12924:12928 Clef.Spec.Witnesses <> apply defax
+R12942:12945 Corelib.Init.Datatypes <> None constr
+R12950:12953 Corelib.Init.Datatypes <> None constr
+R12969:12973 Clef.RFC0002.Nested <> NPair constr
+R13012:13017 Clef.RFC0002.Nested <> nseval:129 def
+R13023:13025 Clef.RFC0002.Nested <> env:127 var
+R13021:13021 Clef.RFC0002.Nested <> G:126 var
+R13019:13019 Clef.RFC0002.Nested <> s:125 var
+R12994:12999 Clef.RFC0002.Nested <> nseval:129 def
+R13005:13007 Clef.RFC0002.Nested <> env:127 var
+R13003:13003 Clef.RFC0002.Nested <> G:126 var
+R13001:13001 Clef.RFC0002.Nested <> s:125 var
+R13042:13045 Corelib.Init.Datatypes <> Some constr
+R13050:13053 Corelib.Init.Datatypes <> Some constr
+R13060:13063 Corelib.Init.Datatypes <> Some constr
+R13066:13070 Clef.Spec.Runtime <> VPair constr
+R13093:13096 Corelib.Init.Datatypes <> None constr
+R13112:13115 Clef.RFC0002.Nested <> NFst constr
+R13134:13139 Clef.RFC0002.Nested <> nseval:129 def
+R13145:13147 Clef.RFC0002.Nested <> env:127 var
+R13143:13143 Clef.RFC0002.Nested <> G:126 var
+R13141:13141 Clef.RFC0002.Nested <> s:125 var
+R13164:13167 Corelib.Init.Datatypes <> Some constr
+R13170:13174 Clef.Spec.Runtime <> VPair constr
+R13184:13187 Corelib.Init.Datatypes <> Some constr
+R13204:13207 Corelib.Init.Datatypes <> None constr
+R13223:13226 Clef.RFC0002.Nested <> NSnd constr
+R13245:13250 Clef.RFC0002.Nested <> nseval:129 def
+R13256:13258 Clef.RFC0002.Nested <> env:127 var
+R13254:13254 Clef.RFC0002.Nested <> G:126 var
+R13252:13252 Clef.RFC0002.Nested <> s:125 var
+R13275:13278 Corelib.Init.Datatypes <> Some constr
+R13281:13285 Clef.Spec.Runtime <> VPair constr
+R13295:13298 Corelib.Init.Datatypes <> Some constr
+R13315:13318 Corelib.Init.Datatypes <> None constr
+R13334:13337 Clef.RFC0002.Nested <> NLet constr
+R13371:13376 Clef.RFC0002.Nested <> nseval:129 def
+R13382:13384 Clef.RFC0002.Nested <> env:127 var
+R13380:13380 Clef.RFC0002.Nested <> G:126 var
+R13378:13378 Clef.RFC0002.Nested <> s:125 var
+R13358:13362 Clef.RFC0002.Nested <> ntype def
+R13364:13364 Clef.RFC0002.Nested <> s:125 var
+R13366:13366 Clef.RFC0002.Nested <> G:126 var
+R13401:13404 Corelib.Init.Datatypes <> Some constr
+R13409:13412 Corelib.Init.Datatypes <> Some constr
+R13419:13424 Clef.RFC0002.Nested <> nseval:129 def
+R13439:13442 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R13443:13445 Clef.RFC0002.Nested <> env:127 var
+R13430:13433 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R13434:13434 Clef.RFC0002.Nested <> G:126 var
+R13426:13426 Clef.RFC0002.Nested <> s:125 var
+R13466:13469 Corelib.Init.Datatypes <> None constr
+R13485:13490 Clef.RFC0002.Nested <> NMatch constr
+R13527:13532 Clef.RFC0002.Nested <> nseval:129 def
+R13538:13540 Clef.RFC0002.Nested <> env:127 var
+R13536:13536 Clef.RFC0002.Nested <> G:126 var
+R13534:13534 Clef.RFC0002.Nested <> s:125 var
+R13514:13518 Clef.RFC0002.Nested <> ntype def
+R13520:13520 Clef.RFC0002.Nested <> s:125 var
+R13522:13522 Clef.RFC0002.Nested <> G:126 var
+R13557:13560 Corelib.Init.Datatypes <> Some constr
+R13565:13568 Corelib.Init.Datatypes <> Some constr
+R13598:13601 Corelib.Init.Datatypes <> list ind
+R13608:13610 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R13604:13607 Clef.RFC0002.Regions <> test ind
+R13611:13613 Clef.RFC0002.Nested <> ntm ind
+binder 13594:13594 <> l:131
+R13619:13624 Corelib.Init.Datatypes <> option ind
+R13626:13628 Clef.Spec.Runtime <> val ind
+R13652:13652 Clef.RFC0002.Nested <> l:131 var
+R13674:13675 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R13680:13683 Corelib.Init.Datatypes <> None constr
+R13706:13709 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R13700:13700 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R13702:13703 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R13705:13705 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R13735:13739 Clef.RFC0002.Nested <> holds def
+R13741:13741 Clef.RFC0002.Nested <> s:125 var
+R13854:13855 Clef.RFC0002.Nested <> go:132 var
+R13769:13774 Clef.RFC0002.Nested <> nseval:129 def
+R13821:13824 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R13803:13808 Corelib.Lists.ListDef <> repeat def
+R13813:13817 Clef.RFC0002.Bodies <> arity def
+R13825:13827 Clef.RFC0002.Nested <> env:127 var
+R13795:13798 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R13779:13790 Clef.RFC0002.Regions <> binder_types def
+R13792:13792 Clef.RFC0002.Nested <> s:125 var
+R13799:13799 Clef.RFC0002.Nested <> G:126 var
+R13776:13776 Clef.RFC0002.Nested <> s:125 var
+R13898:13901 Corelib.Init.Datatypes <> None constr
+prf 14056:14067 <> nseval_match
+R14078:14082 Clef.RFC0002.Regions <> inst3 rec
+binder 14074:14074 <> s:134
+R14090:14093 Corelib.Init.Datatypes <> list ind
+R14095:14096 Clef.Spec.Types <> ty ind
+binder 14086:14086 <> G:135
+R14106:14109 Corelib.Init.Datatypes <> list ind
+R14111:14113 Clef.Spec.Runtime <> val ind
+binder 14100:14102 <> env:136
+R14121:14123 Clef.RFC0002.Nested <> ntm ind
+binder 14117:14117 <> a:137
+R14134:14137 Corelib.Init.Datatypes <> list ind
+R14144:14146 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R14140:14143 Clef.RFC0002.Regions <> test ind
+R14147:14149 Clef.RFC0002.Nested <> ntm ind
+binder 14127:14130 <> arms:138
+R14187:14191 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R14157:14162 Clef.RFC0002.Nested <> nseval def
+R14164:14164 Clef.RFC0002.Nested <> s:134 var
+R14166:14166 Clef.RFC0002.Nested <> G:135 var
+R14168:14170 Clef.RFC0002.Nested <> env:136 var
+R14173:14178 Clef.RFC0002.Nested <> NMatch constr
+R14180:14180 Clef.RFC0002.Nested <> a:137 var
+R14182:14185 Clef.RFC0002.Nested <> arms:138 var
+R14211:14216 Clef.RFC0002.Nested <> nseval def
+R14218:14218 Clef.RFC0002.Nested <> s:134 var
+R14220:14220 Clef.RFC0002.Nested <> G:135 var
+R14222:14224 Clef.RFC0002.Nested <> env:136 var
+R14226:14226 Clef.RFC0002.Nested <> a:137 var
+R14198:14202 Clef.RFC0002.Nested <> ntype def
+R14204:14204 Clef.RFC0002.Nested <> s:134 var
+R14206:14206 Clef.RFC0002.Nested <> G:135 var
+R14208:14208 Clef.RFC0002.Nested <> a:137 var
+R14237:14240 Corelib.Init.Datatypes <> Some constr
+R14245:14248 Corelib.Init.Datatypes <> Some constr
+R14267:14271 Clef.RFC0002.Nested <> pickn def
+R14273:14273 Clef.RFC0002.Nested <> s:134 var
+R14277:14280 Clef.RFC0002.Nested <> arms:138 var
+R14295:14298 Corelib.Init.Datatypes <> Some constr
+R14300:14300 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R14302:14303 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R14305:14305 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R14310:14315 Clef.RFC0002.Nested <> nseval def
+R14317:14317 Clef.RFC0002.Nested <> s:134 var
+R14336:14339 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R14320:14331 Clef.RFC0002.Regions <> binder_types def
+R14333:14333 Clef.RFC0002.Nested <> s:134 var
+R14340:14340 Clef.RFC0002.Nested <> G:135 var
+R14362:14365 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R14344:14349 Corelib.Lists.ListDef <> repeat def
+R14354:14358 Clef.RFC0002.Bodies <> arity def
+R14366:14368 Clef.RFC0002.Nested <> env:136 var
+R14381:14384 Corelib.Init.Datatypes <> None constr
+R14389:14392 Corelib.Init.Datatypes <> None constr
+R14416:14419 Corelib.Init.Datatypes <> None constr
+R14454:14458 Clef.RFC0002.Nested <> ntype def
+R14454:14458 Clef.RFC0002.Nested <> ntype def
+R14506:14511 Clef.RFC0002.Nested <> nseval def
+R14506:14511 Clef.RFC0002.Nested <> nseval def
+R14560:14564 Clef.RFC0002.Nested <> pickn def
+R14637:14641 Clef.RFC0002.Nested <> holds def
+R14637:14641 Clef.RFC0002.Nested <> holds def
+prf 15393:15431 <> nested_specialization_preserves_meaning
+R15438:15442 Clef.RFC0002.Regions <> inst3 rec
+binder 15434:15434 <> s:139
+R15450:15452 Clef.RFC0002.Nested <> ntm ind
+binder 15446:15446 <> e:140
+R15471:15474 Corelib.Init.Datatypes <> list ind
+R15476:15477 Clef.Spec.Types <> ty ind
+binder 15467:15467 <> G:141
+R15485:15487 Clef.RFC0001.TypeCase <> mtm ind
+binder 15481:15481 <> m:142
+R15511:15516 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R15502:15504 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R15491:15495 Clef.RFC0002.Nested <> nspec def
+R15497:15497 Clef.RFC0002.Nested <> s:139 var
+R15499:15499 Clef.RFC0002.Nested <> G:141 var
+R15501:15501 Clef.RFC0002.Nested <> e:140 var
+R15505:15508 Corelib.Init.Datatypes <> Some constr
+R15510:15510 Clef.RFC0002.Nested <> m:142 var
+R15530:15533 Corelib.Init.Datatypes <> list ind
+R15535:15537 Clef.Spec.Runtime <> val ind
+binder 15524:15526 <> env:143
+R15556:15558 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R15540:15545 Clef.RFC0002.Nested <> nseval def
+R15547:15547 Clef.RFC0002.Nested <> s:139 var
+R15549:15549 Clef.RFC0002.Nested <> G:141 var
+R15551:15553 Clef.RFC0002.Nested <> env:143 var
+R15555:15555 Clef.RFC0002.Nested <> e:140 var
+R15559:15562 Clef.RFC0001.TypeCase <> eval def
+R15564:15566 Clef.RFC0002.Nested <> env:143 var
+R15568:15568 Clef.RFC0002.Nested <> m:142 var
+R15676:15687 Clef.RFC0002.Nested <> ntm_arms_ind def
+R15676:15687 Clef.RFC0002.Nested <> ntm_arms_ind def
+R15782:15786 Clef.RFC0002.Nested <> nspec def
+R15782:15786 Clef.RFC0002.Nested <> nspec def
+R15936:15940 Clef.RFC0002.Nested <> nspec def
+R15936:15940 Clef.RFC0002.Nested <> nspec def
+R15998:16002 Clef.RFC0002.Nested <> nspec def
+R15998:16002 Clef.RFC0002.Nested <> nspec def
+R16159:16163 Clef.RFC0002.Nested <> nspec def
+R16159:16163 Clef.RFC0002.Nested <> nspec def
+R16313:16317 Clef.RFC0002.Nested <> nspec def
+R16313:16317 Clef.RFC0002.Nested <> nspec def
+R16467:16471 Clef.RFC0002.Nested <> ntype def
+R16467:16471 Clef.RFC0002.Nested <> ntype def
+R16529:16533 Clef.RFC0002.Nested <> nspec def
+R16529:16533 Clef.RFC0002.Nested <> nspec def
+R16593:16597 Clef.RFC0002.Nested <> nspec def
+R16603:16606 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R16593:16597 Clef.RFC0002.Nested <> nspec def
+R16603:16606 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R16738:16741 Clef.RFC0001.TypeCase <> eval def
+R16738:16741 Clef.RFC0001.TypeCase <> eval def
+R16812:16822 Clef.RFC0002.Nested <> nspec_match thm
+R16812:16822 Clef.RFC0002.Nested <> nspec_match thm
+R16812:16822 Clef.RFC0002.Nested <> nspec_match thm
+R16838:16849 Clef.RFC0002.Nested <> nseval_match thm
+R16838:16849 Clef.RFC0002.Nested <> nseval_match thm
+R16838:16849 Clef.RFC0002.Nested <> nseval_match thm
+R16866:16870 Clef.RFC0002.Nested <> ntype def
+R16866:16870 Clef.RFC0002.Nested <> ntype def
+R16928:16932 Clef.RFC0002.Nested <> nspec def
+R16928:16932 Clef.RFC0002.Nested <> nspec def
+R16992:16996 Clef.RFC0002.Nested <> pickn def
+R16992:16996 Clef.RFC0002.Nested <> pickn def
+R17061:17065 Clef.RFC0002.Nested <> nspec def
+R17086:17089 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R17070:17081 Clef.RFC0002.Regions <> binder_types def
+R17061:17065 Clef.RFC0002.Nested <> nspec def
+R17086:17089 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R17070:17081 Clef.RFC0002.Regions <> binder_types def
+R17201:17204 Clef.RFC0001.TypeCase <> eval def
+R17222:17225 Clef.RFC0001.TypeCase <> eval def
+R17222:17225 Clef.RFC0001.TypeCase <> eval def
+R17276:17284 Stdlib.Lists.List <> find_some thm
+R17276:17284 Stdlib.Lists.List <> find_some thm
+R17314:17326 Stdlib.Lists.List <> Forall_forall thm
+R17314:17326 Stdlib.Lists.List <> Forall_forall thm
+R17314:17326 Stdlib.Lists.List <> Forall_forall thm
+R17351:17351 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R17353:17354 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R17356:17356 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R17373:17382 Clef.RFC0002.Nested <> eval_binds thm
+R17385:17394 Clef.RFC0002.Nested <> binder_env thm
+R17351:17351 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R17353:17354 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R17356:17356 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R17351:17351 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R17353:17354 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R17356:17356 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R17373:17382 Clef.RFC0002.Nested <> eval_binds thm
+R17373:17382 Clef.RFC0002.Nested <> eval_binds thm
+R17385:17394 Clef.RFC0002.Nested <> binder_env thm
+R17385:17394 Clef.RFC0002.Nested <> binder_env thm
+prf 17716:17737 <> typed_body_specializes
+R17744:17748 Clef.RFC0002.Regions <> inst3 rec
+binder 17740:17740 <> s:144
+R17756:17758 Clef.RFC0002.Nested <> ntm ind
+binder 17752:17752 <> e:145
+R17777:17780 Corelib.Init.Datatypes <> list ind
+R17782:17783 Clef.Spec.Types <> ty ind
+binder 17773:17773 <> G:146
+R17791:17792 Clef.Spec.Types <> ty ind
+binder 17787:17787 <> r:147
+R17816:17821 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R17807:17809 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R17796:17800 Clef.RFC0002.Nested <> ntype def
+R17802:17802 Clef.RFC0002.Nested <> s:144 var
+R17804:17804 Clef.RFC0002.Nested <> G:146 var
+R17806:17806 Clef.RFC0002.Nested <> e:145 var
+R17810:17813 Corelib.Init.Datatypes <> Some constr
+R17815:17815 Clef.RFC0002.Nested <> r:147 var
+R17822:17828 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R17830:17831 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 17829:17829 <> m:148
+R17852:17855 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R17843:17845 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R17832:17836 Clef.RFC0002.Nested <> nspec def
+R17838:17838 Clef.RFC0002.Nested <> s:144 var
+R17840:17840 Clef.RFC0002.Nested <> G:146 var
+R17842:17842 Clef.RFC0002.Nested <> e:145 var
+R17846:17849 Corelib.Init.Datatypes <> Some constr
+R17851:17851 Clef.RFC0002.Nested <> m:148 var
+R17865:17867 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R17856:17860 Clef.RFC0001.TypeCase <> mtype def
+R17862:17862 Clef.RFC0002.Nested <> G:146 var
+R17864:17864 Clef.RFC0002.Nested <> m:148 var
+R17868:17871 Corelib.Init.Datatypes <> Some constr
+R17873:17873 Clef.RFC0002.Nested <> r:147 var
+R17981:17992 Clef.RFC0002.Nested <> ntm_arms_ind def
+R17981:17992 Clef.RFC0002.Nested <> ntm_arms_ind def
+R18021:18024 Clef.RFC0001.TypeCase <> MVar constr
+R18021:18024 Clef.RFC0001.TypeCase <> MVar constr
+R18088:18092 Clef.RFC0002.Nested <> ntype def
+R18088:18092 Clef.RFC0002.Nested <> ntype def
+R18185:18189 Clef.RFC0001.TypeCase <> MPrim constr
+R18185:18189 Clef.RFC0001.TypeCase <> MPrim constr
+R18302:18306 Clef.RFC0002.Nested <> ntype def
+R18302:18306 Clef.RFC0002.Nested <> ntype def
+R18364:18368 Clef.RFC0002.Nested <> ntype def
+R18364:18368 Clef.RFC0002.Nested <> ntype def
+R18529:18533 Clef.RFC0001.TypeCase <> MPair constr
+R18529:18533 Clef.RFC0001.TypeCase <> MPair constr
+R18664:18668 Clef.RFC0002.Nested <> ntype def
+R18664:18668 Clef.RFC0002.Nested <> ntype def
+R18761:18764 Clef.RFC0001.TypeCase <> MFst constr
+R18761:18764 Clef.RFC0001.TypeCase <> MFst constr
+R18875:18879 Clef.RFC0002.Nested <> ntype def
+R18875:18879 Clef.RFC0002.Nested <> ntype def
+R18972:18975 Clef.RFC0001.TypeCase <> MSnd constr
+R18972:18975 Clef.RFC0001.TypeCase <> MSnd constr
+R19086:19090 Clef.RFC0002.Nested <> ntype def
+R19086:19090 Clef.RFC0002.Nested <> ntype def
+R19195:19198 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R19195:19198 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R19238:19241 Clef.RFC0001.TypeCase <> MLet constr
+R19238:19241 Clef.RFC0001.TypeCase <> MLet constr
+R19355:19365 Clef.RFC0002.Nested <> ntype_match thm
+R19355:19365 Clef.RFC0002.Nested <> ntype_match thm
+R19355:19365 Clef.RFC0002.Nested <> ntype_match thm
+R19387:19391 Clef.RFC0002.Nested <> ntype def
+R19387:19391 Clef.RFC0002.Nested <> ntype def
+R19449:19453 Clef.RFC0002.Nested <> pickn def
+R19449:19453 Clef.RFC0002.Nested <> pickn def
+R19563:19571 Stdlib.Lists.List <> find_some thm
+R19563:19571 Stdlib.Lists.List <> find_some thm
+R19615:19627 Stdlib.Lists.List <> Forall_forall thm
+R19615:19627 Stdlib.Lists.List <> Forall_forall thm
+R19615:19627 Stdlib.Lists.List <> Forall_forall thm
+R19653:19653 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R19655:19656 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R19658:19658 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R19653:19653 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R19655:19656 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R19658:19658 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R19716:19719 Clef.RFC0001.TypeCase <> MLet constr
+R19725:19729 Clef.RFC0002.Nested <> binds def
+R19732:19735 Corelib.Init.Peano <> pred abbrev
+R19738:19742 Clef.RFC0002.Bodies <> arity def
+R19716:19719 Clef.RFC0001.TypeCase <> MLet constr
+R19725:19729 Clef.RFC0002.Nested <> binds def
+R19732:19735 Corelib.Init.Peano <> pred abbrev
+R19738:19742 Clef.RFC0002.Bodies <> arity def
+R19775:19785 Clef.RFC0002.Nested <> nspec_match thm
+R19775:19785 Clef.RFC0002.Nested <> nspec_match thm
+R19775:19785 Clef.RFC0002.Nested <> nspec_match thm
+R19845:19855 Clef.RFC0002.Nested <> mtype_binds thm
+R19862:19871 Clef.RFC0002.Nested <> binder_ctx thm
+R19845:19855 Clef.RFC0002.Nested <> mtype_binds thm
+R19845:19855 Clef.RFC0002.Nested <> mtype_binds thm
+R19862:19871 Clef.RFC0002.Nested <> binder_ctx thm
+R19862:19871 Clef.RFC0002.Nested <> binder_ctx thm
+def 20229:20234 <> ncheck
+R20245:20248 Clef.RFC0001.Constraints <> cset def
+binder 20237:20238 <> CA:149
+binder 20240:20241 <> CB:150
+R20256:20259 Corelib.Init.Datatypes <> list ind
+R20261:20264 Clef.RFC0002.Bodies <> oty3 ind
+binder 20252:20252 <> G:151
+R20272:20274 Clef.RFC0002.Nested <> ntm ind
+binder 20268:20268 <> e:152
+R20284:20287 Clef.RFC0002.Bodies <> oty3 ind
+binder 20278:20280 <> res:153
+R20292:20295 Corelib.Init.Datatypes <> bool ind
+R20302:20308 Stdlib.Lists.List <> forallb def
+R20463:20467 Clef.RFC0002.Regions <> table def
+R20469:20470 Clef.RFC0002.Nested <> CA:149 var
+R20472:20473 Clef.RFC0002.Nested <> CB:150 var
+binder 20319:20319 <> s:154
+R20337:20341 Clef.RFC0002.Nested <> ntype def
+R20343:20343 Clef.RFC0002.Nested <> s:154 var
+R20350:20353 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R20346:20347 Clef.RFC0002.Regions <> iT proj
+R20349:20349 Clef.RFC0002.Nested <> s:154 var
+R20354:20356 Corelib.Lists.ListDef <> map def
+R20370:20370 Clef.RFC0002.Nested <> G:151 var
+R20359:20365 Clef.RFC0002.Bodies <> inst3ty def
+R20367:20367 Clef.RFC0002.Nested <> s:154 var
+R20373:20373 Clef.RFC0002.Nested <> e:152 var
+R20389:20392 Corelib.Init.Datatypes <> Some constr
+R20399:20403 Clef.RFC0002.Regions <> tyeqb def
+R20408:20414 Clef.RFC0002.Bodies <> inst3ty def
+R20416:20416 Clef.RFC0002.Nested <> s:154 var
+R20418:20420 Clef.RFC0002.Nested <> res:153 var
+R20432:20435 Corelib.Init.Datatypes <> None constr
+R20440:20444 Corelib.Init.Datatypes <> false constr
+prf 21231:21249 <> checked_nested_runs
+R21262:21265 Clef.RFC0001.Constraints <> cset def
+binder 21254:21255 <> CA:155
+binder 21257:21258 <> CB:156
+R21273:21276 Corelib.Init.Datatypes <> list ind
+R21278:21281 Clef.RFC0002.Bodies <> oty3 ind
+binder 21269:21269 <> G:157
+R21289:21291 Clef.RFC0002.Nested <> ntm ind
+binder 21285:21285 <> e:158
+R21301:21304 Clef.RFC0002.Bodies <> oty3 ind
+binder 21295:21297 <> res:159
+R21314:21318 Clef.RFC0002.Regions <> inst3 rec
+binder 21310:21310 <> s:160
+R21328:21331 Corelib.Init.Datatypes <> list ind
+R21333:21335 Clef.Spec.Runtime <> val ind
+binder 21322:21324 <> env:161
+R21343:21345 Clef.Spec.Runtime <> val ind
+binder 21339:21339 <> x:162
+R21379:21384 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R21372:21374 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R21352:21357 Clef.RFC0002.Nested <> ncheck def
+R21359:21360 Clef.RFC0002.Nested <> CA:155 var
+R21362:21363 Clef.RFC0002.Nested <> CB:156 var
+R21365:21365 Clef.RFC0002.Nested <> G:157 var
+R21367:21367 Clef.RFC0002.Nested <> e:158 var
+R21369:21371 Clef.RFC0002.Nested <> res:159 var
+R21375:21378 Corelib.Init.Datatypes <> true constr
+R21398:21401 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R21385:21389 Clef.RFC0002.Regions <> valid def
+R21391:21392 Clef.RFC0002.Nested <> CA:155 var
+R21394:21395 Clef.RFC0002.Nested <> CB:156 var
+R21397:21397 Clef.RFC0002.Nested <> s:160 var
+R21417:21422 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R21402:21407 Clef.Spec.Runtime <> has_ty ind
+R21409:21409 Clef.RFC0002.Nested <> x:162 var
+R21412:21413 Clef.RFC0002.Regions <> iT proj
+R21415:21415 Clef.RFC0002.Nested <> s:160 var
+R21461:21466 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R21423:21429 Stdlib.Lists.List <> Forall2 ind
+R21443:21445 Corelib.Lists.ListDef <> map def
+R21459:21459 Clef.RFC0002.Nested <> G:157 var
+R21448:21454 Clef.RFC0002.Bodies <> inst3ty def
+R21456:21456 Clef.RFC0002.Nested <> s:160 var
+R21438:21440 Clef.RFC0002.Nested <> env:161 var
+R21431:21436 Clef.Spec.Runtime <> has_ty ind
+R21467:21473 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R21475:21476 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 21474:21474 <> v:163
+R21535:21550 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R21526:21528 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R21477:21482 Clef.RFC0002.Nested <> nseval def
+R21484:21484 Clef.RFC0002.Nested <> s:160 var
+R21491:21494 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R21487:21488 Clef.RFC0002.Regions <> iT proj
+R21490:21490 Clef.RFC0002.Nested <> s:160 var
+R21495:21497 Corelib.Lists.ListDef <> map def
+R21511:21511 Clef.RFC0002.Nested <> G:157 var
+R21500:21506 Clef.RFC0002.Bodies <> inst3ty def
+R21508:21508 Clef.RFC0002.Nested <> s:160 var
+R21516:21519 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R21515:21515 Clef.RFC0002.Nested <> x:162 var
+R21520:21522 Clef.RFC0002.Nested <> env:161 var
+R21525:21525 Clef.RFC0002.Nested <> e:158 var
+R21529:21532 Corelib.Init.Datatypes <> Some constr
+R21534:21534 Clef.RFC0002.Nested <> v:163 var
+R21551:21556 Clef.Spec.Runtime <> has_ty ind
+R21558:21558 Clef.RFC0002.Nested <> v:163 var
+R21561:21567 Clef.RFC0002.Bodies <> inst3ty def
+R21569:21569 Clef.RFC0002.Nested <> s:160 var
+R21571:21573 Clef.RFC0002.Nested <> res:159 var
+R21611:21616 Clef.RFC0002.Nested <> ncheck def
+R21632:21645 Stdlib.Lists.List <> forallb_forall thm
+R21632:21645 Stdlib.Lists.List <> forallb_forall thm
+R21632:21645 Stdlib.Lists.List <> forallb_forall thm
+R21672:21676 Corelib.Init.Logic <> proj2 thm
+R21679:21693 Clef.RFC0002.Regions <> table_iff_valid thm
+R21672:21676 Corelib.Init.Logic <> proj2 thm
+R21679:21693 Clef.RFC0002.Regions <> table_iff_valid thm
+R21721:21725 Clef.RFC0002.Nested <> ntype def
+R21734:21737 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R21730:21731 Clef.RFC0002.Regions <> iT proj
+R21738:21740 Corelib.Lists.ListDef <> map def
+R21743:21749 Clef.RFC0002.Bodies <> inst3ty def
+R21721:21725 Clef.RFC0002.Nested <> ntype def
+R21734:21737 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R21730:21731 Clef.RFC0002.Regions <> iT proj
+R21738:21740 Corelib.Lists.ListDef <> map def
+R21743:21749 Clef.RFC0002.Bodies <> inst3ty def
+R21802:21810 Clef.RFC0002.Regions <> tyeqb_iff thm
+R21802:21810 Clef.RFC0002.Regions <> tyeqb_iff thm
+R21839:21860 Clef.RFC0002.Nested <> typed_body_specializes thm
+R21839:21860 Clef.RFC0002.Nested <> typed_body_specializes thm
+R21900:21938 Clef.RFC0002.Nested <> nested_specialization_preserves_meaning thm
+R21900:21938 Clef.RFC0002.Nested <> nested_specialization_preserves_meaning thm
+R21900:21938 Clef.RFC0002.Nested <> nested_specialization_preserves_meaning thm
+R21962:21983 Clef.RFC0001.TypeCase <> specialization_is_safe thm
+R21992:21995 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R21988:21989 Clef.RFC0002.Regions <> iT proj
+R21996:21998 Corelib.Lists.ListDef <> map def
+R22001:22007 Clef.RFC0002.Bodies <> inst3ty def
+R22017:22020 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R21962:21983 Clef.RFC0001.TypeCase <> specialization_is_safe thm
+R21992:21995 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R21988:21989 Clef.RFC0002.Regions <> iT proj
+R21996:21998 Corelib.Lists.ListDef <> map def
+R22001:22007 Clef.RFC0002.Bodies <> inst3ty def
+R22017:22020 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+prf 22427:22437 <> find_filter
+binder 22440:22440 <> A:164
+R22456:22459 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R22455:22455 Clef.RFC0002.Nested <> A:164 var
+R22460:22463 Corelib.Init.Datatypes <> bool ind
+binder 22451:22451 <> f:165
+R22471:22474 Corelib.Init.Datatypes <> list ind
+R22476:22476 Clef.RFC0002.Nested <> A:164 var
+binder 22467:22467 <> l:166
+R22502:22504 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R22483:22486 Stdlib.Lists.List <> find def
+R22491:22496 Stdlib.Lists.List <> filter def
+R22500:22500 Clef.RFC0002.Nested <> l:166 var
+R22498:22498 Clef.RFC0002.Nested <> f:165 var
+R22488:22488 Clef.RFC0002.Nested <> f:165 var
+R22505:22508 Stdlib.Lists.List <> find def
+R22512:22512 Clef.RFC0002.Nested <> l:166 var
+R22510:22510 Clef.RFC0002.Nested <> f:165 var
+prf 23145:23172 <> arm_checked_where_it_matches
+R23183:23187 Clef.RFC0002.Regions <> inst3 rec
+binder 23179:23179 <> s:167
+R23195:23198 Corelib.Init.Datatypes <> list ind
+R23200:23201 Clef.Spec.Types <> ty ind
+binder 23191:23191 <> G:168
+R23209:23211 Clef.RFC0002.Nested <> ntm ind
+binder 23205:23205 <> e:169
+R23222:23225 Corelib.Init.Datatypes <> list ind
+R23232:23234 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R23228:23231 Clef.RFC0002.Regions <> test ind
+R23235:23237 Clef.RFC0002.Nested <> ntm ind
+binder 23215:23218 <> arms:170
+R23246:23247 Clef.Spec.Types <> ty ind
+binder 23242:23242 <> u:171
+R23274:23279 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R23265:23267 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R23254:23258 Clef.RFC0002.Nested <> ntype def
+R23260:23260 Clef.RFC0002.Nested <> s:167 var
+R23262:23262 Clef.RFC0002.Nested <> G:168 var
+R23264:23264 Clef.RFC0002.Nested <> e:169 var
+R23268:23271 Corelib.Init.Datatypes <> Some constr
+R23273:23273 Clef.RFC0002.Nested <> u:171 var
+R23292:23297 Stdlib.Lists.List <> filter def
+R23328:23331 Clef.RFC0002.Nested <> arms:170 var
+binder 23304:23304 <> a:172
+R23309:23313 Clef.RFC0002.Nested <> holds def
+R23315:23315 Clef.RFC0002.Nested <> s:167 var
+R23317:23317 Clef.RFC0002.Nested <> u:171 var
+R23320:23322 Corelib.Init.Datatypes <> fst def
+R23324:23324 Clef.RFC0002.Nested <> a:172 var
+binder 23284:23287 <> live:173
+R23391:23396 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R23363:23365 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R23338:23342 Clef.RFC0002.Nested <> ntype def
+R23344:23344 Clef.RFC0002.Nested <> s:167 var
+R23346:23346 Clef.RFC0002.Nested <> G:168 var
+R23349:23354 Clef.RFC0002.Nested <> NMatch constr
+R23356:23356 Clef.RFC0002.Nested <> e:169 var
+R23358:23361 Clef.RFC0002.Nested <> arms:170 var
+R23366:23370 Clef.RFC0002.Nested <> ntype def
+R23372:23372 Clef.RFC0002.Nested <> s:167 var
+R23374:23374 Clef.RFC0002.Nested <> G:168 var
+R23377:23382 Clef.RFC0002.Nested <> NMatch constr
+R23384:23384 Clef.RFC0002.Nested <> e:169 var
+R23386:23389 Clef.RFC0002.Nested <> live:173 var
+R23410:23413 Corelib.Init.Datatypes <> list ind
+R23415:23417 Clef.Spec.Runtime <> val ind
+binder 23404:23406 <> env:174
+R23450:23452 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R23420:23425 Clef.RFC0002.Nested <> nseval def
+R23427:23427 Clef.RFC0002.Nested <> s:167 var
+R23429:23429 Clef.RFC0002.Nested <> G:168 var
+R23431:23433 Clef.RFC0002.Nested <> env:174 var
+R23436:23441 Clef.RFC0002.Nested <> NMatch constr
+R23443:23443 Clef.RFC0002.Nested <> e:169 var
+R23445:23448 Clef.RFC0002.Nested <> arms:170 var
+R23453:23458 Clef.RFC0002.Nested <> nseval def
+R23460:23460 Clef.RFC0002.Nested <> s:167 var
+R23462:23462 Clef.RFC0002.Nested <> G:168 var
+R23464:23466 Clef.RFC0002.Nested <> env:174 var
+R23469:23474 Clef.RFC0002.Nested <> NMatch constr
+R23476:23476 Clef.RFC0002.Nested <> e:169 var
+R23478:23481 Clef.RFC0002.Nested <> live:173 var
+R23541:23551 Clef.RFC0002.Nested <> ntype_match thm
+R23541:23551 Clef.RFC0002.Nested <> ntype_match thm
+R23541:23551 Clef.RFC0002.Nested <> ntype_match thm
+R23541:23551 Clef.RFC0002.Nested <> ntype_match thm
+R23541:23551 Clef.RFC0002.Nested <> ntype_match thm
+R23564:23568 Clef.RFC0002.Nested <> pickn def
+R23579:23589 Clef.RFC0002.Nested <> find_filter thm
+R23579:23589 Clef.RFC0002.Nested <> find_filter thm
+R23579:23589 Clef.RFC0002.Nested <> find_filter thm
+R23630:23641 Clef.RFC0002.Nested <> nseval_match thm
+R23630:23641 Clef.RFC0002.Nested <> nseval_match thm
+R23630:23641 Clef.RFC0002.Nested <> nseval_match thm
+R23630:23641 Clef.RFC0002.Nested <> nseval_match thm
+R23630:23641 Clef.RFC0002.Nested <> nseval_match thm
+R23661:23666 Clef.RFC0002.Nested <> nseval def
+R23661:23666 Clef.RFC0002.Nested <> nseval def
+R23717:23721 Clef.RFC0002.Nested <> pickn def
+R23732:23742 Clef.RFC0002.Nested <> find_filter thm
+R23732:23742 Clef.RFC0002.Nested <> find_filter thm
+R23732:23742 Clef.RFC0002.Nested <> find_filter thm
+prf 23799:23807 <> ntype_one
+R23814:23818 Clef.RFC0002.Regions <> inst3 rec
+binder 23810:23810 <> s:175
+R23826:23829 Corelib.Init.Datatypes <> list ind
+R23831:23832 Clef.Spec.Types <> ty ind
+binder 23822:23822 <> G:176
+R23840:23842 Clef.RFC0002.Nested <> ntm ind
+binder 23836:23836 <> e:177
+R23850:23853 Clef.RFC0002.Regions <> test ind
+binder 23846:23846 <> p:178
+R23861:23863 Clef.RFC0002.Nested <> ntm ind
+binder 23857:23857 <> b:179
+R23899:23903 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R23870:23874 Clef.RFC0002.Nested <> ntype def
+R23876:23876 Clef.RFC0002.Nested <> s:175 var
+R23878:23878 Clef.RFC0002.Nested <> G:176 var
+R23881:23886 Clef.RFC0002.Nested <> NMatch constr
+R23888:23888 Clef.RFC0002.Nested <> e:177 var
+R23890:23890 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R23897:23897 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R23891:23891 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R23893:23894 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R23896:23896 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R23892:23892 Clef.RFC0002.Nested <> p:178 var
+R23895:23895 Clef.RFC0002.Nested <> b:179 var
+R23910:23914 Clef.RFC0002.Nested <> ntype def
+R23916:23916 Clef.RFC0002.Nested <> s:175 var
+R23918:23918 Clef.RFC0002.Nested <> G:176 var
+R23920:23920 Clef.RFC0002.Nested <> e:177 var
+R23931:23934 Corelib.Init.Datatypes <> Some constr
+R23944:23948 Clef.RFC0002.Nested <> holds def
+R23950:23950 Clef.RFC0002.Nested <> s:175 var
+R23954:23954 Clef.RFC0002.Nested <> p:178 var
+R24000:24003 Corelib.Init.Datatypes <> None constr
+R23961:23965 Clef.RFC0002.Nested <> ntype def
+R23967:23967 Clef.RFC0002.Nested <> s:175 var
+R23986:23989 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R23970:23981 Clef.RFC0002.Regions <> binder_types def
+R23983:23983 Clef.RFC0002.Nested <> s:175 var
+R23985:23985 Clef.RFC0002.Nested <> p:178 var
+R23990:23990 Clef.RFC0002.Nested <> G:176 var
+R23993:23993 Clef.RFC0002.Nested <> b:179 var
+R24009:24012 Corelib.Init.Datatypes <> None constr
+R24017:24020 Corelib.Init.Datatypes <> None constr
+R24055:24059 Clef.RFC0002.Nested <> ntype def
+R24055:24059 Clef.RFC0002.Nested <> ntype def
+R24107:24111 Clef.RFC0002.Nested <> holds def
+R24107:24111 Clef.RFC0002.Nested <> holds def
+prf 24146:24155 <> nseval_one
+R24162:24166 Clef.RFC0002.Regions <> inst3 rec
+binder 24158:24158 <> s:180
+R24174:24177 Corelib.Init.Datatypes <> list ind
+R24179:24180 Clef.Spec.Types <> ty ind
+binder 24170:24170 <> G:181
+R24190:24193 Corelib.Init.Datatypes <> list ind
+R24195:24197 Clef.Spec.Runtime <> val ind
+binder 24184:24186 <> env:182
+R24205:24207 Clef.RFC0002.Nested <> ntm ind
+binder 24201:24201 <> e:183
+R24215:24218 Clef.RFC0002.Regions <> test ind
+binder 24211:24211 <> p:184
+R24226:24228 Clef.RFC0002.Nested <> ntm ind
+binder 24222:24222 <> b:185
+R24269:24273 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R24235:24240 Clef.RFC0002.Nested <> nseval def
+R24242:24242 Clef.RFC0002.Nested <> s:180 var
+R24244:24244 Clef.RFC0002.Nested <> G:181 var
+R24246:24248 Clef.RFC0002.Nested <> env:182 var
+R24251:24256 Clef.RFC0002.Nested <> NMatch constr
+R24258:24258 Clef.RFC0002.Nested <> e:183 var
+R24260:24260 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R24267:24267 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R24261:24261 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R24263:24264 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R24266:24266 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R24262:24262 Clef.RFC0002.Nested <> p:184 var
+R24265:24265 Clef.RFC0002.Nested <> b:185 var
+R24293:24298 Clef.RFC0002.Nested <> nseval def
+R24300:24300 Clef.RFC0002.Nested <> s:180 var
+R24302:24302 Clef.RFC0002.Nested <> G:181 var
+R24304:24306 Clef.RFC0002.Nested <> env:182 var
+R24308:24308 Clef.RFC0002.Nested <> e:183 var
+R24280:24284 Clef.RFC0002.Nested <> ntype def
+R24286:24286 Clef.RFC0002.Nested <> s:180 var
+R24288:24288 Clef.RFC0002.Nested <> G:181 var
+R24290:24290 Clef.RFC0002.Nested <> e:183 var
+R24319:24322 Corelib.Init.Datatypes <> Some constr
+R24327:24330 Corelib.Init.Datatypes <> Some constr
+R24346:24350 Clef.RFC0002.Nested <> holds def
+R24352:24352 Clef.RFC0002.Nested <> s:180 var
+R24356:24356 Clef.RFC0002.Nested <> p:184 var
+R24443:24446 Corelib.Init.Datatypes <> None constr
+R24369:24374 Clef.RFC0002.Nested <> nseval def
+R24376:24376 Clef.RFC0002.Nested <> s:180 var
+R24395:24398 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R24379:24390 Clef.RFC0002.Regions <> binder_types def
+R24392:24392 Clef.RFC0002.Nested <> s:180 var
+R24394:24394 Clef.RFC0002.Nested <> p:184 var
+R24399:24399 Clef.RFC0002.Nested <> G:181 var
+R24421:24424 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R24403:24408 Corelib.Lists.ListDef <> repeat def
+R24413:24417 Clef.RFC0002.Bodies <> arity def
+R24419:24419 Clef.RFC0002.Nested <> p:184 var
+R24425:24427 Clef.RFC0002.Nested <> env:182 var
+R24430:24430 Clef.RFC0002.Nested <> b:185 var
+R24460:24463 Corelib.Init.Datatypes <> None constr
+R24498:24502 Clef.RFC0002.Nested <> ntype def
+R24498:24502 Clef.RFC0002.Nested <> ntype def
+R24550:24555 Clef.RFC0002.Nested <> nseval def
+R24550:24555 Clef.RFC0002.Nested <> nseval def
+R24607:24611 Clef.RFC0002.Nested <> holds def
+R24607:24611 Clef.RFC0002.Nested <> holds def
+prf 25430:25451 <> conjunction_is_nesting
+R25462:25466 Clef.RFC0002.Regions <> inst3 rec
+binder 25458:25458 <> s:186
+R25474:25477 Corelib.Init.Datatypes <> list ind
+R25479:25480 Clef.Spec.Types <> ty ind
+binder 25470:25470 <> G:187
+R25488:25490 Clef.RFC0002.Nested <> ntm ind
+binder 25484:25484 <> e:188
+R25500:25503 Clef.RFC0002.Regions <> test ind
+binder 25494:25494 <> p:189
+binder 25496:25496 <> q:190
+R25511:25513 Clef.RFC0002.Nested <> ntm ind
+binder 25507:25507 <> b:191
+R25532:25537 Clef.RFC0002.Nested <> NMatch constr
+R25539:25539 Clef.RFC0002.Nested <> e:188 var
+R25541:25541 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R25555:25555 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R25542:25542 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R25551:25552 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R25554:25554 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R25543:25546 Clef.RFC0002.Regions <> Both constr
+R25548:25548 Clef.RFC0002.Nested <> p:189 var
+R25550:25550 Clef.RFC0002.Nested <> q:190 var
+R25553:25553 Clef.RFC0002.Nested <> b:191 var
+binder 25524:25527 <> flat:192
+R25576:25581 Clef.RFC0002.Nested <> NMatch constr
+R25583:25583 Clef.RFC0002.Nested <> e:188 var
+R25585:25585 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R25615:25615 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R25586:25586 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R25588:25589 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R25614:25614 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R25587:25587 Clef.RFC0002.Nested <> p:189 var
+R25590:25595 Clef.RFC0002.Nested <> NMatch constr
+R25598:25601 Clef.RFC0002.Nested <> NVar constr
+R25606:25606 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R25613:25613 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R25607:25607 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R25609:25610 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R25612:25612 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R25608:25608 Clef.RFC0002.Nested <> q:190 var
+R25611:25611 Clef.RFC0002.Nested <> b:191 var
+binder 25566:25571 <> nested:193
+R25655:25660 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R25636:25638 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R25622:25626 Clef.RFC0002.Nested <> ntype def
+R25628:25628 Clef.RFC0002.Nested <> s:186 var
+R25630:25630 Clef.RFC0002.Nested <> G:187 var
+R25632:25635 Clef.RFC0002.Nested <> flat:192 var
+R25639:25643 Clef.RFC0002.Nested <> ntype def
+R25645:25645 Clef.RFC0002.Nested <> s:186 var
+R25647:25647 Clef.RFC0002.Nested <> G:187 var
+R25649:25654 Clef.RFC0002.Nested <> nested:193 var
+R25674:25677 Corelib.Init.Datatypes <> list ind
+R25679:25681 Clef.Spec.Runtime <> val ind
+binder 25668:25670 <> env:194
+R25703:25705 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R25684:25689 Clef.RFC0002.Nested <> nseval def
+R25691:25691 Clef.RFC0002.Nested <> s:186 var
+R25693:25693 Clef.RFC0002.Nested <> G:187 var
+R25695:25697 Clef.RFC0002.Nested <> env:194 var
+R25699:25702 Clef.RFC0002.Nested <> flat:192 var
+R25706:25711 Clef.RFC0002.Nested <> nseval def
+R25713:25713 Clef.RFC0002.Nested <> s:186 var
+R25715:25715 Clef.RFC0002.Nested <> G:187 var
+R25717:25719 Clef.RFC0002.Nested <> env:194 var
+R25721:25726 Clef.RFC0002.Nested <> nested:193 var
+R25797:25805 Clef.RFC0002.Nested <> ntype_one thm
+R25797:25805 Clef.RFC0002.Nested <> ntype_one thm
+R25797:25805 Clef.RFC0002.Nested <> ntype_one thm
+R25797:25805 Clef.RFC0002.Nested <> ntype_one thm
+R25797:25805 Clef.RFC0002.Nested <> ntype_one thm
+R25797:25805 Clef.RFC0002.Nested <> ntype_one thm
+R25818:25822 Clef.RFC0002.Nested <> ntype def
+R25818:25822 Clef.RFC0002.Nested <> ntype def
+R25867:25871 Clef.RFC0002.Nested <> holds def
+R25885:25889 Clef.RFC0002.Nested <> holds def
+R25911:25914 Corelib.Init.Datatypes <> andb def
+R25885:25889 Clef.RFC0002.Nested <> holds def
+R25944:25948 Clef.RFC0002.Nested <> ntype def
+R25961:25971 Clef.RFC0002.Nested <> binder_head thm
+R25961:25971 Clef.RFC0002.Nested <> binder_head thm
+R25961:25971 Clef.RFC0002.Nested <> binder_head thm
+R26000:26004 Clef.RFC0002.Nested <> holds def
+R26000:26004 Clef.RFC0002.Nested <> holds def
+R26047:26058 Clef.RFC0002.Regions <> binder_types def
+R26071:26083 Clef.RFC0002.Nested <> holds_binders thm
+R26097:26109 Clef.RFC0002.Nested <> holds_binders thm
+R26071:26083 Clef.RFC0002.Nested <> holds_binders thm
+R26071:26083 Clef.RFC0002.Nested <> holds_binders thm
+R26097:26109 Clef.RFC0002.Nested <> holds_binders thm
+R26097:26109 Clef.RFC0002.Nested <> holds_binders thm
+R26135:26143 Stdlib.Lists.List <> app_assoc thm
+R26150:26159 Stdlib.Lists.List <> repeat_app thm
+R26163:26174 Stdlib.Arith.PeanoNat Nat add_comm thm
+R26177:26181 Clef.RFC0002.Bodies <> arity def
+R26135:26143 Stdlib.Lists.List <> app_assoc thm
+R26135:26143 Stdlib.Lists.List <> app_assoc thm
+R26135:26143 Stdlib.Lists.List <> app_assoc thm
+R26150:26159 Stdlib.Lists.List <> repeat_app thm
+R26150:26159 Stdlib.Lists.List <> repeat_app thm
+R26150:26159 Stdlib.Lists.List <> repeat_app thm
+R26150:26159 Stdlib.Lists.List <> repeat_app thm
+R26163:26174 Stdlib.Arith.PeanoNat Nat add_comm thm
+R26177:26181 Clef.RFC0002.Bodies <> arity def
+R26163:26174 Stdlib.Arith.PeanoNat Nat add_comm thm
+R26177:26181 Clef.RFC0002.Bodies <> arity def
+R26226:26235 Clef.RFC0002.Nested <> nseval_one thm
+R26226:26235 Clef.RFC0002.Nested <> nseval_one thm
+R26226:26235 Clef.RFC0002.Nested <> nseval_one thm
+R26226:26235 Clef.RFC0002.Nested <> nseval_one thm
+R26226:26235 Clef.RFC0002.Nested <> nseval_one thm
+R26248:26252 Clef.RFC0002.Nested <> ntype def
+R26248:26252 Clef.RFC0002.Nested <> ntype def
+R26302:26307 Clef.RFC0002.Nested <> nseval def
+R26302:26307 Clef.RFC0002.Nested <> nseval def
+R26356:26360 Clef.RFC0002.Nested <> holds def
+R26374:26378 Clef.RFC0002.Nested <> holds def
+R26400:26403 Corelib.Init.Datatypes <> andb def
+R26374:26378 Clef.RFC0002.Nested <> holds def
+R26433:26437 Clef.RFC0002.Nested <> ntype def
+R26439:26444 Clef.RFC0002.Nested <> nseval def
+R26457:26467 Clef.RFC0002.Nested <> binder_head thm
+R26482:26492 Clef.RFC0002.Nested <> repeat_head thm
+R26457:26467 Clef.RFC0002.Nested <> binder_head thm
+R26457:26467 Clef.RFC0002.Nested <> binder_head thm
+R26482:26492 Clef.RFC0002.Nested <> repeat_head thm
+R26482:26492 Clef.RFC0002.Nested <> repeat_head thm
+R26509:26513 Clef.RFC0002.Nested <> holds def
+R26509:26513 Clef.RFC0002.Nested <> holds def
+R26556:26567 Clef.RFC0002.Regions <> binder_types def
+R26569:26573 Clef.RFC0002.Bodies <> arity def
+R26586:26598 Clef.RFC0002.Nested <> holds_binders thm
+R26612:26624 Clef.RFC0002.Nested <> holds_binders thm
+R26586:26598 Clef.RFC0002.Nested <> holds_binders thm
+R26586:26598 Clef.RFC0002.Nested <> holds_binders thm
+R26612:26624 Clef.RFC0002.Nested <> holds_binders thm
+R26612:26624 Clef.RFC0002.Nested <> holds_binders thm
+R26650:26658 Stdlib.Lists.List <> app_assoc thm
+R26665:26674 Stdlib.Lists.List <> repeat_app thm
+R26678:26689 Stdlib.Arith.PeanoNat Nat add_comm thm
+R26692:26696 Clef.RFC0002.Bodies <> arity def
+R26650:26658 Stdlib.Lists.List <> app_assoc thm
+R26650:26658 Stdlib.Lists.List <> app_assoc thm
+R26650:26658 Stdlib.Lists.List <> app_assoc thm
+R26650:26658 Stdlib.Lists.List <> app_assoc thm
+R26665:26674 Stdlib.Lists.List <> repeat_app thm
+R26665:26674 Stdlib.Lists.List <> repeat_app thm
+R26665:26674 Stdlib.Lists.List <> repeat_app thm
+R26665:26674 Stdlib.Lists.List <> repeat_app thm
+R26665:26674 Stdlib.Lists.List <> repeat_app thm
+R26678:26689 Stdlib.Arith.PeanoNat Nat add_comm thm
+R26692:26696 Clef.RFC0002.Bodies <> arity def
+R26678:26689 Stdlib.Arith.PeanoNat Nat add_comm thm
+R26692:26696 Clef.RFC0002.Bodies <> arity def
+def 26897:26910 <> region_example
+R26914:26916 Clef.RFC0002.Nested <> ntm ind
+R26923:26928 Clef.RFC0002.Nested <> NMatch constr
+R26931:26934 Clef.RFC0002.Nested <> NVar constr
+R26939:26939 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R26978:26979 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R26993:26993 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R26940:26940 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26944:26945 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26977:26977 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26941:26943 Clef.RFC0002.Regions <> IsA constr
+R26946:26951 Clef.RFC0002.Nested <> NMatch constr
+R26954:26957 Clef.RFC0002.Nested <> NVar constr
+R26962:26962 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R26976:26976 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R26963:26963 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26967:26968 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26975:26975 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26964:26966 Clef.RFC0002.Regions <> IsA constr
+R26969:26972 Clef.RFC0002.Nested <> NVar constr
+R26980:26980 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26984:26985 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26992:26992 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26981:26983 Clef.RFC0002.Regions <> IsB constr
+R26986:26989 Clef.RFC0002.Nested <> NVar constr
+def 27113:27123 <> inner_alone
+R27127:27129 Clef.RFC0002.Nested <> ntm ind
+R27134:27139 Clef.RFC0002.Nested <> NMatch constr
+R27142:27145 Clef.RFC0002.Nested <> NVar constr
+R27150:27150 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R27164:27164 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R27151:27151 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27155:27156 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27163:27163 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R27152:27154 Clef.RFC0002.Regions <> IsA constr
+R27157:27160 Clef.RFC0002.Nested <> NVar constr
+prf 27926:27959 <> nested_match_checked_in_its_region
+R27965:27965 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R28029:28036 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R28109:28109 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R27981:27984 Clef.RFC0001.Constraints <> cset def
+binder 27973:27974 <> CA:195
+binder 27976:27977 <> CB:196
+R28022:28024 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R27987:27992 Clef.RFC0002.Nested <> ncheck def
+R27994:27995 Clef.RFC0002.Nested <> CA:195 var
+R27997:27998 Clef.RFC0002.Nested <> CB:196 var
+R28000:28000 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28003:28003 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28001:28002 Clef.RFC0002.Bodies <> VT constr
+R28005:28018 Clef.RFC0002.Nested <> region_example def
+R28020:28021 Clef.RFC0002.Bodies <> VT constr
+R28025:28028 Corelib.Init.Datatypes <> true constr
+R28050:28051 Clef.Spec.Types <> ty ind
+binder 28044:28044 <> x:197
+binder 28046:28046 <> y:198
+R28060:28063 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R28055:28058 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R28054:28054 Clef.RFC0002.Nested <> x:197 var
+R28059:28059 Clef.RFC0002.Nested <> y:198 var
+R28101:28103 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R28064:28069 Clef.RFC0002.Nested <> ncheck def
+R28071:28071 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28073:28074 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28076:28076 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28072:28072 Clef.RFC0002.Nested <> x:197 var
+R28075:28075 Clef.RFC0002.Nested <> y:198 var
+R28078:28078 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28080:28080 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28079:28079 Clef.RFC0002.Nested <> y:198 var
+R28082:28082 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28085:28085 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28083:28084 Clef.RFC0002.Bodies <> VT constr
+R28087:28097 Clef.RFC0002.Nested <> inner_alone def
+R28099:28100 Clef.RFC0002.Bodies <> VT constr
+R28104:28108 Corelib.Init.Datatypes <> false constr
+R28153:28158 Clef.RFC0002.Nested <> ncheck def
+R28167:28180 Stdlib.Lists.List <> forallb_forall thm
+R28167:28180 Stdlib.Lists.List <> forallb_forall thm
+R28206:28220 Clef.RFC0002.Regions <> table_iff_valid thm
+R28206:28220 Clef.RFC0002.Regions <> table_iff_valid thm
+R28267:28280 Clef.RFC0002.Nested <> region_example def
+R28288:28292 Clef.RFC0002.Nested <> ntype def
+R28294:28302 Stdlib.Lists.List <> nth_error def
+R28304:28308 Clef.RFC0002.Nested <> holds def
+R28310:28321 Clef.RFC0002.Regions <> binder_types def
+R28323:28325 Corelib.Init.Datatypes <> app def
+R28327:28329 Corelib.Lists.ListDef <> map def
+R28331:28337 Clef.RFC0002.Bodies <> inst3ty def
+R28355:28359 Clef.RFC0002.Regions <> tyeqb def
+R28362:28363 Clef.RFC0002.Regions <> iT proj
+R28369:28370 Clef.RFC0002.Regions <> iA proj
+R28355:28359 Clef.RFC0002.Regions <> tyeqb def
+R28362:28363 Clef.RFC0002.Regions <> iT proj
+R28369:28370 Clef.RFC0002.Regions <> iA proj
+R28396:28404 Clef.RFC0002.Regions <> tyeqb_iff thm
+R28396:28404 Clef.RFC0002.Regions <> tyeqb_iff thm
+R28419:28427 Clef.RFC0002.Regions <> tyeqb_iff thm
+R28419:28427 Clef.RFC0002.Regions <> tyeqb_iff thm
+R28466:28470 Clef.RFC0002.Regions <> tyeqb def
+R28473:28474 Clef.RFC0002.Regions <> iT proj
+R28480:28481 Clef.RFC0002.Regions <> iB proj
+R28466:28470 Clef.RFC0002.Regions <> tyeqb def
+R28473:28474 Clef.RFC0002.Regions <> iT proj
+R28480:28481 Clef.RFC0002.Regions <> iB proj
+R28509:28517 Clef.RFC0002.Regions <> tyeqb_iff thm
+R28509:28517 Clef.RFC0002.Regions <> tyeqb_iff thm
+R28532:28540 Clef.RFC0002.Regions <> tyeqb_iff thm
+R28532:28540 Clef.RFC0002.Regions <> tyeqb_iff thm
+R28577:28585 Clef.RFC0002.Regions <> tyeqb_neq thm
+R28577:28585 Clef.RFC0002.Regions <> tyeqb_neq thm
+R28600:28608 Clef.RFC0002.Regions <> tyeqb_neq thm
+R28600:28608 Clef.RFC0002.Regions <> tyeqb_neq thm
+R28677:28682 Clef.RFC0002.Nested <> ncheck def
+R28684:28684 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28686:28687 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28689:28689 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28691:28691 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28693:28693 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28695:28695 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28698:28698 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28696:28697 Clef.RFC0002.Bodies <> VT constr
+R28700:28710 Clef.RFC0002.Nested <> inner_alone def
+R28712:28713 Clef.RFC0002.Bodies <> VT constr
+R28677:28682 Clef.RFC0002.Nested <> ncheck def
+R28684:28684 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28686:28687 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28689:28689 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28691:28691 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28693:28693 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28695:28695 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28698:28698 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28696:28697 Clef.RFC0002.Bodies <> VT constr
+R28700:28710 Clef.RFC0002.Nested <> inner_alone def
+R28712:28713 Clef.RFC0002.Bodies <> VT constr
+R28760:28765 Clef.RFC0002.Nested <> ncheck def
+R28781:28794 Stdlib.Lists.List <> forallb_forall thm
+R28781:28794 Stdlib.Lists.List <> forallb_forall thm
+R28781:28794 Stdlib.Lists.List <> forallb_forall thm
+R28818:28819 Stdlib.Lists.List <> In def
+R28835:28839 Clef.RFC0002.Regions <> table def
+R28841:28841 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28843:28844 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28846:28846 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28848:28848 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28850:28850 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28822:28825 Clef.RFC0002.Regions <> Inst constr
+R28818:28819 Stdlib.Lists.List <> In def
+R28835:28839 Clef.RFC0002.Regions <> table def
+R28841:28841 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28843:28844 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28846:28846 Stdlib.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R28848:28848 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28850:28850 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R28822:28825 Clef.RFC0002.Regions <> Inst constr
+R28867:28881 Clef.RFC0002.Regions <> table_iff_valid thm
+R28867:28881 Clef.RFC0002.Regions <> table_iff_valid thm
+R28891:28895 Clef.RFC0002.Regions <> valid def
+R28898:28900 Clef.RFC0001.Constraints <> sat def
+R28942:28945 Clef.RFC0002.Regions <> Inst constr
+R28942:28945 Clef.RFC0002.Regions <> Inst constr
+R28965:28975 Clef.RFC0002.Nested <> inner_alone def
+R29008:29010 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R28999:29003 Clef.RFC0002.Regions <> tyeqb def
+R29011:29015 Corelib.Init.Datatypes <> false constr
+R29028:29038 Clef.RFC0002.Regions <> tyeqb_false thm
+R29008:29010 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R28999:29003 Clef.RFC0002.Regions <> tyeqb def
+R29011:29015 Corelib.Init.Datatypes <> false constr
+R29028:29038 Clef.RFC0002.Regions <> tyeqb_false thm
+R29063:29067 Clef.RFC0002.Nested <> ntype def
+R29069:29077 Stdlib.Lists.List <> nth_error def
+R29079:29083 Clef.RFC0002.Nested <> holds def
+R29085:29096 Clef.RFC0002.Regions <> binder_types def
+R29098:29100 Corelib.Init.Datatypes <> app def
+R29102:29104 Corelib.Lists.ListDef <> map def
+R29106:29112 Clef.RFC0002.Bodies <> inst3ty def
+R29114:29115 Clef.RFC0002.Regions <> iT proj
+R29117:29118 Clef.RFC0002.Regions <> iA proj
+R29120:29121 Clef.RFC0002.Regions <> iB proj
+def 29630:29635 <> mshift
+R29642:29644 Corelib.Init.Datatypes <> nat ind
+binder 29638:29638 <> k:199
+R29652:29654 Clef.RFC0001.TypeCase <> mtm ind
+binder 29648:29648 <> m:200
+R29659:29661 Clef.RFC0001.TypeCase <> mtm ind
+R29674:29674 Clef.RFC0002.Nested <> m:200 var
+R29685:29688 Clef.RFC0001.TypeCase <> MVar constr
+R29699:29702 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R29703:29703 Clef.RFC0002.Nested <> k:199 var
+R29722:29725 Clef.RFC0001.TypeCase <> MVar constr
+R29728:29728 Corelib.Init.Datatypes <> S constr
+R29710:29713 Clef.RFC0001.TypeCase <> MVar constr
+R29737:29741 Clef.RFC0001.TypeCase <> MPrim constr
+R29750:29754 Clef.RFC0001.TypeCase <> MPrim constr
+R29759:29764 Clef.RFC0002.Nested <> mshift:201 def
+R29766:29766 Clef.RFC0002.Nested <> k:199 var
+R29775:29779 Clef.RFC0001.TypeCase <> MPair constr
+R29788:29792 Clef.RFC0001.TypeCase <> MPair constr
+R29795:29800 Clef.RFC0002.Nested <> mshift:201 def
+R29802:29802 Clef.RFC0002.Nested <> k:199 var
+R29808:29813 Clef.RFC0002.Nested <> mshift:201 def
+R29815:29815 Clef.RFC0002.Nested <> k:199 var
+R29824:29827 Clef.RFC0001.TypeCase <> MFst constr
+R29834:29837 Clef.RFC0001.TypeCase <> MFst constr
+R29840:29845 Clef.RFC0002.Nested <> mshift:201 def
+R29847:29847 Clef.RFC0002.Nested <> k:199 var
+R29856:29859 Clef.RFC0001.TypeCase <> MSnd constr
+R29866:29869 Clef.RFC0001.TypeCase <> MSnd constr
+R29872:29877 Clef.RFC0002.Nested <> mshift:201 def
+R29879:29879 Clef.RFC0002.Nested <> k:199 var
+R29888:29891 Clef.RFC0001.TypeCase <> MLet constr
+R29900:29903 Clef.RFC0001.TypeCase <> MLet constr
+R29906:29911 Clef.RFC0002.Nested <> mshift:201 def
+R29913:29913 Clef.RFC0002.Nested <> k:199 var
+R29919:29924 Clef.RFC0002.Nested <> mshift:201 def
+R29927:29927 Corelib.Init.Datatypes <> S constr
+R29929:29929 Clef.RFC0002.Nested <> k:199 var
+prf 29949:29964 <> nth_error_insert
+binder 29967:29967 <> A:203
+R29986:29989 Corelib.Init.Datatypes <> list ind
+R29991:29991 Clef.RFC0002.Nested <> A:203 var
+binder 29978:29980 <> pre:204
+binder 29982:29982 <> l:205
+R29999:29999 Clef.RFC0002.Nested <> A:203 var
+binder 29995:29995 <> x:206
+R30007:30009 Corelib.Init.Datatypes <> nat ind
+binder 30003:30003 <> n:207
+R30078:30080 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R30016:30024 Stdlib.Lists.List <> nth_error def
+R30047:30050 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R30046:30046 Clef.RFC0002.Nested <> n:207 var
+R30051:30056 Corelib.Init.Datatypes <> length def
+R30058:30060 Clef.RFC0002.Nested <> pre:204 var
+R30074:30074 Corelib.Init.Datatypes <> S constr
+R30076:30076 Clef.RFC0002.Nested <> n:207 var
+R30067:30067 Clef.RFC0002.Nested <> n:207 var
+R30030:30033 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R30027:30029 Clef.RFC0002.Nested <> pre:204 var
+R30035:30038 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R30034:30034 Clef.RFC0002.Nested <> x:206 var
+R30039:30039 Clef.RFC0002.Nested <> l:205 var
+R30081:30089 Stdlib.Lists.List <> nth_error def
+R30102:30102 Clef.RFC0002.Nested <> n:207 var
+R30095:30098 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R30092:30094 Clef.RFC0002.Nested <> pre:204 var
+R30099:30099 Clef.RFC0002.Nested <> l:205 var
+R30125:30128 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R30129:30134 Corelib.Init.Datatypes <> length def
+R30125:30128 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R30129:30134 Corelib.Init.Datatypes <> length def
+R30158:30167 Stdlib.Arith.PeanoNat Nat ltb_lt thm
+R30158:30167 Stdlib.Arith.PeanoNat Nat ltb_lt thm
+R30184:30197 Stdlib.Lists.List <> nth_error_app1 thm
+R30184:30197 Stdlib.Lists.List <> nth_error_app1 thm
+R30184:30197 Stdlib.Lists.List <> nth_error_app1 thm
+R30184:30197 Stdlib.Lists.List <> nth_error_app1 thm
+R30184:30197 Stdlib.Lists.List <> nth_error_app1 thm
+R30234:30243 Stdlib.Arith.PeanoNat Nat ltb_ge thm
+R30234:30243 Stdlib.Arith.PeanoNat Nat ltb_ge thm
+R30260:30273 Stdlib.Lists.List <> nth_error_app2 thm
+R30260:30273 Stdlib.Lists.List <> nth_error_app2 thm
+R30260:30273 Stdlib.Lists.List <> nth_error_app2 thm
+R30260:30273 Stdlib.Lists.List <> nth_error_app2 thm
+R30260:30273 Stdlib.Lists.List <> nth_error_app2 thm
+R30299:30301 Corelib.Init.Peano <> ::nat_scope:x_'-'_x not
+R30296:30296 Corelib.Init.Datatypes <> S constr
+R30302:30307 Corelib.Init.Datatypes <> length def
+R30320:30320 Corelib.Init.Datatypes <> S constr
+R30324:30326 Corelib.Init.Peano <> ::nat_scope:x_'-'_x not
+R30327:30332 Corelib.Init.Datatypes <> length def
+R30299:30301 Corelib.Init.Peano <> ::nat_scope:x_'-'_x not
+R30296:30296 Corelib.Init.Datatypes <> S constr
+R30302:30307 Corelib.Init.Datatypes <> length def
+R30320:30320 Corelib.Init.Datatypes <> S constr
+R30324:30326 Corelib.Init.Peano <> ::nat_scope:x_'-'_x not
+R30327:30332 Corelib.Init.Datatypes <> length def
+prf 30436:30446 <> mtype_shift
+R30453:30455 Clef.RFC0001.TypeCase <> mtm ind
+binder 30449:30449 <> m:208
+R30478:30481 Corelib.Init.Datatypes <> list ind
+R30483:30484 Clef.Spec.Types <> ty ind
+binder 30470:30472 <> pre:209
+binder 30474:30474 <> G:210
+R30492:30493 Clef.Spec.Types <> ty ind
+binder 30488:30488 <> x:211
+R30546:30548 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R30501:30505 Clef.RFC0001.TypeCase <> mtype def
+R30511:30514 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R30508:30510 Clef.RFC0002.Nested <> pre:209 var
+R30516:30519 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R30515:30515 Clef.RFC0002.Nested <> x:211 var
+R30520:30520 Clef.RFC0002.Nested <> G:210 var
+R30524:30529 Clef.RFC0002.Nested <> mshift def
+R30532:30537 Corelib.Init.Datatypes <> length def
+R30539:30541 Clef.RFC0002.Nested <> pre:209 var
+R30544:30544 Clef.RFC0002.Nested <> m:208 var
+R30549:30553 Clef.RFC0001.TypeCase <> mtype def
+R30559:30562 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R30556:30558 Clef.RFC0002.Nested <> pre:209 var
+R30563:30563 Clef.RFC0002.Nested <> G:210 var
+R30566:30566 Clef.RFC0002.Nested <> m:208 var
+R30688:30703 Clef.RFC0002.Nested <> nth_error_insert thm
+R30688:30703 Clef.RFC0002.Nested <> nth_error_insert thm
+R30737:30740 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R30741:30746 Corelib.Init.Datatypes <> length def
+R30737:30740 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R30741:30746 Corelib.Init.Datatypes <> length def
+R30912:30916 Clef.RFC0001.TypeCase <> mtype def
+R30922:30925 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R30912:30916 Clef.RFC0001.TypeCase <> mtype def
+R30922:30925 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R30976:30979 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R30976:30979 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+prf 31067:31076 <> eval_shift
+R31083:31085 Clef.RFC0001.TypeCase <> mtm ind
+binder 31079:31079 <> m:212
+R31110:31113 Corelib.Init.Datatypes <> list ind
+R31115:31117 Clef.Spec.Runtime <> val ind
+binder 31100:31102 <> pre:213
+binder 31104:31106 <> env:214
+R31125:31127 Clef.Spec.Runtime <> val ind
+binder 31121:31121 <> x:215
+R31181:31183 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R31135:31138 Clef.RFC0001.TypeCase <> eval def
+R31144:31147 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R31141:31143 Clef.RFC0002.Nested <> pre:213 var
+R31149:31152 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R31148:31148 Clef.RFC0002.Nested <> x:215 var
+R31153:31155 Clef.RFC0002.Nested <> env:214 var
+R31159:31164 Clef.RFC0002.Nested <> mshift def
+R31167:31172 Corelib.Init.Datatypes <> length def
+R31174:31176 Clef.RFC0002.Nested <> pre:213 var
+R31179:31179 Clef.RFC0002.Nested <> m:212 var
+R31184:31187 Clef.RFC0001.TypeCase <> eval def
+R31193:31196 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R31190:31192 Clef.RFC0002.Nested <> pre:213 var
+R31197:31199 Clef.RFC0002.Nested <> env:214 var
+R31202:31202 Clef.RFC0002.Nested <> m:212 var
+R31326:31341 Clef.RFC0002.Nested <> nth_error_insert thm
+R31326:31341 Clef.RFC0002.Nested <> nth_error_insert thm
+R31377:31380 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R31381:31386 Corelib.Init.Datatypes <> length def
+R31377:31380 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R31381:31386 Corelib.Init.Datatypes <> length def
+R31552:31555 Clef.RFC0001.TypeCase <> eval def
+R31561:31564 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R31552:31555 Clef.RFC0001.TypeCase <> eval def
+R31561:31564 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R31617:31620 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R31617:31620 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+def 31700:31702 <> ofm
+R31709:31711 Clef.RFC0001.TypeCase <> mtm ind
+binder 31705:31705 <> m:216
+R31716:31718 Clef.RFC0002.Nested <> ntm ind
+R31731:31731 Clef.RFC0002.Nested <> m:216 var
+R31742:31745 Clef.RFC0001.TypeCase <> MVar constr
+R31752:31755 Clef.RFC0002.Nested <> NVar constr
+R31763:31767 Clef.RFC0001.TypeCase <> MPrim constr
+R31776:31780 Clef.RFC0002.Nested <> NPrim constr
+R31785:31787 Clef.RFC0002.Nested <> ofm:217 def
+R31796:31800 Clef.RFC0001.TypeCase <> MPair constr
+R31809:31813 Clef.RFC0002.Nested <> NPair constr
+R31816:31818 Clef.RFC0002.Nested <> ofm:217 def
+R31824:31826 Clef.RFC0002.Nested <> ofm:217 def
+R31835:31838 Clef.RFC0001.TypeCase <> MFst constr
+R31845:31848 Clef.RFC0002.Nested <> NFst constr
+R31851:31853 Clef.RFC0002.Nested <> ofm:217 def
+R31862:31865 Clef.RFC0001.TypeCase <> MSnd constr
+R31872:31875 Clef.RFC0002.Nested <> NSnd constr
+R31878:31880 Clef.RFC0002.Nested <> ofm:217 def
+R31889:31892 Clef.RFC0001.TypeCase <> MLet constr
+R31901:31904 Clef.RFC0002.Nested <> NLet constr
+R31907:31909 Clef.RFC0002.Nested <> ofm:217 def
+R31915:31917 Clef.RFC0002.Nested <> ofm:217 def
+prf 32006:32014 <> ntype_ofm
+R32021:32023 Clef.RFC0001.TypeCase <> mtm ind
+binder 32017:32017 <> m:219
+R32040:32044 Clef.RFC0002.Regions <> inst3 rec
+binder 32036:32036 <> s:220
+R32052:32055 Corelib.Init.Datatypes <> list ind
+R32057:32058 Clef.Spec.Types <> ty ind
+binder 32048:32048 <> G:221
+R32079:32081 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R32062:32066 Clef.RFC0002.Nested <> ntype def
+R32068:32068 Clef.RFC0002.Nested <> s:220 var
+R32070:32070 Clef.RFC0002.Nested <> G:221 var
+R32073:32075 Clef.RFC0002.Nested <> ofm def
+R32077:32077 Clef.RFC0002.Nested <> m:219 var
+R32082:32086 Clef.RFC0001.TypeCase <> mtype def
+R32088:32088 Clef.RFC0002.Nested <> G:221 var
+R32090:32090 Clef.RFC0002.Nested <> m:219 var
+R32358:32362 Clef.RFC0001.TypeCase <> mtype def
+R32358:32362 Clef.RFC0001.TypeCase <> mtype def
+prf 32485:32494 <> nseval_ofm
+R32501:32503 Clef.RFC0001.TypeCase <> mtm ind
+binder 32497:32497 <> m:222
+R32522:32526 Clef.RFC0002.Regions <> inst3 rec
+binder 32518:32518 <> s:223
+R32534:32537 Corelib.Init.Datatypes <> list ind
+R32539:32540 Clef.Spec.Types <> ty ind
+binder 32530:32530 <> G:224
+R32550:32553 Corelib.Init.Datatypes <> list ind
+R32555:32557 Clef.Spec.Runtime <> val ind
+binder 32544:32546 <> env:225
+R32565:32566 Clef.Spec.Types <> ty ind
+binder 32561:32561 <> t:226
+R32592:32595 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R32583:32585 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R32574:32578 Clef.RFC0001.TypeCase <> mtype def
+R32580:32580 Clef.RFC0002.Nested <> G:224 var
+R32582:32582 Clef.RFC0002.Nested <> m:222 var
+R32586:32589 Corelib.Init.Datatypes <> Some constr
+R32591:32591 Clef.RFC0002.Nested <> t:226 var
+R32618:32620 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R32596:32601 Clef.RFC0002.Nested <> nseval def
+R32603:32603 Clef.RFC0002.Nested <> s:223 var
+R32605:32605 Clef.RFC0002.Nested <> G:224 var
+R32607:32609 Clef.RFC0002.Nested <> env:225 var
+R32612:32614 Clef.RFC0002.Nested <> ofm def
+R32616:32616 Clef.RFC0002.Nested <> m:222 var
+R32621:32624 Clef.RFC0001.TypeCase <> eval def
+R32626:32628 Clef.RFC0002.Nested <> env:225 var
+R32630:32630 Clef.RFC0002.Nested <> m:222 var
+R32787:32791 Clef.RFC0001.TypeCase <> mtype def
+R32787:32791 Clef.RFC0001.TypeCase <> mtype def
+R32923:32927 Clef.RFC0001.TypeCase <> mtype def
+R32923:32927 Clef.RFC0001.TypeCase <> mtype def
+R32983:32987 Clef.RFC0001.TypeCase <> mtype def
+R32983:32987 Clef.RFC0001.TypeCase <> mtype def
+R33123:33127 Clef.RFC0001.TypeCase <> mtype def
+R33123:33127 Clef.RFC0001.TypeCase <> mtype def
+R33259:33263 Clef.RFC0001.TypeCase <> mtype def
+R33259:33263 Clef.RFC0001.TypeCase <> mtype def
+R33395:33399 Clef.RFC0001.TypeCase <> mtype def
+R33395:33399 Clef.RFC0001.TypeCase <> mtype def
+R33453:33461 Clef.RFC0002.Nested <> ntype_ofm thm
+R33453:33461 Clef.RFC0002.Nested <> ntype_ofm thm
+R33453:33461 Clef.RFC0002.Nested <> ntype_ofm thm
+R33535:33538 Clef.RFC0001.TypeCase <> eval def
+R33535:33538 Clef.RFC0001.TypeCase <> eval def
+R33593:33596 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R33602:33605 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R33593:33596 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R33602:33605 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+def 33697:33702 <> as_arm
+R33709:33711 Clef.RFC0002.Bodies <> arm rec
+binder 33705:33705 <> a:227
+R33720:33722 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R33716:33719 Clef.RFC0002.Regions <> test ind
+R33723:33725 Clef.RFC0002.Nested <> ntm ind
+R33732:33732 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R33740:33741 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R33782:33782 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R33733:33737 Clef.RFC0002.Bodies <> atest proj
+R33739:33739 Clef.RFC0002.Nested <> a:227 var
+R33742:33744 Clef.RFC0002.Nested <> ofm def
+R33747:33752 Clef.RFC0002.Nested <> mshift def
+R33755:33759 Clef.RFC0002.Bodies <> arity def
+R33762:33766 Clef.RFC0002.Bodies <> atest proj
+R33768:33768 Clef.RFC0002.Nested <> a:227 var
+R33773:33777 Clef.RFC0002.Bodies <> abody proj
+R33779:33779 Clef.RFC0002.Nested <> a:227 var
+def 33888:33891 <> flat
+R33901:33904 Corelib.Init.Datatypes <> list ind
+R33906:33908 Clef.RFC0002.Bodies <> arm rec
+binder 33894:33897 <> arms:228
+R33913:33915 Clef.RFC0002.Nested <> ntm ind
+R33920:33925 Clef.RFC0002.Nested <> NMatch constr
+R33928:33931 Clef.RFC0002.Nested <> NVar constr
+R33937:33939 Corelib.Lists.ListDef <> map def
+R33948:33951 Clef.RFC0002.Nested <> arms:228 var
+R33941:33946 Clef.RFC0002.Nested <> as_arm def
+prf 33962:33969 <> find_ext
+binder 33972:33972 <> A:229
+R33990:33993 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R33989:33989 Clef.RFC0002.Nested <> A:229 var
+R33994:33997 Corelib.Init.Datatypes <> bool ind
+binder 33983:33983 <> f:230
+binder 33985:33985 <> g:231
+R34005:34008 Corelib.Init.Datatypes <> list ind
+R34010:34010 Clef.RFC0002.Nested <> A:229 var
+binder 34001:34001 <> l:232
+R34017:34017 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R34037:34041 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 34025:34025 <> a:233
+R34031:34033 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R34028:34028 Clef.RFC0002.Nested <> f:230 var
+R34030:34030 Clef.RFC0002.Nested <> a:233 var
+R34034:34034 Clef.RFC0002.Nested <> g:231 var
+R34036:34036 Clef.RFC0002.Nested <> a:233 var
+R34050:34052 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R34042:34045 Stdlib.Lists.List <> find def
+R34049:34049 Clef.RFC0002.Nested <> l:232 var
+R34047:34047 Clef.RFC0002.Nested <> f:230 var
+R34053:34056 Stdlib.Lists.List <> find def
+R34060:34060 Clef.RFC0002.Nested <> l:232 var
+R34058:34058 Clef.RFC0002.Nested <> g:231 var
+prf 34224:34233 <> pickn_flat
+R34244:34247 Clef.RFC0001.Constraints <> cset def
+binder 34236:34237 <> CA:234
+binder 34239:34240 <> CB:235
+R34255:34259 Clef.RFC0002.Regions <> inst3 rec
+binder 34251:34251 <> s:236
+R34270:34273 Corelib.Init.Datatypes <> list ind
+R34275:34277 Clef.RFC0002.Bodies <> arm rec
+binder 34263:34266 <> arms:237
+R34316:34318 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R34284:34288 Clef.RFC0002.Nested <> pickn def
+R34290:34290 Clef.RFC0002.Nested <> s:236 var
+R34293:34294 Clef.RFC0002.Regions <> iT proj
+R34296:34296 Clef.RFC0002.Nested <> s:236 var
+R34300:34302 Corelib.Lists.ListDef <> map def
+R34311:34314 Clef.RFC0002.Nested <> arms:237 var
+R34304:34309 Clef.RFC0002.Nested <> as_arm def
+R34319:34328 Corelib.Init.Datatypes <> option_map def
+R34338:34344 Clef.RFC0002.Bodies <> selecta def
+R34346:34353 Clef.RFC0002.Regions <> Equation constr
+R34355:34356 Clef.RFC0002.Nested <> CA:234 var
+R34358:34359 Clef.RFC0002.Nested <> CB:235 var
+R34361:34364 Clef.RFC0002.Nested <> arms:237 var
+R34366:34366 Clef.RFC0002.Nested <> s:236 var
+R34330:34335 Clef.RFC0002.Nested <> as_arm def
+R34386:34390 Clef.RFC0002.Nested <> pickn def
+R34393:34399 Clef.RFC0002.Bodies <> selecta def
+R34410:34417 Clef.RFC0002.Bodies <> find_map thm
+R34410:34417 Clef.RFC0002.Bodies <> find_map thm
+R34410:34417 Clef.RFC0002.Bodies <> find_map thm
+R34435:34442 Clef.RFC0002.Nested <> find_ext thm
+R34435:34442 Clef.RFC0002.Nested <> find_ext thm
+R34464:34471 Clef.RFC0002.Bodies <> amatches def
+R34480:34494 Clef.RFC0002.Nested <> holds_scrutinee thm
+R34480:34494 Clef.RFC0002.Nested <> holds_scrutinee thm
+prf 34589:34598 <> ntype_flat
+R34609:34612 Clef.RFC0001.Constraints <> cset def
+binder 34601:34602 <> CA:238
+binder 34604:34605 <> CB:239
+R34620:34624 Clef.RFC0002.Regions <> inst3 rec
+binder 34616:34616 <> s:240
+R34632:34635 Corelib.Init.Datatypes <> list ind
+R34637:34638 Clef.Spec.Types <> ty ind
+binder 34628:34628 <> G:241
+R34649:34652 Corelib.Init.Datatypes <> list ind
+R34654:34656 Clef.RFC0002.Bodies <> arm rec
+binder 34642:34645 <> arms:242
+R34694:34698 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R34663:34667 Clef.RFC0002.Nested <> ntype def
+R34669:34669 Clef.RFC0002.Nested <> s:240 var
+R34676:34679 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R34672:34673 Clef.RFC0002.Regions <> iT proj
+R34675:34675 Clef.RFC0002.Nested <> s:240 var
+R34680:34680 Clef.RFC0002.Nested <> G:241 var
+R34684:34687 Clef.RFC0002.Nested <> flat def
+R34689:34692 Clef.RFC0002.Nested <> arms:242 var
+R34705:34711 Clef.RFC0002.Bodies <> selecta def
+R34713:34720 Clef.RFC0002.Regions <> Equation constr
+R34722:34723 Clef.RFC0002.Nested <> CA:238 var
+R34725:34726 Clef.RFC0002.Nested <> CB:239 var
+R34728:34731 Clef.RFC0002.Nested <> arms:242 var
+R34733:34733 Clef.RFC0002.Nested <> s:240 var
+R34744:34747 Corelib.Init.Datatypes <> Some constr
+R34754:34758 Clef.RFC0001.TypeCase <> mtype def
+R34785:34788 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R34761:34772 Clef.RFC0002.Regions <> binder_types def
+R34774:34774 Clef.RFC0002.Nested <> s:240 var
+R34777:34781 Clef.RFC0002.Bodies <> atest proj
+R34789:34789 Clef.RFC0002.Nested <> G:241 var
+R34793:34797 Clef.RFC0002.Bodies <> abody proj
+R34806:34809 Corelib.Init.Datatypes <> None constr
+R34814:34817 Corelib.Init.Datatypes <> None constr
+R34842:34845 Clef.RFC0002.Nested <> flat def
+R34856:34866 Clef.RFC0002.Nested <> ntype_match thm
+R34856:34866 Clef.RFC0002.Nested <> ntype_match thm
+R34856:34866 Clef.RFC0002.Nested <> ntype_match thm
+R34874:34878 Clef.RFC0002.Nested <> ntype def
+R34880:34888 Stdlib.Lists.List <> nth_error def
+R34901:34910 Clef.RFC0002.Nested <> pickn_flat thm
+R34901:34910 Clef.RFC0002.Nested <> pickn_flat thm
+R34901:34910 Clef.RFC0002.Nested <> pickn_flat thm
+R34932:34938 Clef.RFC0002.Bodies <> selecta def
+R34940:34947 Clef.RFC0002.Regions <> Equation constr
+R34932:34938 Clef.RFC0002.Bodies <> selecta def
+R34940:34947 Clef.RFC0002.Regions <> Equation constr
+R34997:35006 Corelib.Init.Datatypes <> option_map def
+R35008:35013 Clef.RFC0002.Nested <> as_arm def
+R35025:35033 Clef.RFC0002.Nested <> ntype_ofm thm
+R35025:35033 Clef.RFC0002.Nested <> ntype_ofm thm
+R35025:35033 Clef.RFC0002.Nested <> ntype_ofm thm
+R35050:35060 Clef.RFC0002.Nested <> mtype_shift thm
+R35063:35067 Clef.RFC0002.Bodies <> abody proj
+R35073:35084 Clef.RFC0002.Regions <> binder_types def
+R35089:35093 Clef.RFC0002.Bodies <> atest proj
+R35102:35103 Clef.RFC0002.Regions <> iT proj
+R35050:35060 Clef.RFC0002.Nested <> mtype_shift thm
+R35063:35067 Clef.RFC0002.Bodies <> abody proj
+R35073:35084 Clef.RFC0002.Regions <> binder_types def
+R35089:35093 Clef.RFC0002.Bodies <> atest proj
+R35102:35103 Clef.RFC0002.Regions <> iT proj
+R35125:35137 Clef.RFC0002.Nested <> binder_length thm
+R35125:35137 Clef.RFC0002.Nested <> binder_length thm
+R35125:35137 Clef.RFC0002.Nested <> binder_length thm
+prf 35874:35894 <> nested_extends_bodies
+R35909:35912 Clef.RFC0001.Constraints <> cset def
+binder 35901:35902 <> CA:243
+binder 35904:35905 <> CB:244
+R35920:35923 Corelib.Init.Datatypes <> list ind
+R35925:35928 Clef.RFC0002.Bodies <> oty3 ind
+binder 35916:35916 <> G:245
+R35939:35942 Corelib.Init.Datatypes <> list ind
+R35944:35946 Clef.RFC0002.Bodies <> arm rec
+binder 35932:35935 <> arms:246
+R35956:35959 Clef.RFC0002.Bodies <> oty3 ind
+binder 35950:35952 <> res:247
+R36005:36010 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R35998:36000 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R35966:35971 Clef.RFC0002.Bodies <> check3 def
+R35973:35980 Clef.RFC0002.Regions <> Equation constr
+R35982:35983 Clef.RFC0002.Nested <> CA:243 var
+R35985:35986 Clef.RFC0002.Nested <> CB:244 var
+R35988:35988 Clef.RFC0002.Nested <> G:245 var
+R35990:35993 Clef.RFC0002.Nested <> arms:246 var
+R35995:35997 Clef.RFC0002.Nested <> res:247 var
+R36001:36004 Corelib.Init.Datatypes <> true constr
+R36048:36053 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R36041:36043 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R36011:36016 Clef.RFC0002.Nested <> ncheck def
+R36018:36019 Clef.RFC0002.Nested <> CA:243 var
+R36021:36022 Clef.RFC0002.Nested <> CB:244 var
+R36024:36024 Clef.RFC0002.Nested <> G:245 var
+R36027:36030 Clef.RFC0002.Nested <> flat def
+R36032:36035 Clef.RFC0002.Nested <> arms:246 var
+R36038:36040 Clef.RFC0002.Nested <> res:247 var
+R36044:36047 Corelib.Init.Datatypes <> true constr
+R36066:36070 Clef.RFC0002.Regions <> inst3 rec
+binder 36062:36062 <> s:248
+R36080:36083 Corelib.Init.Datatypes <> list ind
+R36085:36087 Clef.Spec.Runtime <> val ind
+binder 36074:36076 <> env:249
+R36095:36097 Clef.Spec.Runtime <> val ind
+binder 36091:36091 <> x:250
+R36118:36125 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R36105:36109 Clef.RFC0002.Regions <> valid def
+R36111:36112 Clef.RFC0002.Nested <> CA:243 var
+R36114:36115 Clef.RFC0002.Nested <> CB:244 var
+R36117:36117 Clef.RFC0002.Nested <> s:248 var
+R36185:36191 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R36126:36131 Clef.RFC0002.Nested <> nseval def
+R36133:36133 Clef.RFC0002.Nested <> s:248 var
+R36140:36143 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R36136:36137 Clef.RFC0002.Regions <> iT proj
+R36139:36139 Clef.RFC0002.Nested <> s:248 var
+R36144:36146 Corelib.Lists.ListDef <> map def
+R36160:36160 Clef.RFC0002.Nested <> G:245 var
+R36149:36155 Clef.RFC0002.Bodies <> inst3ty def
+R36157:36157 Clef.RFC0002.Nested <> s:248 var
+R36165:36168 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R36164:36164 Clef.RFC0002.Nested <> x:250 var
+R36169:36171 Clef.RFC0002.Nested <> env:249 var
+R36175:36178 Clef.RFC0002.Nested <> flat def
+R36180:36183 Clef.RFC0002.Nested <> arms:246 var
+R36192:36194 Clef.RFC0002.Bodies <> run def
+R36196:36203 Clef.RFC0002.Regions <> Equation constr
+R36205:36206 Clef.RFC0002.Nested <> CA:243 var
+R36208:36209 Clef.RFC0002.Nested <> CB:244 var
+R36211:36214 Clef.RFC0002.Nested <> arms:246 var
+R36216:36216 Clef.RFC0002.Nested <> s:248 var
+R36218:36220 Clef.RFC0002.Nested <> env:249 var
+R36222:36222 Clef.RFC0002.Nested <> x:250 var
+R36251:36256 Clef.RFC0002.Bodies <> check3 def
+R36272:36285 Stdlib.Lists.List <> forallb_forall thm
+R36272:36285 Stdlib.Lists.List <> forallb_forall thm
+R36272:36285 Stdlib.Lists.List <> forallb_forall thm
+binder 36314:36314 <> s:251
+R36335:36350 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R36317:36318 Stdlib.Lists.List <> In def
+R36323:36327 Clef.RFC0002.Regions <> table def
+R36320:36320 Clef.RFC0002.Nested <> s:251 var
+R36351:36357 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R36359:36360 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 36358:36358 <> a:252
+R36399:36416 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R36390:36392 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R36361:36367 Clef.RFC0002.Bodies <> selecta def
+R36369:36376 Clef.RFC0002.Regions <> Equation constr
+R36389:36389 Clef.RFC0002.Nested <> s:251 var
+R36393:36396 Corelib.Init.Datatypes <> Some constr
+R36398:36398 Clef.RFC0002.Nested <> a:252 var
+R36480:36496 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R36417:36421 Clef.RFC0001.TypeCase <> mtype def
+R36448:36451 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R36424:36435 Clef.RFC0002.Regions <> binder_types def
+R36437:36437 Clef.RFC0002.Nested <> s:251 var
+R36440:36444 Clef.RFC0002.Bodies <> atest proj
+R36446:36446 Clef.RFC0002.Nested <> a:252 var
+R36452:36454 Corelib.Lists.ListDef <> map def
+R36457:36463 Clef.RFC0002.Bodies <> inst3ty def
+R36465:36465 Clef.RFC0002.Nested <> s:251 var
+R36472:36476 Clef.RFC0002.Bodies <> abody proj
+R36478:36478 Clef.RFC0002.Nested <> a:252 var
+R36497:36500 Corelib.Init.Datatypes <> Some constr
+R36503:36509 Clef.RFC0002.Bodies <> inst3ty def
+R36511:36511 Clef.RFC0002.Nested <> s:251 var
+binder 36314:36314 <> s:253
+R36335:36350 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R36317:36318 Stdlib.Lists.List <> In def
+R36323:36327 Clef.RFC0002.Regions <> table def
+R36320:36320 Clef.RFC0002.Nested <> s:253 var
+R36351:36357 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R36359:36360 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 36358:36358 <> a:254
+R36399:36416 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R36390:36392 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R36361:36367 Clef.RFC0002.Bodies <> selecta def
+R36369:36376 Clef.RFC0002.Regions <> Equation constr
+R36389:36389 Clef.RFC0002.Nested <> s:253 var
+R36393:36396 Corelib.Init.Datatypes <> Some constr
+R36398:36398 Clef.RFC0002.Nested <> a:254 var
+R36480:36496 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R36417:36421 Clef.RFC0001.TypeCase <> mtype def
+R36448:36451 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R36424:36435 Clef.RFC0002.Regions <> binder_types def
+R36437:36437 Clef.RFC0002.Nested <> s:253 var
+R36440:36444 Clef.RFC0002.Bodies <> atest proj
+R36446:36446 Clef.RFC0002.Nested <> a:254 var
+R36452:36454 Corelib.Lists.ListDef <> map def
+R36457:36463 Clef.RFC0002.Bodies <> inst3ty def
+R36465:36465 Clef.RFC0002.Nested <> s:253 var
+R36472:36476 Clef.RFC0002.Bodies <> abody proj
+R36478:36478 Clef.RFC0002.Nested <> a:254 var
+R36497:36500 Corelib.Init.Datatypes <> Some constr
+R36503:36509 Clef.RFC0002.Bodies <> inst3ty def
+R36511:36511 Clef.RFC0002.Nested <> s:253 var
+R36564:36576 Stdlib.Bool.Bool <> andb_true_iff thm
+R36564:36576 Stdlib.Bool.Bool <> andb_true_iff thm
+R36621:36632 Clef.RFC0002.Bodies <> existsb_find thm
+R36621:36632 Clef.RFC0002.Bodies <> existsb_find thm
+R36696:36704 Stdlib.Lists.List <> find_some thm
+R36696:36704 Stdlib.Lists.List <> find_some thm
+R36737:36750 Stdlib.Lists.List <> forallb_forall thm
+R36737:36750 Stdlib.Lists.List <> forallb_forall thm
+R36737:36750 Stdlib.Lists.List <> forallb_forall thm
+R36823:36828 Clef.RFC0002.Bodies <> arm_ok def
+R36851:36855 Clef.RFC0001.TypeCase <> mtype def
+R36882:36885 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R36858:36869 Clef.RFC0002.Regions <> binder_types def
+R36874:36878 Clef.RFC0002.Bodies <> atest proj
+R36886:36888 Corelib.Lists.ListDef <> map def
+R36891:36897 Clef.RFC0002.Bodies <> inst3ty def
+R36906:36910 Clef.RFC0002.Bodies <> abody proj
+R36851:36855 Clef.RFC0001.TypeCase <> mtype def
+R36882:36885 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R36858:36869 Clef.RFC0002.Regions <> binder_types def
+R36874:36878 Clef.RFC0002.Bodies <> atest proj
+R36886:36888 Corelib.Lists.ListDef <> map def
+R36891:36897 Clef.RFC0002.Bodies <> inst3ty def
+R36906:36910 Clef.RFC0002.Bodies <> abody proj
+R36960:36968 Clef.RFC0002.Regions <> tyeqb_iff thm
+R36960:36968 Clef.RFC0002.Regions <> tyeqb_iff thm
+R37021:37026 Clef.RFC0002.Nested <> ncheck def
+R37035:37048 Stdlib.Lists.List <> forallb_forall thm
+R37035:37048 Stdlib.Lists.List <> forallb_forall thm
+R37113:37122 Clef.RFC0002.Nested <> ntype_flat thm
+R37113:37122 Clef.RFC0002.Nested <> ntype_flat thm
+R37113:37122 Clef.RFC0002.Nested <> ntype_flat thm
+R37144:37153 Clef.RFC0002.Regions <> tyeqb_refl thm
+R37144:37153 Clef.RFC0002.Regions <> tyeqb_refl thm
+R37197:37201 Corelib.Init.Logic <> proj2 thm
+R37204:37218 Clef.RFC0002.Regions <> table_iff_valid thm
+R37197:37201 Corelib.Init.Logic <> proj2 thm
+R37204:37218 Clef.RFC0002.Regions <> table_iff_valid thm
+R37258:37261 Clef.RFC0002.Nested <> flat def
+R37264:37266 Clef.RFC0002.Bodies <> run def
+R37277:37288 Clef.RFC0002.Nested <> nseval_match thm
+R37277:37288 Clef.RFC0002.Nested <> nseval_match thm
+R37277:37288 Clef.RFC0002.Nested <> nseval_match thm
+R37296:37300 Clef.RFC0002.Nested <> ntype def
+R37302:37307 Clef.RFC0002.Nested <> nseval def
+R37309:37317 Stdlib.Lists.List <> nth_error def
+R37334:37343 Clef.RFC0002.Nested <> pickn_flat thm
+R37334:37343 Clef.RFC0002.Nested <> pickn_flat thm
+R37334:37343 Clef.RFC0002.Nested <> pickn_flat thm
+R37361:37370 Corelib.Init.Datatypes <> option_map def
+R37372:37377 Clef.RFC0002.Nested <> as_arm def
+R37397:37407 Clef.RFC0002.Nested <> mtype_shift thm
+R37410:37414 Clef.RFC0002.Bodies <> abody proj
+R37420:37431 Clef.RFC0002.Regions <> binder_types def
+R37436:37440 Clef.RFC0002.Bodies <> atest proj
+R37447:37449 Corelib.Lists.ListDef <> map def
+R37452:37458 Clef.RFC0002.Bodies <> inst3ty def
+R37467:37468 Clef.RFC0002.Regions <> iT proj
+R37397:37407 Clef.RFC0002.Nested <> mtype_shift thm
+R37410:37414 Clef.RFC0002.Bodies <> abody proj
+R37420:37431 Clef.RFC0002.Regions <> binder_types def
+R37436:37440 Clef.RFC0002.Bodies <> atest proj
+R37447:37449 Corelib.Lists.ListDef <> map def
+R37452:37458 Clef.RFC0002.Bodies <> inst3ty def
+R37467:37468 Clef.RFC0002.Regions <> iT proj
+R37499:37511 Clef.RFC0002.Nested <> binder_length thm
+R37499:37511 Clef.RFC0002.Nested <> binder_length thm
+R37499:37511 Clef.RFC0002.Nested <> binder_length thm
+R37536:37545 Clef.RFC0002.Nested <> nseval_ofm thm
+R37536:37545 Clef.RFC0002.Nested <> nseval_ofm thm
+R37536:37545 Clef.RFC0002.Nested <> nseval_ofm thm
+R37578:37587 Clef.RFC0002.Nested <> eval_shift thm
+R37590:37594 Clef.RFC0002.Bodies <> abody proj
+R37600:37605 Corelib.Lists.ListDef <> repeat def
+R37610:37614 Clef.RFC0002.Bodies <> arity def
+R37617:37621 Clef.RFC0002.Bodies <> atest proj
+R37578:37587 Clef.RFC0002.Nested <> eval_shift thm
+R37590:37594 Clef.RFC0002.Bodies <> abody proj
+R37600:37605 Corelib.Lists.ListDef <> repeat def
+R37610:37614 Clef.RFC0002.Bodies <> arity def
+R37617:37621 Clef.RFC0002.Bodies <> atest proj
+R37654:37666 Stdlib.Lists.List <> repeat_length thm
+R37654:37666 Stdlib.Lists.List <> repeat_length thm
+R37654:37666 Stdlib.Lists.List <> repeat_length thm
