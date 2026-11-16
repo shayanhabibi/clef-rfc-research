@@ -3571,8 +3571,9 @@ These parts of a nested type-case are not modelled.
    priority the same arm is selected in either order, and agreement asks for equal types.
 6. **What the report leaves open.** `nlive` names an arm that no instantiation selects. It is a
    check apart from `ncheck`, `nordered` and `npglued`, and no theorem joins them into one check
-   of a definition. Whether a reported arm is an error or a warning is not decided. The spec
-   gives a warning for a rule that is never matched ([Dynamic Type-test Patterns](https://clef-lang.com/spec/draft/patterns/#dynamic-type-test-patterns)).
+   of a definition. Whether a reported arm is an error or a warning is outside the RFC. What the
+   RFC fixes is which arms are reported and the verification tier at which that is decided, which
+   the [Discussion](Clef.RFC0002.Discussion.html) gives.
    Three statements about the report are not proved. The first is that a body which passes
    `nordered` and the report passes the report after its arms are rearranged. The second is the
    same for a body that glues with priority kept, where the set an arm's body is walked over

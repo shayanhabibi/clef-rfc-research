@@ -180,8 +180,21 @@ are a reading of the specification and the design documents, and none is a theor
 | Agreement of inner arms by identical bodies (`inner_same_body_glues`) | 1 | A structural comparison, with a count of binders. It does not look at the region |
 | The gluing condition of a whole body (`nglued`) | 1 to 4 | It is a statement and not a procedure. Its tier is that of the rule used for each overlap: priority, identical bodies, or a proof |
 | Gluing of a whole body with priority kept (`npglued`) | 1 to 4 | The set handed to each arm's body is computed from the tests, at the edge of tier 1. Agreement is asked only between arms of which neither is strictly more specific, and its tier is that of the rule used |
-| The report of arms never selected (`nlive`) | Edge of 1 | The sets the whole-body overlap check computes, each tested for a member |
+| The report of arms never selected (`nlive`) | Edge of 1 | Each arm's set is the table filtered by equalities between closed types, and the report asks whether it has a member. It compares no two arms and reads no body |
 | Agreement by proved equivalence | 4 | A relation between two programs |
+
+**The report of an arm that can never be selected is decided at tier 1, at its edge.** The
+report is the computed check `nlive`. For each arm it filters the instantiations that reach the
+match by the arm's test and the tests before it, each an equality between two closed types, and
+asks whether any instantiation is left. `arm_passes_report_iff_selected_somewhere` shows that
+this decides the property exactly, so no approximation is involved and nothing is left for a
+later tier. It uses no solver, no library theorem and no judgment about executions. It is at the
+edge of the tier for one reason, the one given for the table: it enumerates the instantiations.
+It is a simpler check than the overlap check, which also orders arms by generality. Its tier
+does not depend on the rule used for agreement. A definition whose overlapping arms agree by a
+tier 4 proof has its arms reported at tier 1, because the report reads the tests and never a
+body. The tier is the identification this RFC makes. Whether a reported arm is an error or a
+warning is outside the RFC.
 
 **The constraint is a disjunction of equations between variables.** `'T : ('A | 'B)` says `'T` is
 `'A` or `'T` is `'B`. A set of closed types narrows one variable. This relates three, and it has
@@ -327,9 +340,9 @@ condition for an inner match, over the region of the match. The proofs give thes
    (`general_arm_first_is_reported`). A match the report passes has no two arms equally specific
    (`match_with_no_arm_to_report_has_distinct_tests`), which is the second requirement of the
    whole-body overlap check. The author's intersection arm is reported when the two member sets
-   share no type (`intersection_reachable_iff`). The spec gives a warning for a rule that is
-   never matched ([Dynamic Type-test Patterns](https://clef-lang.com/spec/draft/patterns/#dynamic-type-test-patterns)). Whether this report is a warning or an error is the fifth
-   unresolved question.
+   share no type (`intersection_reachable_iff`). The report is decided at the edge of tier 1,
+   as the section on the verification tiers explains. Whether a reported arm is an error or a
+   warning is outside the RFC.
 
 ## Possible extensions
 
@@ -404,11 +417,9 @@ Nothing in a program without a closed-set constraint changes. The RFC depends on
    of every inner match by filtering the table once for each arm, and proves the check does its
    job. No bound on that work is proved.
 4. Constraints declared but never inferred, as the restriction that keeps inference principal.
-5. Whether an arm that can never be selected is an error or a warning. The spec gives a warning
-   for a rule that is never matched ([Dynamic Type-test Patterns](https://clef-lang.com/spec/draft/patterns/#dynamic-type-test-patterns)).
-   Under the adopted rule a warning keeps arm order irrelevant, because two equally specific arms
-   must agree (`priority_kept_body_means_the_same_reordered`). An error would also reject the
-   author's intersection arm in a definition whose member sets share no type. This replaces the
-   earlier question of a diagnostic for two arms with equivalent tests: the second of two such
-   arms is one the report names.
+
+The earlier question of a diagnostic for two arms with equivalent tests is closed: the second of
+two such arms can never be selected, and the report names it. Whether a reported arm is an error
+or a warning is not a question of this RFC. The RFC fixes which arms are reported and the tier at
+which the report is decided.
 *)
