@@ -53,8 +53,16 @@ equation reading. Member types are closed, as in RFC 0001.
 | A body that glues means the same after any rearrangement of the arms of any of its matches | Proved from an assumption: `glued_body_means_the_same_reordered` |
 | A definition and its rearrangement that both glue type-check alike and return the same result | Proved from an assumption: `glued_definition_means_the_same_reordered` |
 | The gluing condition accepts in both orders a definition the whole-body overlap check rejects | Proved for one family of constraints: `gluing_accepts_what_overlap_check_rejects` |
-| A body that passes the whole-body overlap check satisfies the gluing condition | Not proved. The two examine an arm's body over different sets |
-| Under agreement, an arm's body need be examined only where the arm is selected | Not settled. Neither proved nor refuted |
+| A body that passes the whole-body overlap check satisfies the gluing condition | Refuted for one family of constraints: `ordered_body_glues_falsified` |
+| Under the gluing condition, an arm's body need be examined only where the arm is selected | Refuted for one family of constraints: `selected_set_gluing_falsified` |
+| A body that passes the whole-body overlap check glues with priority kept | Proved: `ordered_body_glues_with_priority_kept` |
+| A body that glues with priority kept means the same after any rearrangement of the arms of any of its matches | Proved from an assumption: `priority_kept_body_means_the_same_reordered` |
+| A definition and its rearrangement that both glue with priority kept type-check alike and return the same result | Proved from an assumption: `priority_kept_definition_means_the_same_reordered` |
+| Gluing with priority kept accepts in both orders a definition the whole-body overlap check rejects | Proved for one family of constraints: `priority_kept_gluing_accepts_what_overlap_check_rejects` |
+| Arms that glue with priority kept glue | Proved: `priority_kept_gluing_glues` |
+| Agreement accepts a match that gluing with priority kept rejects | Proved for one family of constraints: `agreement_accepts_what_priority_kept_gluing_rejects` |
+| A definition that glues and does not glue with priority kept | Not proved. The separation is proved for one match over a given region |
+| Under gluing with priority kept, an arm's body need be examined only where the arm is selected | Not settled. Neither proved nor refuted |
 | Agreement of two arms in Bodies gives agreement of the same arms as inner arms | Not proved |
 | A computed check that implies the gluing condition | Not modelled |
 | A nested match under the membership reading | Not modelled |
@@ -62,9 +70,10 @@ equation reading. Member types are closed, as in RFC 0001.
 | More than two tested variables, and generic members | Not modelled |
 
 `checked_match_runs` and `checked_nested_runs` rest on `witness_sound`, the assumption that every
-witness is implemented at its declared type. So do the three theorems on gluing in a nested
-body, `inner_glued_order_irrelevant`, `glued_body_means_the_same_reordered` and
-`glued_definition_means_the_same_reordered`: agreement is asked only for scrutinees of the right
+witness is implemented at its declared type. So do the five theorems on gluing in a nested
+body, `inner_glued_order_irrelevant`, `glued_body_means_the_same_reordered`,
+`glued_definition_means_the_same_reordered`, `priority_kept_body_means_the_same_reordered` and
+`priority_kept_definition_means_the_same_reordered`: agreement is asked only for scrutinees of the right
 type, and that a scrutinee evaluates to one is the safety theorem. No other theorem here uses an assumption beyond decidable equality of type
 constructors, `tycon_eq_dec`. The refutations hold whenever two different closed types exist, or,
 for the two about evaluation, whenever some type has a value.
@@ -150,6 +159,7 @@ are a reading of the specification and the design documents, and none is a theor
 | The whole-body overlap check (`nordered`) | Edge of 1 | One walk over the body. At each arm the set of instantiations is filtered by equalities between closed types |
 | Agreement of inner arms by identical bodies (`inner_same_body_glues`) | 1 | A structural comparison, with a count of binders. It does not look at the region |
 | The gluing condition of a whole body (`nglued`) | 1 to 4 | It is a statement and not a procedure. Its tier is that of the rule used for each overlap: priority, identical bodies, or a proof |
+| Gluing of a whole body with priority kept (`npglued`) | 1 to 4 | The set handed to each arm's body is computed from the tests, at the edge of tier 1. Agreement is asked only between arms of which neither is strictly more specific, and its tier is that of the rule used |
 | Agreement by proved equivalence | 4 | A relation between two programs |
 
 **The constraint is a disjunction of equations between variables.** `'T : ('A | 'B)` says `'T` is
@@ -248,10 +258,37 @@ condition for an inner match, over the region of the match. The proofs give thes
    value at every instantiation (`glued_body_means_the_same_reordered`,
    `glued_definition_means_the_same_reordered`), and a definition priority rejects meets the
    hypotheses in both orders (`gluing_accepts_what_overlap_check_rejects`).
-5. **The two whole-body conditions are not yet related.** A body that passes `nordered` is not
-   shown to satisfy `nglued`, because the sets differ and neither condition is preserved when
-   its set changes. Whether `nglued` could use the smaller set is not settled either. Both are
-   listed in the table above.
+5. **The overlap check does not imply the gluing condition.** For `'A : (x | y)` and
+   `'B : (y)`, a definition with the intersection arm first and a match inside the arm `:? 'A`
+   passes the type check and the whole-body overlap check, and does not satisfy `nglued`
+   (`ordered_body_glues_falsified`). The inner match runs only where the two variables differ.
+   `nglued` examines it wherever `:? 'A` succeeds, which adds the instantiation the intersection
+   arm takes, and there its two arms overlap with bodies of different types. With point 4 the
+   two whole-body conditions are incomparable: each accepts a definition the other rejects.
+6. **The set of the overlap check is unsound for the gluing condition.** Take `nglued` with each
+   arm's body examined only where the arm is selected. A definition and its rearrangement both
+   satisfy that condition, both pass the type check, and return different values where the two
+   variables are the same type (`selected_set_gluing_falsified`). The two outer arms agree
+   because they hold the same inner match. In each order the inner match is ordered by priority
+   where its outer arm is first, and nothing is asked of it where the other outer arm is first.
+   So the larger set of `nglued` is needed for that rule.
+7. **Keeping priority where there is one gives a condition between the two.** The cause of both
+   results is that `nglued` lets two arms agree even when one is strictly more specific, so the
+   general arm may be selected on the overlap. Gluing with priority kept, `npglued`, requires the
+   strictly more specific of two overlapping arms to be the one selected, and admits agreement
+   only between arms of which neither is strictly more specific. An arm's body is then examined
+   where its test succeeds and no strictly more specific test does, a set computed from the
+   tests. Every body that passes the overlap check satisfies it
+   (`ordered_body_glues_with_priority_kept`). It makes arm order irrelevant
+   (`priority_kept_body_means_the_same_reordered`,
+   `priority_kept_definition_means_the_same_reordered`). It accepts in both orders the two-arm
+   definition priority rejects (`priority_kept_gluing_accepts_what_overlap_check_rejects`).
+8. **What keeping priority gives up.** For one match it is the stricter rule
+   (`priority_kept_gluing_glues`). It rejects a general arm written before a strictly more
+   specific arm with the same body, which `nglued` accepts
+   (`agreement_accepts_what_priority_kept_gluing_rejects`). In that match the second arm can
+   never be selected. So the difference between the two rules is whether such an arm is an
+   error.
 
 ## Possible extensions
 
@@ -307,8 +344,13 @@ Nothing in a program without a closed-set constraint changes. The RFC depends on
 1. Whether agreement is admitted beside priority, and in which form: identical bodies only, or
    bodies proved equivalent. An arm such as `:? 'A | :? 'B` covering several regions is the
    surface form of the first. The model now supports either answer for an inner match as well as
-   for the outer one. If agreement is admitted, an arm's body has to be checked wherever its test
-   succeeds, and whether that can be narrowed to where the arm is selected is open.
+   for the outer one. If agreement is admitted, there are two rules for a whole body. Under
+   `nglued` any two overlapping arms may agree, an arm's body is checked wherever its test
+   succeeds, and a definition that priority accepts can be rejected. Under `npglued` agreement is
+   admitted only between arms of which neither is strictly more specific, an arm's body is
+   checked where no strictly more specific arm succeeds, and every definition priority accepts
+   is accepted. The proofs favour the second, because it extends the overlap check. The first
+   accepts a general arm written before a more specific one with the same body.
 2. Whether a missing reachable intersection arm is an error. The overlap check as modelled makes it
    one, unless the overlapping arms agree.
 3. What the whole-body overlap check costs. [Nested](Clef.RFC0002.Nested.html) computes the region

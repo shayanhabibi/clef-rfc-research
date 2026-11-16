@@ -74,6 +74,11 @@ The proofs in [Nested](Clef.RFC0002.Nested.html) allow a match anywhere in a bod
   always qualify. A body all of whose matches glue, by priority or by agreement, means the same
   after any rearrangement of its arms. Under agreement an arm's body is examined wherever its
   test succeeds.
+- That condition and the overlap check of a whole body are incomparable: each accepts a
+  definition the other rejects. Examining an arm's body only where the arm is selected is unsound
+  for it. A third condition lies between the two. It keeps priority where one arm is strictly
+  more specific and admits agreement elsewhere. Every definition the overlap check accepts
+  satisfies it, and it makes arm order irrelevant.
 
 ## The reading of `:? 'A`
 
@@ -94,6 +99,6 @@ The readings agree on every program whose member sets are disjoint
 |---|---|
 | [Regions](Clef.RFC0002.Regions.html) | Instantiations, arm tests under both readings, selection, the overlap check and the theorems |
 | [Bodies](Clef.RFC0002.Bodies.html) | Arm bodies, the check of a definition, what it computes, and the two ways overlapping arms are glued |
-| [Nested](Clef.RFC0002.Nested.html) | A match anywhere in a body: typing, specialization, erasure, safety, what an inner match knows about the arm it is in, the overlap check for inner matches with the region of each computed from the body, and agreement for inner matches |
+| [Nested](Clef.RFC0002.Nested.html) | A match anywhere in a body: typing, specialization, erasure, safety, what an inner match knows about the arm it is in, the overlap check for inner matches with the region of each computed from the body, agreement for inner matches, and how the two whole-body conditions relate |
 | [Discussion](Clef.RFC0002.Discussion.html) | What the proofs do not cover, the reasons for the adopted reading, the relation to the verification tiers, drawbacks and alternatives |
 *)
