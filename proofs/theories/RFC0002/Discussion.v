@@ -136,6 +136,16 @@ parameters also have known types, and a rule that used them would accept more.
 Both rules carry over to a match nested in an arm. The section on nested matches below gives the
 statements.
 
+**The rule adopted.** The RFC admits agreement beside priority, with priority kept. Of two
+overlapping arms, if one is strictly more specific it must be the one selected. Two overlapping
+arms of which neither is strictly more specific are accepted when they agree. For a whole body
+this is the condition `npglued` of [Nested](Clef.RFC0002.Nested.html). It accepts every definition
+the overlap check accepts (`ordered_body_glues_with_priority_kept`) and makes arm order
+irrelevant (`priority_kept_body_means_the_same_reordered`). Agreement between any two overlapping
+arms, the condition `nglued`, is not adopted. The reasons are in the section on nested matches
+and under Alternatives. Which form of agreement a compiler checks is still open, and is the first
+unresolved question.
+
 ## Relation to the verification tiers
 
 The specification organises checking into
@@ -289,6 +299,10 @@ condition for an inner match, over the region of the match. The proofs give thes
    (`agreement_accepts_what_priority_kept_gluing_rejects`). In that match the second arm can
    never be selected. So the difference between the two rules is whether such an arm is an
    error.
+9. **The RFC adopts gluing with priority kept.** It is the only one of the two agreement rules
+   that accepts every definition the overlap check accepts, and the set it hands to an arm's body
+   is computed from the tests. An arm that can never be selected is reported, as an unreachable
+   rule is.
 
 ## Possible extensions
 
@@ -334,6 +348,14 @@ note gives each in more detail.
 - **Agreement only.** Drop the overlap check and require every overlap to agree. This rejects the
   author's three-arm match whenever the intersection arm does something of its own, which is the
   reason to write it.
+- **Agreement between any two overlapping arms.** This is the condition `nglued`: two arms may
+  agree even when one is strictly more specific, so the general arm may be written first. It
+  makes arm order irrelevant (`glued_body_means_the_same_reordered`). It is rejected because it
+  does not extend priority. An arm's body must then be checked wherever its test succeeds
+  (`selected_set_gluing_falsified`), and over that set a definition the overlap check accepts
+  can fail (`ordered_body_glues_falsified`). What it accepts beyond the adopted rule is a general
+  arm written before a more specific one with the same body
+  (`agreement_accepts_what_priority_kept_gluing_rejects`), where the second arm is unreachable.
 
 ## Impact and migration
 
@@ -341,18 +363,12 @@ Nothing in a program without a closed-set constraint changes. The RFC depends on
 
 ## Unresolved questions
 
-1. Whether agreement is admitted beside priority, and in which form: identical bodies only, or
-   bodies proved equivalent. An arm such as `:? 'A | :? 'B` covering several regions is the
-   surface form of the first. The model now supports either answer for an inner match as well as
-   for the outer one. If agreement is admitted, there are two rules for a whole body. Under
-   `nglued` any two overlapping arms may agree, an arm's body is checked wherever its test
-   succeeds, and a definition that priority accepts can be rejected. Under `npglued` agreement is
-   admitted only between arms of which neither is strictly more specific, an arm's body is
-   checked where no strictly more specific arm succeeds, and every definition priority accepts
-   is accepted. The proofs favour the second, because it extends the overlap check. The first
-   accepts a general arm written before a more specific one with the same body.
-2. Whether a missing reachable intersection arm is an error. The overlap check as modelled makes it
-   one, unless the overlapping arms agree.
+1. In which form agreement is checked: identical bodies only, or bodies proved equivalent. An arm
+   such as `:? 'A | :? 'B` covering several regions is the surface form of the first. That
+   agreement is admitted, and that priority is kept where one arm is strictly more specific, is
+   decided. The model supports either form, for an inner match as well as for the outer one.
+2. Whether a missing reachable intersection arm is an error. Under the adopted rule it is one,
+   unless neither of the overlapping arms is strictly more specific and the two agree.
 3. What the whole-body overlap check costs. [Nested](Clef.RFC0002.Nested.html) computes the region
    of every inner match by filtering the table once for each arm, and proves the check does its
    job. No bound on that work is proved.

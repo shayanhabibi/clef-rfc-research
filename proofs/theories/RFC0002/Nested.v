@@ -2662,6 +2662,9 @@ strictly more specific it must be the one selected. Agreement is admitted only b
 which neither is strictly more specific. An arm is then never selected where a strictly more
 specific arm also succeeds, and its body is examined on the rest of its test. That set is
 computed from the tests alone.
+
+The RFC adopts this condition. The [Discussion](Clef.RFC0002.Discussion.html) gives the reasons
+and lists agreement between any two overlapping arms among the alternatives.
 *)
 
 (** The instantiations of a set at which a test succeeds and no strictly more specific test of

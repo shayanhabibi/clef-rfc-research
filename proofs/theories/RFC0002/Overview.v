@@ -17,8 +17,9 @@ the scrutinee's type is the type `'A` is instantiated to. Two arms that test
 different variables overlap wherever those variables are instantiated to the same type. The RFC
 adds one check on a match: an arm that overlaps an earlier arm must be more general than it, unless
 a still earlier arm takes the instantiations they share. Under that check the first matching arm is
-the most specific one, so the spec's first-match order needs no change. Arm selection stays static:
-every variable is a closed type at each specialization.
+the most specific one, so the spec's first-match order needs no change. Two overlapping arms of
+which neither is more specific are also accepted when their bodies compute the same result. Arm
+selection stays static: every variable is a closed type at each specialization.
 
 ## Motivation
 
@@ -78,7 +79,7 @@ The proofs in [Nested](Clef.RFC0002.Nested.html) allow a match anywhere in a bod
   definition the other rejects. Examining an arm's body only where the arm is selected is unsound
   for it. A third condition lies between the two. It keeps priority where one arm is strictly
   more specific and admits agreement elsewhere. Every definition the overlap check accepts
-  satisfies it, and it makes arm order irrelevant.
+  satisfies it, and it makes arm order irrelevant. The RFC adopts this third condition.
 
 ## The reading of `:? 'A`
 
