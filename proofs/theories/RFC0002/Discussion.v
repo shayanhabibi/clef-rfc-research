@@ -62,6 +62,16 @@ equation reading. Member types are closed, as in RFC 0001.
 | Arms that glue with priority kept glue | Proved: `priority_kept_gluing_glues` |
 | Agreement accepts a match that gluing with priority kept rejects | Proved for one family of constraints: `agreement_accepts_what_priority_kept_gluing_rejects` |
 | A definition that glues and does not glue with priority kept | Not proved. The separation is proved for one match over a given region |
+| An arm passes the report exactly when some instantiation selects it | Proved: `arm_passes_report_iff_selected_somewhere` |
+| In a body that passes the report, every arm of a match is selected somewhere | Proved: `body_that_passes_report_has_every_arm_selected` |
+| A match that glues and has no arm to report glues with priority kept | Proved: `glued_match_with_no_arm_to_report_keeps_priority` |
+| The match that separates the two agreement rules is reported | Proved for one family of constraints: `general_arm_first_is_reported` |
+| The overlap check accepts a body with an arm that can never be selected | Proved for one family of constraints: `overlap_check_accepts_an_arm_never_selected` |
+| Gluing with priority kept accepts a body with an arm that can never be selected | Proved: `priority_kept_gluing_accepts_an_arm_never_selected` |
+| A match with no arm to report has no two arms equally specific | Proved: `match_with_no_arm_to_report_has_distinct_tests` |
+| A whole body that glues and passes the report glues with priority kept | Not proved. It is proved for one match |
+| A body that passes the report passes it after its arms are rearranged | Not proved, under the overlap check or under gluing with priority kept |
+| One check of a definition that joins the type check, the adopted condition and the report | Not modelled |
 | Under gluing with priority kept, an arm's body need be examined only where the arm is selected | Not settled. Neither proved nor refuted |
 | Agreement of two arms in Bodies gives agreement of the same arms as inner arms | Not proved |
 | A computed check that implies the gluing condition | Not modelled |
@@ -170,6 +180,7 @@ are a reading of the specification and the design documents, and none is a theor
 | Agreement of inner arms by identical bodies (`inner_same_body_glues`) | 1 | A structural comparison, with a count of binders. It does not look at the region |
 | The gluing condition of a whole body (`nglued`) | 1 to 4 | It is a statement and not a procedure. Its tier is that of the rule used for each overlap: priority, identical bodies, or a proof |
 | Gluing of a whole body with priority kept (`npglued`) | 1 to 4 | The set handed to each arm's body is computed from the tests, at the edge of tier 1. Agreement is asked only between arms of which neither is strictly more specific, and its tier is that of the rule used |
+| The report of arms never selected (`nlive`) | Edge of 1 | The sets the whole-body overlap check computes, each tested for a member |
 | Agreement by proved equivalence | 4 | A relation between two programs |
 
 **The constraint is a disjunction of equations between variables.** `'T : ('A | 'B)` says `'T` is
@@ -301,8 +312,24 @@ condition for an inner match, over the region of the match. The proofs give thes
    error.
 9. **The RFC adopts gluing with priority kept.** It is the only one of the two agreement rules
    that accepts every definition the overlap check accepts, and the set it hands to an arm's body
-   is computed from the tests. An arm that can never be selected is reported, as an unreachable
-   rule is.
+   is computed from the tests.
+10. **An arm that can never be selected is reported.** The report is computed by the walk the
+   overlap check makes: an arm is named when the set of instantiations that select it is empty
+   (`nlive`). It is exact. An arm passes if and only if some instantiation that reaches its match
+   selects it (`arm_passes_report_iff_selected_somewhere`,
+   `body_that_passes_report_has_every_arm_selected`). It is a check of its own, because the
+   overlap check and gluing with priority kept each accept a body it rejects
+   (`overlap_check_accepts_an_arm_never_selected`,
+   `priority_kept_gluing_accepts_an_arm_never_selected`). Among matches it passes, the two
+   agreement rules accept the same matches (`glued_match_with_no_arm_to_report_keeps_priority`,
+   `priority_kept_gluing_glues`). So what the rejected rule accepts beyond the adopted one is
+   confined to matches the report names, and the match of point 8 is one
+   (`general_arm_first_is_reported`). A match the report passes has no two arms equally specific
+   (`match_with_no_arm_to_report_has_distinct_tests`), which is the second requirement of the
+   whole-body overlap check. The author's intersection arm is reported when the two member sets
+   share no type (`intersection_reachable_iff`). The spec gives a warning for a rule that is
+   never matched ([Dynamic Type-test Patterns](https://clef-lang.com/spec/draft/patterns/#dynamic-type-test-patterns)). Whether this report is a warning or an error is the fifth
+   unresolved question.
 
 ## Possible extensions
 
@@ -330,9 +357,11 @@ note gives each in more detail.
 - **The check runs over a table.** Its size is bounded by the product of the member-set sizes.
 - **Arms carry type equations.** An arm that may assume `'A = 'B` is a local type refinement, which
   is where inference usually loses principal types.
-- **Equivalent tests need their own diagnostic.** Two arms that test the same thing pass the
-  overlap check and make the result depend on order. The compiler must reject one of them, as it
-  would an unreachable rule.
+- **Equivalent tests are left to the report.** Two arms that test the same thing pass the overlap
+  check on the tests alone. Under the adopted rule they are accepted only when they agree, so the
+  result does not depend on their order. The second of them can never be selected, and the report
+  names it (`match_with_no_arm_to_report_has_distinct_tests`,
+  `priority_kept_gluing_accepts_an_arm_never_selected`).
 
 ## Alternatives
 
@@ -355,7 +384,9 @@ note gives each in more detail.
   (`selected_set_gluing_falsified`), and over that set a definition the overlap check accepts
   can fail (`ordered_body_glues_falsified`). What it accepts beyond the adopted rule is a general
   arm written before a more specific one with the same body
-  (`agreement_accepts_what_priority_kept_gluing_rejects`), where the second arm is unreachable.
+  (`agreement_accepts_what_priority_kept_gluing_rejects`), where the second arm can never be
+  selected and is reported (`general_arm_first_is_reported`). Among matches with no arm to report
+  the two rules accept the same matches (`glued_match_with_no_arm_to_report_keeps_priority`).
 
 ## Impact and migration
 
@@ -373,5 +404,11 @@ Nothing in a program without a closed-set constraint changes. The RFC depends on
    of every inner match by filtering the table once for each arm, and proves the check does its
    job. No bound on that work is proved.
 4. Constraints declared but never inferred, as the restriction that keeps inference principal.
-5. The diagnostic for two arms with equivalent tests.
+5. Whether an arm that can never be selected is an error or a warning. The spec gives a warning
+   for a rule that is never matched ([Dynamic Type-test Patterns](https://clef-lang.com/spec/draft/patterns/#dynamic-type-test-patterns)).
+   Under the adopted rule a warning keeps arm order irrelevant, because two equally specific arms
+   must agree (`priority_kept_body_means_the_same_reordered`). An error would also reject the
+   author's intersection arm in a definition whose member sets share no type. This replaces the
+   earlier question of a diagnostic for two arms with equivalent tests: the second of two such
+   arms is one the report names.
 *)

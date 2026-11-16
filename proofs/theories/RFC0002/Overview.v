@@ -18,8 +18,9 @@ different variables overlap wherever those variables are instantiated to the sam
 adds one check on a match: an arm that overlaps an earlier arm must be more general than it, unless
 a still earlier arm takes the instantiations they share. Under that check the first matching arm is
 the most specific one, so the spec's first-match order needs no change. Two overlapping arms of
-which neither is more specific are also accepted when their bodies compute the same result. Arm
-selection stays static: every variable is a closed type at each specialization.
+which neither is more specific are also accepted when their bodies compute the same result. An
+arm that no instantiation selects is reported. Arm selection stays static: every variable is a
+closed type at each specialization.
 
 ## Motivation
 
@@ -80,6 +81,10 @@ The proofs in [Nested](Clef.RFC0002.Nested.html) allow a match anywhere in a bod
   for it. A third condition lies between the two. It keeps priority where one arm is strictly
   more specific and admits agreement elsewhere. Every definition the overlap check accepts
   satisfies it, and it makes arm order irrelevant. The RFC adopts this third condition.
+- An arm that no instantiation selects is reported by a computed check, and the check names
+  exactly those arms. Neither the overlap check nor the adopted condition implies it. Among
+  matches with no arm to report, the adopted condition and agreement between any two overlapping
+  arms accept the same matches.
 
 ## The reading of `:? 'A`
 
@@ -100,6 +105,6 @@ The readings agree on every program whose member sets are disjoint
 |---|---|
 | [Regions](Clef.RFC0002.Regions.html) | Instantiations, arm tests under both readings, selection, the overlap check and the theorems |
 | [Bodies](Clef.RFC0002.Bodies.html) | Arm bodies, the check of a definition, what it computes, and the two ways overlapping arms are glued |
-| [Nested](Clef.RFC0002.Nested.html) | A match anywhere in a body: typing, specialization, erasure, safety, what an inner match knows about the arm it is in, the overlap check for inner matches with the region of each computed from the body, agreement for inner matches, and how the two whole-body conditions relate |
+| [Nested](Clef.RFC0002.Nested.html) | A match anywhere in a body: typing, specialization, erasure, safety, what an inner match knows about the arm it is in, the overlap check for inner matches with the region of each computed from the body, agreement for inner matches, how the two whole-body conditions relate, and the report of arms that can never be selected |
 | [Discussion](Clef.RFC0002.Discussion.html) | What the proofs do not cover, the reasons for the adopted reading, the relation to the verification tiers, drawbacks and alternatives |
 *)

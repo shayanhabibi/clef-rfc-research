@@ -20,7 +20,7 @@ let g<'A, 'B, 'T when 'A : (int | string)
     | :? 'B as b -> b
 ```
 
-Eight questions are answered.
+Nine questions are answered.
 
 1. Is a nested type-case still erased? A specialization has no type to inspect, at any depth.
 2. Is a definition that checks still safe to run at every instantiation?
@@ -30,6 +30,7 @@ Eight questions are answered.
 6. How is that set of instantiations computed from a body?
 7. May two overlapping arms of an inner match be written in either order when their bodies agree?
 8. How do the overlap check and the gluing condition of a whole body relate?
+9. Which arms can never be selected, and how does reporting them relate to the checks?
 
 Only the equation reading is modelled, since it is the one the RFC adopts. A test `:? 'A` on a
 scrutinee succeeds when the scrutinee's type is the type `'A` is instantiated to.
@@ -3218,6 +3219,330 @@ Proof.
   - cbn [fst] in L. rewrite L2 in L. discriminate.
 Qed.
 
+(**md ## Reporting an arm that can never be selected
+
+An arm can never be selected when, at every instantiation that reaches its match, its test fails
+or the test of an earlier arm succeeds. The conditions above accept such an arm. This section
+states the report as a computed check and relates it to them.
+
+The check walks the body as the overlap check does. At a match it computes, for each arm, the set
+of instantiations at which that arm is selected. An arm whose set is empty is reported. The
+arm's body is then walked over that set, so an inner arm is reported when no instantiation that
+reaches its match selects it.
+*)
+
+(** Whether a set of instantiations has a member. *)
+Definition inhabited (l : list inst3) : bool :=
+  match l with
+  | [] => false
+  | _ :: _ => true
+  end.
+
+Lemma inhabited_iff (l : list inst3) : inhabited l = true <-> exists s, In s l.
+Proof.
+  destruct l as [| s l]; simpl; split.
+  - discriminate.
+  - intros [s []].
+  - intros _. exists s. left. reflexivity.
+  - reflexivity.
+Qed.
+
+(** Whether every arm of one match is selected at some instantiation of a set.
+    - [R:] the instantiations the match runs at.
+    - [u:] the type of its scrutinee at each instantiation.
+    - [arms:] the arms. *)
+Definition all_selectable (R : list inst3) (u : inst3 -> ty) (arms : list (test * ntm)) : bool :=
+  arms_ok (fun seen p _ => inhabited (reach R u seen p)) [] arms.
+
+(** The report for a whole body. It passes when every arm of every match in the body is selected
+    at some instantiation that reaches the match.
+    - [R:] the instantiations that reach the body.
+    - [Gf:] the types of the variables in scope at each instantiation.
+    - [e:] the body. *)
+Fixpoint nlive (R : list inst3) (Gf : inst3 -> list ty) (e : ntm) : bool :=
+  match e with
+  | NVar _ => true
+  | NPrim _ a => nlive R Gf a
+  | NPair a b => nlive R Gf a && nlive R Gf b
+  | NFst a => nlive R Gf a
+  | NSnd a => nlive R Gf a
+  | NLet a b => nlive R Gf a && nlive R (let_ctx Gf a) b
+  | NMatch a arms =>
+      nlive R Gf a
+      && arms_ok
+           (fun seen p b =>
+              inhabited (reach R (scrut_ty Gf a) seen p)
+              && nlive (reach R (scrut_ty Gf a) seen p) (arm_ctx Gf p) b)
+           [] arms
+  end.
+
+(** An arm whose test is also the test of an earlier arm is selected nowhere. *)
+Lemma reach_none_when_repeated (R : list inst3) (u : inst3 -> ty) (seen : list test) (p : test) :
+  In p seen -> reach R u seen p = [].
+Proof.
+  intros I. unfold reach. induction R as [| s R IH]; [reflexivity |]. cbn [filter].
+  destruct (holds s (u s) p) eqn:Hp; cbn [andb]; [| exact IH].
+  assert (X : existsb (fun q => holds s (u s) q) seen = true).
+  { apply existsb_exists. exists p. split; [exact I | exact Hp]. }
+  rewrite X. cbn [negb]. exact IH.
+Qed.
+
+(**md
+**An arm passes the report exactly when some instantiation selects it.**
+
+For one arm of a match, the computed set has a member if and only if the arm's test is not the
+test of an earlier arm and, at some instantiation the match runs at, the match selects that arm.
+An arm that repeats an earlier test is always reported. So the report is exact: it names an arm
+if and only if no instantiation runs its body.
+
+- [R:] the instantiations the match runs at.
+- [u:] the type of its scrutinee at each of them.
+- [pre:] the arms before this one.
+- [p:] the test of this arm.
+- [b:] its body.
+- [post:] the arms after it.
+*)
+Theorem arm_passes_report_iff_selected_somewhere
+    (R : list inst3) (u : inst3 -> ty) (pre : list (test * ntm)) (p : test) (b : ntm)
+    (post : list (test * ntm)) :
+  inhabited (reach R u (map fst pre) p) = true <->
+  ~ In p (map fst pre) /\
+  exists s, In s R /\ pickn s (u s) (pre ++ (p, b) :: post) = Some (p, b).
+Proof.
+  rewrite inhabited_iff. split.
+  - intros [s Hs].
+    assert (NI : ~ In p (map fst pre)).
+    { intros I. rewrite (reach_none_when_repeated R u _ p I) in Hs. exact Hs. }
+    split; [exact NI |]. exists s.
+    exact (proj1 (reach_is_where_the_arm_is_selected R u pre p b post s NI) Hs).
+  - intros [NI [s Hs]]. exists s.
+    exact (proj2 (reach_is_where_the_arm_is_selected R u pre p b post s NI) Hs).
+Qed.
+
+(**md
+**In a body that passes the report, every arm of a match is selected somewhere.**
+
+If a match passes the report over a set of instantiations, each of its arms is selected by the
+match at some instantiation of the set, and the arm's body passes the report over the set of
+instantiations at which the arm is selected. By `reach_is_where_the_arm_is_selected` that set
+holds exactly the instantiations at which the body runs, so the statement applies again to a
+match inside the body.
+
+- [R:] the instantiations that reach the match.
+- [Gf:] the types of the variables in scope at each of them.
+- [a:] the scrutinee.
+- [arms:] the arms.
+- [pre:] the arms before the one considered.
+- [p:] its test.
+- [b:] its body.
+- [post:] the arms after it.
+*)
+Theorem body_that_passes_report_has_every_arm_selected
+    (R : list inst3) (Gf : inst3 -> list ty) (a : ntm) (arms : list (test * ntm))
+    (pre : list (test * ntm)) (p : test) (b : ntm) (post : list (test * ntm)) :
+  nlive R Gf (NMatch a arms) = true ->
+  arms = pre ++ (p, b) :: post ->
+  (exists s, In s R /\ pickn s (scrut_ty Gf a s) arms = Some (p, b)) /\
+  nlive (reach R (scrut_ty Gf a) (map fst pre) p) (arm_ctx Gf p) b = true.
+Proof.
+  cbn [nlive]. intros H E. apply andb_true_iff in H. destruct H as [_ H]. rewrite E in H.
+  pose proof (arms_ok_split _ pre [] p b post H) as K. cbn [app] in K.
+  apply andb_true_iff in K. destruct K as [K1 K2]. split; [| exact K2].
+  rewrite E.
+  exact (proj2 (proj1 (arm_passes_report_iff_selected_somewhere
+                         R (scrut_ty Gf a) pre p b post) K1)).
+Qed.
+
+(**md ### The report and the two agreement rules
+
+`agreement_accepts_what_priority_kept_gluing_rejects` gives a match that glues and does not glue
+with priority kept, and its second arm can never be selected. The next theorem shows that this
+is the only way the two rules differ on one match.
+*)
+
+Lemma find_split {A : Type} (f : A -> bool) (l : list A) (x : A) :
+  find f l = Some x ->
+  exists pre post, l = pre ++ x :: post /\ forall y, In y pre -> f y = false.
+Proof.
+  induction l as [| a l IH]; simpl; [discriminate |].
+  destruct (f a) eqn:Fa.
+  - intros E. injection E as <-. exists [], l. split; [reflexivity | intros y []].
+  - intros E. destruct (IH E) as [pre [post [-> K]]]. exists (a :: pre), post.
+    split; [reflexivity |]. intros y [<- | Hy]; [exact Fa | exact (K y Hy)].
+Qed.
+
+(**md
+**A match that glues and has no arm to report glues with priority kept.**
+
+Take a match whose arms glue over a set of instantiations, and suppose every arm is selected
+somewhere in the set. Then the arms glue with priority kept. The reason is that a later arm
+strictly more specific than the selected one would succeed only where the selected one's test
+does, and so could never be selected.
+
+With `priority_kept_gluing_glues`, the two agreement rules accept the same matches among those
+with no arm to report. What agreement between any two overlapping arms accepts beyond the adopted
+rule is a match with an arm that can never be selected.
+
+- [R:] the instantiations the match is checked over.
+- [u:] the type of the scrutinee at each of them.
+- [Gf:] the types of the variables in scope at each of them.
+- [arms:] the arms.
+*)
+Theorem glued_match_with_no_arm_to_report_keeps_priority
+    (R : list inst3) (u : inst3 -> ty) (Gf : inst3 -> list ty) (arms : list (test * ntm)) :
+  glues_in R u Gf arms -> all_selectable R u arms = true -> pglues_in R u Gf arms.
+Proof.
+  intros G L s p q Hs F Hq M.
+  destruct (G s p q Hs F Hq M) as [X | A]; [left; exact X |]. right. split; [| exact A].
+  destruct (lt_in R u (fst q) (fst p)) eqn:X; [exfalso | reflexivity].
+  unfold lt_in in X. apply andb_true_iff in X. destruct X as [X1 X2].
+  apply negb_true_iff in X2.
+  unfold pickn in F. destruct (find_split _ _ _ F) as [pre [post [E K]]].
+  rewrite E in Hq. apply in_app_or in Hq. destruct Hq as [Hq | [<- | Hq]].
+  - pose proof (K q Hq) as Z. cbn beta in Z. rewrite Z in M. discriminate.
+  - rewrite le_in_refl in X2. discriminate.
+  - apply in_split in Hq. destruct Hq as [m [post2 E2]]. destruct q as [tq bq].
+    cbn [fst] in X1, M.
+    assert (E3 : arms = (pre ++ p :: m) ++ (tq, bq) :: post2).
+    { rewrite E, E2, <- app_assoc. reflexivity. }
+    unfold all_selectable in L. rewrite E3 in L.
+    pose proof (arms_ok_split _ (pre ++ p :: m) [] tq bq post2 L) as Z. cbn [app] in Z.
+    apply inhabited_iff in Z. destruct Z as [s' Hs'].
+    unfold reach in Hs'. apply filter_In in Hs'. destruct Hs' as [HR HP].
+    apply andb_true_iff in HP. destruct HP as [Hq' Hn]. apply negb_true_iff in Hn.
+    assert (Y : existsb (fun r => holds s' (u s') r) (map fst (pre ++ p :: m)) = true).
+    { apply existsb_exists. exists (fst p). split.
+      - apply (in_map fst). apply in_elt.
+      - exact (proj1 (le_in_iff R u tq (fst p)) X1 s' HR Hq'). }
+    rewrite Y in Hn. discriminate.
+Qed.
+
+(**md
+**The match that separates the two agreement rules is reported.**
+
+In the match of `agreement_accepts_what_priority_kept_gluing_rejects`, the arm `:? 'B` is written
+after `:? 'A` inside a region where `'T` is `'A`. The report names it: no instantiation of the
+region selects it.
+
+- [x:] a member of the first set only.
+- [y:] the member the two sets share.
+- [b:] the body both arms have.
+*)
+Theorem general_arm_first_is_reported (x y : ty) (b : ntm) :
+  x <> y ->
+  all_selectable (restrict (table [x; y] [y]) iT IsA) iT [(IsA, b); (IsB, b)] = false.
+Proof.
+  intros N.
+  assert (Q1 : tyeqb x y = false) by (apply tyeqb_false; exact N).
+  assert (Q2 : tyeqb y x = false) by (apply tyeqb_false; congruence).
+  unfold all_selectable. crunch Q1 Q2. reflexivity.
+Qed.
+
+(**md ### The report is a check of its own
+
+Neither the overlap check nor gluing with priority kept implies the report. Each accepts a body
+with an arm that can never be selected.
+*)
+
+(**md
+**The overlap check accepts a body with an arm that can never be selected.**
+
+The definition of `ordered_body_glues_falsified`, for `'A : (x | y)` and `'B : (y)`, passes the
+type check and the whole-body overlap check. Its inner match runs only where `'A` and `'B`
+differ, and there the inner arm `:? 'B` never succeeds. The report rejects the definition.
+
+- [x:] a member of the first set only.
+- [y:] the member the two sets share.
+*)
+Theorem overlap_check_accepts_an_arm_never_selected (x y : ty) :
+  x <> y ->
+  ncheck [x; y] [y] [] shadowed VT = true /\
+  nordered (table [x; y] [y]) (top_ctx []) shadowed = true /\
+  nlive (table [x; y] [y]) (top_ctx []) shadowed = false.
+Proof.
+  intros N.
+  destruct (ordered_body_glues_falsified x y N) as [H1 [H2 _]].
+  split; [exact H1 |]. split; [exact H2 |].
+  assert (Q1 : tyeqb x y = false) by (apply tyeqb_false; exact N).
+  assert (Q2 : tyeqb y x = false) by (apply tyeqb_false; congruence).
+  unfold shadowed. crunch Q1 Q2. reflexivity.
+Qed.
+
+(** A match whose two arms have the same test and the same body. *)
+Definition twice : ntm := NMatch (NVar 0) [(IsA, NVar 0); (IsA, NVar 0)].
+
+(**md
+**Gluing with priority kept accepts a body with an arm that can never be selected.**
+
+Take the match with the arm `:? 'A` written twice with one body. For every pair of member sets it
+glues with priority kept: neither test is strictly more specific than the other, and the bodies
+are the same. Its second arm is selected nowhere, and the report rejects it. The whole-body
+overlap check rejects it too, because the two tests are equally specific.
+
+- [CA:] the members of `'A`.
+- [CB:] the members of `'B`.
+*)
+Theorem priority_kept_gluing_accepts_an_arm_never_selected (CA CB : cset) :
+  npglued (table CA CB) (top_ctx []) twice /\
+  nlive (table CA CB) (top_ctx []) twice = false.
+Proof.
+  split.
+  - unfold twice. cbn [npglued arms_all]. split; [exact I |]. split; [| repeat split].
+    apply incomparable_same_body_glues; [reflexivity | |]; apply lt_in_irrefl.
+  - unfold twice. cbn [nlive arms_ok app].
+    rewrite (reach_none_when_repeated _ _ [IsA] IsA (or_introl eq_refl)).
+    cbn [inhabited andb]. apply andb_false_r.
+Qed.
+
+(**md ### What the report gives the overlap check
+
+The whole-body overlap check asks two things of a match: that it is ordered, and that no two of
+its arms are equally specific. `check_accepts_both_orders` shows the second is needed. The report
+implies it.
+*)
+
+Lemma selectable_distinct (R : list inst3) (u : inst3 -> ty) :
+  forall (arms : list (test * ntm)) (seen : list test),
+    arms_ok (fun seen p _ => inhabited (reach R u seen p)) seen arms = true ->
+    distinct_in R u (map fst arms) = true.
+Proof.
+  induction arms as [| [p b] r IH]; intros seen H; [reflexivity |].
+  cbn [arms_ok] in H. apply andb_true_iff in H. destruct H as [_ H].
+  cbn [map fst distinct_in]. apply andb_true_iff. split; [| exact (IH _ H)].
+  apply forallb_forall. intros q Hq. apply negb_true_iff.
+  destruct (le_in R u q p) eqn:L2; [exfalso | apply andb_false_r].
+  apply in_map_iff in Hq. destruct Hq as [[q' bq] [Eq Iq]]. cbn [fst] in Eq. subst q'.
+  apply in_split in Iq. destruct Iq as [m [post E]]. rewrite E in H.
+  pose proof (arms_ok_split _ m (seen ++ [p]) q bq post H) as Z. cbn beta in Z.
+  apply inhabited_iff in Z. destruct Z as [s Hs]. unfold reach in Hs. apply filter_In in Hs.
+  destruct Hs as [HR HP]. apply andb_true_iff in HP. destruct HP as [Hq Hn].
+  apply negb_true_iff in Hn.
+  assert (Y : existsb (fun t => holds s (u s) t) ((seen ++ [p]) ++ map fst m) = true).
+  { apply existsb_exists. exists p. split.
+    - apply in_or_app. left. apply in_or_app. right. left. reflexivity.
+    - exact (proj1 (le_in_iff R u q p) L2 s HR Hq). }
+  rewrite Y in Hn. discriminate.
+Qed.
+
+(**md
+**A match with no arm to report has no two arms equally specific.**
+
+If every arm of a match is selected somewhere in a set of instantiations, then no later arm is
+at least as specific over the set as an earlier one, and in particular no two arms are equally
+specific. So for one match the report supplies the second requirement of the whole-body overlap
+check.
+
+- [R:] the instantiations the match runs at.
+- [u:] the type of its scrutinee at each of them.
+- [arms:] the arms.
+*)
+Theorem match_with_no_arm_to_report_has_distinct_tests
+    (R : list inst3) (u : inst3 -> ty) (arms : list (test * ntm)) :
+  all_selectable R u arms = true -> distinct_in R u (map fst arms) = true.
+Proof.
+  intros H. exact (selectable_distinct R u arms [] H).
+Qed.
+
 (**md ## Rules stated in prose
 
 These parts of a nested type-case are not modelled.
@@ -3244,9 +3569,18 @@ These parts of a nested type-case are not modelled.
 5. **Every matching arm.** This module types the arm selected at each instantiation. Bodies types
    every arm that matches. The results on arm order do not need the stronger check: under
    priority the same arm is selected in either order, and agreement asks for equal types.
-6. **Unreachable inner arms.** An inner arm whose computed set is empty can never run. The model
-   accepts it. A compiler would report it, as it reports an unreachable rule.
-   `inner_tests_decided_in_a_region` shows when this happens for a scrutinee of variable type.
+6. **What the report leaves open.** `nlive` names an arm that no instantiation selects. It is a
+   check apart from `ncheck`, `nordered` and `npglued`, and no theorem joins them into one check
+   of a definition. Whether a reported arm is an error or a warning is not decided. The spec
+   gives a warning for a rule that is never matched ([Dynamic Type-test Patterns](https://clef-lang.com/spec/draft/patterns/#dynamic-type-test-patterns)).
+   Three statements about the report are not proved. The first is that a body which passes
+   `nordered` and the report passes the report after its arms are rearranged. The second is the
+   same for a body that glues with priority kept, where the set an arm's body is walked over
+   depends on which of two agreeing arms is written first. The third is the whole-body form of
+   `glued_match_with_no_arm_to_report_keeps_priority`: the two gluing conditions hand different
+   sets to an arm's body, so the statement for one match does not carry to a body.
+   `inner_tests_decided_in_a_region` shows when an inner arm is reported for a scrutinee of
+   variable type.
 7. **The cost of the check.** The check filters the set once for each arm of each match. No bound
    on that work is stated.
 *)
