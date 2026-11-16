@@ -3543,6 +3543,383 @@ Proof.
   intros H. exact (selectable_distinct R u arms [] H).
 Qed.
 
+(**md ### The report over a whole body
+
+The three results above that speak of one match are carried here to a body, with the sets each
+condition computes for the matches inside it.
+*)
+
+(** What the report of a match consists of. *)
+Lemma nlive_match (R : list inst3) (Gf : inst3 -> list ty) (a : ntm)
+  (arms : list (test * ntm)) :
+  nlive R Gf (NMatch a arms) = true ->
+  nlive R Gf a = true /\
+  forall pre p b post, arms = pre ++ (p, b) :: post ->
+    inhabited (reach R (scrut_ty Gf a) (map fst pre) p) = true /\
+    nlive (reach R (scrut_ty Gf a) (map fst pre) p) (arm_ctx Gf p) b = true.
+Proof.
+  cbn [nlive]. intros H. apply andb_true_iff in H. destruct H as [H1 H2].
+  split; [exact H1 |]. intros pre p b post E. rewrite E in H2.
+  pose proof (arms_ok_split _ pre [] p b post H2) as K. cbn [app] in K.
+  apply andb_true_iff in K. exact K.
+Qed.
+
+Lemma arms_ok_intro (chk : list test -> test -> ntm -> bool) :
+  forall (l : list (test * ntm)) (seen : list test),
+    (forall pre p b post, l = pre ++ (p, b) :: post ->
+       chk (seen ++ map fst pre) p b = true) ->
+    arms_ok chk seen l = true.
+Proof.
+  induction l as [| [p b] r IH]; intros seen H; [reflexivity |].
+  cbn [arms_ok]. apply andb_true_iff. split.
+  - pose proof (H [] p b r eq_refl) as K. cbn [map] in K. rewrite app_nil_r in K. exact K.
+  - apply IH. intros pre q c post E.
+    pose proof (H ((p, b) :: pre) q c post) as K. cbn [map fst] in K.
+    rewrite <- app_assoc. apply K. rewrite E. reflexivity.
+Qed.
+
+Lemma arms_ok_both (c1 c2 c3 : list test -> test -> ntm -> bool) :
+  forall (l : list (test * ntm)) (seen : list test),
+    (forall seen p b, In (p, b) l ->
+       c1 seen p b = true -> c2 seen p b = true -> c3 seen p b = true) ->
+    arms_ok c1 seen l = true -> arms_ok c2 seen l = true -> arms_ok c3 seen l = true.
+Proof.
+  induction l as [| [p b] r IH]; intros seen H A1 A2; [reflexivity |].
+  cbn [arms_ok] in A1, A2 |- *. apply andb_true_iff in A1. apply andb_true_iff in A2.
+  destruct A1 as [A1 A1']. destruct A2 as [A2 A2']. apply andb_true_iff. split.
+  - exact (H seen p b (or_introl eq_refl) A1 A2).
+  - apply (IH (seen ++ [p])); [| exact A1' | exact A2'].
+    intros s q c I. apply H. right. exact I.
+Qed.
+
+(** An arm that is selected somewhere in a set is not at least as specific, over any larger set,
+    as an arm written before it. *)
+Lemma later_not_below (L U : list inst3) (u : inst3 -> ty) (seen : list test) (p q : test) :
+  (forall s, In s L -> In s U) -> In p seen ->
+  inhabited (reach L u seen q) = true -> le_in U u q p = false.
+Proof.
+  intros S Ip Z. destruct (le_in U u q p) eqn:X; [exfalso | reflexivity].
+  apply inhabited_iff in Z. destruct Z as [s Hs]. unfold reach in Hs. apply filter_In in Hs.
+  destruct Hs as [HL HP]. apply andb_true_iff in HP. destruct HP as [Hq Hn].
+  apply negb_true_iff in Hn.
+  assert (Y : existsb (fun t => holds s (u s) t) seen = true).
+  { apply existsb_exists. exists p. split; [exact Ip |].
+    exact (proj1 (le_in_iff U u q p) X s (S s HL) Hq). }
+  rewrite Y in Hn. discriminate.
+Qed.
+
+(** A body that glues over a set and passes the report over a smaller one glues with priority
+    kept over any set between the two. *)
+Lemma glued_live_over (e : ntm) :
+  forall (W U L : list inst3) (Gf : inst3 -> list ty),
+    (forall s, In s L -> In s U) -> (forall s, In s U -> In s W) ->
+    nglued W Gf e -> nlive L Gf e = true -> npglued U Gf e.
+Proof.
+  induction e as [n | o e IH | a b IHa IHb | e IH | e IH | a b IHa IHb | a arms IHa IH]
+    using ntm_arms_ind; intros W U L Gf LU UW G Lv.
+  - exact I.
+  - cbn [nglued] in G. cbn [nlive] in Lv. cbn [npglued]. exact (IH W U L Gf LU UW G Lv).
+  - cbn [nglued] in G. cbn [nlive] in Lv. destruct G as [Ga Gb].
+    apply andb_true_iff in Lv. destruct Lv as [La Lb]. cbn [npglued].
+    split; [exact (IHa W U L Gf LU UW Ga La) | exact (IHb W U L Gf LU UW Gb Lb)].
+  - cbn [nglued] in G. cbn [nlive] in Lv. cbn [npglued]. exact (IH W U L Gf LU UW G Lv).
+  - cbn [nglued] in G. cbn [nlive] in Lv. cbn [npglued]. exact (IH W U L Gf LU UW G Lv).
+  - cbn [nglued] in G. cbn [nlive] in Lv. destruct G as [Ga Gb].
+    apply andb_true_iff in Lv. destruct Lv as [La Lb]. cbn [npglued].
+    split; [exact (IHa W U L Gf LU UW Ga La) | exact (IHb W U L (let_ctx Gf a) LU UW Gb Lb)].
+  - apply nglued_match in G. destruct G as [Ga [GL AB]].
+    apply nlive_match in Lv. destruct Lv as [La SelL].
+    apply npglued_match_iff. split; [exact (IHa W U L Gf LU UW Ga La) |].
+    remember (scrut_ty Gf a) as u eqn:Eu.
+    split.
+    + intros s p q Hs F Hq M.
+      assert (C : le_in U u (fst q) (fst p) = true -> q = p).
+      { intros X. unfold pickn in F. destruct (find_split _ _ _ F) as [pre [post [E K]]].
+        pose proof Hq as Hq'. rewrite E in Hq'. apply in_app_or in Hq'.
+        destruct Hq' as [Hq' | [Hq' | Hq']].
+        - pose proof (K q Hq') as Z. cbn beta in Z. rewrite Z in M. discriminate.
+        - symmetry. exact Hq'.
+        - exfalso. apply in_split in Hq'. destruct Hq' as [m [post2 E2]].
+          destruct q as [tq bq]. destruct p as [tp bp]. cbn [fst] in X.
+          assert (E3 : arms = (pre ++ (tp, bp) :: m) ++ (tq, bq) :: post2).
+          { rewrite E, E2, <- app_assoc. reflexivity. }
+          destruct (SelL _ _ _ _ E3) as [Z _].
+          assert (Ip : In tp (map fst (pre ++ (tp, bp) :: m))).
+          { apply (in_map fst _ (tp, bp)). apply in_elt. }
+          rewrite (later_not_below L U u _ tp tq LU Ip Z) in X. discriminate. }
+      destruct (GL s p q (UW s Hs) F Hq M) as [X | A].
+      * left. unfold lt_in in X |- *. apply andb_true_iff in X. destruct X as [X1 X2].
+        apply andb_true_iff. split.
+        -- apply le_in_iff. intros s' Hs' M'.
+           exact (proj1 (le_in_iff W u _ _) X1 s' (UW s' Hs') M').
+        -- apply negb_true_iff. destruct (le_in U u (fst q) (fst p)) eqn:Z; [| reflexivity].
+           pose proof (C eq_refl) as Q. subst q. rewrite le_in_refl in X2. cbn in X2. discriminate.
+      * right. split; [| exact A]. unfold lt_in.
+        destruct (le_in U u (fst q) (fst p)) eqn:Z; [| reflexivity].
+        pose proof (C eq_refl) as Q. subst q. rewrite le_in_refl. reflexivity.
+    + intros p b Ib. destruct (in_split _ _ Ib) as [pre [post Ea]].
+      destruct (SelL pre p b post Ea) as [_ Lb].
+      rewrite Forall_forall in IH.
+      apply (IH (p, b) Ib (restrict W u p) _ (reach L u (map fst pre) p) (arm_ctx Gf p));
+        [| | exact (AB p b Ib) | exact Lb].
+      * intros s Hs. unfold reach in Hs. apply filter_In in Hs. destruct Hs as [HL HP].
+        apply andb_true_iff in HP. destruct HP as [Mp Hn]. apply negb_true_iff in Hn.
+        unfold unbeaten. apply filter_In. split; [exact (LU s HL) |]. cbn beta.
+        rewrite Mp. cbn [andb]. apply forallb_forall. intros q Hq. cbn beta.
+        destruct (holds s (u s) q) eqn:Mq; [| reflexivity]. cbn [andb].
+        apply negb_true_iff. destruct (lt_in U u q p) eqn:X; [exfalso | reflexivity].
+        unfold lt_in in X. apply andb_true_iff in X. destruct X as [X1 X2].
+        rewrite Ea, map_app in Hq. cbn [map fst] in Hq. apply in_app_or in Hq.
+        destruct Hq as [Hq | [Hq | Hq]].
+        -- assert (Y : existsb (fun t => holds s (u s) t) (map fst pre) = true).
+           { apply existsb_exists. exists q. split; assumption. }
+           rewrite Y in Hn. discriminate.
+        -- subst q. rewrite le_in_refl in X2. cbn in X2. discriminate.
+        -- apply in_map_iff in Hq. destruct Hq as [[q' bq] [Eq Iq]]. cbn [fst] in Eq.
+           subst q'. apply in_split in Iq. destruct Iq as [m [post2 E2]].
+           assert (E3 : arms = (pre ++ (p, b) :: m) ++ (q, bq) :: post2).
+           { rewrite Ea, E2, <- app_assoc. reflexivity. }
+           destruct (SelL _ _ _ _ E3) as [Z _].
+           assert (Ip : In p (map fst (pre ++ (p, b) :: m))).
+           { apply (in_map fst _ (p, b)). apply in_elt. }
+           rewrite (later_not_below L U u _ p q LU Ip Z) in X1. discriminate.
+      * intros s Hs. unfold unbeaten in Hs. apply filter_In in Hs. destruct Hs as [HU HP].
+        apply andb_true_iff in HP. unfold restrict. apply filter_In.
+        split; [exact (UW s HU) | exact (proj1 HP)].
+Qed.
+
+(**md
+**A body that glues and has no arm to report glues with priority kept.**
+
+This is `glued_match_with_no_arm_to_report_keeps_priority` for a whole body. If a body satisfies
+the gluing condition over a set of instantiations and passes the report over the same set, it
+satisfies the gluing condition with priority kept over that set. Taking the set to be the table
+gives the statement for a definition.
+
+The three conditions hand different sets to an arm's body: where its test succeeds, where no
+strictly more specific test succeeds, and where the arm is selected. The proof carries all three
+down the body together. For a body with no arm to report, the third is contained in the second
+and the second in the first, and that is what the step at each match needs.
+
+So what agreement between any two overlapping arms accepts beyond the adopted rule is a body with
+an arm that can never be selected.
+
+- [R:] the instantiations that reach the body.
+- [Gf:] the types of the variables in scope at each of them.
+- [e:] the body.
+*)
+Theorem glued_body_with_no_arm_to_report_keeps_priority
+    (R : list inst3) (Gf : inst3 -> list ty) (e : ntm) :
+  nglued R Gf e -> nlive R Gf e = true -> npglued R Gf e.
+Proof.
+  intros G Lv. exact (glued_live_over e R R R Gf (fun _ H => H) (fun _ H => H) G Lv).
+Qed.
+
+(** The whole-body overlap check on the tests alone: `nordered` without its requirement that no
+    two arms of a match are equally specific.
+    - [R:] the instantiations that reach the body.
+    - [Gf:] the types of the variables in scope at each instantiation.
+    - [e:] the body. *)
+Fixpoint nprior (R : list inst3) (Gf : inst3 -> list ty) (e : ntm) : bool :=
+  match e with
+  | NVar _ => true
+  | NPrim _ a => nprior R Gf a
+  | NPair a b => nprior R Gf a && nprior R Gf b
+  | NFst a => nprior R Gf a
+  | NSnd a => nprior R Gf a
+  | NLet a b => nprior R Gf a && nprior R (let_ctx Gf a) b
+  | NMatch a arms =>
+      nprior R Gf a
+      && ordered_in R (scrut_ty Gf a) [] (map fst arms)
+      && arms_ok
+           (fun seen p b => nprior (reach R (scrut_ty Gf a) seen p) (arm_ctx Gf p) b)
+           [] arms
+  end.
+
+Lemma prior_live_ordered (e : ntm) :
+  forall (R : list inst3) (Gf : inst3 -> list ty),
+    nprior R Gf e = true -> nlive R Gf e = true -> nordered R Gf e = true.
+Proof.
+  induction e as [n | o e IH | a b IHa IHb | e IH | e IH | a b IHa IHb | a arms IHa IH]
+    using ntm_arms_ind; intros R Gf P Lv.
+  - reflexivity.
+  - cbn [nprior] in P. cbn [nlive] in Lv. cbn [nordered]. exact (IH R Gf P Lv).
+  - cbn [nprior] in P. cbn [nlive] in Lv. cbn [nordered].
+    apply andb_true_iff in P. destruct P as [Pa Pb].
+    apply andb_true_iff in Lv. destruct Lv as [La Lb].
+    rewrite (IHa R Gf Pa La). exact (IHb R Gf Pb Lb).
+  - cbn [nprior] in P. cbn [nlive] in Lv. cbn [nordered]. exact (IH R Gf P Lv).
+  - cbn [nprior] in P. cbn [nlive] in Lv. cbn [nordered]. exact (IH R Gf P Lv).
+  - cbn [nprior] in P. cbn [nlive] in Lv. cbn [nordered].
+    apply andb_true_iff in P. destruct P as [Pa Pb].
+    apply andb_true_iff in Lv. destruct Lv as [La Lb].
+    rewrite (IHa R Gf Pa La). exact (IHb R (let_ctx Gf a) Pb Lb).
+  - cbn [nprior] in P. cbn [nlive] in Lv. cbn [nordered].
+    apply andb_true_iff in P. destruct P as [P P3].
+    apply andb_true_iff in P. destruct P as [Pa PO].
+    apply andb_true_iff in Lv. destruct Lv as [La LA].
+    rewrite (IHa R Gf Pa La), PO. cbn [andb]. apply andb_true_iff. split.
+    + apply (selectable_distinct R (scrut_ty Gf a) arms []).
+      refine (arms_ok_both _ _ _ arms [] _ LA LA).
+      intros seen p b _ K _. cbn beta in K. apply andb_true_iff in K. exact (proj1 K).
+    + rewrite Forall_forall in IH.
+      refine (arms_ok_both _ _ _ arms [] _ P3 LA).
+      intros seen p b Ib K1 K2. cbn beta in K1, K2 |- *. apply andb_true_iff in K2.
+      exact (IH (p, b) Ib _ _ K1 (proj2 K2)).
+Qed.
+
+(**md
+**A body whose tests are ordered and that has no arm to report passes the overlap check.**
+
+This is `match_with_no_arm_to_report_has_distinct_tests` for a whole body. `nprior` is the
+whole-body overlap check without its second requirement, that no two arms of a match are equally
+specific. A body that passes `nprior` and the report passes the whole-body overlap check. The
+theorems proved from that check then apply, among them `reordering_arms_changes_nothing`.
+
+So the overlap rule of the Summary and the report are together enough for arm order not to
+matter, and both are computed.
+
+- [R:] the instantiations that reach the body.
+- [Gf:] the types of the variables in scope at each of them.
+- [e:] the body.
+*)
+Theorem ordered_tests_and_no_arm_to_report_pass_the_overlap_check
+    (R : list inst3) (Gf : inst3 -> list ty) (e : ntm) :
+  nprior R Gf e = true -> nlive R Gf e = true -> nordered R Gf e = true.
+Proof.
+  exact (prior_live_ordered e R Gf).
+Qed.
+
+(** Under the overlap check, rearranging the arms keeps the report. The two contexts may differ
+    outside the set. *)
+Lemma live_reorder (f : list (test * ntm) -> list (test * ntm)) :
+  (forall l a, In a (f l) <-> In a l) ->
+  forall (e : ntm) (R : list inst3) (Gf Gf' : inst3 -> list ty),
+    (forall s, In s R -> Gf' s = Gf s) ->
+    nordered R Gf e = true -> nordered R Gf' (reorder f e) = true ->
+    nlive R Gf e = true -> nlive R Gf' (reorder f e) = true.
+Proof.
+  intros Hf e.
+  induction e as [n | o e IH | a b IHa IHb | e IH | e IH | a b IHa IHb | a arms IHa IH]
+    using ntm_arms_ind; intros R Gf Gf' HG N1 N2 Lv.
+  - reflexivity.
+  - cbn [reorder nordered] in N1, N2. cbn [nlive] in Lv. cbn [reorder nlive].
+    exact (IH R Gf Gf' HG N1 N2 Lv).
+  - cbn [reorder nordered] in N1, N2. cbn [nlive] in Lv.
+    apply andb_true_iff in N1. destruct N1 as [N1a N1b].
+    apply andb_true_iff in N2. destruct N2 as [N2a N2b].
+    apply andb_true_iff in Lv. destruct Lv as [La Lb].
+    cbn [reorder nlive]. rewrite (IHa R Gf Gf' HG N1a N2a La).
+    exact (IHb R Gf Gf' HG N1b N2b Lb).
+  - cbn [reorder nordered] in N1, N2. cbn [nlive] in Lv. cbn [reorder nlive].
+    exact (IH R Gf Gf' HG N1 N2 Lv).
+  - cbn [reorder nordered] in N1, N2. cbn [nlive] in Lv. cbn [reorder nlive].
+    exact (IH R Gf Gf' HG N1 N2 Lv).
+  - cbn [reorder nordered] in N1, N2. cbn [nlive] in Lv.
+    apply andb_true_iff in N1. destruct N1 as [N1a N1b].
+    apply andb_true_iff in N2. destruct N2 as [N2a N2b].
+    apply andb_true_iff in Lv. destruct Lv as [La Lb].
+    assert (HG' : forall s', In s' R -> let_ctx Gf' (reorder f a) s' = let_ctx Gf a s').
+    { intros s' Hs'. unfold let_ctx.
+      destruct (reorder_same f Hf a R Gf Gf' HG N1a N2a s' Hs') as [T _].
+      rewrite T, (HG s' Hs'). reflexivity. }
+    cbn [reorder nlive]. rewrite (IHa R Gf Gf' HG N1a N2a La).
+    exact (IHb R (let_ctx Gf a) (let_ctx Gf' (reorder f a)) HG' N1b N2b Lb).
+  - cbn [reorder] in N2. cbn [reorder].
+    apply nordered_match in N1. destruct N1 as [N1a [O1 [D1 A1]]].
+    apply nordered_match in N2. destruct N2 as [N2a [O2 [D2 A2]]].
+    apply nlive_match in Lv. destruct Lv as [La SelL].
+    remember (f (map (fun pb => (fst pb, reorder f (snd pb))) arms)) as arms' eqn:EA.
+    assert (U : forall s', In s' R ->
+              scrut_ty Gf' (reorder f a) s' = scrut_ty Gf a s').
+    { intros s' Hs'. unfold scrut_ty.
+      destruct (reorder_same f Hf a R Gf Gf' HG N1a N2a s' Hs') as [T _].
+      rewrite T. reflexivity. }
+    rewrite (ordered_in_ext R _ _ (map fst arms') U) in O2.
+    assert (TM : forall p, In p (map fst arms) <-> In p (map fst arms')).
+    { rewrite EA. apply reorder_tests. exact Hf. }
+    pose proof (test_selection_order_free R (scrut_ty Gf a) (map fst arms) (map fst arms')
+                  O1 O2 TM (distinct_antisym R _ _ D1)) as SEL.
+    cbn [nlive]. rewrite (IHa R Gf Gf' HG N1a N2a La). cbn [andb].
+    apply arms_ok_intro. intros pre' p b' post' Ea'. cbn [app].
+    assert (I2 : In (p, b') arms') by (rewrite Ea'; apply in_elt).
+    pose proof I2 as I2'. rewrite EA in I2'. apply (proj1 (Hf _ _)) in I2'.
+    apply in_map_iff in I2'. destruct I2' as [[py pb] [E Iy]]. cbn [fst snd] in E.
+    injection E as E1 E2. subst py b'.
+    destruct (in_split _ _ Iy) as [pre [post Ea]].
+    pose proof (A1 pre p pb post Ea) as B1.
+    pose proof (A2 pre' p (reorder f pb) post' Ea') as B2.
+    assert (NI1 : ~ In p (map fst pre)).
+    { pose proof D1 as D. rewrite Ea, map_app in D. exact (distinct_notin _ _ _ _ _ D). }
+    assert (NI2 : ~ In p (map fst pre')).
+    { pose proof D2 as D. rewrite Ea', map_app in D. exact (distinct_notin _ _ _ _ _ D). }
+    assert (RE : reach R (scrut_ty Gf' (reorder f a)) (map fst pre') p =
+                 reach R (scrut_ty Gf a) (map fst pre) p).
+    { unfold reach. apply filter_ext_in. intros s' Hs'. rewrite (U s' Hs').
+      apply Bool.eq_iff_eq_true.
+      rewrite (reach_pred_iff s' _ (map fst pre') (map fst post') p NI2).
+      rewrite (reach_pred_iff s' _ (map fst pre) (map fst post) p NI1).
+      pose proof (SEL s' Hs') as S'. rewrite Ea, Ea', !map_app in S'.
+      cbn [map fst] in S'. rewrite S'. tauto. }
+    rewrite RE in B2. rewrite RE.
+    destruct (SelL pre p pb post Ea) as [Z Lb]. rewrite Z. cbn [andb].
+    assert (HGa : forall s', In s' (reach R (scrut_ty Gf a) (map fst pre) p) ->
+              arm_ctx Gf' p s' = arm_ctx Gf p s').
+    { intros s' Hs'. unfold reach in Hs'. apply filter_In in Hs'.
+      unfold arm_ctx. rewrite (HG s' (proj1 Hs')). reflexivity. }
+    rewrite Forall_forall in IH.
+    exact (IH (p, pb) Iy _ (arm_ctx Gf p) (arm_ctx Gf' p) HGa B1 B2 Lb).
+Qed.
+
+(**md
+**Under the overlap check, rearranging the arms keeps the report.**
+
+Take a body that passes the whole-body overlap check and has no arm to report. If the body with
+the arms of every match rearranged also passes the overlap check, it has no arm to report
+either. Under that check every arm is selected at the same instantiations in either order, so
+the set the report computes for an arm does not change.
+
+- [f:] the rearrangement applied to each list of arms. It keeps the same arms.
+- [e:] the body.
+- [R:] the instantiations that reach the body.
+- [Gf:] the types of the variables in scope at each of them.
+*)
+Theorem rearranged_body_has_no_arm_to_report
+    (f : list (test * ntm) -> list (test * ntm)) (e : ntm)
+    (R : list inst3) (Gf : inst3 -> list ty) :
+  (forall l a, In a (f l) <-> In a l) ->
+  nordered R Gf e = true -> nordered R Gf (reorder f e) = true ->
+  nlive R Gf e = true -> nlive R Gf (reorder f e) = true.
+Proof.
+  intros Hf. exact (live_reorder f Hf e R Gf Gf (fun _ _ => eq_refl)).
+Qed.
+
+(**md
+**The hypotheses of the three whole-body theorems can be met.**
+
+For `'A : (x | y)` and `'B : (y)`, the two-arm match whose arms both return the scrutinee glues
+and has no arm to report, although its arms overlap. For `'A : (x)` and `'B : (y)`, the same
+match passes the check on the tests alone and has no arm to report. With
+`check_accepts_both_orders`, it also meets the hypotheses of
+`rearranged_body_has_no_arm_to_report` with its arms reversed.
+
+- [x:] a member of the first set only.
+- [y:] a member of the second set.
+*)
+Theorem whole_body_report_hypotheses_are_met (x y : ty) :
+  x <> y ->
+  nglued (table [x; y] [y]) (top_ctx []) two_arms /\
+  nlive (table [x; y] [y]) (top_ctx []) two_arms = true /\
+  nprior (table [x] [y]) (top_ctx []) two_arms = true /\
+  nlive (table [x] [y]) (top_ctx []) two_arms = true.
+Proof.
+  intros N.
+  assert (Q1 : tyeqb x y = false) by (apply tyeqb_false; exact N).
+  assert (Q2 : tyeqb y x = false) by (apply tyeqb_false; congruence).
+  split; [exact (proj1 (gluing_accepts_what_overlap_check_rejects x y N)) |].
+  split; [| split]; unfold two_arms; crunch Q1 Q2; reflexivity.
+Qed.
+
 (**md ## Rules stated in prose
 
 These parts of a nested type-case are not modelled.
@@ -3570,16 +3947,19 @@ These parts of a nested type-case are not modelled.
    every arm that matches. The results on arm order do not need the stronger check: under
    priority the same arm is selected in either order, and agreement asks for equal types.
 6. **What the report leaves open.** `nlive` names an arm that no instantiation selects. It is a
-   check apart from `ncheck`, `nordered` and `npglued`, and no theorem joins them into one check
-   of a definition. Whether a reported arm is an error or a warning is outside the RFC. What the
+   check apart from `ncheck`, `nordered` and `npglued`.
+   `ordered_tests_and_no_arm_to_report_pass_the_overlap_check` joins it with the overlap check
+   on the tests. No one check that also holds the type check and agreement is modelled. Whether a reported arm is an error or a warning is outside the RFC. What the
    RFC fixes is which arms are reported and the verification tier at which that is decided, which
    the [Discussion](Clef.RFC0002.Discussion.html) gives.
-   Three statements about the report are not proved. The first is that a body which passes
-   `nordered` and the report passes the report after its arms are rearranged. The second is the
-   same for a body that glues with priority kept, where the set an arm's body is walked over
-   depends on which of two agreeing arms is written first. The third is the whole-body form of
-   `glued_match_with_no_arm_to_report_keeps_priority`: the two gluing conditions hand different
-   sets to an arm's body, so the statement for one match does not carry to a body.
+   Two statements about the report are not proved. The first is that a body which glues with
+   priority kept and has no arm to report still has none after its arms are rearranged. The set
+   an arm's body is walked over is where the arm is selected, and that depends on which of two
+   agreeing arms is written first. Under the overlap check the statement is proved
+   (`rearranged_body_has_no_arm_to_report`). The second is the converse of
+   `glued_body_with_no_arm_to_report_keeps_priority`: a body that glues with priority kept and
+   has no arm to report is not shown to satisfy `nglued`, which examines an arm's body over a
+   larger set. For one match the converse holds (`priority_kept_gluing_glues`).
    `inner_tests_decided_in_a_region` shows when an inner arm is reported for a scrutinee of
    variable type.
 7. **The cost of the check.** The check filters the set once for each arm of each match. No bound

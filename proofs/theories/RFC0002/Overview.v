@@ -82,9 +82,10 @@ The proofs in [Nested](Clef.RFC0002.Nested.html) allow a match anywhere in a bod
   more specific and admits agreement elsewhere. Every definition the overlap check accepts
   satisfies it, and it makes arm order irrelevant. The RFC adopts this third condition.
 - An arm that no instantiation selects is reported by a computed check, and the check names
-  exactly those arms. Neither the overlap check nor the adopted condition implies it. Among
-  matches with no arm to report, the adopted condition and agreement between any two overlapping
-  arms accept the same matches.
+  exactly those arms. Neither the overlap check nor the adopted condition implies it. A body
+  with no arm to report that satisfies agreement between any two overlapping arms satisfies the
+  adopted condition. A body with no arm to report whose tests are ordered passes the whole-body
+  overlap check, and under that check the report does not depend on arm order.
 
 ## The reading of `:? 'A`
 

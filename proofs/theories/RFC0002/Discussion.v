@@ -69,9 +69,13 @@ equation reading. Member types are closed, as in RFC 0001.
 | The overlap check accepts a body with an arm that can never be selected | Proved for one family of constraints: `overlap_check_accepts_an_arm_never_selected` |
 | Gluing with priority kept accepts a body with an arm that can never be selected | Proved: `priority_kept_gluing_accepts_an_arm_never_selected` |
 | A match with no arm to report has no two arms equally specific | Proved: `match_with_no_arm_to_report_has_distinct_tests` |
-| A whole body that glues and passes the report glues with priority kept | Not proved. It is proved for one match |
-| A body that passes the report passes it after its arms are rearranged | Not proved, under the overlap check or under gluing with priority kept |
-| One check of a definition that joins the type check, the adopted condition and the report | Not modelled |
+| A whole body that glues and has no arm to report glues with priority kept | Proved: `glued_body_with_no_arm_to_report_keeps_priority` |
+| A whole body whose tests are ordered and that has no arm to report passes the whole-body overlap check | Proved: `ordered_tests_and_no_arm_to_report_pass_the_overlap_check` |
+| A body that passes the overlap check and has no arm to report has none after its arms are rearranged, if the rearrangement passes the overlap check | Proved: `rearranged_body_has_no_arm_to_report` |
+| The hypotheses of those three theorems can be met | Proved for two families of constraints: `whole_body_report_hypotheses_are_met`, `check_accepts_both_orders` |
+| A body that glues with priority kept and has no arm to report has none after its arms are rearranged | Not settled. Neither proved nor refuted |
+| A whole body that glues with priority kept and has no arm to report glues | Not proved. It is proved for one match |
+| One check of a definition that joins the type check, the adopted condition and the report | Not modelled. The report and the overlap check on the tests are joined |
 | Under gluing with priority kept, an arm's body need be examined only where the arm is selected | Not settled. Neither proved nor refuted |
 | Agreement of two arms in Bodies gives agreement of the same arms as inner arms | Not proved |
 | A computed check that implies the gluing condition | Not modelled |
@@ -181,6 +185,7 @@ are a reading of the specification and the design documents, and none is a theor
 | The gluing condition of a whole body (`nglued`) | 1 to 4 | It is a statement and not a procedure. Its tier is that of the rule used for each overlap: priority, identical bodies, or a proof |
 | Gluing of a whole body with priority kept (`npglued`) | 1 to 4 | The set handed to each arm's body is computed from the tests, at the edge of tier 1. Agreement is asked only between arms of which neither is strictly more specific, and its tier is that of the rule used |
 | The report of arms never selected (`nlive`) | Edge of 1 | Each arm's set is the table filtered by equalities between closed types, and the report asks whether it has a member. It compares no two arms and reads no body |
+| The overlap check on the tests together with the report (`nprior`, `nlive`) | Edge of 1 | Both are computed by one walk over the body. Together they give the whole-body overlap check (`ordered_tests_and_no_arm_to_report_pass_the_overlap_check`) |
 | Agreement by proved equivalence | 4 | A relation between two programs |
 
 **The report of an arm that can never be selected is decided at tier 1, at its edge.** The
@@ -333,13 +338,20 @@ condition for an inner match, over the region of the match. The proofs give thes
    `body_that_passes_report_has_every_arm_selected`). It is a check of its own, because the
    overlap check and gluing with priority kept each accept a body it rejects
    (`overlap_check_accepts_an_arm_never_selected`,
-   `priority_kept_gluing_accepts_an_arm_never_selected`). Among matches it passes, the two
+   `priority_kept_gluing_accepts_an_arm_never_selected`). A whole body that glues and has no
+   arm to report glues with priority kept (`glued_body_with_no_arm_to_report_keeps_priority`).
+   Among matches the report passes, the two
    agreement rules accept the same matches (`glued_match_with_no_arm_to_report_keeps_priority`,
    `priority_kept_gluing_glues`). So what the rejected rule accepts beyond the adopted one is
-   confined to matches the report names, and the match of point 8 is one
+   confined to bodies the report names, and the match of point 8 is one
    (`general_arm_first_is_reported`). A match the report passes has no two arms equally specific
    (`match_with_no_arm_to_report_has_distinct_tests`), which is the second requirement of the
-   whole-body overlap check. The author's intersection arm is reported when the two member sets
+   whole-body overlap check. For a whole body, the overlap check on the tests and the report
+   together give the whole-body overlap check
+   (`ordered_tests_and_no_arm_to_report_pass_the_overlap_check`), so the two computed checks
+   are enough for arm order not to matter. Under the overlap check the report does not depend
+   on arm order (`rearranged_body_has_no_arm_to_report`). Under gluing with priority kept that
+   is not settled. The author's intersection arm is reported when the two member sets
    share no type (`intersection_reachable_iff`). The report is decided at the edge of tier 1,
    as the section on the verification tiers explains. Whether a reported arm is an error or a
    warning is outside the RFC.
@@ -398,8 +410,9 @@ note gives each in more detail.
   can fail (`ordered_body_glues_falsified`). What it accepts beyond the adopted rule is a general
   arm written before a more specific one with the same body
   (`agreement_accepts_what_priority_kept_gluing_rejects`), where the second arm can never be
-  selected and is reported (`general_arm_first_is_reported`). Among matches with no arm to report
-  the two rules accept the same matches (`glued_match_with_no_arm_to_report_keeps_priority`).
+  selected and is reported (`general_arm_first_is_reported`). A body that satisfies `nglued` and
+  has no arm to report satisfies the adopted rule
+  (`glued_body_with_no_arm_to_report_keeps_priority`).
 
 ## Impact and migration
 
