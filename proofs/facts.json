@@ -8,9 +8,9 @@
     "theories/RFC0001/Representation.v": "b8c7101f4c4bfaaff499261a9a8f8d8b",
     "theories/RFC0001/TypeCase.v": "ac18369418ee5ad858fbd48d0e561307",
     "theories/RFC0002/Bodies.v": "35492047b3a779fec5119decfef48d0c",
-    "theories/RFC0002/Discussion.v": "e5bfbd264c832a1c669a1584ff7d1e47",
-    "theories/RFC0002/Nested.v": "e51fd7b79e4ed4c0b1c9c3066bf29b2c",
-    "theories/RFC0002/Overview.v": "687e1f4a61ca8fed5cb70bbf93743978",
+    "theories/RFC0002/Discussion.v": "b4769a8d4aafb6873249f7972a7172d5",
+    "theories/RFC0002/Nested.v": "a04206df7d8d80f28e4caad1645cec3b",
+    "theories/RFC0002/Overview.v": "890c005d62c6e1f43a4e1b8112e96d14",
     "theories/RFC0002/Regions.v": "55439ab54c6dc484ac5680c4df570aed",
     "theories/RFC0003/Conversion.v": "87d6abfbe5310fd32a19f4822dbb4989",
     "theories/RFC0003/Discussion.v": "39d46a4bf9622b3054dd2d5e71f342f0",
@@ -1726,6 +1726,16 @@
     "Clef.RFC0002.Nested.NtmInduction.P": {
       "binders": {}
     },
+    "Clef.RFC0002.Nested.ab_decided": {
+      "type": "forall s : Regions.inst3,\nRegions.tyeqb (Regions.iT s) (Regions.iA s) = true \\/\nRegions.tyeqb (Regions.iT s) (Regions.iB s) = true ->\nRegions.tyeqb (Regions.iA s) (Regions.iB s) =\n(Regions.tyeqb (Regions.iT s) (Regions.iA s) &&\n Regions.tyeqb (Regions.iT s) (Regions.iB s))%bool",
+      "binders": {
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
     "Clef.RFC0002.Nested.arity_pos": {
       "type": "forall p : Regions.test, exists j : nat, Bodies.arity p = S j",
       "binders": {
@@ -1806,6 +1816,19 @@
     "Clef.RFC0002.Nested.binds": {
       "type": "nat -> TypeCase.mtm -> TypeCase.mtm",
       "binders": {}
+    },
+    "Clef.RFC0002.Nested.check_over_larger_set_is_stricter": {
+      "type": "forall (R R' : list Regions.inst3) (u : Regions.inst3 -> Types.ty)\n  (arms : list Regions.test),\nList.incl R R' ->\nforall seen : list Regions.test,\nNested.ordered_in R' u seen arms = true ->\nNested.ordered_in R u seen arms = true",
+      "binders": {
+        "R": "list Regions.inst3",
+        "R'": "list Regions.inst3",
+        "arms": "list Regions.test",
+        "u": "Regions.inst3 -> Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
     },
     "Clef.RFC0002.Nested.checked_nested_runs": {
       "type": "forall (CA CB : Constraints.cset) (G : list Bodies.oty3)\n  (e : Nested.ntm) (res : Bodies.oty3) (s : Regions.inst3)\n  (env : list Runtime.val) (x : Runtime.val),\nNested.ncheck CA CB G e res = true ->\nRegions.valid CA CB s ->\nRuntime.has_ty x (Regions.iT s) ->\nList.Forall2 Runtime.has_ty env (ListDef.map (Bodies.inst3ty s) G) ->\nexists v : Runtime.val,\n  Nested.nseval s (Regions.iT s :: ListDef.map (Bodies.inst3ty s) G)\n    (x :: env) e =\n  Some v /\\ Runtime.has_ty v (Bodies.inst3ty s res)",
@@ -1901,6 +1924,16 @@
       "type": "list Bodies.arm -> Nested.ntm",
       "binders": {}
     },
+    "Clef.RFC0002.Nested.forallb_eq": {
+      "type": "forall (A : Type) (f g : A -> bool) (l : list A),\n(forall a : A, f a = g a) -> List.forallb f l = List.forallb g l",
+      "binders": {
+        "A": "Type",
+        "f": "A -> bool",
+        "g": "A -> bool",
+        "l": "list A"
+      },
+      "assumptions": "closed"
+    },
     "Clef.RFC0002.Nested.holds": {
       "type": "Regions.inst3 -> Types.ty -> Regions.test -> bool",
       "binders": {}
@@ -1933,6 +1966,116 @@
     "Clef.RFC0002.Nested.inner_alone": {
       "type": "Nested.ntm",
       "binders": {}
+    },
+    "Clef.RFC0002.Nested.inner_first_match_is_most_specific": {
+      "type": "forall (R : list Regions.inst3) (u : Regions.inst3 -> Types.ty)\n  (arms : list Regions.test) (s : Regions.inst3) \n  (p q : Regions.test),\nNested.ordered_in R u nil arms = true ->\nList.In s R ->\nList.find (fun t : Regions.test => Nested.holds s (u s) t) arms =\nSome p ->\nList.In q arms ->\nNested.holds s (u s) q = true -> Nested.le_in R u p q = true",
+      "binders": {
+        "R": "list Regions.inst3",
+        "arms": "list Regions.test",
+        "p": "Regions.test",
+        "q": "Regions.test",
+        "s": "Regions.inst3",
+        "u": "Regions.inst3 -> Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Nested.inner_order_is_irrelevant": {
+      "type": "forall (R : list Regions.inst3) (u : Regions.inst3 -> Types.ty)\n  (l1 l2 : list (Regions.test * Nested.ntm)) \n  (s : Regions.inst3) (G : list Types.ty) (e : Nested.ntm),\nNested.ordered_in R u nil (ListDef.map fst l1) = true ->\nNested.ordered_in R u nil (ListDef.map fst l2) = true ->\n(forall a : Regions.test * Nested.ntm, List.In a l1 <-> List.In a l2) ->\n(forall a b : Regions.test * Nested.ntm,\n List.In a l1 ->\n List.In b l1 ->\n Nested.le_in R u (fst a) (fst b) = true ->\n Nested.le_in R u (fst b) (fst a) = true -> a = b) ->\nList.In s R ->\nNested.ntype s G e = Some (u s) ->\nNested.ntype s G (Nested.NMatch e l1) =\nNested.ntype s G (Nested.NMatch e l2) /\\\n(forall env : list Runtime.val,\n Nested.nseval s G env (Nested.NMatch e l1) =\n Nested.nseval s G env (Nested.NMatch e l2))",
+      "binders": {
+        "G": "list Types.ty",
+        "R": "list Regions.inst3",
+        "e": "Nested.ntm",
+        "l1": "list (Regions.test * Nested.ntm)",
+        "l2": "list (Regions.test * Nested.ntm)",
+        "s": "Regions.inst3",
+        "u": "Regions.inst3 -> Types.ty"
+      },
+      "assumptions": [
+        "Witnesses.witness",
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op",
+        "Runtime.atom",
+        "Witnesses.apply"
+      ]
+    },
+    "Clef.RFC0002.Nested.inner_selection_order_free": {
+      "type": "forall (R : list Regions.inst3) (u : Regions.inst3 -> Types.ty)\n  (l1 l2 : list (Regions.test * Nested.ntm)),\nNested.ordered_in R u nil (ListDef.map fst l1) = true ->\nNested.ordered_in R u nil (ListDef.map fst l2) = true ->\n(forall a : Regions.test * Nested.ntm, List.In a l1 <-> List.In a l2) ->\n(forall a b : Regions.test * Nested.ntm,\n List.In a l1 ->\n List.In b l1 ->\n Nested.le_in R u (fst a) (fst b) = true ->\n Nested.le_in R u (fst b) (fst a) = true -> a = b) ->\nforall s : Regions.inst3,\nList.In s R -> Nested.pickn s (u s) l1 = Nested.pickn s (u s) l2",
+      "binders": {
+        "R": "list Regions.inst3",
+        "l1": "list (Regions.test * Nested.ntm)",
+        "l2": "list (Regions.test * Nested.ntm)",
+        "u": "Regions.inst3 -> Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon",
+        "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.inner_tests_decided_in_a_region": {
+      "type": "forall (CA CB : Constraints.cset) (s1 s2 : Regions.inst3)\n  (o : Bodies.oty3) (p : Regions.test),\nRegions.valid CA CB s1 ->\nRegions.valid CA CB s2 ->\nRegions.select Regions.Equation CA CB\n  (Regions.Both Regions.IsA Regions.IsB\n   :: Regions.IsA :: Regions.IsB :: nil)\n  s1 =\nRegions.select Regions.Equation CA CB\n  (Regions.Both Regions.IsA Regions.IsB\n   :: Regions.IsA :: Regions.IsB :: nil)\n  s2 ->\nNested.is_var o ->\nNested.holds s1 (Bodies.inst3ty s1 o) p =\nNested.holds s2 (Bodies.inst3ty s2 o) p",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "o": "Bodies.oty3",
+        "p": "Regions.test",
+        "s1": "Regions.inst3",
+        "s2": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Nested.is_var": {
+      "type": "Bodies.oty3 -> Prop",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.le_in": {
+      "type": "list Regions.inst3 ->\n(Regions.inst3 -> Types.ty) -> Regions.test -> Regions.test -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.le_in_iff": {
+      "type": "forall (R : list Regions.inst3) (u : Regions.inst3 -> Types.ty)\n  (p q : Regions.test),\nNested.le_in R u p q = true <->\n(forall s : Regions.inst3,\n List.In s R ->\n Nested.holds s (u s) p = true -> Nested.holds s (u s) q = true)",
+      "binders": {
+        "R": "list Regions.inst3",
+        "p": "Regions.test",
+        "q": "Regions.test",
+        "u": "Regions.inst3 -> Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Nested.le_in_refl": {
+      "type": "forall (R : list Regions.inst3) (u : Regions.inst3 -> Types.ty)\n  (p : Regions.test),\nNested.le_in R u p p = true",
+      "binders": {
+        "R": "list Regions.inst3",
+        "p": "Regions.test",
+        "u": "Regions.inst3 -> Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Nested.le_in_table": {
+      "type": "forall (CA CB : Constraints.cset) (p q : Regions.test),\nNested.le_in (Regions.table CA CB) Regions.iT p q =\nRegions.le Regions.Equation CA CB p q",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "p": "Regions.test",
+        "q": "Regions.test"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
     },
     "Clef.RFC0002.Nested.mshift": {
       "type": "nat -> TypeCase.mtm -> TypeCase.mtm",
@@ -2207,6 +2350,39 @@
       "type": "TypeCase.mtm -> Nested.ntm",
       "binders": {}
     },
+    "Clef.RFC0002.Nested.ordered_in": {
+      "type": "list Regions.inst3 ->\n(Regions.inst3 -> Types.ty) ->\nlist Regions.test -> list Regions.test -> bool",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.ordered_in_most_specific": {
+      "type": "forall (R : list Regions.inst3) (u : Regions.inst3 -> Types.ty)\n  (arms seen : list Regions.test) (s : Regions.inst3)\n  (p q : Regions.test),\nNested.ordered_in R u seen arms = true ->\nList.In s R ->\nList.find (fun t : Regions.test => Nested.holds s (u s) t)\n  (seen ++ arms) =\nSome p ->\nList.In q arms ->\nNested.holds s (u s) q = true -> Nested.le_in R u p q = true",
+      "binders": {
+        "R": "list Regions.inst3",
+        "arms": "list Regions.test",
+        "p": "Regions.test",
+        "q": "Regions.test",
+        "s": "Regions.inst3",
+        "seen": "list Regions.test",
+        "u": "Regions.inst3 -> Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Nested.ordered_in_table": {
+      "type": "forall (CA CB : Constraints.cset) (arms seen : list Regions.test),\nNested.ordered_in (Regions.table CA CB) Regions.iT seen arms =\nRegions.ordered Regions.Equation CA CB seen arms",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "arms": "list Regions.test",
+        "seen": "list Regions.test"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
     "Clef.RFC0002.Nested.pickn": {
       "type": "Regions.inst3 ->\nTypes.ty ->\nlist (Regions.test * Nested.ntm) -> option (Regions.test * Nested.ntm)",
       "binders": {}
@@ -2223,6 +2399,14 @@
         "Types.tycon_eq_dec",
         "Types.tycon",
         "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.region_check_accepts_what_table_check_rejects": {
+      "type": "(forall CA CB : Constraints.cset,\n Nested.ordered_in\n   (Nested.restrict (Regions.table CA CB) Regions.iT Regions.IsA)\n   Regions.iT nil (Regions.IsB :: Regions.IsA :: nil) =\n true) /\\\n(forall x y : Types.ty,\n x <> y ->\n Nested.ordered_in\n   (Regions.table (x :: y :: nil)%list (y :: nil)%list) Regions.iT nil\n   (Regions.IsB :: Regions.IsA :: nil) =\n false)",
+      "binders": {},
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
       ]
     },
     "Clef.RFC0002.Nested.region_example": {
@@ -2251,6 +2435,21 @@
       },
       "assumptions": "closed"
     },
+    "Clef.RFC0002.Nested.restrict": {
+      "type": "list Regions.inst3 ->\n(Regions.inst3 -> Types.ty) -> Regions.test -> list Regions.inst3",
+      "binders": {}
+    },
+    "Clef.RFC0002.Nested.tyeqb_sym": {
+      "type": "forall x y : Types.ty, Regions.tyeqb x y = Regions.tyeqb y x",
+      "binders": {
+        "x": "Types.ty",
+        "y": "Types.ty"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
     "Clef.RFC0002.Nested.typed_body_specializes": {
       "type": "forall (s : Regions.inst3) (e : Nested.ntm) \n  (G : list Types.ty) (r : Types.ty),\nNested.ntype s G e = Some r ->\nexists m : TypeCase.mtm,\n  Nested.nspec s G e = Some m /\\ TypeCase.mtype G m = Some r",
       "binders": {
@@ -2264,6 +2463,30 @@
         "Types.tycon_eq_dec",
         "Types.tycon",
         "Witnesses.op"
+      ]
+    },
+    "Clef.RFC0002.Nested.valid_cases": {
+      "type": "forall (CA CB : Constraints.cset) (s : Regions.inst3),\nRegions.valid CA CB s ->\nRegions.tyeqb (Regions.iT s) (Regions.iA s) = true \\/\nRegions.tyeqb (Regions.iT s) (Regions.iB s) = true",
+      "binders": {
+        "CA": "Constraints.cset",
+        "CB": "Constraints.cset",
+        "s": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
+      ]
+    },
+    "Clef.RFC0002.Nested.var_test_by_equations": {
+      "type": "forall (s1 s2 : Regions.inst3) (o : Bodies.oty3),\nNested.is_var o ->\nRegions.tyeqb (Regions.iT s1) (Regions.iA s1) =\nRegions.tyeqb (Regions.iT s2) (Regions.iA s2) ->\nRegions.tyeqb (Regions.iT s1) (Regions.iB s1) =\nRegions.tyeqb (Regions.iT s2) (Regions.iB s2) ->\nRegions.tyeqb (Regions.iA s1) (Regions.iB s1) =\nRegions.tyeqb (Regions.iA s2) (Regions.iB s2) ->\nforall p : Regions.test,\nNested.holds s1 (Bodies.inst3ty s1 o) p =\nNested.holds s2 (Bodies.inst3ty s2 o) p",
+      "binders": {
+        "o": "Bodies.oty3",
+        "s1": "Regions.inst3",
+        "s2": "Regions.inst3"
+      },
+      "assumptions": [
+        "Types.tycon_eq_dec",
+        "Types.tycon"
       ]
     },
     "Clef.RFC0002.Regions.Both": {

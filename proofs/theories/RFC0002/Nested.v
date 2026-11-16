@@ -20,12 +20,13 @@ let g<'A, 'B, 'T when 'A : (int | string)
     | :? 'B as b -> b
 ```
 
-Four questions are answered.
+Five questions are answered.
 
 1. Is a nested type-case still erased? A specialization has no type to inspect, at any depth.
 2. Is a definition that checks still safe to run at every instantiation?
 3. What does an inner match know about the arm it is in?
 4. Does the model agree with [Bodies](Clef.RFC0002.Bodies.html) where there is no nesting?
+5. Over which instantiations are the arms of an inner match compared by the overlap check?
 
 Only the equation reading is modelled, since it is the one the RFC adopts. A test `:? 'A` on a
 scrutinee succeeds when the scrutinee's type is the type `'A` is instantiated to.
@@ -174,7 +175,7 @@ body with the arm's binders in scope. An arm whose test fails at the instantiati
 at there.
 
 This asks less than the check of Bodies, which types every arm that matches. It is enough for
-safety. The questions about arm order are not asked again here.
+safety. Arm order in an inner match is taken up in its own section below.
 *)
 
 (** The type of a body at an instantiation, or [None] when it has none.
@@ -910,17 +911,405 @@ Proof.
     rewrite repeat_length in Ev. exact Ev.
 Qed.
 
+(**md ## Arm order in an inner match
+
+The overlap check of [Regions](Clef.RFC0002.Regions.html) is stated for the match on the
+parameter of type `'T`, and it compares arms over the whole table. An inner match differs in two
+ways. Its scrutinee may be any term, so its type varies with the instantiation. And it runs only
+at the instantiations that reach it. This section states the check for any set of instantiations
+and any scrutinee, and asks which set an inner match should be checked over.
+*)
+
+(** One test is at least as specific as another over a set of instantiations when it succeeds
+    there only where the other does.
+    - [R:] the instantiations considered.
+    - [u:] the type of the scrutinee at each instantiation.
+    - [p:] the more specific test.
+    - [q:] the more general test. *)
+Definition le_in (R : list inst3) (u : inst3 -> ty) (p q : test) : bool :=
+  forallb (fun s => implb (holds s (u s) p) (holds s (u s) q)) R.
+
+(** The computed comparison agrees with its meaning. *)
+Lemma le_in_iff (R : list inst3) (u : inst3 -> ty) (p q : test) :
+  le_in R u p q = true <->
+  forall s, In s R -> holds s (u s) p = true -> holds s (u s) q = true.
+Proof.
+  unfold le_in. rewrite forallb_forall. split; intros H s Hs.
+  - intro M. specialize (H s Hs). cbn beta in H. rewrite M in H. exact H.
+  - cbn beta. destruct (holds s (u s) p) eqn:M; [| reflexivity]. apply (H s Hs M).
+Qed.
+
+Lemma le_in_refl (R : list inst3) (u : inst3 -> ty) (p : test) : le_in R u p p = true.
+Proof.
+  apply le_in_iff. intros s _ M. exact M.
+Qed.
+
+(** The overlap check over a set of instantiations. For each arm, and each instantiation in the
+    set its test succeeds at, the first earlier arm that also succeeds there must be at least as
+    specific as this one over the set.
+    - [R:] the instantiations considered.
+    - [u:] the type of the scrutinee at each instantiation.
+    - [seen:] the arms before the ones being checked, in source order.
+    - [arms:] the arms still to check. *)
+Fixpoint ordered_in (R : list inst3) (u : inst3 -> ty) (seen arms : list test) : bool :=
+  match arms with
+  | [] => true
+  | q :: rest =>
+      forallb
+        (fun s =>
+           implb (holds s (u s) q)
+             (match find (fun p => holds s (u s) p) seen with
+              | None => true
+              | Some p => le_in R u p q
+              end))
+        R
+      && ordered_in R u (seen ++ [q]) rest
+  end.
+
+Lemma forallb_eq {A : Type} (f g : A -> bool) (l : list A) :
+  (forall a, f a = g a) -> forallb f l = forallb g l.
+Proof.
+  intros H. induction l as [| a l IH]; simpl; [reflexivity |].
+  rewrite H, IH. reflexivity.
+Qed.
+
+(** Over the whole table, on the parameter of type `'T`, the comparison is that of Regions. *)
+Lemma le_in_table (CA CB : cset) (p q : test) :
+  le_in (table CA CB) iT p q = le Equation CA CB p q.
+Proof.
+  unfold le_in, le. apply forallb_eq. intros s.
+  rewrite !(holds_scrutinee CA CB). reflexivity.
+Qed.
+
+(**md
+**The overlap check of Regions is this check over the whole table.**
+
+On the parameter of type `'T`, over every instantiation, the check stated here is the overlap
+check of Regions under the equation reading. So the theorems of this section are about the same
+check, taken over a smaller set and on another scrutinee.
+
+- [seen:] the arms before the ones being checked.
+- [arms:] the arms still to check.
+*)
+Theorem ordered_in_table (CA CB : cset) (arms : list test) :
+  forall seen : list test,
+    ordered_in (table CA CB) iT seen arms = ordered Equation CA CB seen arms.
+Proof.
+  induction arms as [| q rest IH]; intros seen; cbn [ordered_in ordered]; [reflexivity |].
+  rewrite IH. f_equal. apply forallb_eq. intros s.
+  rewrite (holds_scrutinee CA CB).
+  rewrite (find_ext (fun p => holds s (iT s) p) (matches Equation CA CB s) seen)
+    by (intros a; apply holds_scrutinee).
+  destruct (find (matches Equation CA CB s) seen) as [p |]; [| reflexivity].
+  rewrite le_in_table. reflexivity.
+Qed.
+
+(** The overlap check, for arms that follow a prefix already checked. *)
+Lemma ordered_in_most_specific (R : list inst3) (u : inst3 -> ty) (arms : list test) :
+  forall (seen : list test) (s : inst3) (p q : test),
+    ordered_in R u seen arms = true ->
+    In s R ->
+    find (fun t => holds s (u s) t) (seen ++ arms) = Some p ->
+    In q arms -> holds s (u s) q = true ->
+    le_in R u p q = true.
+Proof.
+  induction arms as [| a rest IH]; intros seen s p q O V F Hq M; [destruct Hq |].
+  cbn [ordered_in] in O. apply andb_true_iff in O. destruct O as [O1 O2].
+  destruct Hq as [-> | Hq].
+  - rewrite forallb_forall in O1. specialize (O1 s V). cbn beta in O1.
+    rewrite M in O1. simpl in O1. rewrite find_app in F.
+    destruct (find (fun t => holds s (u s) t) seen) as [p' |] eqn:Fs.
+    + injection F as <-. exact O1.
+    + simpl in F. rewrite M in F. injection F as <-. apply le_in_refl.
+  - apply (IH (seen ++ [a]) s p q O2 V); [| exact Hq | exact M].
+    rewrite <- app_assoc. exact F.
+Qed.
+
+(**md
+**Under the check over a set, the first matching arm is the most specific one there.**
+
+If a list of arms passes the check over a set of instantiations, then at every instantiation in
+the set the arm selected by source order is at least as specific, over the set, as every other
+arm whose test succeeds. This is `first_match_is_most_specific` for any scrutinee and any set.
+
+- [R:] the instantiations considered.
+- [u:] the type of the scrutinee at each instantiation.
+- [p:] the test selected.
+- [q:] any other test that succeeds.
+*)
+Theorem inner_first_match_is_most_specific
+    (R : list inst3) (u : inst3 -> ty) (arms : list test) (s : inst3) (p q : test) :
+  ordered_in R u [] arms = true ->
+  In s R ->
+  find (fun t => holds s (u s) t) arms = Some p ->
+  In q arms -> holds s (u s) q = true ->
+  le_in R u p q = true.
+Proof.
+  intros O V F. exact (ordered_in_most_specific R u arms [] s p q O V F).
+Qed.
+
+(**md
+**A match accepted over a set is accepted over every smaller set.**
+
+The check over the whole table is the stricter one. A list of arms that passes it passes the
+check over any region. So checking an inner match over the whole table is sound. The question is
+what it rejects without need.
+
+- [R:] the smaller set.
+- [R':] the larger set.
+*)
+Theorem check_over_larger_set_is_stricter
+    (R R' : list inst3) (u : inst3 -> ty) (arms : list test) :
+  incl R R' ->
+  forall seen : list test,
+    ordered_in R' u seen arms = true -> ordered_in R u seen arms = true.
+Proof.
+  intros I. induction arms as [| q rest IH]; intros seen O; [reflexivity |].
+  cbn [ordered_in] in O. cbn [ordered_in].
+  apply andb_true_iff in O. destruct O as [O1 O2].
+  apply andb_true_iff. split; [| apply IH; exact O2].
+  rewrite forallb_forall in O1. apply forallb_forall. intros s Hs.
+  specialize (O1 s (I s Hs)). cbn beta in O1.
+  destruct (holds s (u s) q); [| reflexivity]. simpl in O1. simpl.
+  destruct (find (fun p => holds s (u s) p) seen) as [p |]; [| reflexivity].
+  apply le_in_iff. intros s' Hs'.
+  apply (proj1 (le_in_iff R' u p q) O1 s' (I s' Hs')).
+Qed.
+
+(** The instantiations of a set at which a test succeeds: the region of an arm that is written
+    first.
+    - [R:] the instantiations the match runs at.
+    - [u:] the type of its scrutinee at each instantiation.
+    - [p:] the test of the arm. *)
+Definition restrict (R : list inst3) (u : inst3 -> ty) (p : test) : list inst3 :=
+  filter (fun s => holds s (u s) p) R.
+
+(**md
+**The check over the region accepts an inner match the check over the table rejects.**
+
+Take an inner match on a scrutinee of type `'T`, inside an arm `:? 'A` that is written first, with
+the arms `:? 'B` then `:? 'A`. Over the region of the outer arm the check accepts it for every
+pair of member sets. In that region `'T` is `'A`, so `:? 'A` succeeds everywhere and `:? 'B`,
+which succeeds where the two variables are the same type, is the more specific arm and is rightly
+first. Over the whole table the same two arms are rejected for `'A : (x | y)` and `'B : (y)`,
+because outside the region `:? 'B` succeeds where `:? 'A` does not.
+
+So the two candidate checks differ, and the one over the whole table rejects a match whose arms
+are correctly ordered where it runs.
+
+- [x:] a member of the first set only.
+- [y:] the member the two sets share.
+*)
+Theorem region_check_accepts_what_table_check_rejects :
+  (forall CA CB : cset,
+     ordered_in (restrict (table CA CB) iT IsA) iT [] [IsB; IsA] = true) /\
+  (forall x y : ty, x <> y -> ordered_in (table [x; y] [y]) iT [] [IsB; IsA] = false).
+Proof.
+  split.
+  - intros CA CB. cbn [ordered_in app].
+    apply andb_true_iff. split; [| apply andb_true_iff; split; [| reflexivity]];
+      apply forallb_forall; intros s Hs; cbn [find].
+    + destruct (holds s (iT s) IsB); reflexivity.
+    + destruct (holds s (iT s) IsA); [| reflexivity]. cbn [implb].
+      destruct (holds s (iT s) IsB); [| reflexivity].
+      apply le_in_iff. intros s' Hs' _. unfold restrict in Hs'.
+      apply filter_In in Hs'. exact (proj2 Hs').
+  - intros x y N. rewrite ordered_in_table.
+    destruct (ordered Equation [x; y] [y] [] [IsB; IsA]) eqn:O; [| reflexivity]. exfalso.
+    assert (V1 : valid [x; y] [y] (Inst y y y)) by (unfold valid, sat; simpl; intuition).
+    assert (V2 : valid [x; y] [y] (Inst x y y)) by (unfold valid, sat; simpl; intuition).
+    assert (L : le Equation [x; y] [y] IsB IsA = true).
+    { apply (first_match_is_most_specific Equation [x; y] [y] [IsB; IsA] (Inst y y y) IsB IsA O V1).
+      - unfold select. cbn [find matches iT iB]. rewrite tyeqb_refl. reflexivity.
+      - simpl. auto.
+      - cbn [matches iT iA]. apply tyeqb_refl. }
+    apply N. symmetry. apply tyeqb_iff.
+    exact (proj1 (le_iff Equation [x; y] [y] IsB IsA) L (Inst x y y) V2 (tyeqb_refl y)).
+Qed.
+
+(** Under the check over a set, with no two arms equally specific there, two lists holding the
+    same arms select the same arm at every instantiation in the set. *)
+Lemma inner_selection_order_free
+    (R : list inst3) (u : inst3 -> ty) (l1 l2 : list (test * ntm)) :
+  ordered_in R u [] (map fst l1) = true ->
+  ordered_in R u [] (map fst l2) = true ->
+  (forall a, In a l1 <-> In a l2) ->
+  (forall a b, In a l1 -> In b l1 ->
+     le_in R u (fst a) (fst b) = true -> le_in R u (fst b) (fst a) = true -> a = b) ->
+  forall s, In s R -> pickn s (u s) l1 = pickn s (u s) l2.
+Proof.
+  intros O1 O2 P D s Hs.
+  destruct (pickn s (u s) l1) as [a1 |] eqn:F1; destruct (pickn s (u s) l2) as [a2 |] eqn:F2.
+  - destruct (find_some _ _ F1) as [I1 M1]. destruct (find_some _ _ F2) as [I2 M2].
+    f_equal. apply (D a1 a2 I1 (proj2 (P a2) I2)).
+    + apply (inner_first_match_is_most_specific R u (map fst l1) s (fst a1) (fst a2) O1 Hs).
+      * rewrite find_map. unfold pickn in F1. rewrite F1. reflexivity.
+      * apply in_map. apply P. exact I2.
+      * exact M2.
+    + apply (inner_first_match_is_most_specific R u (map fst l2) s (fst a2) (fst a1) O2 Hs).
+      * rewrite find_map. unfold pickn in F2. rewrite F2. reflexivity.
+      * apply in_map. apply P. exact I1.
+      * exact M1.
+  - destruct (find_some _ _ F1) as [I1 M1].
+    pose proof (find_none _ _ F2 a1 (proj1 (P a1) I1)) as E. cbn beta in E.
+    rewrite M1 in E. discriminate.
+  - destruct (find_some _ _ F2) as [I2 M2].
+    pose proof (find_none _ _ F1 a2 (proj2 (P a2) I2)) as E. cbn beta in E.
+    rewrite M2 in E. discriminate.
+  - reflexivity.
+Qed.
+
+(**md
+**Under the check over its region, the order of an inner match's arms changes nothing.**
+
+Take two lists holding the same arms. Both pass the overlap check over a set of instantiations,
+and no two different arms are equally specific over that set. At every instantiation in the set
+where the scrutinee has the stated type, the two matches select the same arm. So they have the
+same type and return the same value.
+
+The set is any set that holds every instantiation the match runs at. The region of the enclosing
+arms is such a set, and so is the whole table. This is `priority_glues` and
+`glued_order_irrelevant` for an inner match, and the conclusion is stronger: the same arm is
+selected, where those theorems say only that the results are equal.
+
+- [R:] the instantiations the match is checked over.
+- [u:] the type of the scrutinee at each of them.
+- [l1:] the arms in one order.
+- [l2:] the same arms in another order.
+- [e:] the scrutinee.
+*)
+Theorem inner_order_is_irrelevant
+    (R : list inst3) (u : inst3 -> ty) (l1 l2 : list (test * ntm))
+    (s : inst3) (G : list ty) (e : ntm) :
+  ordered_in R u [] (map fst l1) = true ->
+  ordered_in R u [] (map fst l2) = true ->
+  (forall a, In a l1 <-> In a l2) ->
+  (forall a b, In a l1 -> In b l1 ->
+     le_in R u (fst a) (fst b) = true -> le_in R u (fst b) (fst a) = true -> a = b) ->
+  In s R -> ntype s G e = Some (u s) ->
+  ntype s G (NMatch e l1) = ntype s G (NMatch e l2) /\
+  forall env : list val, nseval s G env (NMatch e l1) = nseval s G env (NMatch e l2).
+Proof.
+  intros O1 O2 P D Hs H.
+  pose proof (inner_selection_order_free R u l1 l2 O1 O2 P D s Hs) as E. split.
+  - rewrite !ntype_match, H, E. reflexivity.
+  - intros env. rewrite !nseval_match, H, E. reflexivity.
+Qed.
+
+(**md ### Inner tests on a variable are decided by the region
+
+The three-arm match splits the table by which of the three variables are equal. That leaves an
+inner match little to decide.
+*)
+
+(** Whether an open type is one of the three variables. *)
+Definition is_var (o : oty3) : Prop :=
+  match o with
+  | VA | VB | VT => True
+  | _ => False
+  end.
+
+Lemma tyeqb_sym (x y : ty) : tyeqb x y = tyeqb y x.
+Proof.
+  destruct (tyeqb x y) eqn:E; symmetry.
+  - apply tyeqb_iff. apply tyeqb_iff in E. congruence.
+  - apply tyeqb_false. apply tyeqb_neq in E. congruence.
+Qed.
+
+(** At a valid instantiation the scrutinee's type is one of the two variables. *)
+Lemma valid_cases (CA CB : cset) (s : inst3) :
+  valid CA CB s -> tyeqb (iT s) (iA s) = true \/ tyeqb (iT s) (iB s) = true.
+Proof.
+  intros [_ [_ [H | H]]]; [left | right]; apply tyeqb_iff; exact H.
+Qed.
+
+(** Whether the two constrained variables are equal follows from the two tests on `'T`. *)
+Lemma ab_decided (s : inst3) :
+  tyeqb (iT s) (iA s) = true \/ tyeqb (iT s) (iB s) = true ->
+  tyeqb (iA s) (iB s) = tyeqb (iT s) (iA s) && tyeqb (iT s) (iB s).
+Proof.
+  intros H.
+  destruct (tyeqb (iT s) (iA s)) eqn:EA; destruct (tyeqb (iT s) (iB s)) eqn:EB; simpl.
+  - apply tyeqb_iff. apply tyeqb_iff in EA. apply tyeqb_iff in EB. congruence.
+  - apply tyeqb_false. apply tyeqb_iff in EA. apply tyeqb_neq in EB. congruence.
+  - apply tyeqb_false. apply tyeqb_neq in EA. apply tyeqb_iff in EB. congruence.
+  - destruct H; discriminate.
+Qed.
+
+(** A test on a scrutinee whose type is a variable depends only on which variables are equal. *)
+Lemma var_test_by_equations (s1 s2 : inst3) (o : oty3) :
+  is_var o ->
+  tyeqb (iT s1) (iA s1) = tyeqb (iT s2) (iA s2) ->
+  tyeqb (iT s1) (iB s1) = tyeqb (iT s2) (iB s2) ->
+  tyeqb (iA s1) (iB s1) = tyeqb (iA s2) (iB s2) ->
+  forall p, holds s1 (inst3ty s1 o) p = holds s2 (inst3ty s2 o) p.
+Proof.
+  intros Ho E1 E2 E3 p. induction p as [| | p1 IH1 p2 IH2]; cbn [holds].
+  - destruct o; try (exfalso; exact Ho); cbn [inst3ty].
+    + rewrite !tyeqb_refl. reflexivity.
+    + rewrite (tyeqb_sym (iB s1)), (tyeqb_sym (iB s2)). exact E3.
+    + exact E1.
+  - destruct o; try (exfalso; exact Ho); cbn [inst3ty].
+    + exact E3.
+    + rewrite !tyeqb_refl. reflexivity.
+    + exact E2.
+  - rewrite IH1, IH2. reflexivity.
+Qed.
+
+(**md
+**Inside an arm of the three-arm match, a test on a variable-typed scrutinee is constant.**
+
+Take two instantiations at which the match with the intersection arm first selects the same arm.
+A test on a scrutinee whose type is `'A`, `'B` or `'T` has the same outcome at both. So in the
+region an arm of that match runs in, every arm of such an inner match either always matches or
+never does. One arm is enough, any further arm is unreachable, and the order of its arms cannot
+matter.
+
+The overlap check for an inner match therefore decides something only in two cases this model
+has: an inner match in an arm that is written first and overlaps a later arm, as in
+`region_check_accepts_what_table_check_rejects`, and an inner match on a scrutinee whose type is
+not a variable.
+
+- [s1:] one instantiation.
+- [s2:] another that selects the same arm.
+- [o:] the type of the inner scrutinee, one of the three variables.
+- [p:] the inner test.
+*)
+Theorem inner_tests_decided_in_a_region
+    (CA CB : cset) (s1 s2 : inst3) (o : oty3) (p : test) :
+  valid CA CB s1 -> valid CA CB s2 ->
+  select Equation CA CB [Both IsA IsB; IsA; IsB] s1 =
+  select Equation CA CB [Both IsA IsB; IsA; IsB] s2 ->
+  is_var o ->
+  holds s1 (inst3ty s1 o) p = holds s2 (inst3ty s2 o) p.
+Proof.
+  intros V1 V2 S Ho.
+  pose proof (valid_cases CA CB s1 V1) as K1. pose proof (valid_cases CA CB s2 V2) as K2.
+  pose proof (ab_decided s1 K1) as A1. pose proof (ab_decided s2 K2) as A2.
+  assert (E : tyeqb (iT s1) (iA s1) = tyeqb (iT s2) (iA s2) /\
+              tyeqb (iT s1) (iB s1) = tyeqb (iT s2) (iB s2)).
+  { unfold select in S. cbn [find matches] in S.
+    destruct (tyeqb (iT s1) (iA s1)); destruct (tyeqb (iT s1) (iB s1));
+      destruct (tyeqb (iT s2) (iA s2)); destruct (tyeqb (iT s2) (iB s2));
+      cbn in S; try discriminate S; split; reflexivity. }
+  destruct E as [E1 E2].
+  apply (var_test_by_equations s1 s2 o Ho E1 E2). rewrite A1, A2, E1, E2. reflexivity.
+Qed.
+
 (**md ## Rules stated in prose
 
 These parts of a nested type-case are not modelled.
 
-1. **Arm order in an inner match.** The overlap check and the two ways of gluing are stated in
-   Regions and Bodies for a match on the parameter of type `'T`, over the whole table. An inner
-   match sees part of the table and may scrutinise a term of another type. The check for it would
-   compare arms over the region of the enclosing arms. That check is not defined here.
-2. **Every matching arm.** This module types the arm selected at each instantiation. Bodies types
-   every arm that matches, which is what lets arms be reordered. The stronger check for nested
-   matches is not defined here.
-3. **Unreachable inner arms.** An inner arm whose test fails throughout its region can never run.
+1. **Computing the region.** The theorems above hold for any set that contains every
+   instantiation an inner match runs at. The model does not compute that set from a body. For an
+   arm written first it is `restrict`. For a later arm it is smaller, since earlier arms take
+   some instantiations.
+2. **Agreement for an inner match.** Bodies accepts two overlapping arms that compute the same
+   result. That second way of gluing is not stated for an inner match.
+3. **Every matching arm.** This module types the arm selected at each instantiation. Bodies types
+   every arm that matches. `inner_order_is_irrelevant` does not need the stronger check, because
+   it shows the same arm is selected in either order.
+4. **Unreachable inner arms.** An inner arm whose test fails throughout its region can never run.
    The model accepts it. A compiler would report it, as it reports an unreachable rule.
+   `inner_tests_decided_in_a_region` shows when this happens for a scrutinee of variable type.
 *)

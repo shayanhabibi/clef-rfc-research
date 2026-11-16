@@ -35,7 +35,14 @@ equation reading. Member types are closed, as in RFC 0001.
 | A conjunction of tests is a nested test | Proved, for a match with one arm: `conjunction_is_nesting` |
 | An inner match need cover only the region of the arm it is in | Proved for one definition, with every pair of member sets: `nested_match_checked_in_its_region` |
 | The model of nested matches agrees with Bodies where there is no nesting | Proved, one direction for the check: `nested_extends_bodies` |
-| The overlap check and gluing for an inner match | Not modelled. They are stated for a match on the parameter of type `'T`, over the whole table |
+| The overlap check, stated over any set of instantiations and any scrutinee, is the check of Regions over the whole table | Proved: `ordered_in_table` |
+| Under the check over a set, the first matching arm of an inner match is the most specific one there | Proved: `inner_first_match_is_most_specific` |
+| A match accepted over the whole table is accepted over every region | Proved: `check_over_larger_set_is_stricter` |
+| The check over the region accepts an inner match the check over the table rejects | Proved for one family of constraints: `region_check_accepts_what_table_check_rejects` |
+| Under the check over its region, with no two arms equally specific there, the order of an inner match's arms changes neither its type nor its value | Proved: `inner_order_is_irrelevant` |
+| Inside an arm of the three-arm match, a test on a scrutinee of variable type is constant | Proved: `inner_tests_decided_in_a_region` |
+| The region an inner match runs in, computed from a body | Not modelled. The theorems hold for any set that contains it |
+| Agreement, the second way of gluing, for an inner match | Not modelled |
 | A nested match under the membership reading | Not modelled |
 | Inference with a constraint `'T : ('A or 'B)` keeps principal types | Not proved. The research note argues it does not, without a restriction |
 | More than two tested variables, and generic members | Not modelled |
@@ -119,6 +126,7 @@ are a reading of the specification and the design documents, and none is a theor
 | Binder typing under the equation reading | 1 | The arm learns an equation between types |
 | Agreement by identical bodies | 1 | A structural comparison |
 | A nested match (`ncheck`) | Edge of 1 | Each test is an equality between two closed types at an instantiation. The check still enumerates the table |
+| The overlap check for an inner match (`ordered_in`) | Edge of 1 | The same enumeration as the overlap check, over part of the table. It compares arms by generality, as that check does |
 | Agreement by proved equivalence | 4 | A relation between two programs |
 
 **The constraint is a disjunction of equations between variables.** `'T : ('A | 'B)` says `'T` is
@@ -157,10 +165,33 @@ body, with the equations of the outer region in scope.
    (`conjunction_is_nesting`). The forms differ when more arms follow: a conjunction that fails
    falls through to the next arm, and an inner match that fails has no arm.
 
-Two differences from Bodies are deliberate and are stated on the module's page. The check types
-the arm selected at each instantiation, where Bodies types every arm that matches. And the
-overlap check is not defined for an inner match. Both are needed before arm order in an inner
-match can be discussed, and neither is needed for safety.
+One difference from Bodies is deliberate and is stated on the module's page. The check types
+the arm selected at each instantiation, where Bodies types every arm that matches. That is enough
+for safety, and for the result on arm order below.
+
+**Arm order in an inner match.** The overlap check is stated in [Nested](Clef.RFC0002.Nested.html) over
+any set of instantiations and for any scrutinee (`ordered_in`), and the check of Regions is the
+case of the whole table (`ordered_in_table`). The question was which set an inner match is
+compared over. The proofs give this answer.
+
+1. **Both candidates are sound.** A match that passes over the whole table passes over every
+   region (`check_over_larger_set_is_stricter`), and under the check over any set that contains
+   the instantiations the match runs at, reordering its arms changes neither its type nor its
+   value (`inner_order_is_irrelevant`). The second needs no two arms to be equally specific over
+   the set, which is the requirement `priority_glues` already makes.
+2. **The whole table is too strict.** For `'A : (x | y)` and `'B : (y)`, an inner match on a
+   scrutinee of type `'T`, in an arm `:? 'A` written first, with arms `:? 'B` then `:? 'A`, is
+   correctly ordered in its region and is rejected over the table
+   (`region_check_accepts_what_table_check_rejects`).
+3. **So the check is taken over the region.** It accepts everything the other accepts, rejects
+   nothing whose order is safe where it runs, and costs no more: it enumerates fewer
+   instantiations.
+4. **In this model the question rarely arises.** Inside an arm of the three-arm match, every test
+   on a scrutinee whose type is one of the variables is constant
+   (`inner_tests_decided_in_a_region`). Such an inner match needs one arm. The check decides
+   something only for an inner match in an arm that overlaps a later arm, or on a scrutinee whose
+   type is not a variable. With more than two tested variables the regions are coarser and the
+   question would arise more often. That case is not modelled.
 
 ## Possible extensions
 
@@ -218,9 +249,10 @@ Nothing in a program without a closed-set constraint changes. The RFC depends on
    surface form of the first.
 2. Whether a missing reachable intersection arm is an error. The overlap check as modelled makes it
    one, unless the overlapping arms agree.
-3. The overlap check for an inner match. Typing, erasure and safety of a nested type-case are
-   settled in [Nested](Clef.RFC0002.Nested.html). What is open is how arms of an inner match are
-   compared: over the whole table, or over the region of the enclosing arms.
+3. How the compiler computes the region of an inner match from a body. [Nested](Clef.RFC0002.Nested.html)
+   settles that the overlap check for an inner match is taken over that region, and proves its
+   theorems for any set that contains it. Whether agreement is admitted for an inner match is
+   part of question 1.
 4. Constraints declared but never inferred, as the restriction that keeps inference principal.
 5. The diagnostic for two arms with equivalent tests.
 *)

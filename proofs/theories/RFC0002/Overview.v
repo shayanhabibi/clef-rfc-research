@@ -64,6 +64,9 @@ The proofs in [Nested](Clef.RFC0002.Nested.html) allow a match anywhere in a bod
 - An inner match is checked against the region of the arm it is in. It need cover only that
   region, and its arms may use the outer arm's type equation.
 - The intersection arm can be written as a test nested in another.
+- The overlap check for an inner match is taken over the region of the arm it is in. Under it the
+  order of the inner arms does not change the program. Taken over the whole table it would reject
+  a correctly ordered match.
 
 ## The reading of `:? 'A`
 
@@ -84,6 +87,6 @@ The readings agree on every program whose member sets are disjoint
 |---|---|
 | [Regions](Clef.RFC0002.Regions.html) | Instantiations, arm tests under both readings, selection, the overlap check and the theorems |
 | [Bodies](Clef.RFC0002.Bodies.html) | Arm bodies, the check of a definition, what it computes, and the two ways overlapping arms are glued |
-| [Nested](Clef.RFC0002.Nested.html) | A match anywhere in a body: typing, specialization, erasure, safety, and what an inner match knows about the arm it is in |
+| [Nested](Clef.RFC0002.Nested.html) | A match anywhere in a body: typing, specialization, erasure, safety, what an inner match knows about the arm it is in, and the overlap check for an inner match |
 | [Discussion](Clef.RFC0002.Discussion.html) | What the proofs do not cover, the reasons for the adopted reading, the relation to the verification tiers, drawbacks and alternatives |
 *)
